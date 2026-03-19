@@ -106,10 +106,10 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
               <Image
                 src={temperament.characterImage}
                 alt={temperament.title}
-                width={72}
-                height={90}
-                className="w-auto h-20 object-contain"
-                style={{ filter: `drop-shadow(0 0 10px ${temperament.colorHex}50)` }}
+                width={800}
+                height={220}
+                className={`h-20 object-contain ${temperament.characterOffset}`}
+                style={{ filter: `drop-shadow(0 0 10px ${temperament.colorHex}50)`, width: '100%' }}
               />
             </div>
 

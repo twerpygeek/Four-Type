@@ -38,17 +38,18 @@ export default function NameInputScreen({ onStart }: NameInputScreenProps) {
         className="relative z-10 flex flex-col items-center gap-8 w-full max-w-md text-center"
       >
         {/* Character silhouettes */}
-        <div className="flex justify-center items-end gap-4">
+        <div className="flex justify-center items-end gap-2">
           {characterOrder.map((key) => {
             const t = TEMPERAMENTS[key]
             return (
-              <div key={key} className="relative">
+              <div key={key} className="relative overflow-hidden" style={{ width: '40px', height: '60px' }}>
                 <Image
                   src={t.characterImage}
                   alt={t.title}
-                  width={48}
-                  height={60}
-                  className="w-12 h-auto object-contain opacity-30 grayscale"
+                  width={800}
+                  height={200}
+                  className={`h-24 object-contain opacity-30 grayscale ${t.characterOffset}`}
+                  style={{ width: '100%' }}
                 />
                 <div
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full blur-xl opacity-20"

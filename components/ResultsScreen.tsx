@@ -99,16 +99,19 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                   boxShadow: `0 0 60px ${t.colorHex}40, inset 0 0 30px ${t.colorHex}15`,
                 }}
               >
-                <Image
-                  src={t.characterImage}
-                  alt={t.title}
-                  width={180}
-                  height={220}
-                  className="w-auto h-40 md:h-48 object-contain"
-                  style={{
-                    filter: `drop-shadow(0 0 20px ${t.colorHex}60)`,
-                  }}
-                />
+                <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+                  <Image
+                    src={t.characterImage}
+                    alt={t.title}
+                    width={800}
+                    height={220}
+                    loading="eager"
+                    className={`w-auto h-40 md:h-48 object-contain ${t.characterOffset}`}
+                    style={{
+                      filter: `drop-shadow(0 0 20px ${t.colorHex}60)`,
+                    }}
+                  />
+                </div>
               </div>
             </div>
 

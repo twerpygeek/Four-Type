@@ -88,21 +88,25 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                     }}
                   />
                   
-                  {/* Character image */}
+                  {/* Character image from sprite sheet */}
                   <div
-                    className="relative transition-all duration-300"
+                    className="relative transition-all duration-300 overflow-hidden"
                     style={{
                       transform: isHovered ? 'translateY(-8px) scale(1.05)' : 'translateY(0) scale(1)',
+                      width: '120px',
+                      height: '160px',
                     }}
                   >
                     <Image
                       src={t.characterImage}
                       alt={t.title}
-                      width={140}
+                      width={800}
                       height={200}
-                      className="w-24 h-auto md:w-36 object-contain drop-shadow-lg"
+                      loading="eager"
+                      className={`h-40 object-contain drop-shadow-lg ${t.characterOffset}`}
                       style={{
                         filter: isHovered ? `drop-shadow(0 0 20px ${t.colorHex}80)` : 'none',
+                        width: '100%',
                       }}
                     />
                   </div>
