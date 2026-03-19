@@ -39,13 +39,13 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
         {/* Title */}
         <div className="flex flex-col items-center gap-2">
           <p className="font-serif text-xs tracking-[0.4em] uppercase text-[#64748B]">
-            The Free Temperament Assessment
+            The Free Type Assessment
           </p>
           <h1
             className="font-serif text-5xl md:text-7xl font-bold text-balance"
             style={{ color: '#FFD700', textShadow: '0 0 40px rgba(255,215,0,0.4)' }}
           >
-            Temperament
+            Type
           </h1>
           <h1
             className="font-serif text-5xl md:text-7xl font-bold text-balance"
@@ -53,6 +53,20 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
           >
             Quest
           </h1>
+        </div>
+
+        {/* Video */}
+        <div className="w-full max-w-xl rounded-xl overflow-hidden border border-[#2A2A40]"
+          style={{ boxShadow: '0 0 40px rgba(255,215,0,0.08)' }}
+        >
+          <video
+            src="/videos/typequest.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-auto"
+          />
         </div>
 
         {/* Divider */}
@@ -88,9 +102,9 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                     }}
                   />
                   
-                  {/* Character image from sprite sheet */}
+                  {/* Character image */}
                   <div
-                    className="relative transition-all duration-300 overflow-hidden"
+                    className="relative transition-all duration-300"
                     style={{
                       transform: isHovered ? 'translateY(-8px) scale(1.05)' : 'translateY(0) scale(1)',
                       width: '120px',
@@ -100,13 +114,11 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                     <Image
                       src={t.characterImage}
                       alt={t.title}
-                      width={800}
-                      height={200}
+                      fill
                       loading="eager"
-                      className={`h-40 object-contain drop-shadow-lg ${t.characterOffset}`}
+                      className="object-contain drop-shadow-lg"
                       style={{
                         filter: isHovered ? `drop-shadow(0 0 20px ${t.colorHex}80)` : 'none',
-                        width: '100%',
                       }}
                     />
                   </div>
