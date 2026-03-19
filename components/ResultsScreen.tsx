@@ -567,10 +567,10 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                 <Image
                   src={viewingTemp.characterImage}
                   alt={viewingTemp.title}
-                  width={70}
-                  height={85}
-                  className="object-contain"
-                  style={{ filter: `drop-shadow(0 0 10px ${viewingTemp.colorHex}60)`, width: 'auto', height: '70px' }}
+                  width={80}
+                  height={96}
+                  className="object-contain w-full h-full"
+                  style={{ filter: `drop-shadow(0 0 10px ${viewingTemp.colorHex}60)` }}
                 />
               </div>
               <div className="flex flex-col gap-1">

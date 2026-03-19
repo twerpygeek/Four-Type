@@ -290,7 +290,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
           <div className="flex flex-col gap-4 p-4 sm:p-5">
             {/* Instruction */}
             <p
-              className="text-xs text-[#64748B] italic leading-relaxed"
+              className="text-sm sm:text-base text-[#64748B] italic leading-relaxed"
               style={{ fontFamily: "'Crimson Text', serif" }}
             >
               {currentQ.instruction}
@@ -299,7 +299,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
             {/* Question text (if any) */}
             {currentQ.text && (
               <p
-                className="font-serif text-base sm:text-lg text-[#E2E8F0] font-semibold leading-snug"
+                className="font-serif text-lg sm:text-2xl text-[#E2E8F0] font-semibold leading-snug"
                 style={{ letterSpacing: '0.01em' }}
               >
                 {currentQ.text}
@@ -357,7 +357,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
                     </div>
                     {/* Answer text */}
                     <p
-                      className="text-sm sm:text-base leading-snug flex-1"
+                      className="text-base sm:text-lg leading-snug flex-1"
                       style={{
                         color: isSelected ? '#F1F5F9' : '#CBD5E1',
                         fontFamily: "'Crimson Text', serif",

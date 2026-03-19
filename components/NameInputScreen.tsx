@@ -38,7 +38,7 @@ export default function NameInputScreen({ onStart }: NameInputScreenProps) {
           style={{ borderColor: '#FFD70040' }}
         >
           <video
-            src="/videos/test-journey.mp4"
+            src="/videos/hero-intro.mp4"
             autoPlay
             loop
             muted
