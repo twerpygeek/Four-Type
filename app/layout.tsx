@@ -18,6 +18,29 @@ export const metadata: Metadata = {
   title: 'TemperamentQuest — Know Thyself. No Paywall.',
   description: 'A free, gamified temperament assessment. Discover your character class — Sanguine, Choleric, Melancholic, or Phlegmatic.',
   generator: 'v0.app',
+  metadataBase: new URL('https://typequest.app'),
+  openGraph: {
+    title: 'TemperamentQuest — Discover Your Character Class',
+    description: 'Take the free temperament assessment and discover if you are The Bard, The Commander, The Strategist, or The Guardian.',
+    url: 'https://typequest.app',
+    siteName: 'TypeQuest',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'TypeQuest - Discover Your Character Class',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'TemperamentQuest — Discover Your Character Class',
+    description: 'Take the free temperament assessment and discover your true temperament.',
+    images: ['/og-image.jpg'],
+  },
 }
 
 export const viewport = {

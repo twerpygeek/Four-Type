@@ -4,7 +4,7 @@ import React, { useRef, useCallback, useState } from 'react'
 import Image from 'next/image'
 import { Temperament } from '@/lib/temperaments'
 import { TEMPERAMENTS } from '@/lib/temperaments'
-import { TemperamentKey } from '@/lib/scoringKey'
+import { TemperamentKey, getDominantAndSecondary } from '@/lib/scoringKey'
 
 interface ShareableCardProps {
   heroName: string
@@ -13,6 +13,11 @@ interface ShareableCardProps {
 }
 
 export default function ShareableCard({ heroName, temperament, scores }: ShareableCardProps) {
+  const [dominant, secondary] = getDominantAndSecondary(scores)
+  const secTemperament = TEMPERAMENTS[secondary]
+  const total = Object.values(scores).reduce((a, b) => a + b, 0)
+  const dominantPct = Math.round((scores[dominant] / total) * 100)
+  const secondaryPct = Math.round((scores[secondary] / total) * 100)
   const cardRef = useRef<HTMLDivElement>(null)
   const [isDownloading, setIsDownloading] = useState(false)
 
@@ -182,7 +187,7 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
       temperament.behavioralTraits.forEach((b) => bullet(b))
       gap()
 
-      // ── In Relationships ─────────────────────────────────────────
+      // ── In Relationships ───────────────────��─────────────────────
       section('In Relationships')
       body(temperament.inRelationships)
       gap()
@@ -320,14 +325,36 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
             ))}
           </div>
 
+          {/* Score summary */}
+          <div className="flex gap-2">
+            <div
+              className="flex-1 rounded-lg px-3 py-2 border"
+              style={{ borderColor: `${temperament.colorHex}40`, backgroundColor: `${temperament.colorHex}10` }}
+            >
+              <p className="font-sans text-[9px] uppercase tracking-wider text-[#64748B]">Dominant</p>
+              <p className="font-serif text-sm font-bold" style={{ color: temperament.colorHex }}>
+                {temperament.title} <span className="text-[#94A3B8] font-normal">({dominantPct}%)</span>
+              </p>
+            </div>
+            <div
+              className="flex-1 rounded-lg px-3 py-2 border"
+              style={{ borderColor: `${secTemperament.colorHex}30`, backgroundColor: `${secTemperament.colorHex}08` }}
+            >
+              <p className="font-sans text-[9px] uppercase tracking-wider text-[#64748B]">Secondary</p>
+              <p className="font-serif text-sm font-bold" style={{ color: secTemperament.colorHex }}>
+                {secTemperament.title} <span className="text-[#94A3B8] font-normal">({secondaryPct}%)</span>
+              </p>
+            </div>
+          </div>
+
           {/* Score bar */}
           <div className="flex gap-0.5 h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#1A1A2E' }}>
             {(['Yellow', 'Red', 'Blue', 'Green'] as TemperamentKey[]).map((key) => {
               const colors: Record<TemperamentKey, string> = {
                 Yellow: '#FFD700', Red: '#E63946', Blue: '#4CC9F0', Green: '#52B788',
               }
-              const total = Object.values(scores).reduce((a, b) => a + b, 0)
-              const pct = (scores[key] / total) * 100
+              const t = Object.values(scores).reduce((a, b) => a + b, 0)
+              const pct = (scores[key] / t) * 100
               return (
                 <div
                   key={key}

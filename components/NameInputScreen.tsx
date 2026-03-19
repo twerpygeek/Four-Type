@@ -1,16 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import RuneBackground from './RuneBackground'
-import { TEMPERAMENTS } from '@/lib/temperaments'
-import type { TemperamentKey } from '@/lib/scoringKey'
 
 interface NameInputScreenProps {
   onStart: (name: string) => void
 }
-
-const characterOrder: TemperamentKey[] = ['Red', 'Yellow', 'Blue', 'Green']
 
 export default function NameInputScreen({ onStart }: NameInputScreenProps) {
   const [name, setName] = useState('')
@@ -37,25 +32,23 @@ export default function NameInputScreen({ onStart }: NameInputScreenProps) {
         onSubmit={handleSubmit}
         className="relative z-10 flex flex-col items-center gap-8 w-full max-w-md text-center"
       >
-        {/* Character silhouettes */}
-        <div className="flex justify-center items-end gap-2">
-          {characterOrder.map((key) => {
-            const t = TEMPERAMENTS[key]
-            return (
-              <div key={key} className="relative" style={{ width: '40px', height: '60px' }}>
-                <Image
-                  src={t.characterImage}
-                  alt={t.title}
-                  fill
-                  className="object-contain opacity-30 grayscale"
-                />
-                <div
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full blur-xl opacity-20"
-                  style={{ backgroundColor: t.colorHex }}
-                />
-              </div>
-            )
-          })}
+        {/* Hero video */}
+        <div
+          className="relative w-full max-w-xs rounded-xl overflow-hidden border-2"
+          style={{ borderColor: '#FFD70040' }}
+        >
+          <video
+            src="/videos/test-journey.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-auto"
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ boxShadow: 'inset 0 0 30px rgba(255,215,0,0.1)' }}
+          />
         </div>
 
         <div className="flex flex-col gap-2">

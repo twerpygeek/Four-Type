@@ -25,6 +25,8 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
   const [revealed, setRevealed] = useState(false)
   const [activeTab, setActiveTab] = useState<Tab>('strengths')
   const [showShareCard, setShowShareCard] = useState(false)
+  const [viewingClass, setViewingClass] = useState<TemperamentKey | null>(null)
+  const viewingTemp = viewingClass ? TEMPERAMENTS[viewingClass] : null
 
   useEffect(() => {
     const timer = setTimeout(() => setRevealed(true), 100)
@@ -401,14 +403,18 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           <p className="font-serif text-xs tracking-widest uppercase text-[#64748B]">
             All Character Classes
           </p>
+          <p className="font-sans text-xs text-[#4A5568] -mt-1">
+            Tap any class to learn more
+          </p>
           <div className="grid grid-cols-2 gap-3">
             {(['Yellow', 'Red', 'Blue', 'Green'] as TemperamentKey[]).map((key) => {
               const cls = TEMPERAMENTS[key]
               const isUser = key === dominant
               return (
-                <div
+                <button
                   key={key}
-                  className="rounded-xl border p-3 flex items-center gap-3 relative overflow-hidden"
+                  onClick={() => setViewingClass(key)}
+                  className="rounded-xl border p-3 flex items-center gap-3 relative overflow-hidden text-left transition-all duration-200 cursor-pointer hover:scale-[1.02]"
                   style={{
                     borderColor: isUser ? cls.colorHex : `${cls.colorHex}20`,
                     backgroundColor: isUser ? `${cls.colorHex}12` : `${cls.colorHex}05`,
@@ -435,7 +441,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                     </p>
                     <p className="font-sans text-[10px] text-[#64748B]">{cls.name}</p>
                   </div>
-                </div>
+                </button>
               )
             })}
           </div>
@@ -524,6 +530,125 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           TemperamentQuest &bull; Free forever &bull; Know Thyself.
         </p>
       </div>
+
+      {/* CLASS DETAIL MODAL */}
+      {viewingTemp && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}
+          onClick={() => setViewingClass(null)}
+        >
+          <div
+            className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl border p-5 flex flex-col gap-4"
+            style={{
+              backgroundColor: '#0D0D0F',
+              borderColor: viewingTemp.colorHex,
+              boxShadow: `0 0 60px ${viewingTemp.colorHex}30`,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setViewingClass(null)}
+              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer"
+              style={{ backgroundColor: `${viewingTemp.colorHex}20`, color: viewingTemp.colorHex }}
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Header */}
+            <div className="flex items-center gap-4">
+              <div
+                className="w-20 h-24 rounded-xl flex items-center justify-center border-2 overflow-hidden shrink-0"
+                style={{ borderColor: viewingTemp.colorHex, backgroundColor: `${viewingTemp.colorHex}15` }}
+              >
+                <Image
+                  src={viewingTemp.characterImage}
+                  alt={viewingTemp.title}
+                  width={70}
+                  height={85}
+                  className="object-contain"
+                  style={{ filter: `drop-shadow(0 0 10px ${viewingTemp.colorHex}60)`, width: 'auto', height: '70px' }}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <h3 className="font-serif text-2xl font-black" style={{ color: viewingTemp.colorHex }}>
+                  {viewingTemp.title.toUpperCase()}
+                </h3>
+                <p className="font-sans text-sm text-[#94A3B8]">
+                  {viewingTemp.name} &bull; {viewingTemp.language}
+                </p>
+                <p className="font-sans text-xs text-[#64748B]">{viewingTemp.rpgClass}</p>
+              </div>
+            </div>
+
+            {/* Lore */}
+            <div
+              className="rounded-lg border p-3"
+              style={{ borderColor: `${viewingTemp.colorHex}30`, backgroundColor: `${viewingTemp.colorHex}08` }}
+            >
+              <p className="font-sans text-sm text-[#94A3B8] italic leading-relaxed">
+                &ldquo;{viewingTemp.lore}&rdquo;
+              </p>
+            </div>
+
+            {/* Core Need */}
+            <div className="flex flex-col gap-1">
+              <p className="font-serif text-xs uppercase tracking-widest" style={{ color: viewingTemp.colorHex }}>
+                Core Need
+              </p>
+              <p className="font-sans text-sm text-[#E2E8F0]">{viewingTemp.coreNeed}</p>
+            </div>
+
+            {/* Strengths */}
+            <div className="flex flex-col gap-2">
+              <p className="font-serif text-xs uppercase tracking-widest text-[#52B788]">Strengths</p>
+              <ul className="flex flex-col gap-1">
+                {viewingTemp.strengths.slice(0, 4).map((s, i) => (
+                  <li key={i} className="flex items-start gap-2 font-sans text-sm text-[#94A3B8]">
+                    <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: viewingTemp.colorHex }} />
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Shadow */}
+            <div className="flex flex-col gap-2">
+              <p className="font-serif text-xs uppercase tracking-widest text-[#E63946]">Shadow Side</p>
+              <ul className="flex flex-col gap-1">
+                {viewingTemp.weaknesses.slice(0, 3).map((w, i) => (
+                  <li key={i} className="flex items-start gap-2 font-sans text-sm text-[#94A3B8]">
+                    <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#E63946]" />
+                    {w}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Famous */}
+            <div className="flex flex-col gap-1">
+              <p className="font-serif text-xs uppercase tracking-widest text-[#64748B]">
+                Famous {viewingTemp.title}s
+              </p>
+              <p className="font-sans text-sm text-[#94A3B8]">{viewingTemp.famous.join(', ')}</p>
+            </div>
+
+            {viewingClass === dominant && (
+              <div
+                className="rounded-lg border px-3 py-2 text-center"
+                style={{ borderColor: `${viewingTemp.colorHex}40`, backgroundColor: `${viewingTemp.colorHex}10` }}
+              >
+                <p className="font-serif text-xs font-bold" style={{ color: viewingTemp.colorHex }}>
+                  This is your dominant type!
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       <style>{`
         @keyframes rotate {
