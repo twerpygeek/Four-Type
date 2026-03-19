@@ -29,12 +29,12 @@ export default function VideoBackground({ questionNumber = 20, overlayOpacity = 
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden bg-[#0D0D0F] z-0 pointer-events-none">
-      {/* Video element — object-cover ensures full coverage on all screen sizes */}
+      {/* Video element — object-cover fills all screen sizes, anchored to center on mobile */}
       <video
         ref={videoRef}
         src="/videos/test-journey.mp4"
-        className="absolute inset-0 w-full h-full object-cover hidden md:block"
-        style={{ minWidth: '100%', minHeight: '100%' }}
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: 'center center' }}
         playsInline
         muted
         loop

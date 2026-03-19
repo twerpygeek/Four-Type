@@ -211,16 +211,14 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                     <Image
                       src={t.characterImage}
                       alt={t.title}
-                      fill
+                      width={100}
+                      height={130}
                       loading="eager"
-                      className="object-contain"
-                      sizes="100px"
+                      className="object-contain w-full h-full"
                       style={{
                         filter: isHovered
                           ? `drop-shadow(0 0 25px ${t.colorHex}) drop-shadow(0 0 50px ${t.colorHex}60)`
                           : `drop-shadow(0 0 10px ${t.colorHex}40)`,
-                        width: '100%',
-                        height: '100%',
                       }}
                     />
                   </div>
