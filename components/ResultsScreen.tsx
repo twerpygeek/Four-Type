@@ -14,7 +14,7 @@ interface ResultsScreenProps {
   onRetake: () => void
 }
 
-type Tab = 'strengths' | 'shadow' | 'communication' | 'partners'
+type Tab = 'strengths' | 'shadow' | 'communication' | 'partners' | 'deeper' | 'growth'
 
 export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScreenProps) {
   const [dominant, secondary] = getDominantAndSecondary(scores)
@@ -47,9 +47,11 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
 
   const tabs: { key: Tab; label: string }[] = [
     { key: 'strengths', label: 'Strengths' },
-    { key: 'shadow', label: 'Shadow Side' },
-    { key: 'communication', label: 'Communication' },
-    { key: 'partners', label: 'Best Match' },
+    { key: 'shadow', label: 'Shadow' },
+    { key: 'deeper', label: 'Analysis' },
+    { key: 'communication', label: 'Style' },
+    { key: 'partners', label: 'Match' },
+    { key: 'growth', label: 'Growth' },
   ]
 
   return (
@@ -103,12 +105,14 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                   <Image
                     src={t.characterImage}
                     alt={t.title}
-                    width={800}
-                    height={220}
+                    width={200}
+                    height={240}
                     loading="eager"
-                    className={`w-auto h-40 md:h-48 object-contain ${t.characterOffset}`}
+                    className="object-contain"
                     style={{
                       filter: `drop-shadow(0 0 20px ${t.colorHex}60)`,
+                      width: 'auto',
+                      height: '160px',
                     }}
                   />
                 </div>
@@ -217,7 +221,8 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               alt={sec.title}
               width={32}
               height={40}
-              className="w-8 h-auto object-contain opacity-70"
+              className="object-contain opacity-70"
+              style={{ width: '32px', height: 'auto' }}
             />
             <p className="font-sans text-xs text-[#94A3B8]">
               Secondary: <span className="font-serif font-semibold" style={{ color: sec.colorHex }}>{sec.title}</span>
@@ -332,6 +337,55 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                 </div>
               </div>
             )}
+
+            {activeTab === 'deeper' && (
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-2">
+                  <p className="font-serif text-xs uppercase tracking-widest" style={{ color: t.colorHex }}>Deep Analysis</p>
+                  <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">{t.deeperAnalysis}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="font-serif text-xs uppercase tracking-widest" style={{ color: t.colorHex }}>Behavioral Traits</p>
+                  <ul className="flex flex-col gap-2">
+                    {t.behavioralTraits.map((trait, i) => (
+                      <li key={i} className="flex items-start gap-3 font-sans text-sm text-[#94A3B8] leading-relaxed">
+                        <span className="shrink-0 mt-1 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: t.colorHex }} />
+                        {trait}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="font-serif text-xs uppercase tracking-widest text-[#FFD700]">In Relationships</p>
+                  <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">{t.inRelationships}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="font-serif text-xs uppercase tracking-widest text-[#4CC9F0]">At Work</p>
+                  <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">{t.atWork}</p>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'growth' && (
+              <div className="flex flex-col gap-4">
+                <p className="font-sans text-sm text-[#64748B] italic">
+                  Areas to develop for a more balanced life:
+                </p>
+                <ul className="flex flex-col gap-3">
+                  {t.growthAreas.map((area, i) => (
+                    <li key={i} className="flex items-start gap-3 font-sans text-sm text-[#94A3B8] leading-relaxed">
+                      <span 
+                        className="shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
+                        style={{ backgroundColor: `${t.colorHex}20`, color: t.colorHex }}
+                      >
+                        {i + 1}
+                      </span>
+                      {area}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
 
@@ -367,8 +421,8 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                     alt={cls.title}
                     width={40}
                     height={50}
-                    className="w-10 h-auto object-contain relative"
-                    style={{ opacity: isUser ? 1 : 0.6 }}
+                    className="object-contain relative"
+                    style={{ opacity: isUser ? 1 : 0.6, width: '40px', height: 'auto' }}
                   />
                   <div className="flex flex-col gap-0.5 relative">
                     <p className="font-serif text-xs font-bold" style={{ color: cls.colorHex }}>

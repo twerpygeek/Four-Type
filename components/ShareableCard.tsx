@@ -20,28 +20,57 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
     return match ? match[1].trim() : s.slice(0, 40)
   })
 
+  const [isDownloading, setIsDownloading] = useState(false)
+
   const handleDownload = useCallback(async () => {
-    if (!cardRef.current) return
+    if (!cardRef.current || isDownloading) return
+    setIsDownloading(true)
 
     try {
       // Dynamic import to avoid SSR issues
       const html2canvas = (await import('html2canvas')).default
+      
+      // Wait a tick for images to load
+      await new Promise(resolve => setTimeout(resolve, 100))
       
       const canvas = await html2canvas(cardRef.current, {
         backgroundColor: '#0D0D0F',
         scale: 2,
         logging: false,
         useCORS: true,
+        allowTaint: true,
+        imageTimeout: 15000,
+        onclone: (clonedDoc) => {
+          // Ensure images in cloned document are loaded
+          const images = clonedDoc.querySelectorAll('img')
+          images.forEach((img) => {
+            img.crossOrigin = 'anonymous'
+          })
+        }
       })
       
-      const link = document.createElement('a')
-      link.download = `temperamentquest-${heroName.toLowerCase().replace(/\s+/g, '-')}.png`
-      link.href = canvas.toDataURL('image/png')
-      link.click()
+      // Convert to blob and download
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          console.error('Failed to create blob')
+          setIsDownloading(false)
+          return
+        }
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.download = `typequest-${heroName.toLowerCase().replace(/\s+/g, '-')}.png`
+        link.href = url
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+        setIsDownloading(false)
+      }, 'image/png')
     } catch (err) {
       console.error('Failed to generate image:', err)
+      setIsDownloading(false)
     }
-  }, [heroName])
+  }, [heroName, isDownloading])
 
   const handleCopyText = useCallback(async () => {
     const secondaryKey = Object.entries(scores)
@@ -94,7 +123,7 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
         <div className="relative z-10 flex flex-col gap-5">
           {/* Header with character illustration */}
           <div className="flex items-start gap-4">
-            {/* Character image */}
+            {/* Character image - using img for html2canvas compatibility */}
             <div
               className="shrink-0 w-20 h-24 rounded-xl flex items-center justify-center border-2 overflow-hidden"
               style={{
@@ -103,13 +132,13 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
                 boxShadow: `0 0 20px ${temperament.colorHex}30`,
               }}
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={temperament.characterImage}
                 alt={temperament.title}
-                width={800}
-                height={220}
-                className={`h-20 object-contain ${temperament.characterOffset}`}
-                style={{ filter: `drop-shadow(0 0 10px ${temperament.colorHex}50)`, width: '100%' }}
+                crossOrigin="anonymous"
+                className="h-20 object-contain"
+                style={{ filter: `drop-shadow(0 0 10px ${temperament.colorHex}50)` }}
               />
             </div>
 

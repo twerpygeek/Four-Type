@@ -174,12 +174,9 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
     return () => window.removeEventListener('resize', resize)
   }, [])
 
-  const answerLetterColors: Record<string, string> = {
-    A: '#FFD700',
-    B: '#E63946',
-    C: '#4CC9F0',
-    D: '#52B788',
-  }
+  // Neutral colors for answer letters to not reveal temperament type
+  const neutralColor = '#94A3B8'
+  const selectedColor = '#FFD700'
 
   return (
     <main
@@ -246,8 +243,8 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
           <div
             className="w-2 h-2 rounded-full animate-pulse"
             style={{
-              backgroundColor: Object.values(answerLetterColors)[currentQ.section - 1],
-              boxShadow: `0 0 8px ${Object.values(answerLetterColors)[currentQ.section - 1]}`,
+              backgroundColor: '#FFD700',
+              boxShadow: '0 0 8px #FFD700',
             }}
           />
           <span className="font-serif text-[10px] tracking-[0.3em] uppercase text-[#64748B]">
@@ -325,9 +322,8 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
           {/* Answer options */}
           <div className="relative flex flex-col gap-3">
             {currentQ.answers.map((answer) => {
-              const letterColor = answerLetterColors[answer.letter]
               const isSelected = selected === answer.letter
-              const isHovered = false // We'll handle this with CSS
+              const letterColor = isSelected ? selectedColor : neutralColor
 
               return (
                 <button
@@ -338,15 +334,15 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
                   className="group w-full flex items-start gap-4 px-4 py-3.5 rounded-xl text-left transition-all duration-200 cursor-pointer disabled:cursor-default relative overflow-hidden"
                   style={{
                     background: isSelected
-                      ? `linear-gradient(90deg, ${letterColor}20 0%, transparent 100%)`
+                      ? `linear-gradient(90deg, ${selectedColor}20 0%, transparent 100%)`
                       : 'transparent',
-                    borderLeft: `3px solid ${isSelected ? letterColor : 'rgba(42, 42, 64, 0.5)'}`,
-                    boxShadow: isSelected ? `0 0 20px ${letterColor}30, inset 0 0 30px ${letterColor}10` : 'none',
+                    borderLeft: `3px solid ${isSelected ? selectedColor : 'rgba(42, 42, 64, 0.5)'}`,
+                    boxShadow: isSelected ? `0 0 20px ${selectedColor}30, inset 0 0 30px ${selectedColor}10` : 'none',
                   }}
                   onMouseEnter={(e) => {
                     if (selected) return
-                    e.currentTarget.style.borderLeftColor = letterColor
-                    e.currentTarget.style.background = `linear-gradient(90deg, ${letterColor}10 0%, transparent 100%)`
+                    e.currentTarget.style.borderLeftColor = '#E2E8F0'
+                    e.currentTarget.style.background = 'linear-gradient(90deg, rgba(226, 232, 240, 0.08) 0%, transparent 100%)'
                   }}
                   onMouseLeave={(e) => {
                     if (selected) return
@@ -359,24 +355,26 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
                     className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-serif text-sm font-bold transition-all duration-200 mt-0.5 relative"
                     style={{
                       background: isSelected
-                        ? `radial-gradient(circle, ${letterColor} 0%, ${letterColor}80 100%)`
-                        : `radial-gradient(circle, ${letterColor}30 0%, ${letterColor}10 100%)`,
-                      color: isSelected ? '#0D0D0F' : letterColor,
-                      boxShadow: isSelected ? `0 0 15px ${letterColor}60` : `inset 0 0 10px ${letterColor}20`,
-                      border: `1px solid ${letterColor}40`,
+                        ? `radial-gradient(circle, ${selectedColor} 0%, ${selectedColor}80 100%)`
+                        : 'rgba(42, 42, 64, 0.5)',
+                      color: isSelected ? '#0D0D0F' : '#E2E8F0',
+                      boxShadow: isSelected ? `0 0 15px ${selectedColor}60` : 'none',
+                      border: `1px solid ${isSelected ? selectedColor : 'rgba(148, 163, 184, 0.3)'}`,
                     }}
                   >
                     {/* Inner glow ring */}
-                    <div
-                      className="absolute inset-0.5 rounded-md border opacity-50"
-                      style={{ borderColor: letterColor }}
-                    />
+                    {isSelected && (
+                      <div
+                        className="absolute inset-0.5 rounded-md border opacity-50"
+                        style={{ borderColor: selectedColor }}
+                      />
+                    )}
                     {answer.letter}
                   </div>
                   <p
-                    className="text-sm leading-relaxed transition-colors duration-200 italic"
+                    className="text-base leading-relaxed transition-colors duration-200"
                     style={{
-                      color: isSelected ? '#E2E8F0' : '#94A3B8',
+                      color: isSelected ? '#E2E8F0' : '#E2E8F0',
                       fontFamily: "'Crimson Text', serif",
                     }}
                   >

@@ -32,7 +32,7 @@ export default function VideoBackground({ questionNumber = 20, overlayOpacity = 
       {/* Video element */}
       <video
         ref={videoRef}
-        src="/videos/background-animation.mp4"
+        src="/videos/test-journey.mp4"
         className="absolute inset-0 w-full h-full object-cover"
         playsInline
         muted
