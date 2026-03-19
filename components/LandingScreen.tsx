@@ -15,71 +15,165 @@ const characterOrder: TemperamentKey[] = ['Red', 'Yellow', 'Blue', 'Green']
 export default function LandingScreen({ onBegin }: LandingScreenProps) {
   const [visible, setVisible] = useState(false)
   const [hoveredChar, setHoveredChar] = useState<TemperamentKey | null>(null)
+  const [glowPulse, setGlowPulse] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100)
     return () => clearTimeout(t)
   }, [])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGlowPulse(prev => !prev)
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <main
       className="relative min-h-screen flex flex-col items-center justify-center px-4 py-16 overflow-hidden"
-      style={{ background: '#0D0D0F' }}
+      style={{ 
+        background: 'radial-gradient(ellipse at center top, #1a1a2e 0%, #0D0D0F 50%, #000000 100%)',
+      }}
     >
+      {/* Ambient glow effects */}
+      <div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-3xl pointer-events-none transition-opacity duration-1000"
+        style={{ 
+          background: 'radial-gradient(ellipse, rgba(255,215,0,0.15) 0%, transparent 70%)',
+          opacity: glowPulse ? 0.8 : 0.5,
+        }} 
+      />
+      <div 
+        className="absolute bottom-0 left-1/4 w-[400px] h-[300px] rounded-full blur-3xl pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(230,57,70,0.08) 0%, transparent 70%)' }} 
+      />
+      <div 
+        className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full blur-3xl pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(82,183,136,0.08) 0%, transparent 70%)' }} 
+      />
+
       <RuneBackground />
 
+      {/* Decorative corner frames */}
+      <div className="absolute top-4 left-4 w-24 h-24 border-l-2 border-t-2 border-[#FFD700]/30 rounded-tl-lg pointer-events-none" />
+      <div className="absolute top-4 right-4 w-24 h-24 border-r-2 border-t-2 border-[#FFD700]/30 rounded-tr-lg pointer-events-none" />
+      <div className="absolute bottom-4 left-4 w-24 h-24 border-l-2 border-b-2 border-[#FFD700]/30 rounded-bl-lg pointer-events-none" />
+      <div className="absolute bottom-4 right-4 w-24 h-24 border-r-2 border-b-2 border-[#FFD700]/30 rounded-br-lg pointer-events-none" />
+
       <div
-        className="relative z-10 flex flex-col items-center gap-8 max-w-4xl w-full text-center"
+        className="relative z-10 flex flex-col items-center gap-10 max-w-5xl w-full text-center"
         style={{
           opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(20px)',
-          transition: 'opacity 0.8s ease, transform 0.8s ease',
+          transform: visible ? 'translateY(0)' : 'translateY(30px)',
+          transition: 'opacity 1s ease, transform 1s ease',
         }}
       >
-        {/* Title */}
-        <div className="flex flex-col items-center gap-2">
-          <p className="font-serif text-xs tracking-[0.4em] uppercase text-[#64748B]">
-            The Free Type Assessment
+        {/* Epic Title Section */}
+        <div className="flex flex-col items-center gap-3">
+          {/* Decorative top element */}
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#FFD700]/50 to-transparent" />
+            <svg width="20" height="20" viewBox="0 0 20 20" className="text-[#FFD700]">
+              <path fill="currentColor" d="M10 0L12 8L20 10L12 12L10 20L8 12L0 10L8 8L10 0Z" />
+            </svg>
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#FFD700]/50 to-transparent" />
+          </div>
+
+          <p 
+            className="font-serif text-xs tracking-[0.5em] uppercase"
+            style={{ 
+              color: '#B8860B',
+              textShadow: '0 0 10px rgba(255,215,0,0.3)',
+            }}
+          >
+            The Free Temperament Assessment
           </p>
-          <h1
-            className="font-serif text-5xl md:text-7xl font-bold text-balance"
-            style={{ color: '#FFD700', textShadow: '0 0 40px rgba(255,215,0,0.4)' }}
+
+          {/* Main Title with epic styling */}
+          <div className="relative">
+            <h1
+              className="font-serif text-6xl md:text-8xl font-bold tracking-wide"
+              style={{ 
+                color: '#FFD700',
+                textShadow: `
+                  0 0 20px rgba(255,215,0,0.5),
+                  0 0 40px rgba(255,215,0,0.3),
+                  0 0 60px rgba(255,215,0,0.2),
+                  0 4px 0 #B8860B,
+                  0 5px 0 #8B6914
+                `,
+                letterSpacing: '0.05em',
+              }}
+            >
+              TYPE
+            </h1>
+            <h1
+              className="font-serif text-6xl md:text-8xl font-bold tracking-wide -mt-2"
+              style={{ 
+                color: '#E2E8F0',
+                textShadow: `
+                  0 0 20px rgba(226,232,240,0.3),
+                  0 0 40px rgba(226,232,240,0.1),
+                  0 4px 0 #94A3B8,
+                  0 5px 0 #64748B
+                `,
+                letterSpacing: '0.05em',
+              }}
+            >
+              QUEST
+            </h1>
+          </div>
+
+          {/* Subtitle ornament */}
+          <div className="flex items-center gap-4 mt-2">
+            <div className="w-24 h-px bg-gradient-to-r from-transparent to-[#FFD700]/40" />
+            <span className="font-serif text-[#FFD700] text-xl">&#9674;</span>
+            <div className="w-24 h-px bg-gradient-to-l from-transparent to-[#FFD700]/40" />
+          </div>
+        </div>
+
+        {/* Video in ornate frame */}
+        <div className="relative w-full max-w-2xl">
+          {/* Ornate frame corners */}
+          <div className="absolute -top-2 -left-2 w-8 h-8 border-l-2 border-t-2 border-[#FFD700] rounded-tl" />
+          <div className="absolute -top-2 -right-2 w-8 h-8 border-r-2 border-t-2 border-[#FFD700] rounded-tr" />
+          <div className="absolute -bottom-2 -left-2 w-8 h-8 border-l-2 border-b-2 border-[#FFD700] rounded-bl" />
+          <div className="absolute -bottom-2 -right-2 w-8 h-8 border-r-2 border-b-2 border-[#FFD700] rounded-br" />
+          
+          <div 
+            className="rounded-lg overflow-hidden border border-[#2A2A40]"
+            style={{ 
+              boxShadow: `
+                0 0 30px rgba(255,215,0,0.15),
+                inset 0 0 30px rgba(0,0,0,0.5)
+              `,
+            }}
           >
-            Type
-          </h1>
-          <h1
-            className="font-serif text-5xl md:text-7xl font-bold text-balance"
-            style={{ color: '#E2E8F0' }}
-          >
-            Quest
-          </h1>
+            <video
+              src="/videos/typequest.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-auto"
+            />
+          </div>
         </div>
 
-        {/* Video */}
-        <div className="w-full max-w-xl rounded-xl overflow-hidden border border-[#2A2A40]"
-          style={{ boxShadow: '0 0 40px rgba(255,215,0,0.08)' }}
-        >
-          <video
-            src="/videos/typequest.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-auto"
-          />
-        </div>
+        {/* Character showcase with epic presentation */}
+        <div className="relative w-full max-w-4xl mt-4">
+          {/* Section header */}
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#2A2A40] to-[#2A2A40]" />
+            <p className="font-serif text-sm tracking-[0.3em] uppercase text-[#64748B]">
+              Choose Your Path
+            </p>
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#2A2A40] to-[#2A2A40]" />
+          </div>
 
-        {/* Divider */}
-        <div className="flex items-center gap-4 w-full max-w-xs">
-          <div className="flex-1 h-px bg-[#2A2A40]" />
-          <span className="font-serif text-[#FFD700] text-lg">&#10022;</span>
-          <div className="flex-1 h-px bg-[#2A2A40]" />
-        </div>
-
-        {/* Character showcase */}
-        <div className="relative w-full max-w-3xl">
           {/* Characters */}
-          <div className="flex justify-center items-end gap-2 md:gap-4">
+          <div className="flex justify-center items-end gap-4 md:gap-8">
             {characterOrder.map((key, i) => {
               const t = TEMPERAMENTS[key]
               const isHovered = hoveredChar === key
@@ -93,22 +187,33 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                     animationDelay: `${i * 150}ms`,
                   }}
                 >
-                  {/* Glow effect behind character */}
+                  {/* Platform/pedestal glow */}
                   <div
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full blur-2xl transition-opacity duration-300"
+                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-28 h-8 rounded-full blur-xl transition-all duration-500"
                     style={{
                       backgroundColor: t.colorHex,
-                      opacity: isHovered ? 0.6 : 0.2,
+                      opacity: isHovered ? 0.7 : 0.2,
+                      transform: isHovered ? 'scale(1.3)' : 'scale(1)',
                     }}
                   />
                   
+                  {/* Vertical light beam on hover */}
+                  {isHovered && (
+                    <div
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-40 pointer-events-none"
+                      style={{
+                        background: `linear-gradient(to top, ${t.colorHex}60, transparent)`,
+                      }}
+                    />
+                  )}
+                  
                   {/* Character image */}
                   <div
-                    className="relative transition-all duration-300"
+                    className="relative transition-all duration-500"
                     style={{
-                      transform: isHovered ? 'translateY(-8px) scale(1.05)' : 'translateY(0) scale(1)',
-                      width: '120px',
-                      height: '160px',
+                      transform: isHovered ? 'translateY(-12px) scale(1.1)' : 'translateY(0) scale(1)',
+                      width: '140px',
+                      height: '180px',
                     }}
                   >
                     <Image
@@ -116,27 +221,34 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                       alt={t.title}
                       fill
                       loading="eager"
-                      className="object-contain drop-shadow-lg"
+                      className="object-contain"
                       style={{
-                        filter: isHovered ? `drop-shadow(0 0 20px ${t.colorHex}80)` : 'none',
+                        filter: isHovered 
+                          ? `drop-shadow(0 0 25px ${t.colorHex}) drop-shadow(0 0 50px ${t.colorHex}60)` 
+                          : `drop-shadow(0 0 10px ${t.colorHex}40)`,
                       }}
                     />
                   </div>
                   
-                  {/* Character label */}
+                  {/* Character nameplate */}
                   <div
-                    className="mt-2 flex flex-col items-center transition-all duration-300"
+                    className="mt-3 px-4 py-2 rounded border transition-all duration-300"
                     style={{
-                      opacity: isHovered ? 1 : 0.7,
+                      backgroundColor: isHovered ? `${t.colorHex}15` : 'rgba(13,13,15,0.8)',
+                      borderColor: isHovered ? t.colorHex : '#2A2A40',
+                      boxShadow: isHovered ? `0 0 20px ${t.colorHex}30` : 'none',
                     }}
                   >
                     <p
-                      className="font-serif text-xs md:text-sm font-bold tracking-wide"
-                      style={{ color: t.colorHex }}
+                      className="font-serif text-xs md:text-sm font-bold tracking-wider"
+                      style={{ 
+                        color: t.colorHex,
+                        textShadow: isHovered ? `0 0 10px ${t.colorHex}` : 'none',
+                      }}
                     >
                       {t.title.toUpperCase()}
                     </p>
-                    <p className="font-sans text-[10px] md:text-xs text-[#64748B]">
+                    <p className="font-sans text-[10px] md:text-xs text-[#64748B] mt-0.5">
                       {t.name}
                     </p>
                   </div>
@@ -148,18 +260,21 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
           {/* Hover tooltip */}
           {hoveredChar && (
             <div
-              className="absolute left-1/2 -translate-x-1/2 bottom-full mb-4 px-4 py-2 rounded-lg border text-center max-w-xs pointer-events-none"
+              className="absolute left-1/2 -translate-x-1/2 -bottom-24 px-6 py-3 rounded-lg border text-center max-w-sm pointer-events-none"
               style={{
-                backgroundColor: 'rgba(26, 26, 46, 0.95)',
-                borderColor: TEMPERAMENTS[hoveredChar].colorHex + '40',
-                boxShadow: `0 0 20px ${TEMPERAMENTS[hoveredChar].colorHex}20`,
+                backgroundColor: 'rgba(13, 13, 15, 0.95)',
+                borderColor: TEMPERAMENTS[hoveredChar].colorHex + '60',
+                boxShadow: `
+                  0 0 30px ${TEMPERAMENTS[hoveredChar].colorHex}20,
+                  inset 0 0 20px ${TEMPERAMENTS[hoveredChar].colorHex}10
+                `,
               }}
             >
-              <p className="font-sans text-xs text-[#94A3B8] leading-relaxed">
+              <p className="font-serif text-sm text-[#E2E8F0]">
                 {TEMPERAMENTS[hoveredChar].rpgClass}
               </p>
               <p
-                className="font-serif text-xs mt-1"
+                className="font-sans text-xs mt-1"
                 style={{ color: TEMPERAMENTS[hoveredChar].colorHex }}
               >
                 The Language of {TEMPERAMENTS[hoveredChar].language}
@@ -168,38 +283,65 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
           )}
         </div>
 
-        {/* Lore */}
-        <p className="font-sans text-[#64748B] text-base leading-relaxed max-w-md text-pretty">
-          Every hero carries a nature forged before the quest begins.{' '}
-          <span className="text-[#E2E8F0]">40 questions. 4 temperaments. No paywall.</span>{' '}
-          Discover the character class you were born to play.
-        </p>
+        {/* Lore text */}
+        <div className="mt-8 max-w-lg">
+          <p className="font-serif text-[#94A3B8] text-base leading-relaxed italic text-pretty">
+            &ldquo;Every hero carries a nature forged before the quest begins...&rdquo;
+          </p>
+          <p className="font-sans text-[#64748B] text-sm mt-3">
+            <span className="text-[#E2E8F0]">40 questions</span> &bull; 
+            <span className="text-[#E2E8F0]"> 4 temperaments</span> &bull; 
+            <span className="text-[#E2E8F0]"> No paywall</span>
+          </p>
+        </div>
 
-        {/* CTA */}
+        {/* Epic CTA Button */}
         <button
           onClick={onBegin}
-          className="group relative font-serif text-base font-bold tracking-widest uppercase px-10 py-4 rounded-lg border-2 transition-all duration-300 cursor-pointer"
+          className="group relative font-serif text-lg font-bold tracking-[0.2em] uppercase px-12 py-5 rounded-lg transition-all duration-300 cursor-pointer overflow-hidden"
           style={{
-            borderColor: '#FFD700',
+            background: 'linear-gradient(180deg, #FFD700 0%, #B8860B 100%)',
             color: '#0D0D0F',
-            backgroundColor: '#FFD700',
+            boxShadow: `
+              0 0 30px rgba(255,215,0,0.3),
+              0 4px 0 #8B6914,
+              inset 0 1px 0 rgba(255,255,255,0.3)
+            `,
+            border: '2px solid #FFD700',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent'
-            e.currentTarget.style.color = '#FFD700'
-            e.currentTarget.style.boxShadow = '0 0 30px rgba(255,215,0,0.4)'
+            e.currentTarget.style.background = 'linear-gradient(180deg, #FFE44D 0%, #FFD700 100%)'
+            e.currentTarget.style.boxShadow = `
+              0 0 50px rgba(255,215,0,0.5),
+              0 0 100px rgba(255,215,0,0.3),
+              0 4px 0 #B8860B,
+              inset 0 1px 0 rgba(255,255,255,0.4)
+            `
+            e.currentTarget.style.transform = 'translateY(-2px)'
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = '#FFD700'
-            e.currentTarget.style.color = '#0D0D0F'
-            e.currentTarget.style.boxShadow = 'none'
+            e.currentTarget.style.background = 'linear-gradient(180deg, #FFD700 0%, #B8860B 100%)'
+            e.currentTarget.style.boxShadow = `
+              0 0 30px rgba(255,215,0,0.3),
+              0 4px 0 #8B6914,
+              inset 0 1px 0 rgba(255,255,255,0.3)
+            `
+            e.currentTarget.style.transform = 'translateY(0)'
           }}
         >
-          Begin Your Quest
+          <span className="relative z-10">Begin Your Quest</span>
+          {/* Button shine effect */}
+          <div 
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
+              transform: 'skewX(-20deg)',
+            }}
+          />
         </button>
 
-        <p className="font-sans text-[#64748B] text-xs">
-          ~20 minutes &bull; 40 questions &bull; Free forever
+        <p className="font-sans text-[#64748B] text-xs tracking-wide">
+          ~20 minutes &bull; Free forever
         </p>
       </div>
     </main>
