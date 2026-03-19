@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import RuneBackground from './RuneBackground'
+import { useEffect, useState, useRef } from 'react'
 
 interface LoadingScreenProps {
   heroName: string
@@ -20,16 +19,23 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
   const [messageIndex, setMessageIndex] = useState(0)
   const [progress, setProgress] = useState(0)
   const [runeVisible, setRuneVisible] = useState(true)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    // Cycle through oracle messages
+    const video = videoRef.current
+    if (!video) return
+    video.muted = true
+    video.loop = true
+    video.play().catch(() => {})
+  }, [])
+
+  useEffect(() => {
     const msgInterval = setInterval(() => {
       setMessageIndex((prev) => (prev + 1) % ORACLE_MESSAGES.length)
     }, 700)
 
-    // Animate progress bar over 3 seconds
     const startTime = Date.now()
-    const duration = 3000
+    const duration = 3500
     const progressInterval = setInterval(() => {
       const elapsed = Date.now() - startTime
       const pct = Math.min((elapsed / duration) * 100, 100)
@@ -41,7 +47,6 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
       }
     }, 30)
 
-    // Rune pulsing
     const runeInterval = setInterval(() => {
       setRuneVisible((v) => !v)
     }, 500)
@@ -55,26 +60,45 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
 
   return (
     <main
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 gap-10"
+      className="relative min-h-screen flex flex-col items-center justify-center px-4 gap-10 overflow-hidden"
       style={{ background: '#0D0D0F' }}
     >
-      <RuneBackground />
+      {/* Video background */}
+      <video
+        ref={videoRef}
+        src="/videos/loading.mp4"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ minWidth: '100%', minHeight: '100%' }}
+        playsInline
+        muted
+        loop
+      />
+      {/* Dark overlay */}
+      <div className="absolute inset-0" style={{ backgroundColor: 'rgba(13,13,15,0.75)' }} />
+      {/* Vignette */}
+      <div
+        className="absolute inset-0"
+        style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.5) 100%)' }}
+      />
 
       <div className="relative z-10 flex flex-col items-center gap-8 w-full max-w-sm text-center">
         {/* Spinning rune circle */}
         <div className="relative w-28 h-28">
           <div
             className="absolute inset-0 rounded-full border-2"
-            style={{
-              borderColor: '#FFD70030',
-            }}
+            style={{ borderColor: '#FFD70030' }}
+          />
+          <div
+            className="absolute inset-2 rounded-full border"
+            style={{ borderColor: '#FFD70015' }}
           />
           <div
             className="absolute inset-0 rounded-full border-t-2"
-            style={{
-              borderColor: '#FFD700',
-              animation: 'spin 1.5s linear infinite',
-            }}
+            style={{ borderColor: '#FFD700', animation: 'spin 1.5s linear infinite' }}
+          />
+          <div
+            className="absolute inset-3 rounded-full border-b"
+            style={{ borderColor: '#FFD70060', animation: 'spinReverse 3s linear infinite' }}
           />
           <div
             className="absolute inset-0 flex items-center justify-center font-serif text-4xl"
@@ -106,10 +130,7 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
 
         {/* Progress bar */}
         <div className="w-full flex flex-col gap-2">
-          <div
-            className="w-full h-2 rounded-full overflow-hidden"
-            style={{ backgroundColor: '#1A1A2E' }}
-          >
+          <div className="w-full h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#1A1A2E' }}>
             <div
               className="h-full rounded-full transition-all duration-100"
               style={{
@@ -119,17 +140,13 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
               }}
             />
           </div>
-          <p className="font-sans text-xs text-[#64748B]">
-            Calculating your destiny...
-          </p>
+          <p className="font-sans text-xs text-[#64748B]">Calculating your destiny...</p>
         </div>
       </div>
 
       <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
       `}</style>
     </main>
   )

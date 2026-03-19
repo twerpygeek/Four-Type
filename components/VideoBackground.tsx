@@ -28,12 +28,13 @@ export default function VideoBackground({ questionNumber = 20, overlayOpacity = 
   const progressOverlay = Math.min(overlayOpacity + (questionNumber - 1) / 40 * 0.3, 0.7)
 
   return (
-    <div className="fixed inset-0 w-full h-full overflow-hidden bg-background z-0 pointer-events-none">
-      {/* Video element */}
+    <div className="fixed inset-0 w-full h-full overflow-hidden bg-[#0D0D0F] z-0 pointer-events-none">
+      {/* Video element — object-cover ensures full coverage on all screen sizes */}
       <video
         ref={videoRef}
         src="/videos/test-journey.mp4"
         className="absolute inset-0 w-full h-full object-cover"
+        style={{ minWidth: '100%', minHeight: '100%' }}
         playsInline
         muted
         loop

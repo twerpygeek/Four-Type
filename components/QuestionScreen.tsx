@@ -180,16 +180,13 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
 
   return (
     <main
-      className="relative min-h-screen flex flex-col items-start justify-start px-4 pt-6 pb-10 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center px-3 sm:px-4 py-4 sm:py-6 pb-16 overflow-hidden"
       style={{ background: '#0D0D0F' }}
     >
-      <VideoBackground questionNumber={questionNumber} overlayOpacity={0.35} />
+      <VideoBackground questionNumber={questionNumber} overlayOpacity={0.45} />
 
       {/* Spark particle canvas */}
-      <canvas
-        ref={sparkCanvasRef}
-        className="fixed inset-0 pointer-events-none z-50"
-      />
+      <canvas ref={sparkCanvasRef} className="fixed inset-0 pointer-events-none z-50" />
 
       {/* Chapter transition overlay */}
       {chapterTransition && (
@@ -201,12 +198,10 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
             animation: 'fadeIn 0.3s ease',
           }}
         >
-          <div className="text-center">
-            <p className="font-serif text-xs tracking-[0.5em] uppercase text-[#64748B] mb-2">
-              Entering
-            </p>
+          <div className="text-center px-6">
+            <p className="font-serif text-xs tracking-[0.5em] uppercase text-[#64748B] mb-2">Entering</p>
             <h2
-              className="font-serif text-4xl md:text-5xl font-black text-[#FFD700]"
+              className="font-serif text-3xl md:text-5xl font-black text-[#FFD700]"
               style={{
                 textShadow: '0 0 40px rgba(255,215,0,0.5)',
                 animation: 'pulseGlow 1.5s ease infinite',
@@ -221,7 +216,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
       {/* Level up toast */}
       {levelMsg && (
         <div
-          className="fixed top-4 left-1/2 -translate-x-1/2 z-50 font-serif text-sm px-6 py-3 rounded-lg border-2 text-center"
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-50 font-serif text-sm px-5 py-3 rounded-lg border-2 text-center whitespace-nowrap"
           style={{
             backgroundColor: '#1A1A2E',
             borderColor: '#FFD700',
@@ -234,169 +229,171 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
         </div>
       )}
 
-      <div className="relative z-10 w-full max-w-xl mx-auto flex flex-col gap-6">
+      <div className="relative z-10 w-full max-w-xl mx-auto flex flex-col gap-4">
         {/* Progress bar */}
         <XPProgressBar current={questionNumber} total={QUESTIONS.length} heroName={heroName} />
 
         {/* Section label */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 px-1">
           <div
-            className="w-2 h-2 rounded-full animate-pulse"
-            style={{
-              backgroundColor: '#FFD700',
-              boxShadow: '0 0 8px #FFD700',
-            }}
+            className="w-1.5 h-1.5 rounded-full animate-pulse"
+            style={{ backgroundColor: '#FFD700', boxShadow: '0 0 8px #FFD700' }}
           />
-          <span className="font-serif text-[10px] tracking-[0.3em] uppercase text-[#64748B]">
-            Section {currentQ.section}: {currentQ.sectionLabel}
+          <span className="font-serif text-[9px] tracking-[0.3em] uppercase text-[#64748B]">
+            {currentQ.sectionLabel}
           </span>
         </div>
 
-        {/* Stone Tablet Quest Card */}
+        {/* === GAME CARD === */}
         <div
-          className="relative rounded-2xl p-6 flex flex-col gap-5 transition-all duration-300"
+          className="relative rounded-2xl overflow-hidden flex flex-col"
           style={{
-            background: 'rgba(26, 26, 46, 0.85)',
-            borderImage: 'linear-gradient(135deg, #FFD700 0%, transparent 30%, transparent 70%, #FFD700 100%) 1',
-            borderWidth: '1.5px',
-            borderStyle: 'solid',
-            boxShadow: '0 0 40px rgba(255,200,0,0.08), inset 0 0 60px rgba(0,0,0,0.4)',
+            background: 'linear-gradient(160deg, #1a1a2e 0%, #12121e 100%)',
+            border: '1px solid rgba(255,215,0,0.25)',
+            boxShadow: '0 0 0 1px rgba(255,215,0,0.08), 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)',
             opacity: cardVisible ? 1 : 0,
-            transform: cardVisible ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
+            transform: cardVisible ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.98)',
+            transition: 'opacity 0.25s ease-out, transform 0.25s ease-out',
           }}
         >
-          {/* Noise texture overlay */}
+          {/* Top header bar */}
           <div
-            className="absolute inset-0 rounded-2xl opacity-30 pointer-events-none"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-              backgroundSize: '100px 100px',
-              mixBlendMode: 'overlay',
-            }}
-          />
-
-          {/* Quest number badge */}
-          <div className="relative flex items-center justify-between">
-            <span
-              className="font-serif text-xs font-bold tracking-[0.2em] uppercase px-3 py-1.5 rounded-lg"
+            className="flex items-center justify-between px-4 py-3 border-b"
+            style={{ borderColor: 'rgba(255,215,0,0.15)', background: 'rgba(255,215,0,0.04)' }}
+          >
+            {/* Quest badge */}
+            <div
+              className="flex items-center gap-2 px-3 py-1 rounded-full"
               style={{
-                background: 'linear-gradient(135deg, rgba(255,215,0,0.15) 0%, rgba(255,215,0,0.05) 100%)',
-                border: '1px solid rgba(255,215,0,0.3)',
-                color: '#FFD700',
+                background: 'linear-gradient(135deg, rgba(255,215,0,0.18) 0%, rgba(255,215,0,0.06) 100%)',
+                border: '1px solid rgba(255,215,0,0.35)',
               }}
             >
-              Quest {questionNumber}
-            </span>
-            <span className="font-sans text-xs text-[#64748B]">
-              {questionNumber} / {QUESTIONS.length}
-            </span>
+              {/* Small sword icon */}
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M1 9L9 1M9 1H5M9 1V5" stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="font-serif text-[11px] font-bold tracking-[0.15em] uppercase text-[#FFD700]">
+                Quest {questionNumber}
+              </span>
+            </div>
+
+            {/* Progress counter */}
+            <div className="flex items-center gap-1.5">
+              <span className="font-mono text-xs text-[#E2E8F0] font-bold">{questionNumber}</span>
+              <span className="font-mono text-[10px] text-[#2A2A40]">/</span>
+              <span className="font-mono text-[10px] text-[#64748B]">{QUESTIONS.length}</span>
+            </div>
           </div>
 
-          {/* Instruction */}
-          <div className="relative flex flex-col gap-2">
+          {/* Body */}
+          <div className="flex flex-col gap-4 p-4 sm:p-5">
+            {/* Instruction */}
             <p
-              className="text-xs text-[#94A3B8] italic leading-relaxed"
+              className="text-xs text-[#64748B] italic leading-relaxed"
               style={{ fontFamily: "'Crimson Text', serif" }}
             >
               {currentQ.instruction}
             </p>
+
+            {/* Question text (if any) */}
             {currentQ.text && (
               <p
-                className="font-serif text-base text-[#E2E8F0] font-medium leading-relaxed tracking-wide"
-                style={{ letterSpacing: '0.02em' }}
+                className="font-serif text-base sm:text-lg text-[#E2E8F0] font-semibold leading-snug"
+                style={{ letterSpacing: '0.01em' }}
               >
                 {currentQ.text}
               </p>
             )}
-          </div>
 
-          {/* Divider */}
-          <div
-            className="h-px w-full"
-            style={{
-              background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent)',
-            }}
-          />
+            {/* Divider */}
+            <div
+              className="h-px w-full"
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent)' }}
+            />
 
-          {/* Answer options */}
-          <div className="relative flex flex-col gap-3">
-            {currentQ.answers.map((answer) => {
-              const isSelected = selected === answer.letter
-              const letterColor = isSelected ? selectedColor : neutralColor
-
-              return (
-                <button
-                  key={answer.letter}
-                  id={`answer-${answer.letter}`}
-                  onClick={(e) => handleSelect(answer.letter, e)}
-                  disabled={!!selected}
-                  className="group w-full flex items-start gap-4 px-4 py-3.5 rounded-xl text-left transition-all duration-200 cursor-pointer disabled:cursor-default relative overflow-hidden"
-                  style={{
-                    background: isSelected
-                      ? `linear-gradient(90deg, ${selectedColor}20 0%, transparent 100%)`
-                      : 'transparent',
-                    borderLeft: `3px solid ${isSelected ? selectedColor : 'rgba(42, 42, 64, 0.5)'}`,
-                    boxShadow: isSelected ? `0 0 20px ${selectedColor}30, inset 0 0 30px ${selectedColor}10` : 'none',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (selected) return
-                    e.currentTarget.style.borderLeftColor = '#E2E8F0'
-                    e.currentTarget.style.background = 'linear-gradient(90deg, rgba(226, 232, 240, 0.08) 0%, transparent 100%)'
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selected) return
-                    e.currentTarget.style.borderLeftColor = 'rgba(42, 42, 64, 0.5)'
-                    e.currentTarget.style.background = 'transparent'
-                  }}
-                >
-                  {/* Rune seal letter badge */}
-                  <div
-                    className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-serif text-sm font-bold transition-all duration-200 mt-0.5 relative"
+            {/* Answer options */}
+            <div className="flex flex-col gap-2">
+              {currentQ.answers.map((answer) => {
+                const isSelected = selected === answer.letter
+                return (
+                  <button
+                    key={answer.letter}
+                    id={`answer-${answer.letter}`}
+                    onClick={(e) => handleSelect(answer.letter, e)}
+                    disabled={!!selected}
+                    className="group w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-left transition-all duration-200 cursor-pointer disabled:cursor-default relative overflow-hidden"
                     style={{
                       background: isSelected
-                        ? `radial-gradient(circle, ${selectedColor} 0%, ${selectedColor}80 100%)`
-                        : 'rgba(42, 42, 64, 0.5)',
-                      color: isSelected ? '#0D0D0F' : '#E2E8F0',
-                      boxShadow: isSelected ? `0 0 15px ${selectedColor}60` : 'none',
-                      border: `1px solid ${isSelected ? selectedColor : 'rgba(148, 163, 184, 0.3)'}`,
+                        ? 'linear-gradient(90deg, rgba(255,215,0,0.15) 0%, rgba(255,215,0,0.04) 100%)'
+                        : 'rgba(255,255,255,0.03)',
+                      border: `1px solid ${isSelected ? 'rgba(255,215,0,0.5)' : 'rgba(255,255,255,0.07)'}`,
+                      boxShadow: isSelected ? '0 0 20px rgba(255,215,0,0.15), inset 0 0 20px rgba(255,215,0,0.05)' : 'none',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (selected) return
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.07)'
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'
+                    }}
+                    onMouseLeave={(e) => {
+                      if (selected) return
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.03)'
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
                     }}
                   >
-                    {/* Inner glow ring */}
+                    {/* Letter badge */}
+                    <div
+                      className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center font-serif text-sm font-bold transition-all duration-200 relative"
+                      style={{
+                        background: isSelected
+                          ? 'linear-gradient(135deg, #FFD700 0%, #B8860B 100%)'
+                          : 'rgba(255,255,255,0.06)',
+                        color: isSelected ? '#0D0D0F' : '#94A3B8',
+                        boxShadow: isSelected ? '0 0 15px rgba(255,215,0,0.5)' : 'none',
+                        border: isSelected ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                      }}
+                    >
+                      {answer.letter}
+                    </div>
+                    {/* Answer text */}
+                    <p
+                      className="text-sm sm:text-base leading-snug flex-1"
+                      style={{
+                        color: isSelected ? '#F1F5F9' : '#CBD5E1',
+                        fontFamily: "'Crimson Text', serif",
+                        fontWeight: isSelected ? 600 : 400,
+                      }}
+                    >
+                      {answer.text}
+                    </p>
+                    {/* Check mark on selected */}
                     {isSelected && (
-                      <div
-                        className="absolute inset-0.5 rounded-md border opacity-50"
-                        style={{ borderColor: selectedColor }}
-                      />
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0">
+                        <circle cx="8" cy="8" r="7" fill="rgba(255,215,0,0.2)" stroke="#FFD700" strokeWidth="1"/>
+                        <path d="M5 8L7 10L11 6" stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
                     )}
-                    {answer.letter}
-                  </div>
-                  <p
-                    className="text-base leading-relaxed transition-colors duration-200"
-                    style={{
-                      color: isSelected ? '#E2E8F0' : '#E2E8F0',
-                      fontFamily: "'Crimson Text', serif",
-                    }}
-                  >
-                    {answer.text}
-                  </p>
-                </button>
-              )
-            })}
+                  </button>
+                )
+              })}
+            </div>
           </div>
+
+          {/* Bottom glow accent */}
+          <div
+            className="h-px w-full"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.15), transparent)' }}
+          />
         </div>
 
         {/* Keyboard hint */}
-        <p className="font-sans text-center text-[10px] text-[#2A2A40]">
+        <p className="font-sans text-center text-[10px] text-[#2A2A40] pb-2">
           Press A, B, C, or D to answer quickly
         </p>
       </div>
 
       <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideDown {
           from { opacity: 0; transform: translate(-50%, -20px); }
           to { opacity: 1; transform: translate(-50%, 0); }

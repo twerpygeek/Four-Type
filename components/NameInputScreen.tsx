@@ -42,14 +42,12 @@ export default function NameInputScreen({ onStart }: NameInputScreenProps) {
           {characterOrder.map((key) => {
             const t = TEMPERAMENTS[key]
             return (
-              <div key={key} className="relative overflow-hidden" style={{ width: '40px', height: '60px' }}>
+              <div key={key} className="relative" style={{ width: '40px', height: '60px' }}>
                 <Image
                   src={t.characterImage}
                   alt={t.title}
-                  width={800}
-                  height={200}
-                  className={`h-24 object-contain opacity-30 grayscale ${t.characterOffset}`}
-                  style={{ width: '100%' }}
+                  fill
+                  className="object-contain opacity-30 grayscale"
                 />
                 <div
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full blur-xl opacity-20"

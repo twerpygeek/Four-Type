@@ -105,14 +105,14 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                   <Image
                     src={t.characterImage}
                     alt={t.title}
-                    width={200}
-                    height={240}
+                    width={160}
+                    height={160}
                     loading="eager"
                     className="object-contain"
                     style={{
                       filter: `drop-shadow(0 0 20px ${t.colorHex}60)`,
                       width: 'auto',
-                      height: '160px',
+                      height: '140px',
                     }}
                   />
                 </div>

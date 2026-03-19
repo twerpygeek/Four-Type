@@ -31,7 +31,7 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
 
   return (
     <main
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 py-16 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 md:py-16 overflow-hidden"
       style={{ 
         background: 'radial-gradient(ellipse at center top, #1a1a2e 0%, #0D0D0F 50%, #000000 100%)',
       }}
@@ -73,15 +73,15 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
         <div className="flex flex-col items-center gap-3">
           {/* Decorative top element */}
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#FFD700]/50 to-transparent" />
+            <div className="w-10 md:w-16 h-px bg-gradient-to-r from-transparent via-[#FFD700]/50 to-transparent" />
             <svg width="20" height="20" viewBox="0 0 20 20" className="text-[#FFD700]">
               <path fill="currentColor" d="M10 0L12 8L20 10L12 12L10 20L8 12L0 10L8 8L10 0Z" />
             </svg>
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#FFD700]/50 to-transparent" />
+            <div className="w-10 md:w-16 h-px bg-gradient-to-r from-transparent via-[#FFD700]/50 to-transparent" />
           </div>
 
           <p 
-            className="font-serif text-xs tracking-[0.5em] uppercase"
+            className="font-serif text-[10px] md:text-xs tracking-[0.4em] uppercase"
             style={{ 
               color: '#B8860B',
               textShadow: '0 0 10px rgba(255,215,0,0.3)',
@@ -93,7 +93,7 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
           {/* Main Title with epic styling */}
           <div className="relative">
             <h1
-              className="font-serif text-6xl md:text-8xl font-bold tracking-wide"
+              className="font-serif text-5xl md:text-8xl font-bold tracking-wide"
               style={{ 
                 color: '#FFD700',
                 textShadow: `
@@ -109,7 +109,7 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
               TYPE
             </h1>
             <h1
-              className="font-serif text-6xl md:text-8xl font-bold tracking-wide -mt-2"
+              className="font-serif text-5xl md:text-8xl font-bold tracking-wide -mt-2"
               style={{ 
                 color: '#E2E8F0',
                 textShadow: `
@@ -127,9 +127,9 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
 
           {/* Subtitle ornament */}
           <div className="flex items-center gap-4 mt-2">
-            <div className="w-24 h-px bg-gradient-to-r from-transparent to-[#FFD700]/40" />
+            <div className="w-16 md:w-24 h-px bg-gradient-to-r from-transparent to-[#FFD700]/40" />
             <span className="font-serif text-[#FFD700] text-xl">&#9674;</span>
-            <div className="w-24 h-px bg-gradient-to-l from-transparent to-[#FFD700]/40" />
+            <div className="w-16 md:w-24 h-px bg-gradient-to-l from-transparent to-[#FFD700]/40" />
           </div>
         </div>
 
@@ -172,8 +172,8 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
             <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#2A2A40] to-[#2A2A40]" />
           </div>
 
-          {/* Characters */}
-          <div className="flex justify-center items-end gap-4 md:gap-8">
+          {/* Characters — 2x2 grid on mobile, row on desktop */}
+          <div className="grid grid-cols-2 md:flex md:flex-row justify-center items-end gap-4 md:gap-8 w-full">
             {characterOrder.map((key, i) => {
               const t = TEMPERAMENTS[key]
               const isHovered = hoveredChar === key
@@ -183,37 +183,31 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                   className="relative flex flex-col items-center group cursor-pointer"
                   onMouseEnter={() => setHoveredChar(key)}
                   onMouseLeave={() => setHoveredChar(null)}
-                  style={{
-                    animationDelay: `${i * 150}ms`,
-                  }}
+                  style={{ animationDelay: `${i * 150}ms` }}
                 >
-                  {/* Platform/pedestal glow */}
+                  {/* Platform glow */}
                   <div
-                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-28 h-8 rounded-full blur-xl transition-all duration-500"
+                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-6 rounded-full blur-xl transition-all duration-500"
                     style={{
                       backgroundColor: t.colorHex,
                       opacity: isHovered ? 0.7 : 0.2,
                       transform: isHovered ? 'scale(1.3)' : 'scale(1)',
                     }}
                   />
-                  
                   {/* Vertical light beam on hover */}
                   {isHovered && (
                     <div
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-40 pointer-events-none"
-                      style={{
-                        background: `linear-gradient(to top, ${t.colorHex}60, transparent)`,
-                      }}
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-32 pointer-events-none"
+                      style={{ background: `linear-gradient(to top, ${t.colorHex}60, transparent)` }}
                     />
                   )}
-                  
                   {/* Character image */}
                   <div
                     className="relative transition-all duration-500"
                     style={{
                       transform: isHovered ? 'translateY(-12px) scale(1.1)' : 'translateY(0) scale(1)',
-                      width: '140px',
-                      height: '180px',
+                      width: '100px',
+                      height: '130px',
                     }}
                   >
                     <Image
@@ -223,16 +217,15 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                       loading="eager"
                       className="object-contain"
                       style={{
-                        filter: isHovered 
-                          ? `drop-shadow(0 0 25px ${t.colorHex}) drop-shadow(0 0 50px ${t.colorHex}60)` 
+                        filter: isHovered
+                          ? `drop-shadow(0 0 25px ${t.colorHex}) drop-shadow(0 0 50px ${t.colorHex}60)`
                           : `drop-shadow(0 0 10px ${t.colorHex}40)`,
                       }}
                     />
                   </div>
-                  
-                  {/* Character nameplate */}
+                  {/* Nameplate */}
                   <div
-                    className="mt-3 px-4 py-2 rounded border transition-all duration-300"
+                    className="mt-3 px-3 py-1.5 rounded border transition-all duration-300 w-full text-center"
                     style={{
                       backgroundColor: isHovered ? `${t.colorHex}15` : 'rgba(13,13,15,0.8)',
                       borderColor: isHovered ? t.colorHex : '#2A2A40',
@@ -240,15 +233,15 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                     }}
                   >
                     <p
-                      className="font-serif text-xs md:text-sm font-bold tracking-wider"
-                      style={{ 
+                      className="font-serif text-[10px] md:text-sm font-bold tracking-wider"
+                      style={{
                         color: t.colorHex,
                         textShadow: isHovered ? `0 0 10px ${t.colorHex}` : 'none',
                       }}
                     >
                       {t.title.toUpperCase()}
                     </p>
-                    <p className="font-sans text-[10px] md:text-xs text-[#64748B] mt-0.5">
+                    <p className="font-sans text-[9px] md:text-xs text-[#64748B] mt-0.5">
                       {t.name}
                     </p>
                   </div>
