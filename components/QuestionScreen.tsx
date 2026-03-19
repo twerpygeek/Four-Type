@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { QUESTIONS, AnswerLetter, Question } from '@/lib/questions'
 import XPProgressBar from './XPProgressBar'
 import CinematicBackground from './CinematicBackground'
+import VideoBackground from './VideoBackground'
 
 interface QuestionScreenProps {
   heroName: string
@@ -182,10 +183,10 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
 
   return (
     <main
-      className="relative min-h-screen flex flex-col items-start justify-start px-4 pt-6 pb-10"
+      className="relative min-h-screen flex flex-col items-start justify-start px-4 pt-6 pb-10 overflow-hidden"
       style={{ background: '#0D0D0F' }}
     >
-      <CinematicBackground questionNumber={questionNumber} />
+      <VideoBackground questionNumber={questionNumber} overlayOpacity={0.35} />
 
       {/* Spark particle canvas */}
       <canvas

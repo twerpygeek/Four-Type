@@ -43,7 +43,7 @@ export const TEMPERAMENTS: Record<TemperamentKey, Temperament> = {
     bgClass: 'bg-[#FFD700]',
     textClass: 'text-[#FFD700]',
     characterImage: '/images/characters/all-characters.png',
-    characterOffset: 'translate-x-[25%]',
+    characterOffset: 'translate-x-[-25%]',
     lore: "You are the spark in every room — the one who makes strangers feel like old friends in minutes. The world is your stage and you play it well. You live in the moment, love deeply, and laugh loudly. Your greatest gift is the ability to see the best in people and make them feel seen.",
     coreNeed: 'To be liked. Approval is oxygen.',
     strengths: [
@@ -134,7 +134,7 @@ export const TEMPERAMENTS: Record<TemperamentKey, Temperament> = {
     bgClass: 'bg-[#4CC9F0]',
     textClass: 'text-[#4CC9F0]',
     characterImage: '/images/characters/all-characters.png',
-    characterOffset: 'translate-x-[-25%]',
+    characterOffset: 'translate-x-[-50%]',
     lore: "You see what others miss. The flaw in the plan. The pattern in the chaos. The standard that has not been met. You carry the weight of excellence — and it is a gift. Your depth is your power. You think before you speak, feel before you act, and rarely get it wrong when you do.",
     coreNeed: 'To be understood. Quality is non-negotiable.',
     strengths: [
@@ -179,7 +179,7 @@ export const TEMPERAMENTS: Record<TemperamentKey, Temperament> = {
     bgClass: 'bg-[#52B788]',
     textClass: 'text-[#52B788]',
     characterImage: '/images/characters/all-characters.png',
-    characterOffset: 'translate-x-[-50%]',
+    characterOffset: 'translate-x-[-75%]',
     lore: "You are the peace everyone else is searching for. When the room is on fire, you are the still water. You listen when no one else does. You hold space when others cannot. Your gift is harmony — you see all sides, honor all voices, and rarely take a step that was not worth taking.",
     coreNeed: 'Peace and respect. Conflict is physically painful.',
     strengths: [
