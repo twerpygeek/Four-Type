@@ -3,6 +3,8 @@
 import React, { useRef, useCallback, useState } from 'react'
 import Image from 'next/image'
 import { Temperament } from '@/lib/temperaments'
+import { TEMPERAMENTS } from '@/lib/temperaments'
+import { TemperamentKey } from '@/lib/scoringKey'
 
 interface ShareableCardProps {
   heroName: string
@@ -12,124 +14,264 @@ interface ShareableCardProps {
 
 export default function ShareableCard({ heroName, temperament, scores }: ShareableCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
+  const [isDownloading, setIsDownloading] = useState(false)
 
-  // Get top 3 traits from strengths
   const traits = temperament.strengths.slice(0, 3).map((s) => {
-    // Extract the main phrase (before em dash or semicolon)
     const match = s.match(/^([^—;]+)/)
     return match ? match[1].trim() : s.slice(0, 40)
   })
 
-  const [isDownloading, setIsDownloading] = useState(false)
-
   const handleDownload = useCallback(async () => {
-    if (!cardRef.current || isDownloading) return
+    if (isDownloading) return
     setIsDownloading(true)
 
     try {
-      // Dynamic import to avoid SSR issues
-      const html2canvas = (await import('html2canvas')).default
-      
-      // Wait a tick for images to load
-      await new Promise(resolve => setTimeout(resolve, 100))
-      
-      const canvas = await html2canvas(cardRef.current, {
-        backgroundColor: '#0D0D0F',
-        scale: 2,
-        logging: false,
-        useCORS: true,
-        allowTaint: true,
-        imageTimeout: 15000,
-        onclone: (clonedDoc) => {
-          // Ensure images in cloned document are loaded
-          const images = clonedDoc.querySelectorAll('img')
-          images.forEach((img) => {
-            img.crossOrigin = 'anonymous'
-          })
-        }
+      const { jsPDF } = await import('jspdf')
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+
+      const W = 210
+      const color = temperament.colorHex
+      const hexToRgb = (hex: string) => {
+        const r = parseInt(hex.slice(1, 3), 16)
+        const g = parseInt(hex.slice(3, 5), 16)
+        const b = parseInt(hex.slice(5, 7), 16)
+        return [r, g, b]
+      }
+      const [cr, cg, cb] = hexToRgb(color)
+
+      // ── Background ──────────────────────────────────────────────
+      doc.setFillColor(13, 13, 15)
+      doc.rect(0, 0, 210, 297, 'F')
+
+      // ── Header band ─────────────────────────────────────────────
+      doc.setFillColor(cr, cg, cb)
+      doc.rect(0, 0, 210, 38, 'F')
+
+      // Overlay dark tint on header
+      doc.setFillColor(0, 0, 0)
+      doc.setGState(doc.GState({ opacity: 0.45 }))
+      doc.rect(0, 0, 210, 38, 'F')
+      doc.setGState(doc.GState({ opacity: 1 }))
+
+      // Header text
+      doc.setTextColor(cr, cg, cb)
+      doc.setFontSize(22)
+      doc.setFont('helvetica', 'bold')
+      doc.text('TYPEQUEST', W / 2, 14, { align: 'center' })
+
+      doc.setTextColor(200, 200, 200)
+      doc.setFontSize(9)
+      doc.setFont('helvetica', 'normal')
+      doc.text('Temperament Assessment Report', W / 2, 21, { align: 'center' })
+
+      // Hero name + type
+      doc.setTextColor(255, 255, 255)
+      doc.setFontSize(11)
+      doc.setFont('helvetica', 'bold')
+      doc.text(`${heroName}  ·  ${temperament.title.toUpperCase()}  ·  ${temperament.name}`, W / 2, 31, { align: 'center' })
+
+      // ── Section helper ───────────────────────────────────────────
+      let y = 48
+      const section = (title: string) => {
+        doc.setFillColor(cr, cg, cb)
+        doc.setGState(doc.GState({ opacity: 0.15 }))
+        doc.rect(14, y - 4, W - 28, 8, 'F')
+        doc.setGState(doc.GState({ opacity: 1 }))
+        doc.setDrawColor(cr, cg, cb)
+        doc.setLineWidth(0.5)
+        doc.line(14, y + 4, W - 14, y + 4)
+        doc.setTextColor(cr, cg, cb)
+        doc.setFontSize(9)
+        doc.setFont('helvetica', 'bold')
+        doc.text(title.toUpperCase(), 16, y + 1)
+        y += 10
+      }
+
+      const body = (text: string, indent = 16) => {
+        doc.setTextColor(180, 190, 200)
+        doc.setFontSize(9)
+        doc.setFont('helvetica', 'normal')
+        const lines = doc.splitTextToSize(text, W - indent - 14)
+        doc.text(lines, indent, y)
+        y += lines.length * 5 + 2
+      }
+
+      const bullet = (text: string, bulletColor = [cr, cg, cb] as [number, number, number]) => {
+        doc.setFillColor(...bulletColor)
+        doc.circle(18, y - 1.5, 1, 'F')
+        doc.setTextColor(180, 190, 200)
+        doc.setFontSize(9)
+        doc.setFont('helvetica', 'normal')
+        const lines = doc.splitTextToSize(text, W - 36)
+        doc.text(lines, 22, y)
+        y += lines.length * 5 + 1
+      }
+
+      const gap = (extra = 4) => { y += extra }
+
+      // ── Identity ─────────────────────────────────────────────────
+      section('Identity')
+      body(`Archetype: ${temperament.archetype}`)
+      body(`RPG Class: ${temperament.rpgClass}`)
+      body(`Love Language: ${temperament.language}`)
+      body(`Core Need: ${temperament.coreNeed}`)
+      gap()
+
+      // ── Score Breakdown ───────────────────────────────────────────
+      section('Score Breakdown')
+      const total = Object.values(scores).reduce((a, b) => a + b, 0)
+      const barColors: Record<TemperamentKey, [number, number, number]> = {
+        Yellow: [255, 215, 0],
+        Red: [230, 57, 70],
+        Blue: [76, 201, 240],
+        Green: [82, 183, 136],
+      }
+      ;(Object.keys(scores) as TemperamentKey[]).forEach((key) => {
+        const pct = Math.round((scores[key] / total) * 100)
+        const t2 = TEMPERAMENTS[key]
+        const [br, bg2, bb] = barColors[key]
+        const barW = ((W - 60) * scores[key]) / total
+
+        doc.setTextColor(180, 190, 200)
+        doc.setFontSize(8)
+        doc.setFont('helvetica', key === temperament.key ? 'bold' : 'normal')
+        doc.text(`${t2.name} (${t2.title})`, 16, y)
+
+        doc.setFillColor(30, 30, 50)
+        doc.roundedRect(60, y - 4, W - 74, 5, 1, 1, 'F')
+        doc.setFillColor(br, bg2, bb)
+        if (barW > 0) doc.roundedRect(60, y - 4, barW, 5, 1, 1, 'F')
+
+        doc.setTextColor(br, bg2, bb)
+        doc.setFont('helvetica', 'bold')
+        doc.text(`${pct}%`, W - 12, y, { align: 'right' })
+
+        y += 8
       })
-      
-      // Convert to blob and download
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          console.error('Failed to create blob')
-          setIsDownloading(false)
-          return
-        }
-        const url = URL.createObjectURL(blob)
-        const link = document.createElement('a')
-        link.download = `typequest-${heroName.toLowerCase().replace(/\s+/g, '-')}.png`
-        link.href = url
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        URL.revokeObjectURL(url)
-        setIsDownloading(false)
-      }, 'image/png')
+      gap()
+
+      // ── Lore ──────────────────────────────────────────────────────
+      section('Class Lore')
+      body(`"${temperament.lore}"`)
+      gap()
+
+      // ── Deep Analysis ─────────────────────────────────────────────
+      section('Deep Analysis')
+      body(temperament.deeperAnalysis)
+      gap()
+
+      // ── Strengths ─────────────────────────────────────────────────
+      section('Strengths')
+      temperament.strengths.forEach((s) => bullet(s))
+      gap()
+
+      // Page 2 ──────────────────────────────────────────────────────
+      doc.addPage()
+      doc.setFillColor(13, 13, 15)
+      doc.rect(0, 0, 210, 297, 'F')
+      y = 20
+
+      // ── Shadow Side ───────────────────────────────────────────────
+      section('Shadow Side')
+      temperament.weaknesses.forEach((w) => bullet(w, [230, 57, 70]))
+      body(`Under stress: ${temperament.underStress}`)
+      gap()
+
+      // ── Behavioral Traits ─────────────────────────────────────────
+      section('Behavioral Traits')
+      temperament.behavioralTraits.forEach((b) => bullet(b))
+      gap()
+
+      // ── In Relationships ─────────────────────────────────────────
+      section('In Relationships')
+      body(temperament.inRelationships)
+      gap()
+
+      // ── At Work ───────────────────────────────────────────────────
+      section('At Work')
+      body(temperament.atWork)
+      gap()
+
+      // ── Communication Style ───────────────────────────────────────
+      section('Communication Style')
+      temperament.communication.forEach((c) => bullet(c))
+      body(`How to speak their language: ${temperament.speakTheir}`)
+      gap()
+
+      // ── Growth Areas ─────────────────────────────────────────────
+      section('Growth Areas')
+      temperament.growthAreas.forEach((g, i) => bullet(`${i + 1}. ${g}`))
+      gap()
+
+      // ── Best Match ────────────────────────────────────────────────
+      section('Compatibility')
+      body(`Best partners: ${temperament.bestPartners}`)
+      body(`Friction with: ${temperament.frictionWith}`)
+      body(`Famous ${temperament.title}s: ${temperament.famous.join(', ')}`)
+      gap()
+
+      // ── Footer ────────────────────────────────────────────────────
+      doc.setDrawColor(cr, cg, cb)
+      doc.setGState(doc.GState({ opacity: 0.3 }))
+      doc.line(14, 282, W - 14, 282)
+      doc.setGState(doc.GState({ opacity: 1 }))
+      doc.setTextColor(80, 90, 110)
+      doc.setFontSize(7)
+      doc.setFont('helvetica', 'normal')
+      doc.text('TypeQuest · Free Temperament Assessment · typequest.app', W / 2, 288, { align: 'center' })
+      ;[1, 2].forEach((pg) => {
+        doc.setPage(pg)
+        doc.setTextColor(60, 70, 85)
+        doc.setFontSize(7)
+        doc.text(`Page ${pg} of 2`, W - 14, 292, { align: 'right' })
+      })
+
+      doc.save(`typequest-${temperament.name.toLowerCase()}-${heroName.toLowerCase().replace(/\s+/g, '-')}.pdf`)
     } catch (err) {
-      console.error('Failed to generate image:', err)
+      console.error('PDF generation failed:', err)
+    } finally {
       setIsDownloading(false)
     }
-  }, [heroName, isDownloading])
+  }, [heroName, temperament, scores, isDownloading])
 
   const handleCopyText = useCallback(async () => {
-    const secondaryKey = Object.entries(scores)
-      .filter(([key]) => key !== temperament.key)
-      .sort(([, a], [, b]) => b - a)[0]?.[0] || ''
-
-    const text = `I got ${temperament.title} (${temperament.color}/${secondaryKey}). What's yours?\n\n"${temperament.language}"\n\nDiscover your character class free at temperamentquest.app`
-    
+    const text = `I got ${temperament.title} (${temperament.name}). What's yours?\n\n"${temperament.language}"\n\nDiscover your character class free at typequest.app`
     try {
       await navigator.clipboard.writeText(text)
       return true
     } catch {
       return false
     }
-  }, [temperament, scores])
+  }, [temperament])
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 w-full">
       {/* The shareable card */}
       <div
         ref={cardRef}
-        className="relative overflow-hidden rounded-2xl p-6"
+        className="relative overflow-hidden rounded-2xl p-4 w-full"
         style={{
           backgroundColor: '#0D0D0F',
           border: `2px solid ${temperament.colorHex}`,
         }}
       >
-        {/* Glow background effect */}
+        {/* Glow background */}
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-20 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at 30% 20%, ${temperament.colorHex}40 0%, transparent 50%), radial-gradient(circle at 70% 80%, ${temperament.colorHex}20 0%, transparent 40%)`,
+            background: `radial-gradient(circle at 30% 20%, ${temperament.colorHex}40 0%, transparent 50%)`,
           }}
         />
 
-        {/* Corner accents */}
-        <div
-          className="absolute top-0 left-0 w-20 h-20"
-          style={{
-            background: `linear-gradient(135deg, ${temperament.colorHex}25 0%, transparent 50%)`,
-          }}
-        />
-        <div
-          className="absolute bottom-0 right-0 w-20 h-20"
-          style={{
-            background: `linear-gradient(315deg, ${temperament.colorHex}25 0%, transparent 50%)`,
-          }}
-        />
-
-        <div className="relative z-10 flex flex-col gap-5">
-          {/* Header with character illustration */}
-          <div className="flex items-start gap-4">
-            {/* Character image - using img for html2canvas compatibility */}
+        <div className="relative z-10 flex flex-col gap-4">
+          {/* Header */}
+          <div className="flex items-start gap-3">
+            {/* Character image */}
             <div
-              className="shrink-0 w-20 h-24 rounded-xl flex items-center justify-center border-2 overflow-hidden"
+              className="shrink-0 w-16 h-20 rounded-xl flex items-center justify-center border-2 overflow-hidden"
               style={{
                 borderColor: temperament.colorHex,
                 backgroundColor: `${temperament.colorHex}15`,
-                boxShadow: `0 0 20px ${temperament.colorHex}30`,
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -137,23 +279,22 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
                 src={temperament.characterImage}
                 alt={temperament.title}
                 crossOrigin="anonymous"
-                className="h-20 object-contain"
-                style={{ filter: `drop-shadow(0 0 10px ${temperament.colorHex}50)` }}
+                style={{ height: '68px', width: 'auto', objectFit: 'contain' }}
               />
             </div>
 
-            <div className="flex flex-col gap-1 flex-1 min-w-0">
-              <p className="font-sans text-xs text-[#64748B] truncate">{heroName}</p>
+            <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+              <p className="font-sans text-[11px] text-[#64748B] truncate">{heroName}</p>
               <h2
-                className="font-serif text-2xl font-black leading-tight"
+                className="font-serif text-xl font-black leading-tight break-words"
                 style={{ color: temperament.colorHex }}
               >
                 {temperament.title.toUpperCase()}
               </h2>
-              <p className="font-sans text-sm text-[#94A3B8]">
+              <p className="font-sans text-xs text-[#94A3B8] leading-snug">
                 {temperament.name} &bull; {temperament.language}
               </p>
-              <p className="font-sans text-xs text-[#64748B]">
+              <p className="font-sans text-[11px] text-[#64748B] leading-snug">
                 {temperament.rpgClass}
               </p>
             </div>
@@ -162,20 +303,16 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
           {/* Divider */}
           <div
             className="h-px w-full"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${temperament.colorHex}40, transparent)`,
-            }}
+            style={{ background: `linear-gradient(90deg, transparent, ${temperament.colorHex}40, transparent)` }}
           />
 
-          {/* 3 Key Traits */}
+          {/* Key Traits */}
           <div className="flex flex-col gap-2">
-            <p className="font-serif text-[10px] tracking-[0.3em] uppercase text-[#64748B]">
-              Key Traits
-            </p>
+            <p className="font-serif text-[9px] tracking-[0.3em] uppercase text-[#64748B]">Key Traits</p>
             {traits.map((trait, i) => (
-              <div key={i} className="flex items-center gap-2">
+              <div key={i} className="flex items-start gap-2">
                 <div
-                  className="shrink-0 w-1.5 h-1.5 rounded-full"
+                  className="shrink-0 w-1.5 h-1.5 rounded-full mt-1.5"
                   style={{ backgroundColor: temperament.colorHex }}
                 />
                 <p className="font-sans text-sm text-[#E2E8F0] leading-snug">{trait}</p>
@@ -184,24 +321,20 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
           </div>
 
           {/* Score bar */}
-          <div className="flex gap-1 h-2.5 rounded-full overflow-hidden bg-[#1A1A2E]">
-            {(['Yellow', 'Red', 'Blue', 'Green'] as const).map((key) => {
-              const colors = {
-                Yellow: '#FFD700',
-                Red: '#E63946',
-                Blue: '#4CC9F0',
-                Green: '#52B788',
+          <div className="flex gap-0.5 h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#1A1A2E' }}>
+            {(['Yellow', 'Red', 'Blue', 'Green'] as TemperamentKey[]).map((key) => {
+              const colors: Record<TemperamentKey, string> = {
+                Yellow: '#FFD700', Red: '#E63946', Blue: '#4CC9F0', Green: '#52B788',
               }
               const total = Object.values(scores).reduce((a, b) => a + b, 0)
               const pct = (scores[key] / total) * 100
               return (
                 <div
                   key={key}
-                  className="h-full transition-all"
                   style={{
                     width: `${pct}%`,
                     backgroundColor: colors[key],
-                    opacity: key === temperament.key ? 1 : 0.4,
+                    opacity: key === temperament.key ? 1 : 0.35,
                   }}
                 />
               )
@@ -210,12 +343,8 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
 
           {/* Footer */}
           <div className="flex items-center justify-between">
-            <p className="font-serif text-[10px] tracking-[0.2em] uppercase text-[#3A3A50]">
-              TemperamentQuest
-            </p>
-            <p className="font-sans text-[10px] text-[#3A3A50]">
-              temperamentquest.app
-            </p>
+            <p className="font-serif text-[9px] tracking-[0.15em] uppercase text-[#3A3A50]">TypeQuest</p>
+            <p className="font-sans text-[9px] text-[#3A3A50]">typequest.app</p>
           </div>
         </div>
       </div>
@@ -224,28 +353,31 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
       <div className="flex gap-3">
         <button
           onClick={handleDownload}
-          className="flex-1 flex items-center justify-center gap-2 font-serif text-xs font-bold tracking-widest uppercase py-3 rounded-xl border-2 transition-all duration-200 cursor-pointer"
+          disabled={isDownloading}
+          className="flex-1 flex items-center justify-center gap-2 font-serif text-xs font-bold tracking-widest uppercase py-3 rounded-xl border-2 transition-all duration-200 cursor-pointer disabled:opacity-60"
           style={{
             borderColor: temperament.colorHex,
             color: '#0D0D0F',
             backgroundColor: temperament.colorHex,
           }}
           onMouseEnter={(e) => {
+            if (isDownloading) return
             e.currentTarget.style.backgroundColor = 'transparent'
             e.currentTarget.style.color = temperament.colorHex
           }}
           onMouseLeave={(e) => {
+            if (isDownloading) return
             e.currentTarget.style.backgroundColor = temperament.colorHex
             e.currentTarget.style.color = '#0D0D0F'
           }}
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3M3 17v3a1 1 0 001 1h16a1 1 0 001-1v-3" />
           </svg>
-          Download
+          {isDownloading ? 'Generating...' : 'PDF Report'}
         </button>
-        
-        <ShareTextButton temperament={temperament} scores={scores} onCopy={handleCopyText} />
+
+        <ShareTextButton temperament={temperament} onCopy={handleCopyText} />
       </div>
     </div>
   )
@@ -256,7 +388,6 @@ function ShareTextButton({
   onCopy,
 }: {
   temperament: Temperament
-  scores: { Yellow: number; Red: number; Blue: number; Green: number }
   onCopy: () => Promise<boolean>
 }) {
   const [copied, setCopied] = useState(false)
@@ -289,15 +420,15 @@ function ShareTextButton({
     >
       {copied ? (
         <>
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
           Copied!
         </>
       ) : (
         <>
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+          <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" />
           </svg>
           Copy Text
         </>

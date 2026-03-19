@@ -113,6 +113,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                       filter: `drop-shadow(0 0 20px ${t.colorHex}60)`,
                       width: 'auto',
                       height: '140px',
+                      maxWidth: '100%',
                     }}
                   />
                 </div>
@@ -251,13 +252,16 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           className="rounded-2xl border overflow-hidden"
           style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: '#2A2A40' }}
         >
-          {/* Tab bar */}
-          <div className="flex border-b" style={{ borderColor: '#2A2A40' }}>
+          {/* Tab bar — scrollable on mobile */}
+          <div
+            className="flex border-b overflow-x-auto scrollbar-none"
+            style={{ borderColor: '#2A2A40' }}
+          >
             {tabs.map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className="flex-1 py-3 font-serif text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer"
+                className="shrink-0 px-3 py-3 font-serif text-[11px] font-semibold tracking-wide transition-all duration-200 cursor-pointer whitespace-nowrap"
                 style={{
                   color: activeTab === tab.key ? t.colorHex : '#64748B',
                   borderBottom: activeTab === tab.key ? `2px solid ${t.colorHex}` : '2px solid transparent',
@@ -419,17 +423,17 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                   <Image
                     src={cls.characterImage}
                     alt={cls.title}
-                    width={40}
-                    height={50}
-                    className="object-contain relative"
-                    style={{ opacity: isUser ? 1 : 0.6, width: '40px', height: 'auto' }}
+                    width={36}
+                    height={44}
+                    className="object-contain relative shrink-0"
+                    style={{ opacity: isUser ? 1 : 0.6, width: '36px', height: 'auto', maxHeight: '44px' }}
                   />
-                  <div className="flex flex-col gap-0.5 relative">
-                    <p className="font-serif text-xs font-bold" style={{ color: cls.colorHex }}>
+                  <div className="flex flex-col gap-0.5 relative min-w-0">
+                    <p className="font-serif text-[11px] font-bold leading-tight" style={{ color: cls.colorHex }}>
                       {cls.title}
                       {isUser && <span className="ml-1 text-[8px] opacity-60">YOU</span>}
                     </p>
-                    <p className="font-sans text-[11px] text-[#64748B]">{cls.name}</p>
+                    <p className="font-sans text-[10px] text-[#64748B]">{cls.name}</p>
                   </div>
                 </div>
               )
