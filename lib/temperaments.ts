@@ -42,8 +42,8 @@ export const TEMPERAMENTS: Record<TemperamentKey, Temperament> = {
     borderClass: 'border-[#FFD700]',
     bgClass: 'bg-[#FFD700]',
     textClass: 'text-[#FFD700]',
-    characterImage: '/images/characters/all-characters.png',
-    characterOffset: 'translate-x-[-25%]',
+    characterImage: '/images/characters/bard.png',
+    characterOffset: '',
     lore: "You are the spark in every room — the one who makes strangers feel like old friends in minutes. The world is your stage and you play it well. You live in the moment, love deeply, and laugh loudly. Your greatest gift is the ability to see the best in people and make them feel seen.",
     coreNeed: 'To be liked. Approval is oxygen.',
     strengths: [
@@ -88,8 +88,8 @@ export const TEMPERAMENTS: Record<TemperamentKey, Temperament> = {
     borderClass: 'border-[#E63946]',
     bgClass: 'bg-[#E63946]',
     textClass: 'text-[#E63946]',
-    characterImage: '/images/characters/all-characters.png',
-    characterOffset: 'translate-x-0',
+    characterImage: '/images/characters/commander.png',
+    characterOffset: '',
     lore: "You are built to lead. Where others see problems, you see the next move. You don't wait for permission — you take the hill and figure out the details later. Loyalty, results, and efficiency are your sacred code. You are the most likely person in any room to actually get it done.",
     coreNeed: 'Loyalty and results. Incompetence is a personal offense.',
     strengths: [
@@ -133,8 +133,8 @@ export const TEMPERAMENTS: Record<TemperamentKey, Temperament> = {
     borderClass: 'border-[#4CC9F0]',
     bgClass: 'bg-[#4CC9F0]',
     textClass: 'text-[#4CC9F0]',
-    characterImage: '/images/characters/all-characters.png',
-    characterOffset: 'translate-x-[-50%]',
+    characterImage: '/images/characters/strategist.png',
+    characterOffset: '',
     lore: "You see what others miss. The flaw in the plan. The pattern in the chaos. The standard that has not been met. You carry the weight of excellence — and it is a gift. Your depth is your power. You think before you speak, feel before you act, and rarely get it wrong when you do.",
     coreNeed: 'To be understood. Quality is non-negotiable.',
     strengths: [
@@ -178,8 +178,8 @@ export const TEMPERAMENTS: Record<TemperamentKey, Temperament> = {
     borderClass: 'border-[#52B788]',
     bgClass: 'bg-[#52B788]',
     textClass: 'text-[#52B788]',
-    characterImage: '/images/characters/all-characters.png',
-    characterOffset: 'translate-x-[-75%]',
+    characterImage: '/images/characters/guardian.png',
+    characterOffset: '',
     lore: "You are the peace everyone else is searching for. When the room is on fire, you are the still water. You listen when no one else does. You hold space when others cannot. Your gift is harmony — you see all sides, honor all voices, and rarely take a step that was not worth taking.",
     coreNeed: 'Peace and respect. Conflict is physically painful.',
     strengths: [
