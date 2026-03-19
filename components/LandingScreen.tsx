@@ -1,21 +1,20 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import RuneBackground from './RuneBackground'
+import { TEMPERAMENTS } from '@/lib/temperaments'
+import type { TemperamentKey } from '@/lib/scoringKey'
 
 interface LandingScreenProps {
   onBegin: () => void
 }
 
-const temperamentColors = [
-  { label: 'Sanguine', color: '#FFD700', delay: '0ms' },
-  { label: 'Choleric', color: '#E63946', delay: '200ms' },
-  { label: 'Melancholic', color: '#4CC9F0', delay: '400ms' },
-  { label: 'Phlegmatic', color: '#52B788', delay: '600ms' },
-]
+const characterOrder: TemperamentKey[] = ['Red', 'Yellow', 'Blue', 'Green']
 
 export default function LandingScreen({ onBegin }: LandingScreenProps) {
   const [visible, setVisible] = useState(false)
+  const [hoveredChar, setHoveredChar] = useState<TemperamentKey | null>(null)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100)
@@ -30,28 +29,13 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
       <RuneBackground />
 
       <div
-        className="relative z-10 flex flex-col items-center gap-8 max-w-2xl w-full text-center"
+        className="relative z-10 flex flex-col items-center gap-8 max-w-4xl w-full text-center"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(20px)',
           transition: 'opacity 0.8s ease, transform 0.8s ease',
         }}
       >
-        {/* Crown ornament */}
-        <div className="flex items-center gap-3">
-          {temperamentColors.map((t) => (
-            <div
-              key={t.label}
-              className="w-3 h-3 rounded-full"
-              style={{
-                backgroundColor: t.color,
-                boxShadow: `0 0 10px ${t.color}`,
-                animationDelay: t.delay,
-              }}
-            />
-          ))}
-        </div>
-
         {/* Title */}
         <div className="flex flex-col items-center gap-2">
           <p className="font-serif text-xs tracking-[0.4em] uppercase text-[#64748B]">
@@ -78,42 +62,102 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
           <div className="flex-1 h-px bg-[#2A2A40]" />
         </div>
 
+        {/* Character showcase */}
+        <div className="relative w-full max-w-3xl">
+          {/* Characters */}
+          <div className="flex justify-center items-end gap-2 md:gap-4">
+            {characterOrder.map((key, i) => {
+              const t = TEMPERAMENTS[key]
+              const isHovered = hoveredChar === key
+              return (
+                <div
+                  key={key}
+                  className="relative flex flex-col items-center group cursor-pointer"
+                  onMouseEnter={() => setHoveredChar(key)}
+                  onMouseLeave={() => setHoveredChar(null)}
+                  style={{
+                    animationDelay: `${i * 150}ms`,
+                  }}
+                >
+                  {/* Glow effect behind character */}
+                  <div
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full blur-2xl transition-opacity duration-300"
+                    style={{
+                      backgroundColor: t.colorHex,
+                      opacity: isHovered ? 0.6 : 0.2,
+                    }}
+                  />
+                  
+                  {/* Character image */}
+                  <div
+                    className="relative transition-all duration-300"
+                    style={{
+                      transform: isHovered ? 'translateY(-8px) scale(1.05)' : 'translateY(0) scale(1)',
+                    }}
+                  >
+                    <Image
+                      src={t.characterImage}
+                      alt={t.title}
+                      width={140}
+                      height={200}
+                      className="w-24 h-auto md:w-36 object-contain drop-shadow-lg"
+                      style={{
+                        filter: isHovered ? `drop-shadow(0 0 20px ${t.colorHex}80)` : 'none',
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Character label */}
+                  <div
+                    className="mt-2 flex flex-col items-center transition-all duration-300"
+                    style={{
+                      opacity: isHovered ? 1 : 0.7,
+                    }}
+                  >
+                    <p
+                      className="font-serif text-xs md:text-sm font-bold tracking-wide"
+                      style={{ color: t.colorHex }}
+                    >
+                      {t.title.toUpperCase()}
+                    </p>
+                    <p className="font-sans text-[10px] md:text-xs text-[#64748B]">
+                      {t.name}
+                    </p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Hover tooltip */}
+          {hoveredChar && (
+            <div
+              className="absolute left-1/2 -translate-x-1/2 bottom-full mb-4 px-4 py-2 rounded-lg border text-center max-w-xs pointer-events-none"
+              style={{
+                backgroundColor: 'rgba(26, 26, 46, 0.95)',
+                borderColor: TEMPERAMENTS[hoveredChar].colorHex + '40',
+                boxShadow: `0 0 20px ${TEMPERAMENTS[hoveredChar].colorHex}20`,
+              }}
+            >
+              <p className="font-sans text-xs text-[#94A3B8] leading-relaxed">
+                {TEMPERAMENTS[hoveredChar].rpgClass}
+              </p>
+              <p
+                className="font-serif text-xs mt-1"
+                style={{ color: TEMPERAMENTS[hoveredChar].colorHex }}
+              >
+                The Language of {TEMPERAMENTS[hoveredChar].language}
+              </p>
+            </div>
+          )}
+        </div>
+
         {/* Lore */}
         <p className="font-sans text-[#64748B] text-base leading-relaxed max-w-md text-pretty">
           Every hero carries a nature forged before the quest begins.{' '}
           <span className="text-[#E2E8F0]">40 questions. 4 temperaments. No paywall.</span>{' '}
           Discover the character class you were born to play.
         </p>
-
-        {/* Class badges */}
-        <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
-          {[
-            { name: 'The Herald', sub: 'Sanguine', color: '#FFD700' },
-            { name: 'The Commander', sub: 'Choleric', color: '#E63946' },
-            { name: 'The Sage', sub: 'Melancholic', color: '#4CC9F0' },
-            { name: 'The Guardian', sub: 'Phlegmatic', color: '#52B788' },
-          ].map((cls) => (
-            <div
-              key={cls.name}
-              className="flex items-center gap-2 rounded-lg px-3 py-2.5 border"
-              style={{
-                borderColor: `${cls.color}30`,
-                backgroundColor: `${cls.color}08`,
-              }}
-            >
-              <div
-                className="w-2 h-2 rounded-full shrink-0"
-                style={{ backgroundColor: cls.color, boxShadow: `0 0 6px ${cls.color}` }}
-              />
-              <div className="text-left">
-                <div className="font-serif text-xs font-semibold" style={{ color: cls.color }}>
-                  {cls.name}
-                </div>
-                <div className="font-sans text-[10px] text-[#64748B]">{cls.sub}</div>
-              </div>
-            </div>
-          ))}
-        </div>
 
         {/* CTA */}
         <button
@@ -141,11 +185,6 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
         <p className="font-sans text-[#64748B] text-xs">
           ~20 minutes &bull; 40 questions &bull; Free forever
         </p>
-      </div>
-
-      {/* Bottom scroll cue */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-[#2A2A40] text-xs font-sans tracking-widest uppercase">
-        Scroll to discover
       </div>
     </main>
   )

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { ScoreMap, TemperamentKey, getDominantAndSecondary, getMaskingWarning } from '@/lib/scoringKey'
 import { TEMPERAMENTS } from '@/lib/temperaments'
 import ScoreChart from './ScoreChart'
@@ -59,9 +60,9 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
       <CinematicBackground temperament={dominant} />
 
       <div className="relative z-10 w-full max-w-xl flex flex-col gap-8">
-        {/* HERO REVEAL */}
+        {/* HERO REVEAL WITH CHARACTER */}
         <div
-          className="flex flex-col items-center gap-4 text-center"
+          className="flex flex-col items-center gap-6 text-center"
           style={{
             opacity: revealed ? 1 : 0,
             transform: revealed ? 'scale(1) translateY(0)' : 'scale(0.9) translateY(20px)',
@@ -72,32 +73,54 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             Your Character Class
           </p>
 
-          {/* Glow ring with animated border */}
-          <div
-            className="relative w-36 h-36 rounded-full flex items-center justify-center"
-            style={{
-              background: `conic-gradient(from 0deg, ${t.colorHex}, transparent, ${t.colorHex})`,
-              animation: 'rotate 8s linear infinite',
-            }}
-          >
+          {/* Character illustration with animated glow */}
+          <div className="relative">
+            {/* Animated glow ring */}
             <div
-              className="absolute inset-1 rounded-full flex items-center justify-center"
+              className="absolute inset-0 rounded-full opacity-50 blur-3xl"
               style={{
-                backgroundColor: '#0D0D0F',
-                boxShadow: `0 0 60px ${t.colorHex}50, inset 0 0 40px ${t.colorHex}20`,
+                background: `radial-gradient(circle, ${t.colorHex}60 0%, transparent 70%)`,
+                animation: 'pulse-glow 3s ease-in-out infinite',
+              }}
+            />
+            
+            {/* Rotating border effect */}
+            <div
+              className="relative w-48 h-48 md:w-56 md:h-56 rounded-full flex items-center justify-center p-1"
+              style={{
+                background: `conic-gradient(from 0deg, ${t.colorHex}, transparent, ${t.colorHex})`,
+                animation: 'rotate 12s linear infinite',
               }}
             >
               <div
-                className="absolute inset-3 rounded-full border-2"
-                style={{ borderColor: `${t.colorHex}40` }}
-              />
-              <span
-                className="font-serif text-6xl font-black"
-                style={{ color: t.colorHex, textShadow: `0 0 30px ${t.colorHex}` }}
+                className="w-full h-full rounded-full flex items-center justify-center overflow-hidden"
+                style={{
+                  backgroundColor: '#0D0D0F',
+                  boxShadow: `0 0 60px ${t.colorHex}40, inset 0 0 30px ${t.colorHex}15`,
+                }}
               >
-                {t.emoji}
-              </span>
+                <Image
+                  src={t.characterImage}
+                  alt={t.title}
+                  width={180}
+                  height={220}
+                  className="w-auto h-40 md:h-48 object-contain"
+                  style={{
+                    filter: `drop-shadow(0 0 20px ${t.colorHex}60)`,
+                  }}
+                />
+              </div>
             </div>
+
+            {/* Sparkle decorations */}
+            <div
+              className="absolute top-2 right-4 w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: t.colorHex, boxShadow: `0 0 10px ${t.colorHex}` }}
+            />
+            <div
+              className="absolute bottom-4 left-2 w-1.5 h-1.5 rounded-full animate-pulse"
+              style={{ backgroundColor: t.colorHex, boxShadow: `0 0 8px ${t.colorHex}`, animationDelay: '0.5s' }}
+            />
           </div>
 
           <div className="flex flex-col gap-1">
@@ -117,6 +140,22 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               {t.name} &bull; The Language of {t.language}
             </p>
             <p className="font-sans text-xs text-[#64748B]">{t.archetype}</p>
+          </div>
+
+          {/* RPG Class badge */}
+          <div
+            className="flex items-center gap-3 px-4 py-2 rounded-full border"
+            style={{
+              borderColor: `${t.colorHex}40`,
+              backgroundColor: `${t.colorHex}10`,
+            }}
+          >
+            <span
+              className="font-serif text-sm font-bold"
+              style={{ color: t.colorHex }}
+            >
+              {t.rpgClass}
+            </span>
           </div>
 
           {/* Interpretation badge */}
@@ -170,9 +209,12 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             className="flex items-center gap-3 rounded-lg px-3 py-2 border"
             style={{ borderColor: `${sec.colorHex}30`, backgroundColor: `${sec.colorHex}08` }}
           >
-            <div
-              className="w-2 h-2 rounded-full shrink-0"
-              style={{ backgroundColor: sec.colorHex }}
+            <Image
+              src={sec.characterImage}
+              alt={sec.title}
+              width={32}
+              height={40}
+              className="w-8 h-auto object-contain opacity-70"
             />
             <p className="font-sans text-xs text-[#94A3B8]">
               Secondary: <span className="font-serif font-semibold" style={{ color: sec.colorHex }}>{sec.title}</span>
@@ -305,7 +347,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               return (
                 <div
                   key={key}
-                  className="rounded-xl border p-3 flex flex-col gap-1 relative overflow-hidden"
+                  className="rounded-xl border p-3 flex items-center gap-3 relative overflow-hidden"
                   style={{
                     borderColor: isUser ? cls.colorHex : `${cls.colorHex}20`,
                     backgroundColor: isUser ? `${cls.colorHex}12` : `${cls.colorHex}05`,
@@ -317,12 +359,21 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                       style={{ backgroundColor: cls.colorHex }}
                     />
                   )}
-                  <p className="font-serif text-xs font-bold relative" style={{ color: cls.colorHex }}>
-                    {cls.title}
-                    {isUser && <span className="ml-1 text-[8px] opacity-60">YOU</span>}
-                  </p>
-                  <p className="font-sans text-[11px] text-[#64748B] relative">{cls.name}</p>
-                  <p className="font-sans text-[11px] text-[#64748B] leading-tight relative">{cls.rpgClass}</p>
+                  <Image
+                    src={cls.characterImage}
+                    alt={cls.title}
+                    width={40}
+                    height={50}
+                    className="w-10 h-auto object-contain relative"
+                    style={{ opacity: isUser ? 1 : 0.6 }}
+                  />
+                  <div className="flex flex-col gap-0.5 relative">
+                    <p className="font-serif text-xs font-bold" style={{ color: cls.colorHex }}>
+                      {cls.title}
+                      {isUser && <span className="ml-1 text-[8px] opacity-60">YOU</span>}
+                    </p>
+                    <p className="font-sans text-[11px] text-[#64748B]">{cls.name}</p>
+                  </div>
                 </div>
               )
             })}
@@ -417,6 +468,10 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
         @keyframes rotate {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.6; }
         }
       `}</style>
     </main>

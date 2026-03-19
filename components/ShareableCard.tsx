@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef, useCallback } from 'react'
+import React, { useRef, useCallback, useState } from 'react'
+import Image from 'next/image'
 import { Temperament } from '@/lib/temperaments'
 
 interface ShareableCardProps {
@@ -78,36 +79,38 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
 
         {/* Corner accents */}
         <div
-          className="absolute top-0 left-0 w-16 h-16"
+          className="absolute top-0 left-0 w-20 h-20"
           style={{
-            background: `linear-gradient(135deg, ${temperament.colorHex}20 0%, transparent 50%)`,
+            background: `linear-gradient(135deg, ${temperament.colorHex}25 0%, transparent 50%)`,
           }}
         />
         <div
-          className="absolute bottom-0 right-0 w-16 h-16"
+          className="absolute bottom-0 right-0 w-20 h-20"
           style={{
-            background: `linear-gradient(315deg, ${temperament.colorHex}20 0%, transparent 50%)`,
+            background: `linear-gradient(315deg, ${temperament.colorHex}25 0%, transparent 50%)`,
           }}
         />
 
         <div className="relative z-10 flex flex-col gap-5">
-          {/* Header with emblem */}
+          {/* Header with character illustration */}
           <div className="flex items-start gap-4">
-            {/* Character emblem */}
+            {/* Character image */}
             <div
-              className="shrink-0 w-16 h-16 rounded-xl flex items-center justify-center border-2"
+              className="shrink-0 w-20 h-24 rounded-xl flex items-center justify-center border-2 overflow-hidden"
               style={{
                 borderColor: temperament.colorHex,
                 backgroundColor: `${temperament.colorHex}15`,
                 boxShadow: `0 0 20px ${temperament.colorHex}30`,
               }}
             >
-              <span
-                className="font-serif text-3xl font-black"
-                style={{ color: temperament.colorHex, textShadow: `0 0 10px ${temperament.colorHex}` }}
-              >
-                {temperament.emoji}
-              </span>
+              <Image
+                src={temperament.characterImage}
+                alt={temperament.title}
+                width={72}
+                height={90}
+                className="w-auto h-20 object-contain"
+                style={{ filter: `drop-shadow(0 0 10px ${temperament.colorHex}50)` }}
+              />
             </div>
 
             <div className="flex flex-col gap-1 flex-1 min-w-0">
@@ -120,6 +123,9 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
               </h2>
               <p className="font-sans text-sm text-[#94A3B8]">
                 {temperament.name} &bull; {temperament.language}
+              </p>
+              <p className="font-sans text-xs text-[#64748B]">
+                {temperament.rpgClass}
               </p>
             </div>
           </div>
@@ -149,7 +155,7 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
           </div>
 
           {/* Score bar */}
-          <div className="flex gap-1 h-2 rounded-full overflow-hidden bg-[#1A1A2E]">
+          <div className="flex gap-1 h-2.5 rounded-full overflow-hidden bg-[#1A1A2E]">
             {(['Yellow', 'Red', 'Blue', 'Green'] as const).map((key) => {
               const colors = {
                 Yellow: '#FFD700',
@@ -175,10 +181,10 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
 
           {/* Footer */}
           <div className="flex items-center justify-between">
-            <p className="font-serif text-[10px] tracking-[0.2em] uppercase text-[#2A2A40]">
+            <p className="font-serif text-[10px] tracking-[0.2em] uppercase text-[#3A3A50]">
               TemperamentQuest
             </p>
-            <p className="font-sans text-[10px] text-[#2A2A40]">
+            <p className="font-sans text-[10px] text-[#3A3A50]">
               temperamentquest.app
             </p>
           </div>
@@ -224,7 +230,7 @@ function ShareTextButton({
   scores: { Yellow: number; Red: number; Blue: number; Green: number }
   onCopy: () => Promise<boolean>
 }) {
-  const [copied, setCopied] = React.useState(false)
+  const [copied, setCopied] = useState(false)
 
   const handleClick = async () => {
     const success = await onCopy()
@@ -270,5 +276,3 @@ function ShareTextButton({
     </button>
   )
 }
-
-import React from 'react'
