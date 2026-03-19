@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { ScoreMap, TemperamentKey, getDominantAndSecondary, getMaskingWarning } from '@/lib/scoringKey'
 import { TEMPERAMENTS } from '@/lib/temperaments'
 import ScoreChart from './ScoreChart'
-import RuneBackground from './RuneBackground'
+import CinematicBackground from './CinematicBackground'
+import ShareableCard from './ShareableCard'
 
 interface ResultsScreenProps {
   heroName: string
@@ -22,7 +23,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
 
   const [revealed, setRevealed] = useState(false)
   const [activeTab, setActiveTab] = useState<Tab>('strengths')
-  const [copied, setCopied] = useState(false)
+  const [showShareCard, setShowShareCard] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => setRevealed(true), 100)
@@ -43,17 +44,6 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
     return `${t.name} with ${sec.name} shadow — bilingual in two temperaments`
   }
 
-  async function handleShare() {
-    const text = `I just discovered my temperament on TemperamentQuest!\n\n${heroName} is ${t.title} (${t.name})\n"${t.language}"\n\nScores: Yellow ${scores.Yellow} | Red ${scores.Red} | Blue ${scores.Blue} | Green ${scores.Green}\n\nDiscover yours free at temperamentquest.app`
-    try {
-      await navigator.clipboard.writeText(text)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2500)
-    } catch {
-      // fallback: do nothing
-    }
-  }
-
   const tabs: { key: Tab; label: string }[] = [
     { key: 'strengths', label: 'Strengths' },
     { key: 'shadow', label: 'Shadow Side' },
@@ -66,15 +56,15 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
       className="relative min-h-screen flex flex-col items-center px-4 pt-8 pb-16 gap-8"
       style={{ background: '#0D0D0F' }}
     >
-      <RuneBackground />
+      <CinematicBackground temperament={dominant} />
 
       <div className="relative z-10 w-full max-w-xl flex flex-col gap-8">
-        {/* ─── HERO REVEAL ─── */}
+        {/* HERO REVEAL */}
         <div
           className="flex flex-col items-center gap-4 text-center"
           style={{
             opacity: revealed ? 1 : 0,
-            transform: revealed ? 'scale(1)' : 'scale(0.9)',
+            transform: revealed ? 'scale(1) translateY(0)' : 'scale(0.9) translateY(20px)',
             transition: 'opacity 0.8s cubic-bezier(0.34,1.56,0.64,1), transform 0.8s cubic-bezier(0.34,1.56,0.64,1)',
           }}
         >
@@ -82,24 +72,32 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             Your Character Class
           </p>
 
-          {/* Glow ring */}
+          {/* Glow ring with animated border */}
           <div
-            className="relative w-32 h-32 rounded-full border-2 flex items-center justify-center"
+            className="relative w-36 h-36 rounded-full flex items-center justify-center"
             style={{
-              borderColor: t.colorHex,
-              boxShadow: `0 0 40px ${t.colorHex}50, 0 0 80px ${t.colorHex}20`,
+              background: `conic-gradient(from 0deg, ${t.colorHex}, transparent, ${t.colorHex})`,
+              animation: 'rotate 8s linear infinite',
             }}
           >
             <div
-              className="absolute inset-2 rounded-full border"
-              style={{ borderColor: `${t.colorHex}40` }}
-            />
-            <span
-              className="font-serif text-5xl font-black"
-              style={{ color: t.colorHex, textShadow: `0 0 20px ${t.colorHex}` }}
+              className="absolute inset-1 rounded-full flex items-center justify-center"
+              style={{
+                backgroundColor: '#0D0D0F',
+                boxShadow: `0 0 60px ${t.colorHex}50, inset 0 0 40px ${t.colorHex}20`,
+              }}
             >
-              {t.key === 'Yellow' ? 'H' : t.key === 'Red' ? 'C' : t.key === 'Blue' ? 'S' : 'G'}
-            </span>
+              <div
+                className="absolute inset-3 rounded-full border-2"
+                style={{ borderColor: `${t.colorHex}40` }}
+              />
+              <span
+                className="font-serif text-6xl font-black"
+                style={{ color: t.colorHex, textShadow: `0 0 30px ${t.colorHex}` }}
+              >
+                {t.emoji}
+              </span>
+            </div>
           </div>
 
           <div className="flex flex-col gap-1">
@@ -108,7 +106,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             </p>
             <h1
               className="font-serif text-4xl md:text-5xl font-black text-balance"
-              style={{ color: t.colorHex, textShadow: `0 0 30px ${t.colorHex}50` }}
+              style={{ color: t.colorHex, textShadow: `0 0 40px ${t.colorHex}50` }}
             >
               {t.title.toUpperCase()}
             </h1>
@@ -134,28 +132,33 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           </div>
         </div>
 
-        {/* ─── LORE ─── */}
+        {/* LORE */}
         <div
-          className="rounded-2xl border p-5 flex flex-col gap-3"
-          style={{ backgroundColor: '#1A1A2E', borderColor: `${t.colorHex}30` }}
+          className="rounded-2xl border p-5 flex flex-col gap-3 relative overflow-hidden"
+          style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: `${t.colorHex}30` }}
         >
-          <p className="font-serif text-xs tracking-widest uppercase" style={{ color: t.colorHex }}>
+          {/* Subtle glow */}
+          <div
+            className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-20 blur-3xl"
+            style={{ backgroundColor: t.colorHex }}
+          />
+          <p className="font-serif text-xs tracking-widest uppercase relative" style={{ color: t.colorHex }}>
             Class Lore
           </p>
           <blockquote
-            className="font-sans text-sm text-[#94A3B8] leading-relaxed italic text-pretty"
+            className="font-sans text-sm text-[#94A3B8] leading-relaxed italic text-pretty relative"
           >
             &ldquo;{t.lore}&rdquo;
           </blockquote>
-          <p className="font-sans text-xs text-[#64748B]">
+          <p className="font-sans text-xs text-[#64748B] relative">
             <span style={{ color: t.colorHex }}>Core Need:</span> {t.coreNeed}
           </p>
         </div>
 
-        {/* ─── SCORE CHART ─── */}
+        {/* SCORE CHART */}
         <div
           className="rounded-2xl border p-5 flex flex-col gap-4"
-          style={{ backgroundColor: '#1A1A2E', borderColor: '#2A2A40' }}
+          style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: '#2A2A40' }}
         >
           <p className="font-serif text-xs tracking-widest uppercase text-[#64748B]">
             Score Breakdown
@@ -193,10 +196,10 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           )}
         </div>
 
-        {/* ─── TABS ─── */}
+        {/* TABS */}
         <div
           className="rounded-2xl border overflow-hidden"
-          style={{ backgroundColor: '#1A1A2E', borderColor: '#2A2A40' }}
+          style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: '#2A2A40' }}
         >
           {/* Tab bar */}
           <div className="flex border-b" style={{ borderColor: '#2A2A40' }}>
@@ -287,10 +290,10 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           </div>
         </div>
 
-        {/* ─── ALL CLASSES ─── */}
+        {/* ALL CLASSES */}
         <div
           className="rounded-2xl border p-5 flex flex-col gap-3"
-          style={{ backgroundColor: '#1A1A2E', borderColor: '#2A2A40' }}
+          style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: '#2A2A40' }}
         >
           <p className="font-serif text-xs tracking-widest uppercase text-[#64748B]">
             All Character Classes
@@ -302,29 +305,71 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               return (
                 <div
                   key={key}
-                  className="rounded-xl border p-3 flex flex-col gap-1"
+                  className="rounded-xl border p-3 flex flex-col gap-1 relative overflow-hidden"
                   style={{
                     borderColor: isUser ? cls.colorHex : `${cls.colorHex}20`,
                     backgroundColor: isUser ? `${cls.colorHex}12` : `${cls.colorHex}05`,
                   }}
                 >
-                  <p className="font-serif text-xs font-bold" style={{ color: cls.colorHex }}>
+                  {isUser && (
+                    <div
+                      className="absolute -top-10 -right-10 w-20 h-20 rounded-full opacity-20 blur-2xl"
+                      style={{ backgroundColor: cls.colorHex }}
+                    />
+                  )}
+                  <p className="font-serif text-xs font-bold relative" style={{ color: cls.colorHex }}>
                     {cls.title}
                     {isUser && <span className="ml-1 text-[8px] opacity-60">YOU</span>}
                   </p>
-                  <p className="font-sans text-[11px] text-[#64748B]">{cls.name}</p>
-                  <p className="font-sans text-[11px] text-[#64748B] leading-tight">{cls.rpgClass}</p>
+                  <p className="font-sans text-[11px] text-[#64748B] relative">{cls.name}</p>
+                  <p className="font-sans text-[11px] text-[#64748B] leading-tight relative">{cls.rpgClass}</p>
                 </div>
               )
             })}
           </div>
         </div>
 
-        {/* ─── CTA BUTTONS ─── */}
+        {/* SHAREABLE CARD SECTION */}
+        <div
+          className="rounded-2xl border p-5 flex flex-col gap-4"
+          style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: '#2A2A40' }}
+        >
+          <div className="flex items-center justify-between">
+            <p className="font-serif text-xs tracking-widest uppercase text-[#64748B]">
+              Share Your Results
+            </p>
+            <button
+              onClick={() => setShowShareCard(!showShareCard)}
+              className="font-sans text-xs px-3 py-1 rounded-full border transition-all cursor-pointer"
+              style={{
+                borderColor: `${t.colorHex}40`,
+                color: t.colorHex,
+              }}
+            >
+              {showShareCard ? 'Hide' : 'Show'} Card
+            </button>
+          </div>
+
+          {showShareCard && (
+            <ShareableCard
+              heroName={heroName}
+              temperament={t}
+              scores={scores}
+            />
+          )}
+
+          {!showShareCard && (
+            <p className="font-sans text-sm text-[#64748B] text-center py-4">
+              Generate a shareable character card to post on social media
+            </p>
+          )}
+        </div>
+
+        {/* CTA BUTTONS */}
         <div className="flex flex-col gap-3">
           <button
-            onClick={handleShare}
-            className="w-full font-serif text-sm font-bold tracking-widest uppercase py-3.5 rounded-xl border-2 transition-all duration-200 cursor-pointer"
+            onClick={() => setShowShareCard(true)}
+            className="w-full font-serif text-sm font-bold tracking-widest uppercase py-3.5 rounded-xl border-2 transition-all duration-200 cursor-pointer relative overflow-hidden group"
             style={{
               borderColor: t.colorHex,
               color: '#0D0D0F',
@@ -339,7 +384,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               e.currentTarget.style.color = '#0D0D0F'
             }}
           >
-            {copied ? 'Copied to Clipboard!' : 'Share My Class'}
+            Share My Class
           </button>
 
           <button
@@ -367,6 +412,13 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           TemperamentQuest &bull; Free forever &bull; Know Thyself.
         </p>
       </div>
+
+      <style>{`
+        @keyframes rotate {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </main>
   )
 }
