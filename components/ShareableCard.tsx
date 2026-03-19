@@ -4,7 +4,8 @@ import React, { useRef, useCallback, useState } from 'react'
 import Image from 'next/image'
 import { Temperament } from '@/lib/temperaments'
 import { TEMPERAMENTS } from '@/lib/temperaments'
-import { TemperamentKey, getDominantAndSecondary } from '@/lib/scoringKey'
+import { TemperamentKey, getDominantAndSecondary, resolveBlend } from '@/lib/scoringKey'
+import { BLENDS, getBlendColors, Blend } from '@/lib/blends'
 
 interface ShareableCardProps {
   heroName: string
@@ -20,8 +21,13 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
   const secondaryPct = Math.round((scores[secondary] / total) * 100)
   const cardRef = useRef<HTMLDivElement>(null)
   const [isDownloading, setIsDownloading] = useState(false)
+  
+  // Resolve blend
+  const blendResult = resolveBlend(scores)
+  const blend = BLENDS[blendResult.blendKey]
+  const blendColors = getBlendColors(blend)
 
-  const traits = temperament.strengths.slice(0, 3).map((s) => {
+  const traits = blend.strengths.slice(0, 3).map((s) => {
     const match = s.match(/^([^—;]+)/)
     return match ? match[1].trim() : s.slice(0, 40)
   })
@@ -240,14 +246,14 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
   }, [heroName, temperament, scores, isDownloading])
 
   const handleCopyText = useCallback(async () => {
-    const text = `I got ${temperament.title} (${temperament.name}). What's yours?\n\n"${temperament.language}"\n\nDiscover your character class free at typequest.app`
+    const text = `I am ${blend.name} (${blend.blend}). What's yours?\n\n"${blend.tagline}"\n\nDiscover your character class free at typequest.app`
     try {
       await navigator.clipboard.writeText(text)
       return true
     } catch {
       return false
     }
-  }, [temperament])
+  }, [blend])
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -257,14 +263,14 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
         className="relative overflow-hidden rounded-2xl p-4 w-full"
         style={{
           backgroundColor: '#0D0D0F',
-          border: `2px solid ${temperament.colorHex}`,
+          border: `2px solid ${blendColors.primary}`,
         }}
       >
         {/* Glow background */}
         <div
           className="absolute inset-0 opacity-20 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at 30% 20%, ${temperament.colorHex}40 0%, transparent 50%)`,
+            background: `radial-gradient(circle at 30% 20%, ${blendColors.primary}40 0%, transparent 50%)`,
           }}
         />
 
@@ -275,8 +281,8 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
             <div
               className="shrink-0 w-16 h-20 rounded-xl flex items-center justify-center border-2 overflow-hidden"
               style={{
-                borderColor: temperament.colorHex,
-                backgroundColor: `${temperament.colorHex}15`,
+                borderColor: blendColors.primary,
+                backgroundColor: `${blendColors.primary}15`,
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -292,15 +298,15 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
               <p className="font-sans text-[11px] text-[#64748B] truncate">{heroName}</p>
               <h2
                 className="font-serif text-xl font-black leading-tight break-words"
-                style={{ color: temperament.colorHex }}
+                style={{ color: blendColors.primary }}
               >
-                {temperament.title.toUpperCase()}
+                {blend.name.toUpperCase()}
               </h2>
               <p className="font-sans text-xs text-[#94A3B8] leading-snug">
-                {temperament.name} &bull; {temperament.language}
+                {blend.blend}
               </p>
               <p className="font-sans text-[11px] text-[#64748B] leading-snug">
-                {temperament.rpgClass}
+                {blend.rpgClass}
               </p>
             </div>
           </div>
@@ -308,17 +314,17 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
           {/* Divider */}
           <div
             className="h-px w-full"
-            style={{ background: `linear-gradient(90deg, transparent, ${temperament.colorHex}40, transparent)` }}
+            style={{ background: `linear-gradient(90deg, transparent, ${blendColors.primary}40, transparent)` }}
           />
 
           {/* Key Traits */}
           <div className="flex flex-col gap-2">
-            <p className="font-serif text-[9px] tracking-[0.3em] uppercase text-[#64748B]">Key Traits</p>
+            <p className="font-serif text-[9px] tracking-[0.3em] uppercase text-[#64748B]">Key Strengths</p>
             {traits.map((trait, i) => (
               <div key={i} className="flex items-start gap-2">
                 <div
                   className="shrink-0 w-1.5 h-1.5 rounded-full mt-1.5"
-                  style={{ backgroundColor: temperament.colorHex }}
+                  style={{ backgroundColor: blendColors.primary }}
                 />
                 <p className="font-sans text-sm text-[#E2E8F0] leading-snug">{trait}</p>
               </div>
@@ -329,20 +335,20 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
           <div className="flex gap-2">
             <div
               className="flex-1 rounded-lg px-3 py-2 border"
-              style={{ borderColor: `${temperament.colorHex}40`, backgroundColor: `${temperament.colorHex}10` }}
+              style={{ borderColor: `${blendColors.primary}40`, backgroundColor: `${blendColors.primary}10` }}
             >
-              <p className="font-sans text-[9px] uppercase tracking-wider text-[#64748B]">Dominant</p>
-              <p className="font-serif text-sm font-bold" style={{ color: temperament.colorHex }}>
-                {temperament.title} <span className="text-[#94A3B8] font-normal">({dominantPct}%)</span>
+              <p className="font-sans text-[9px] uppercase tracking-wider text-[#64748B]">Primary</p>
+              <p className="font-serif text-sm font-bold" style={{ color: blendColors.primary }}>
+                {temperament.name} <span className="text-[#94A3B8] font-normal">({dominantPct}%)</span>
               </p>
             </div>
             <div
               className="flex-1 rounded-lg px-3 py-2 border"
-              style={{ borderColor: `${secTemperament.colorHex}30`, backgroundColor: `${secTemperament.colorHex}08` }}
+              style={{ borderColor: `${blendColors.secondary}30`, backgroundColor: `${blendColors.secondary}08` }}
             >
               <p className="font-sans text-[9px] uppercase tracking-wider text-[#64748B]">Secondary</p>
-              <p className="font-serif text-sm font-bold" style={{ color: secTemperament.colorHex }}>
-                {secTemperament.title} <span className="text-[#94A3B8] font-normal">({secondaryPct}%)</span>
+              <p className="font-serif text-sm font-bold" style={{ color: blendColors.secondary }}>
+                {secTemperament.name} <span className="text-[#94A3B8] font-normal">({secondaryPct}%)</span>
               </p>
             </div>
           </div>
@@ -383,18 +389,18 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
           disabled={isDownloading}
           className="flex-1 flex items-center justify-center gap-2 font-serif text-xs font-bold tracking-widest uppercase py-3 rounded-xl border-2 transition-all duration-200 cursor-pointer disabled:opacity-60"
           style={{
-            borderColor: temperament.colorHex,
+            borderColor: blendColors.primary,
             color: '#0D0D0F',
-            backgroundColor: temperament.colorHex,
+            backgroundColor: blendColors.primary,
           }}
           onMouseEnter={(e) => {
             if (isDownloading) return
             e.currentTarget.style.backgroundColor = 'transparent'
-            e.currentTarget.style.color = temperament.colorHex
+            e.currentTarget.style.color = blendColors.primary
           }}
           onMouseLeave={(e) => {
             if (isDownloading) return
-            e.currentTarget.style.backgroundColor = temperament.colorHex
+            e.currentTarget.style.backgroundColor = blendColors.primary
             e.currentTarget.style.color = '#0D0D0F'
           }}
         >
@@ -404,17 +410,17 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
           {isDownloading ? 'Generating...' : 'PDF Report'}
         </button>
 
-        <ShareTextButton temperament={temperament} onCopy={handleCopyText} />
+        <ShareTextButton color={blendColors.primary} onCopy={handleCopyText} />
       </div>
     </div>
   )
 }
 
 function ShareTextButton({
-  temperament,
+  color,
   onCopy,
 }: {
-  temperament: Temperament
+  color: string
   onCopy: () => Promise<boolean>
 }) {
   const [copied, setCopied] = useState(false)
@@ -432,16 +438,16 @@ function ShareTextButton({
       onClick={handleClick}
       className="flex-1 flex items-center justify-center gap-2 font-serif text-xs font-bold tracking-widest uppercase py-3 rounded-xl border transition-all duration-200 cursor-pointer"
       style={{
-        borderColor: `${temperament.colorHex}40`,
-        color: temperament.colorHex,
+        borderColor: `${color}40`,
+        color: color,
         backgroundColor: 'transparent',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = temperament.colorHex
-        e.currentTarget.style.backgroundColor = `${temperament.colorHex}10`
+        e.currentTarget.style.borderColor = color
+        e.currentTarget.style.backgroundColor = `${color}10`
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = `${temperament.colorHex}40`
+        e.currentTarget.style.borderColor = `${color}40`
         e.currentTarget.style.backgroundColor = 'transparent'
       }}
     >
