@@ -31,37 +31,25 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
   return (
     <main
       className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 md:py-16 overflow-hidden"
-      style={{ background: '#0D0D0F' }}
+      style={{ 
+        background: 'radial-gradient(ellipse at center top, #1a1a2e 0%, #0D0D0F 50%, #000000 100%)',
+      }}
     >
-      {/* Full-screen video background */}
-      <video
-        src="/videos/landing-bg.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ minWidth: '100%', minHeight: '100%' }}
-      />
-
-      {/* Dark overlay for text readability */}
-      <div
-        className="absolute inset-0"
-        style={{ backgroundColor: 'rgba(13, 13, 15, 0.7)' }}
-      />
-
-      {/* Vignette effect */}
-      <div
-        className="absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.6) 100%)' }}
-      />
-
       {/* Ambient glow effects */}
       <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-3xl pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-3xl pointer-events-none transition-opacity duration-1000"
         style={{ 
-          background: 'radial-gradient(ellipse, rgba(255,215,0,0.2) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(255,215,0,0.15) 0%, transparent 70%)',
+          opacity: glowPulse ? 0.8 : 0.5,
         }} 
+      />
+      <div 
+        className="absolute bottom-0 left-1/4 w-[400px] h-[300px] rounded-full blur-3xl pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(230,57,70,0.08) 0%, transparent 70%)' }} 
+      />
+      <div 
+        className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full blur-3xl pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(82,183,136,0.08) 0%, transparent 70%)' }} 
       />
 
       {/* Decorative corner frames */}
@@ -160,7 +148,7 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
             }}
           >
             <video
-              src="/videos/typequest.mp4"
+              src="/videos/landing-bg.mp4"
               autoPlay
               loop
               muted
@@ -225,6 +213,7 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                       fill
                       loading="eager"
                       className="object-contain"
+                      sizes="100px"
                       style={{
                         filter: isHovered
                           ? `drop-shadow(0 0 25px ${t.colorHex}) drop-shadow(0 0 50px ${t.colorHex}60)`

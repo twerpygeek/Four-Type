@@ -33,7 +33,7 @@ export default function VideoBackground({ questionNumber = 20, overlayOpacity = 
       <video
         ref={videoRef}
         src="/videos/test-journey.mp4"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover hidden md:block"
         style={{ minWidth: '100%', minHeight: '100%' }}
         playsInline
         muted
