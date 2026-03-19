@@ -205,6 +205,7 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                       transform: isHovered ? 'translateY(-12px) scale(1.1)' : 'translateY(0) scale(1)',
                       width: '100px',
                       height: '130px',
+                      aspectRatio: '100 / 130',
                     }}
                   >
                     <Image
