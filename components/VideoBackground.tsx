@@ -28,7 +28,7 @@ export default function VideoBackground({ questionNumber = 20, overlayOpacity = 
   const progressOverlay = Math.min(overlayOpacity + (questionNumber - 1) / 40 * 0.3, 0.7)
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden bg-background">
+    <div className="fixed inset-0 w-full h-full overflow-hidden bg-background z-0 pointer-events-none">
       {/* Video element */}
       <video
         ref={videoRef}
