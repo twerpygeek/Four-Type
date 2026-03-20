@@ -52,12 +52,43 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center group-hover:scale-105 transition-transform">
-              <span className="font-serif text-primary font-bold text-xl">4</span>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            {/* Gold shield/crest logo with "4" */}
+            <div 
+              className="relative w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center group-hover:scale-105 transition-transform"
+              style={{
+                background: 'linear-gradient(145deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%)',
+                borderRadius: '8px',
+                boxShadow: '0 2px 8px rgba(255,215,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3)',
+              }}
+            >
+              {/* Inner embossed effect */}
+              <div 
+                className="absolute inset-[2px] rounded-[6px] flex items-center justify-center"
+                style={{
+                  background: 'linear-gradient(145deg, #B8860B 0%, #DAA520 50%, #FFD700 100%)',
+                }}
+              >
+                <span 
+                  className="font-serif font-black text-lg sm:text-xl"
+                  style={{ 
+                    color: '#1a1a1a',
+                    textShadow: '0 1px 0 rgba(255,255,255,0.3)',
+                  }}
+                >
+                  4
+                </span>
+              </div>
             </div>
-            <span className="font-serif text-xl text-foreground group-hover:text-primary transition-colors">
-              FourType
+            {/* FourType text with gold accent */}
+            <span 
+              className="font-serif text-lg sm:text-xl font-semibold tracking-wide"
+              style={{ 
+                color: '#E5E7EB',
+                textShadow: '0 0 20px rgba(255,215,0,0.15)',
+              }}
+            >
+              <span style={{ color: '#FFD700' }}>Four</span>Type
             </span>
           </Link>
 

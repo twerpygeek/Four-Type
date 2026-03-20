@@ -217,19 +217,20 @@ export default function HomePage() {
               </div>
 
               {/* 4 character columns */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 {temperaments.map((temp) => (
                   <Link
                     key={temp.key}
                     href={`/temperament/${temp.key}`}
-                    className="group flex flex-col items-center gap-3"
+                    className="group flex flex-col items-center"
                     onMouseEnter={() => setHoveredTemp(temp.key)}
                     onMouseLeave={() => setHoveredTemp(null)}
                   >
                     {/* Character with colour glow underneath */}
-                    <div className="relative flex items-end justify-center h-44 sm:h-56 w-full">
+                    <div className="relative flex items-end justify-center w-full mb-3">
+                      {/* Glow under character */}
                       <div
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full blur-2xl transition-opacity duration-300"
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 sm:w-28 h-20 sm:h-28 rounded-full blur-2xl transition-opacity duration-300"
                         style={{
                           backgroundColor: temp.color,
                           opacity: hoveredTemp === temp.key ? 0.4 : 0.13,
@@ -238,15 +239,15 @@ export default function HomePage() {
                       <Image
                         src={temp.image}
                         alt={temp.title}
-                        width={170}
-                        height={210}
-                        className="relative object-contain drop-shadow-2xl transition-transform duration-300 group-hover:-translate-y-3"
+                        width={140}
+                        height={175}
+                        className="relative object-contain drop-shadow-2xl transition-transform duration-300 group-hover:-translate-y-2 w-auto h-[130px] sm:h-[175px]"
                       />
                     </div>
 
                     {/* Bordered name card */}
                     <div
-                      className="w-full px-3 py-3 text-center transition-all duration-300"
+                      className="w-full px-2 sm:px-3 py-2 sm:py-3 text-center transition-all duration-300"
                       style={{
                         border: `1px solid ${temp.color}`,
                         boxShadow: hoveredTemp === temp.key
@@ -256,19 +257,19 @@ export default function HomePage() {
                       }}
                     >
                       <p
-                        className="font-serif text-sm sm:text-base font-bold tracking-[0.15em] uppercase"
+                        className="font-serif text-xs sm:text-base font-bold tracking-[0.1em] sm:tracking-[0.15em] uppercase"
                         style={{ color: temp.color }}
                       >
                         {temp.title}
                       </p>
-                      <p className="font-sans text-xs text-foreground/45 mt-0.5">
+                      <p className="font-sans text-[10px] sm:text-xs text-foreground/45 mt-0.5">
                         {temp.name}
                       </p>
                     </div>
 
-                    {/* Animated hover info panel */}
+                    {/* Animated hover info panel - desktop only */}
                     <div
-                      className="w-full px-3 text-center overflow-hidden transition-all duration-300"
+                      className="hidden sm:block w-full px-3 text-center overflow-hidden transition-all duration-300 mt-2"
                       style={{
                         border: hoveredTemp === temp.key ? `1px solid ${temp.color}50` : '1px solid transparent',
                         backgroundColor: `${temp.color}0A`,
