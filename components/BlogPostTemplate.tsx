@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { RuneBackground } from '@/components/RuneBackground';
+import RuneBackground from '@/components/RuneBackground';
 
 interface BlogPostProps {
   title: string;

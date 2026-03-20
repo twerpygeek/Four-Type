@@ -353,8 +353,9 @@ export default function HomePage() {
                       <Image
                         src={temp.image}
                         alt={temp.title}
-                        fill
-                        className="object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300"
+                        width={96}
+                        height={128}
+                        className="object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300 w-full h-full"
                       />
                     </div>
 
