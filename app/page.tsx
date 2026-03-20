@@ -108,8 +108,8 @@ export default function HomePage() {
       <main className="min-h-screen bg-background">
         <RuneBackground />
         
-        {/* Hero Section */}
-        <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        {/* Hero Section - FourType Landing */}
+        <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center pt-20 overflow-hidden">
           {/* Animated gradient background */}
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
@@ -117,72 +117,161 @@ export default function HomePage() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#4CC9F0]/5 rounded-full blur-3xl" />
           </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-8 animate-fade-in">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm text-primary font-medium">Ancient wisdom, modern understanding</span>
+          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center">
+            {/* Tagline */}
+            <div className="text-center mb-4">
+              <p className="text-sm sm:text-base text-primary/80 font-medium tracking-widest uppercase letter-spacing">
+                Know Your True Nature
+              </p>
             </div>
-            
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight animate-fade-in-up">
-              <span className="text-balance">Know Your</span>
-              <br />
-              <span className="bg-gradient-to-r from-primary via-[#E63946] to-[#4CC9F0] bg-clip-text text-transparent">
-                True Nature
+
+            {/* Logo */}
+            <h1 className="font-serif text-6xl sm:text-7xl lg:text-8xl font-bold text-center mb-2">
+              <span className="bg-gradient-to-r from-primary via-[#FFD700] to-primary bg-clip-text text-transparent drop-shadow-lg">
+                FOURTYPE
               </span>
             </h1>
-            
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-100">
-              Discover which of the four temperaments shapes your personality, decisions, and relationships. 
-              Take the quiz and unlock insights that have guided humanity for over 2,500 years.
+
+            {/* Subtitle */}
+            <p className="text-center text-lg sm:text-xl text-muted-foreground mb-12 font-light tracking-wide">
+              The Temperament Quest
             </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-200">
+
+            {/* Center Video with Decorative Border */}
+            <div className="relative w-full max-w-3xl mx-auto mb-16">
+              {/* Decorative corners */}
+              <div className="absolute -top-6 -left-6 w-8 h-8 border-t-2 border-l-2 border-primary/40" />
+              <div className="absolute -top-6 -right-6 w-8 h-8 border-t-2 border-r-2 border-primary/40" />
+              <div className="absolute -bottom-6 -left-6 w-8 h-8 border-b-2 border-l-2 border-primary/40" />
+              <div className="absolute -bottom-6 -right-6 w-8 h-8 border-b-2 border-r-2 border-primary/40" />
+
+              {/* Video Container */}
+              <div className="relative bg-black/60 rounded-lg overflow-hidden aspect-video border border-primary/20">
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-a2da9931-dd77-40ca-b351-adddc5cc3a08-tiKxL7ZkSPMBtfTWvRilrBR5Q1UAoe.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+
+            {/* Character Cards Section */}
+            <div className="w-full">
+              <p className="text-center text-muted-foreground mb-10 text-sm sm:text-base tracking-wide">
+                Find Your True Nature
+              </p>
+
+              {/* Character Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-4">
+                {temperaments.map((temp) => (
+                  <Link
+                    key={temp.key}
+                    href={`/temperament/${temp.key}`}
+                    className="group relative flex flex-col items-center transition-all duration-300"
+                    onMouseEnter={() => setHoveredTemp(temp.key)}
+                    onMouseLeave={() => setHoveredTemp(null)}
+                  >
+                    {/* Glowing Border Box */}
+                    <div 
+                      className={`relative w-full aspect-square mb-4 transition-all duration-300 ${
+                        hoveredTemp === temp.key ? 'scale-105' : ''
+                      }`}
+                      style={{
+                        border: `2px solid ${temp.color}`,
+                        borderRadius: '0.5rem',
+                        boxShadow: hoveredTemp === temp.key 
+                          ? `0 0 20px ${temp.color}, inset 0 0 20px ${temp.color}20` 
+                          : `0 0 10px ${temp.color}40`,
+                        backgroundColor: hoveredTemp === temp.key ? `${temp.color}10` : 'transparent',
+                      }}
+                    >
+                      {/* Glow effect background */}
+                      <div 
+                        className="absolute inset-0 rounded opacity-0 group-hover:opacity-40 transition-opacity duration-300 blur-xl"
+                        style={{ backgroundColor: temp.color }}
+                      />
+                      
+                      {/* Character Image */}
+                      <div className="relative w-full h-full flex items-center justify-center p-4">
+                        <Image
+                          src={temp.image}
+                          alt={temp.title}
+                          width={200}
+                          height={240}
+                          className="object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+
+                      {/* Hover Info Box */}
+                      <div 
+                        className={`absolute -bottom-40 left-1/2 -translate-x-1/2 w-48 p-4 rounded-lg border transition-all duration-300 pointer-events-none ${
+                          hoveredTemp === temp.key 
+                            ? 'opacity-100 translate-y-0' 
+                            : 'opacity-0 translate-y-2'
+                        }`}
+                        style={{
+                          backgroundColor: `${temp.color}15`,
+                          borderColor: temp.color,
+                        }}
+                      >
+                        <p className="text-xs sm:text-sm text-foreground font-medium text-center">
+                          {temp.description}
+                        </p>
+                        <div className="mt-2 flex flex-wrap gap-1 justify-center">
+                          {temp.traits.slice(0, 2).map((trait) => (
+                            <span
+                              key={trait}
+                              className="text-xs px-2 py-1 rounded"
+                              style={{ 
+                                backgroundColor: `${temp.color}30`,
+                                color: temp.color,
+                              }}
+                            >
+                              {trait}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Title and Type */}
+                    <h3 
+                      className="font-serif text-base sm:text-lg font-bold text-center transition-colors duration-300"
+                      style={{ color: hoveredTemp === temp.key ? temp.color : '#E5E7EB' }}
+                    >
+                      {temp.title}
+                    </h3>
+                    <p 
+                      className="text-xs sm:text-sm text-muted-foreground text-center"
+                      style={{ color: temp.color }}
+                    >
+                      {temp.name}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Centered CTA */}
+            <div className="mt-20 flex flex-col items-center gap-6">
               <Link
                 href="/quiz"
-                className="group flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5"
+                className="group flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5"
               >
                 Take the Free Quiz
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/manifesto"
-                className="group flex items-center gap-2 px-8 py-4 bg-secondary text-foreground font-semibold rounded-xl hover:bg-secondary/80 transition-all border border-border"
+                className="text-sm text-primary hover:text-primary/80 transition-colors font-medium"
               >
-                <Play className="w-5 h-5" />
-                Read the Manifesto
+                Learn More About Temperaments
               </Link>
-            </div>
-
-            {/* Floating character preview */}
-            <div className="mt-16 flex items-end justify-center gap-4 sm:gap-8">
-              {temperaments.map((temp, i) => (
-                <div
-                  key={temp.key}
-                  className="relative group cursor-pointer animate-fade-in-up"
-                  style={{ animationDelay: `${300 + i * 100}ms` }}
-                  onMouseEnter={() => setHoveredTemp(temp.key)}
-                  onMouseLeave={() => setHoveredTemp(null)}
-                >
-                  <div 
-                    className="absolute inset-0 rounded-full blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300"
-                    style={{ backgroundColor: temp.color }}
-                  />
-                  <div className={`relative w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 transition-transform duration-300 ${hoveredTemp === temp.key ? 'scale-110 -translate-y-2' : ''}`}>
-                    <Image
-                      src={temp.image}
-                      alt={temp.title}
-                      fill
-                      className="object-contain drop-shadow-2xl"
-                    />
-                  </div>
-                  <div 
-                    className={`absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium transition-opacity duration-300 ${hoveredTemp === temp.key ? 'opacity-100' : 'opacity-0'}`}
-                    style={{ color: temp.color }}
-                  >
-                    {temp.title}
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
 
