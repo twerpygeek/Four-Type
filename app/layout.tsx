@@ -15,7 +15,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Temperament Test – Discover Your Character Class | FourType',
+  title: 'Temperament Test – Find Your Character Class | FourType',
   description: 'Find out who you really are under pressure. Take this free temperament test and discover your character class — Commander, Bard, Strategist, or Guardian.',
   generator: 'v0.app',
   metadataBase: new URL('https://fourtype.com'),
@@ -25,15 +25,15 @@ export const metadata: Metadata = {
     apple: '/favicon.jpg',
   },
   openGraph: {
-    title: 'Temperament Test – Discover Your Character Class | FourType',
+    title: 'Temperament Test – Find Your Character Class | FourType',
     description: 'Find out who you really are under pressure. Take this free temperament test and discover your character class — Commander, Bard, Strategist, or Guardian.',
     url: 'https://fourtype.com',
     siteName: 'FourType',
     images: [
       {
-        url: 'https://fourtype.com/og-image.jpg',
-        width: 1270,
-        height: 952,
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
         alt: 'FourType — Know Your True Nature. The Commander, The Bard, The Strategist, The Guardian.',
       },
     ],
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Temperament Test – Discover Your Character Class | FourType',
+    title: 'Temperament Test – Find Your Character Class | FourType',
     description: 'Find out who you really are under pressure. Take this free temperament test and discover your character class.',
-    images: ['https://fourtype.com/og-image.jpg'],
+    images: ['/og-image.jpg'],
   },
 }
 

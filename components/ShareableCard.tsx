@@ -35,9 +35,12 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
   const handleDownload = useCallback(async () => {
     if (isDownloading) return
     setIsDownloading(true)
+    console.log('[v0] Starting PDF generation...')
 
     try {
+      console.log('[v0] Importing jsPDF...')
       const { jsPDF } = await import('jspdf')
+      console.log('[v0] jsPDF imported, creating document...')
       const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
 
       const W = 210
@@ -68,7 +71,7 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
       doc.setTextColor(cr, cg, cb)
       doc.setFontSize(22)
       doc.setFont('helvetica', 'bold')
-      doc.text('TYPEQUEST', W / 2, 14, { align: 'center' })
+      doc.text('FOURTYPE', W / 2, 14, { align: 'center' })
 
       doc.setTextColor(200, 200, 200)
       doc.setFontSize(9)
@@ -229,7 +232,7 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
       doc.setTextColor(80, 90, 110)
       doc.setFontSize(7)
       doc.setFont('helvetica', 'normal')
-      doc.text('TypeQuest · Free Temperament Assessment · typequest.app', W / 2, 288, { align: 'center' })
+      doc.text('FourType · The Temperament Quest · fourtype.com', W / 2, 288, { align: 'center' })
       ;[1, 2].forEach((pg) => {
         doc.setPage(pg)
         doc.setTextColor(60, 70, 85)
@@ -237,16 +240,19 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
         doc.text(`Page ${pg} of 2`, W - 14, 292, { align: 'right' })
       })
 
-      doc.save(`typequest-${temperament.name.toLowerCase()}-${heroName.toLowerCase().replace(/\s+/g, '-')}.pdf`)
+      console.log('[v0] Saving PDF...')
+      doc.save(`fourtype-${blend.name.toLowerCase()}-${heroName.toLowerCase().replace(/\s+/g, '-')}.pdf`)
+      console.log('[v0] PDF saved successfully!')
     } catch (err) {
-      console.error('PDF generation failed:', err)
+      console.error('[v0] PDF generation failed:', err)
+      alert('Failed to generate PDF. Please try again.')
     } finally {
       setIsDownloading(false)
     }
-  }, [heroName, temperament, scores, isDownloading])
+  }, [heroName, temperament, scores, isDownloading, blend])
 
   const handleCopyText = useCallback(async () => {
-    const text = `I am ${blend.name} (${blend.blend}). What's yours?\n\n"${blend.tagline}"\n\nDiscover your character class free at typequest.app`
+    const text = `I am ${blend.name} (${blend.blend}). What's yours?\n\n"${blend.tagline}"\n\nDiscover your character class free at fourtype.com`
     try {
       await navigator.clipboard.writeText(text)
       return true
@@ -376,8 +382,8 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
 
           {/* Footer */}
           <div className="flex items-center justify-between">
-            <p className="font-serif text-[9px] tracking-[0.15em] uppercase text-[#3A3A50]">TypeQuest</p>
-            <p className="font-sans text-[9px] text-[#3A3A50]">typequest.app</p>
+            <p className="font-serif text-[9px] tracking-[0.15em] uppercase text-[#3A3A50]">FourType</p>
+            <p className="font-sans text-[9px] text-[#3A3A50]">fourtype.com</p>
           </div>
         </div>
       </div>
