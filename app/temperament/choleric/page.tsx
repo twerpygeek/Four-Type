@@ -114,7 +114,7 @@ export default function ChloricPage() {
                     alt="The Commander - Choleric Temperament"
                     width={400}
                     height={500}
-                    className="relative z-10"
+                    className="relative z-10 w-auto h-auto"
                     priority
                   />
                 </div>
@@ -265,22 +265,6 @@ export default function ChloricPage() {
         </section>
       </main>
       <Footer />
-
-      <style jsx>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.5s ease-out forwards;
-        }
-      `}</style>
     </>
   );
 }
