@@ -256,30 +256,38 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
             })}
           </div>
 
-          {/* Hover tooltip */}
-          {hoveredChar && (
-            <div
-              className="absolute left-1/2 -translate-x-1/2 -bottom-24 px-6 py-3 rounded-lg border text-center max-w-sm pointer-events-none"
-              style={{
-                backgroundColor: 'rgba(13, 13, 15, 0.95)',
-                borderColor: TEMPERAMENTS[hoveredChar].colorHex + '60',
-                boxShadow: `
-                  0 0 30px ${TEMPERAMENTS[hoveredChar].colorHex}20,
-                  inset 0 0 20px ${TEMPERAMENTS[hoveredChar].colorHex}10
-                `,
-              }}
-            >
-              <p className="font-serif text-sm text-[#E2E8F0]">
-                {TEMPERAMENTS[hoveredChar].rpgClass}
-              </p>
-              <p
-                className="font-sans text-xs mt-1"
-                style={{ color: TEMPERAMENTS[hoveredChar].colorHex }}
+          {/* Hover tooltip - positioned below characters */}
+          <div
+            className="mt-8 h-16 flex items-center justify-center"
+          >
+            {hoveredChar ? (
+              <div
+                className="px-6 py-3 rounded-lg border text-center max-w-sm transition-all duration-300"
+                style={{
+                  backgroundColor: 'rgba(13, 13, 15, 0.95)',
+                  borderColor: TEMPERAMENTS[hoveredChar].colorHex + '60',
+                  boxShadow: `
+                    0 0 30px ${TEMPERAMENTS[hoveredChar].colorHex}20,
+                    inset 0 0 20px ${TEMPERAMENTS[hoveredChar].colorHex}10
+                  `,
+                }}
               >
-                The Language of {TEMPERAMENTS[hoveredChar].language}
+                <p className="font-serif text-sm text-[#E2E8F0]">
+                  {TEMPERAMENTS[hoveredChar].rpgClass}
+                </p>
+                <p
+                  className="font-sans text-xs mt-1"
+                  style={{ color: TEMPERAMENTS[hoveredChar].colorHex }}
+                >
+                  The Language of {TEMPERAMENTS[hoveredChar].language}
+                </p>
+              </div>
+            ) : (
+              <p className="font-sans text-xs text-[#4A5568] italic">
+                Hover over a character to learn more
               </p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Lore text */}

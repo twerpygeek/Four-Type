@@ -35,12 +35,9 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
   const handleDownload = useCallback(async () => {
     if (isDownloading) return
     setIsDownloading(true)
-    console.log('[v0] Starting PDF generation...')
 
     try {
-      console.log('[v0] Importing jsPDF...')
       const { jsPDF } = await import('jspdf')
-      console.log('[v0] jsPDF imported, creating document...')
       const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
 
       const W = 210
@@ -240,11 +237,10 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
         doc.text(`Page ${pg} of 2`, W - 14, 292, { align: 'right' })
       })
 
-      console.log('[v0] Saving PDF...')
-      doc.save(`fourtype-${blend.name.toLowerCase()}-${heroName.toLowerCase().replace(/\s+/g, '-')}.pdf`)
-      console.log('[v0] PDF saved successfully!')
+      const filename = `fourtype-${blend.name.toLowerCase().replace(/\s+/g, '-')}-${heroName.toLowerCase().replace(/\s+/g, '-')}.pdf`
+      doc.save(filename)
     } catch (err) {
-      console.error('[v0] PDF generation failed:', err)
+      console.error('PDF generation failed:', err)
       alert('Failed to generate PDF. Please try again.')
     } finally {
       setIsDownloading(false)
@@ -256,8 +252,23 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
     try {
       await navigator.clipboard.writeText(text)
       return true
-    } catch {
-      return false
+    } catch (err) {
+      // Fallback for browsers without clipboard API
+      const textarea = document.createElement('textarea')
+      textarea.value = text
+      textarea.style.position = 'fixed'
+      textarea.style.opacity = '0'
+      document.body.appendChild(textarea)
+      textarea.select()
+      try {
+        document.execCommand('copy')
+        document.body.removeChild(textarea)
+        return true
+      } catch {
+        document.body.removeChild(textarea)
+        alert('Could not copy text. Please copy manually.')
+        return false
+      }
     }
   }, [blend])
 
@@ -430,12 +441,19 @@ function ShareTextButton({
   onCopy: () => Promise<boolean>
 }) {
   const [copied, setCopied] = useState(false)
+  const [copying, setCopying] = useState(false)
 
   const handleClick = async () => {
-    const success = await onCopy()
-    if (success) {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+    if (copying) return
+    setCopying(true)
+    try {
+      const success = await onCopy()
+      if (success) {
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      }
+    } finally {
+      setCopying(false)
     }
   }
 
