@@ -1,9 +1,9 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, BookOpen, Users, Brain, Sparkles, ChevronRight, Play } from 'lucide-react'
+import { ArrowRight, BookOpen, Users, Brain, Sparkles, ChevronRight, Scroll, Swords, Map } from 'lucide-react'
 import RuneBackground from '@/components/RuneBackground'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -51,6 +51,34 @@ const temperaments = [
   },
 ]
 
+const menuItems = [
+  {
+    href: '/quiz',
+    icon: Swords,
+    label: 'Begin Quest',
+    description: 'Discover your temperament',
+    primary: true,
+  },
+  {
+    href: '/manifesto',
+    icon: Scroll,
+    label: 'The Manifesto',
+    description: 'Learn the ancient wisdom',
+  },
+  {
+    href: '/blog',
+    icon: BookOpen,
+    label: 'Chronicles',
+    description: 'Stories and insights',
+  },
+  {
+    href: '/faq',
+    icon: Map,
+    label: 'Guide',
+    description: 'Questions answered',
+  },
+]
+
 const features = [
   {
     icon: Brain,
@@ -74,33 +102,9 @@ const features = [
   },
 ]
 
-const blogPosts = [
-  {
-    slug: 'history-of-temperaments',
-    title: 'History of the 4 Temperaments',
-    excerpt: 'From Hippocrates to modern psychology — a 2,500-year journey through personality science.',
-    category: 'History',
-    readTime: '8 min',
-  },
-  {
-    slug: 'leadership-and-temperament',
-    title: 'Temperament and Leadership',
-    excerpt: 'How each temperament leads differently, and how to develop your leadership style.',
-    category: 'Leadership',
-    readTime: '6 min',
-  },
-  {
-    slug: 'temperaments-vs-mbti-big-five',
-    title: '4 Temperaments vs MBTI vs Big Five',
-    excerpt: 'How the major personality systems compare and which one is right for you.',
-    category: 'Comparison',
-    readTime: '7 min',
-  },
-]
-
 export default function HomePage() {
   const [hoveredTemp, setHoveredTemp] = useState<string | null>(null)
-  const heroRef = useRef<HTMLDivElement>(null)
+  const [hoveredMenu, setHoveredMenu] = useState<string | null>(null)
 
   return (
     <>
@@ -108,15 +112,13 @@ export default function HomePage() {
       <main className="min-h-screen bg-background">
         <RuneBackground />
         
-        {/* ── Hero Section ── */}
-        <section ref={heroRef} className="relative flex flex-col items-center justify-center pt-24 pb-20 overflow-hidden">
-
-          {/* Radial dark vignette on edges */}
+        {/* Hero Section */}
+        <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-12 overflow-hidden">
+          {/* Radial dark vignette */}
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_35%,transparent_50%,rgba(13,13,15,0.85)_100%)]" />
 
           <div className="relative z-10 w-full flex flex-col items-center px-4">
-
-            {/* ── Top ornament: lines + star ── */}
+            {/* Top ornament */}
             <div className="flex items-center gap-4 mb-4">
               <div className="h-px w-20 sm:w-32 bg-gradient-to-r from-transparent to-[#FFD700]/50" />
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
@@ -125,38 +127,30 @@ export default function HomePage() {
               <div className="h-px w-20 sm:w-32 bg-gradient-to-l from-transparent to-[#FFD700]/50" />
             </div>
 
-            {/* ── Tagline ── */}
-            <p className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.45em] uppercase mb-4"
-              style={{ color: '#c9a227' }}>
+            {/* Tagline */}
+            <p className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.45em] uppercase mb-4" style={{ color: '#c9a227' }}>
               Know Your True Nature
             </p>
 
-            {/* ── FOURTYPE glow title ── */}
+            {/* FOURTYPE glow title */}
             <h1
               className="font-serif font-black text-center leading-[0.9] mb-4 select-none"
               style={{
-                fontSize: 'clamp(3.8rem, 13vw, 9.5rem)',
+                fontSize: 'clamp(3.5rem, 12vw, 9rem)',
                 color: '#FFD700',
-                textShadow: [
-                  '0 0 12px #FFE566',
-                  '0 0 30px #FFD700',
-                  '0 0 60px #FFA500',
-                  '0 0 100px #FF7700',
-                  '0 0 140px #cc5500',
-                  '3px 3px 0 rgba(80,40,0,0.6)',
-                ].join(', '),
+                textShadow: '0 0 12px #FFE566, 0 0 30px #FFD700, 0 0 60px #FFA500, 0 0 100px #FF7700, 0 0 140px #cc5500, 3px 3px 0 rgba(80,40,0,0.6)',
               }}
             >
               FOURTYPE
             </h1>
 
-            {/* ── Subtitle ── */}
+            {/* Subtitle */}
             <p className="font-serif text-lg sm:text-xl text-foreground/55 tracking-[0.18em] mb-4">
               The Temperament Quest
             </p>
 
-            {/* ── Diamond divider ── */}
-            <div className="flex items-center gap-3 mb-10">
+            {/* Diamond divider */}
+            <div className="flex items-center gap-3 mb-8">
               <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
               <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
                 <path d="M4.5 0L9 4.5L4.5 9L0 4.5Z" fill="#FFD700" fillOpacity="0.7" />
@@ -164,19 +158,13 @@ export default function HomePage() {
               <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
             </div>
 
-            {/* ── Video frame with gold L-bracket corners ── */}
-            <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-[680px] mx-auto mb-10">
-              {/* L-bracket corners — each is two absolutely-positioned spans */}
-              {/* top-left */}
+            {/* Video frame with gold L-bracket corners */}
+            <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-[680px] mx-auto mb-8">
               <span className="pointer-events-none absolute -top-[10px] -left-[10px] w-7 h-7 border-t-2 border-l-2 border-[#FFD700]/75" />
-              {/* top-right */}
               <span className="pointer-events-none absolute -top-[10px] -right-[10px] w-7 h-7 border-t-2 border-r-2 border-[#FFD700]/75" />
-              {/* bottom-left */}
               <span className="pointer-events-none absolute -bottom-[10px] -left-[10px] w-7 h-7 border-b-2 border-l-2 border-[#FFD700]/75" />
-              {/* bottom-right */}
               <span className="pointer-events-none absolute -bottom-[10px] -right-[10px] w-7 h-7 border-b-2 border-r-2 border-[#FFD700]/75" />
 
-              {/* Video container */}
               <div
                 className="overflow-hidden bg-black"
                 style={{
@@ -184,39 +172,103 @@ export default function HomePage() {
                   boxShadow: '0 0 0 1px rgba(255,215,0,0.18), 0 8px 48px rgba(0,0,0,0.7)',
                 }}
               >
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                >
-                  <source
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-a2da9931-dd77-40ca-b351-adddc5cc3a08-PYDgy4CNaLVdiZe0hjEl7V7Jxejpnr.mp4"
-                    type="video/mp4"
-                  />
+                <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+                  <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-a2da9931-dd77-40ca-b351-adddc5cc3a08-PYDgy4CNaLVdiZe0hjEl7V7Jxejpnr.mp4" type="video/mp4" />
                 </video>
               </div>
             </div>
 
-            {/* ── "Find Your True Nature" ── */}
-            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-20"
-              style={{ color: 'rgba(255,215,0,0.55)' }}>
+            {/* "Find Your True Nature" */}
+            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-12" style={{ color: 'rgba(255,215,0,0.55)' }}>
               Find Your True Nature
             </p>
 
-            {/* ── CHOOSE YOUR PATH + character cards ── */}
+            {/* Game-like Menu Interface */}
+            <div className="w-full max-w-md mx-auto mb-16">
+              <div className="relative">
+                {/* Decorative frame */}
+                <div className="absolute -inset-4 border border-[#FFD700]/20 pointer-events-none" />
+                <div className="absolute -inset-4">
+                  <span className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#FFD700]/60" />
+                  <span className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#FFD700]/60" />
+                  <span className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#FFD700]/60" />
+                  <span className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#FFD700]/60" />
+                </div>
+
+                {/* Menu items */}
+                <div className="space-y-3 p-2">
+                  {menuItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`group relative flex items-center gap-4 px-5 py-4 transition-all duration-300 ${
+                        item.primary
+                          ? 'bg-[#FFD700]/10 border-2 border-[#FFD700]/60 hover:bg-[#FFD700]/20 hover:border-[#FFD700]'
+                          : 'bg-foreground/5 border border-foreground/10 hover:bg-foreground/10 hover:border-foreground/20'
+                      }`}
+                      onMouseEnter={() => setHoveredMenu(item.href)}
+                      onMouseLeave={() => setHoveredMenu(null)}
+                      style={{
+                        boxShadow: hoveredMenu === item.href
+                          ? item.primary
+                            ? '0 0 20px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.05)'
+                            : '0 0 15px rgba(255,255,255,0.1)'
+                          : 'none',
+                      }}
+                    >
+                      {/* Icon */}
+                      <div
+                        className={`w-10 h-10 flex items-center justify-center transition-all duration-300 ${
+                          item.primary ? 'text-[#FFD700]' : 'text-foreground/60 group-hover:text-foreground'
+                        }`}
+                      >
+                        <item.icon className="w-5 h-5" />
+                      </div>
+
+                      {/* Text */}
+                      <div className="flex-1">
+                        <p
+                          className={`font-serif text-base sm:text-lg font-semibold tracking-wide transition-colors ${
+                            item.primary ? 'text-[#FFD700]' : 'text-foreground/80 group-hover:text-foreground'
+                          }`}
+                        >
+                          {item.label}
+                        </p>
+                        <p className="text-xs text-foreground/40 group-hover:text-foreground/60 transition-colors">
+                          {item.description}
+                        </p>
+                      </div>
+
+                      {/* Arrow */}
+                      <ArrowRight
+                        className={`w-5 h-5 transition-all duration-300 group-hover:translate-x-1 ${
+                          item.primary ? 'text-[#FFD700]/60 group-hover:text-[#FFD700]' : 'text-foreground/30 group-hover:text-foreground/60'
+                        }`}
+                      />
+
+                      {/* Glow line on hover */}
+                      {item.primary && (
+                        <div
+                          className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#FFD700] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        />
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Character Selection */}
             <div className="w-full max-w-5xl mx-auto">
-              {/* Section rule with label */}
-              <div className="flex items-center gap-5 justify-center mb-12">
-                <div className="h-px flex-1 max-w-[220px] bg-foreground/12" />
+              <div className="flex items-center gap-5 justify-center mb-10">
+                <div className="h-px flex-1 max-w-[180px] bg-foreground/12" />
                 <p className="font-sans text-[10px] sm:text-xs font-semibold tracking-[0.45em] uppercase text-foreground/35 whitespace-nowrap">
                   Choose Your Path
                 </p>
-                <div className="h-px flex-1 max-w-[220px] bg-foreground/12" />
+                <div className="h-px flex-1 max-w-[180px] bg-foreground/12" />
               </div>
 
-              {/* 4 character columns */}
+              {/* Character cards */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 {temperaments.map((temp) => (
                   <Link
@@ -226,9 +278,8 @@ export default function HomePage() {
                     onMouseEnter={() => setHoveredTemp(temp.key)}
                     onMouseLeave={() => setHoveredTemp(null)}
                   >
-                    {/* Character with colour glow underneath */}
+                    {/* Character with glow */}
                     <div className="relative flex items-end justify-center w-full mb-3">
-                      {/* Glow under character */}
                       <div
                         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 sm:w-28 h-20 sm:h-28 rounded-full blur-2xl transition-opacity duration-300"
                         style={{
@@ -241,11 +292,11 @@ export default function HomePage() {
                         alt={temp.title}
                         width={140}
                         height={175}
-                        className="relative object-contain drop-shadow-2xl transition-transform duration-300 group-hover:-translate-y-2 w-auto h-[130px] sm:h-[175px]"
+                        className="relative object-contain drop-shadow-2xl transition-transform duration-300 group-hover:-translate-y-2 w-auto h-[120px] sm:h-[160px]"
                       />
                     </div>
 
-                    {/* Bordered name card */}
+                    {/* Name card */}
                     <div
                       className="w-full px-2 sm:px-3 py-2 sm:py-3 text-center transition-all duration-300"
                       style={{
@@ -266,55 +317,10 @@ export default function HomePage() {
                         {temp.name}
                       </p>
                     </div>
-
-                    {/* Animated hover info panel - desktop only */}
-                    <div
-                      className="hidden sm:block w-full px-3 text-center overflow-hidden transition-all duration-300 mt-2"
-                      style={{
-                        border: hoveredTemp === temp.key ? `1px solid ${temp.color}50` : '1px solid transparent',
-                        backgroundColor: `${temp.color}0A`,
-                        maxHeight: hoveredTemp === temp.key ? '130px' : '0px',
-                        opacity: hoveredTemp === temp.key ? 1 : 0,
-                        paddingTop: hoveredTemp === temp.key ? '0.625rem' : '0',
-                        paddingBottom: hoveredTemp === temp.key ? '0.625rem' : '0',
-                      }}
-                    >
-                      <p className="font-sans text-[11px] text-foreground/65 leading-relaxed mb-2">
-                        {temp.description}
-                      </p>
-                      <div className="flex gap-1 flex-wrap justify-center">
-                        {temp.traits.map((t) => (
-                          <span
-                            key={t}
-                            className="font-sans text-[10px] px-2 py-0.5 rounded-full"
-                            style={{ backgroundColor: `${temp.color}22`, color: temp.color }}
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
                   </Link>
                 ))}
               </div>
             </div>
-
-            {/* ── CTA ── */}
-            <div className="mt-16 flex flex-col items-center gap-3">
-              <Link
-                href="/quiz"
-                className="group flex items-center gap-2 px-9 py-3 font-sans font-semibold text-sm tracking-wide rounded-lg transition-all duration-200 hover:-translate-y-0.5"
-                style={{
-                  backgroundColor: '#FFD700',
-                  color: '#0D0D0F',
-                  boxShadow: '0 0 24px rgba(255,215,0,0.38)',
-                }}
-              >
-                Take the Free Quiz
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
           </div>
         </section>
 
@@ -336,15 +342,10 @@ export default function HomePage() {
                   key={temp.key}
                   href={`/temperament/${temp.key}`}
                   className="group relative overflow-hidden rounded-2xl bg-card border border-border hover:border-opacity-50 transition-all duration-300 hover:-translate-y-1"
-                  style={{ '--temp-color': temp.color } as React.CSSProperties}
                 >
-                  {/* Glow effect */}
-                  <div 
-                    className={`absolute inset-0 bg-gradient-to-br ${temp.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                  />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${temp.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                   
                   <div className="relative p-6 lg:p-8 flex gap-6">
-                    {/* Character */}
                     <div className="relative w-24 h-32 flex-shrink-0">
                       <div 
                         className="absolute inset-0 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"
@@ -355,11 +356,10 @@ export default function HomePage() {
                         alt={temp.title}
                         width={96}
                         height={128}
-                        className="object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300 w-full h-full"
+                        className="object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300 w-auto h-auto max-w-full max-h-full"
                       />
                     </div>
 
-                    {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
                         <span 
@@ -387,7 +387,6 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    {/* Arrow */}
                     <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0 self-center" />
                   </div>
                 </Link>
@@ -429,66 +428,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Blog Preview Section */}
-        <section className="relative py-24 lg:py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-12">
-              <div>
-                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-                  Latest Insights
-                </h2>
-                <p className="text-lg text-muted-foreground">
-                  Explore the science, history, and practical applications of temperament theory.
-                </p>
-              </div>
-              <Link
-                href="/blog"
-                className="hidden sm:flex items-center gap-2 text-primary hover:underline font-medium"
-              >
-                View all articles
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {blogPosts.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="group relative overflow-hidden rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/10 text-primary">
-                        {post.category}
-                      </span>
-                      <span className="text-xs text-muted-foreground">{post.readTime} read</span>
-                    </div>
-                    <h3 className="font-serif text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                      {post.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                    <div className="mt-4 flex items-center gap-1 text-sm text-primary font-medium">
-                      Read more
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            <Link
-              href="/blog"
-              className="sm:hidden flex items-center justify-center gap-2 mt-8 text-primary hover:underline font-medium"
-            >
-              View all articles
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </section>
-
         {/* CTA Section */}
         <section className="relative py-24 lg:py-32 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-[#E63946]/10" />
@@ -496,7 +435,7 @@ export default function HomePage() {
           
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              Ready to Discover Your Type?
+              Ready to Begin Your Quest?
             </h2>
             <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
               Take our comprehensive temperament assessment and receive detailed insights about your personality, 
@@ -506,7 +445,8 @@ export default function HomePage() {
               href="/quiz"
               className="inline-flex items-center gap-2 px-10 py-5 bg-primary text-primary-foreground font-semibold text-lg rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5"
             >
-              Start Your Journey
+              <Swords className="w-5 h-5" />
+              Begin Quest
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>

@@ -380,7 +380,7 @@ export default function ManifestoPage() {
 
                       <div className="pt-4">
                         <Link
-                          href={`/temperaments/${temp.key}`}
+                          href={`/temperament/${temp.key}`}
                           className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:gap-3"
                           style={{ color: temp.color }}
                         >

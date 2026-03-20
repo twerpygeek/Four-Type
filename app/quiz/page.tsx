@@ -206,7 +206,7 @@ export default function HomePage() {
             {temperaments.map((temp) => (
               <Link
                 key={temp.key}
-                href={`/temperaments/${temp.key}`}
+                href={`/temperament/${temp.key}`}
                 className="group relative overflow-hidden rounded-2xl bg-card border border-border hover:border-opacity-50 transition-all duration-300 hover:-translate-y-1"
                 style={{ '--temp-color': temp.color } as React.CSSProperties}
               >
