@@ -1,5 +1,3 @@
-'use client';
-
 import { BlogPostTemplate } from '@/components/BlogPostTemplate';
 import type { Metadata } from 'next';
 
