@@ -1,387 +1,265 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRight, BookOpen, Users, Brain, Sparkles, ChevronRight, Play } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 import RuneBackground from '@/components/RuneBackground'
 
-const temperaments = [
+interface Question {
+  id: number
+  text: string
+  answers: {
+    text: string
+    temperament: 'sanguine' | 'choleric' | 'melancholic' | 'phlegmatic'
+  }[]
+}
+
+const quizQuestions: Question[] = [
   {
-    key: 'sanguine',
-    title: 'The Bard',
-    name: 'Sanguine',
-    color: '#FFD700',
-    bgGlow: 'from-[#FFD700]/20 to-transparent',
-    description: 'The enthusiastic connector who lights up every room with infectious energy and optimism.',
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Bard-QJJyqACHiDlWLpgew2foCbl5YGjLOi.png',
-    traits: ['Charismatic', 'Creative', 'Spontaneous'],
+    id: 1,
+    text: 'When faced with a challenge, you typically:',
+    answers: [
+      { text: 'Jump in enthusiastically and figure it out as you go', temperament: 'sanguine' },
+      { text: 'Take charge and create a plan to conquer it', temperament: 'choleric' },
+      { text: 'Analyze it carefully before taking action', temperament: 'melancholic' },
+      { text: 'Take time to consider all perspectives', temperament: 'phlegmatic' },
+    ],
   },
   {
-    key: 'choleric',
-    title: 'The Commander',
-    name: 'Choleric',
-    color: '#E63946',
-    bgGlow: 'from-[#E63946]/20 to-transparent',
-    description: 'The natural leader who takes charge, drives results, and turns vision into reality.',
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-rEIrJwEHYOzxNaP1ngaLZqm7A6GdrY.png',
-    traits: ['Decisive', 'Ambitious', 'Strategic'],
+    id: 2,
+    text: 'In social situations, you are most likely to:',
+    answers: [
+      { text: 'Be the life of the party and connect with everyone', temperament: 'sanguine' },
+      { text: 'Lead conversations and direct activities', temperament: 'choleric' },
+      { text: 'Listen thoughtfully and engage in deep discussion', temperament: 'melancholic' },
+      { text: 'Make people feel comfortable and supported', temperament: 'phlegmatic' },
+    ],
   },
   {
-    key: 'melancholic',
-    title: 'The Strategist',
-    name: 'Melancholic',
-    color: '#4CC9F0',
-    bgGlow: 'from-[#4CC9F0]/20 to-transparent',
-    description: 'The deep thinker who sees patterns others miss and holds the world to high standards.',
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-11A2ki2xYEb1yOkVrQ2xjaZ1etfh3Z.png',
-    traits: ['Analytical', 'Perfectionist', 'Loyal'],
+    id: 3,
+    text: 'Your work style is best described as:',
+    answers: [
+      { text: 'Flexible, adaptable, and spontaneous', temperament: 'sanguine' },
+      { text: 'Driven, efficient, and results-oriented', temperament: 'choleric' },
+      { text: 'Detail-oriented, methodical, and thorough', temperament: 'melancholic' },
+      { text: 'Steady, reliable, and team-focused', temperament: 'phlegmatic' },
+    ],
   },
   {
-    key: 'phlegmatic',
-    title: 'The Guardian',
-    name: 'Phlegmatic',
-    color: '#52B788',
-    bgGlow: 'from-[#52B788]/20 to-transparent',
-    description: 'The calm peacemaker who brings harmony, listens deeply, and holds teams together.',
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Guardian-98lWuYWNazfR3hvOW2FUE3dkp13BLy.png',
-    traits: ['Patient', 'Diplomatic', 'Reliable'],
+    id: 4,
+    text: 'When things go wrong, you typically:',
+    answers: [
+      { text: 'Stay positive and move on to the next thing', temperament: 'sanguine' },
+      { text: 'Quickly identify what went wrong and fix it', temperament: 'choleric' },
+      { text: 'Reflect deeply on what could have been done better', temperament: 'melancholic' },
+      { text: 'Support others and help stabilize the situation', temperament: 'phlegmatic' },
+    ],
+  },
+  {
+    id: 5,
+    text: 'Your ideal weekend involves:',
+    answers: [
+      { text: 'Social activities, spontaneous adventures, and meeting new people', temperament: 'sanguine' },
+      { text: 'Accomplishing goals and taking on new challenges', temperament: 'choleric' },
+      { text: 'Focused time on a project or hobby you care about', temperament: 'melancholic' },
+      { text: 'Peaceful time with close friends or family', temperament: 'phlegmatic' },
+    ],
   },
 ]
 
-const features = [
-  {
-    icon: Brain,
-    title: '2,500 Years of Wisdom',
-    description: 'From Hippocrates to modern psychology, the temperaments have stood the test of time.',
-  },
-  {
-    icon: Users,
-    title: 'Understand Yourself & Others',
-    description: 'Learn why you react the way you do, and how to connect better with every type.',
-  },
-  {
-    icon: BookOpen,
-    title: 'Actionable Insights',
-    description: 'Practical strategies for growth, relationships, leadership, and daily life.',
-  },
-  {
-    icon: Sparkles,
-    title: '15 Unique Subtypes',
-    description: 'Go beyond the basics with detailed blend profiles for deeper self-discovery.',
-  },
-]
+export default function QuizPage() {
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [answers, setAnswers] = useState<Record<number, 'sanguine' | 'choleric' | 'melancholic' | 'phlegmatic'>>({})
+  const [showResults, setShowResults] = useState(false)
 
-const blogPosts = [
-  {
-    slug: 'history-of-temperaments',
-    title: 'History of the 4 Temperaments',
-    excerpt: 'From Hippocrates to modern psychology — a 2,500-year journey through personality science.',
-    category: 'History',
-    readTime: '8 min',
-  },
-  {
-    slug: 'leadership-and-temperament',
-    title: 'Temperament and Leadership',
-    excerpt: 'How each temperament leads differently, and how to develop your leadership style.',
-    category: 'Leadership',
-    readTime: '6 min',
-  },
-  {
-    slug: 'temperaments-vs-mbti-big-five',
-    title: '4 Temperaments vs MBTI vs Big Five',
-    excerpt: 'How the major personality systems compare and which one is right for you.',
-    category: 'Comparison',
-    readTime: '7 min',
-  },
-]
+  const question = quizQuestions[currentQuestion]
+  const isAnswered = currentQuestion in answers
 
-export default function HomePage() {
-  const [hoveredTemp, setHoveredTemp] = useState<string | null>(null)
-  const heroRef = useRef<HTMLDivElement>(null)
+  const handleAnswer = (temperament: 'sanguine' | 'choleric' | 'melancholic' | 'phlegmatic') => {
+    setAnswers({ ...answers, [currentQuestion]: temperament })
+  }
+
+  const handleNext = () => {
+    if (currentQuestion < quizQuestions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1)
+    } else {
+      setShowResults(true)
+    }
+  }
+
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1)
+    }
+  }
+
+  const getResults = () => {
+    const counts = {
+      sanguine: 0,
+      choleric: 0,
+      melancholic: 0,
+      phlegmatic: 0,
+    }
+
+    Object.values(answers).forEach((temp) => {
+      counts[temp]++
+    })
+
+    return Object.entries(counts).reduce((a, b) => (counts[b[0] as keyof typeof counts] > counts[a[0] as keyof typeof counts] ? b : a))
+  }
+
+  if (showResults) {
+    const [resultTemp] = getResults()
+    const resultMap = {
+      sanguine: { title: 'The Bard', color: '#FFD700', description: 'You are The Bard - The enthusiastic connector who lights up every room with infectious energy and optimism.' },
+      choleric: { title: 'The Commander', color: '#E63946', description: 'You are The Commander - The natural leader who takes charge, drives results, and turns vision into reality.' },
+      melancholic: { title: 'The Strategist', color: '#4CC9F0', description: 'You are The Strategist - The deep thinker who sees patterns others miss and holds the world to high standards.' },
+      phlegmatic: { title: 'The Guardian', color: '#52B788', description: 'You are The Guardian - The calm peacemaker who brings harmony, listens deeply, and holds teams together.' },
+    }
+
+    const result = resultMap[resultTemp as keyof typeof resultMap]
+
+    return (
+      <>
+        <Navigation />
+        <main className="min-h-screen bg-background pt-24 pb-16 relative overflow-hidden">
+          <RuneBackground />
+          <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <p className="text-sm font-medium tracking-widest uppercase mb-4" style={{ color: result.color }}>
+                Your Temperament
+              </p>
+              <h1 className="font-serif text-5xl sm:text-6xl font-bold mb-4 text-foreground">
+                {result.title}
+              </h1>
+              <p className="text-lg text-foreground/70 mb-12">{result.description}</p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href={`/temperament/${resultTemp}`}
+                  className="px-8 py-3 rounded-lg font-semibold transition-all hover:-translate-y-0.5"
+                  style={{
+                    backgroundColor: result.color,
+                    color: '#0D0D0F',
+                    boxShadow: `0 0 24px ${result.color}60`,
+                  }}
+                >
+                  Learn More
+                  <ArrowRight className="inline ml-2 w-4 h-4" />
+                </Link>
+                <Link
+                  href="/"
+                  className="px-8 py-3 rounded-lg font-semibold border border-foreground/20 hover:bg-foreground/5 transition-all"
+                >
+                  Back Home
+                </Link>
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    )
+  }
 
   return (
-    <main className="min-h-screen bg-background">
-      <RuneBackground />
-      
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#E63946]/10 rounded-full blur-3xl animate-pulse delay-1000" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#4CC9F0]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-8 animate-fade-in">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm text-primary font-medium">Ancient wisdom, modern understanding</span>
-          </div>
-          
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight animate-fade-in-up">
-            <span className="text-balance">Know Your</span>
-            <br />
-            <span className="bg-gradient-to-r from-primary via-[#E63946] to-[#4CC9F0] bg-clip-text text-transparent">
-              True Nature
-            </span>
-          </h1>
-          
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-100">
-            Discover which of the four temperaments shapes your personality, decisions, and relationships. 
-            Take the quiz and unlock insights that have guided humanity for over 2,500 years.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-200">
-            <Link
-              href="/quiz"
-              className="group flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5"
-            >
-              Take the Free Quiz
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              href="/manifesto"
-              className="group flex items-center gap-2 px-8 py-4 bg-secondary text-foreground font-semibold rounded-xl hover:bg-secondary/80 transition-all border border-border"
-            >
-              <Play className="w-5 h-5" />
-              Read the Manifesto
-            </Link>
-          </div>
-
-          {/* Floating character preview */}
-          <div className="mt-16 flex items-end justify-center gap-4 sm:gap-8">
-            {temperaments.map((temp, i) => (
-              <div
-                key={temp.key}
-                className="relative group cursor-pointer animate-fade-in-up"
-                style={{ animationDelay: `${300 + i * 100}ms` }}
-                onMouseEnter={() => setHoveredTemp(temp.key)}
-                onMouseLeave={() => setHoveredTemp(null)}
-              >
-                <div 
-                  className="absolute inset-0 rounded-full blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300"
-                  style={{ backgroundColor: temp.color }}
-                />
-                <div className={`relative w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 transition-transform duration-300 ${hoveredTemp === temp.key ? 'scale-110 -translate-y-2' : ''}`}>
-                  <Image
-                    src={temp.image}
-                    alt={temp.title}
-                    fill
-                    className="object-contain drop-shadow-2xl"
-                  />
-                </div>
-                <div 
-                  className={`absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium transition-opacity duration-300 ${hoveredTemp === temp.key ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ color: temp.color }}
-                >
-                  {temp.title}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-muted-foreground/50 rounded-full animate-pulse" />
-          </div>
-        </div>
-      </section>
-
-      {/* The Four Types Section */}
-      <section className="relative py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              The Four Types
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Each temperament represents a fundamental pattern of personality that shapes how you think, feel, and act.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            {temperaments.map((temp) => (
-              <Link
-                key={temp.key}
-                href={`/temperament/${temp.key}`}
-                className="group relative overflow-hidden rounded-2xl bg-card border border-border hover:border-opacity-50 transition-all duration-300 hover:-translate-y-1"
-                style={{ '--temp-color': temp.color } as React.CSSProperties}
-              >
-                {/* Glow effect */}
-                <div 
-                  className={`absolute inset-0 bg-gradient-to-br ${temp.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                />
-                
-                <div className="relative p-6 lg:p-8 flex gap-6">
-                  {/* Character */}
-                  <div className="relative w-24 h-32 flex-shrink-0">
-                    <div 
-                      className="absolute inset-0 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"
-                      style={{ backgroundColor: temp.color }}
-                    />
-                    <Image
-                      src={temp.image}
-                      alt={temp.title}
-                      fill
-                      className="object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span 
-                        className="text-xs font-semibold px-2 py-1 rounded-full"
-                        style={{ backgroundColor: `${temp.color}20`, color: temp.color }}
-                      >
-                        {temp.name}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-xl lg:text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                      {temp.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                      {temp.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {temp.traits.map((trait) => (
-                        <span
-                          key={trait}
-                          className="text-xs px-2 py-1 rounded-md bg-secondary/50 text-muted-foreground"
-                        >
-                          {trait}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Arrow */}
-                  <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0 self-center" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="relative py-24 lg:py-32 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Why Study Temperaments?
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Understanding your temperament is the first step to understanding yourself and connecting with others.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, i) => (
-              <div
-                key={feature.title}
-                className="group relative p-6 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <feature.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-serif text-lg font-semibold text-foreground mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Preview Section */}
-      <section className="relative py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-                Latest Insights
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Explore the science, history, and practical applications of temperament theory.
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-background pt-24 pb-16 relative overflow-hidden">
+        <RuneBackground />
+        <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Progress */}
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-3">
+              <p className="text-sm text-foreground/60">
+                Question {currentQuestion + 1} of {quizQuestions.length}
               </p>
+              <div className="flex gap-2">
+                {quizQuestions.map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-2 h-2 rounded-full transition-colors"
+                    style={{
+                      backgroundColor: i in answers ? '#FFD700' : i === currentQuestion ? '#FFD70080' : '#ffffff20',
+                    }}
+                  />
+                ))}
+              </div>
             </div>
-            <Link
-              href="/blog"
-              className="hidden sm:flex items-center gap-2 text-primary hover:underline font-medium"
+            <div className="w-full h-1 bg-foreground/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#FFD700] transition-all duration-300"
+                style={{ width: `${((currentQuestion + 1) / quizQuestions.length) * 100}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Question */}
+          <div className="mb-12">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-8">
+              {question.text}
+            </h2>
+
+            {/* Answers */}
+            <div className="space-y-3">
+              {question.answers.map((answer) => (
+                <button
+                  key={answer.text}
+                  onClick={() => handleAnswer(answer.temperament)}
+                  className="w-full p-4 text-left rounded-lg border-2 transition-all duration-200 hover:border-[#FFD700]/60 hover:bg-foreground/5"
+                  style={{
+                    borderColor: answers[currentQuestion] === answer.temperament ? '#FFD700' : 'rgba(255,255,255,0.1)',
+                    backgroundColor: answers[currentQuestion] === answer.temperament ? 'rgba(255,215,0,0.08)' : 'transparent',
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-5 h-5 rounded border-2 flex items-center justify-center transition-colors"
+                      style={{
+                        borderColor: answers[currentQuestion] === answer.temperament ? '#FFD700' : 'rgba(255,255,255,0.3)',
+                        backgroundColor: answers[currentQuestion] === answer.temperament ? '#FFD700' : 'transparent',
+                      }}
+                    >
+                      {answers[currentQuestion] === answer.temperament && (
+                        <Check className="w-3 h-3" style={{ color: '#0D0D0F' }} />
+                      )}
+                    </div>
+                    <span className="text-foreground/80">{answer.text}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="flex gap-4 justify-between">
+            <button
+              onClick={handlePrevious}
+              disabled={currentQuestion === 0}
+              className="flex items-center gap-2 px-6 py-3 rounded-lg border border-foreground/20 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-foreground/5 transition-all"
             >
-              View all articles
+              <ArrowLeft className="w-4 h-4" />
+              Previous
+            </button>
+
+            <button
+              onClick={handleNext}
+              disabled={!isAnswered}
+              className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:-translate-y-0.5"
+              style={{
+                backgroundColor: isAnswered ? '#FFD700' : '#FFD70040',
+                color: '#0D0D0F',
+              }}
+            >
+              {currentQuestion === quizQuestions.length - 1 ? 'See Results' : 'Next'}
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </button>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {blogPosts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group relative overflow-hidden rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="p-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/10 text-primary">
-                      {post.category}
-                    </span>
-                    <span className="text-xs text-muted-foreground">{post.readTime} read</span>
-                  </div>
-                  <h3 className="font-serif text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-sm text-primary font-medium">
-                    Read more
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <Link
-            href="/blog"
-            className="sm:hidden flex items-center justify-center gap-2 mt-8 text-primary hover:underline font-medium"
-          >
-            View all articles
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative py-24 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-[#E63946]/10" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
-        
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Ready to Discover Your Type?
-          </h2>
-          <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Take our comprehensive temperament assessment and receive detailed insights about your personality, 
-            strengths, and growth areas.
-          </p>
-          <Link
-            href="/quiz"
-            className="inline-flex items-center gap-2 px-10 py-5 bg-primary text-primary-foreground font-semibold text-lg rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5"
-          >
-            Start Your Journey
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </section>
-    </main>
+      </main>
+      <Footer />
+    </>
   )
 }
