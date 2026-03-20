@@ -108,45 +108,71 @@ export default function HomePage() {
       <main className="min-h-screen bg-background">
         <RuneBackground />
         
-        {/* Hero Section - FourType Landing */}
-        <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center pt-20 overflow-hidden">
-          {/* Animated gradient background */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#E63946]/10 rounded-full blur-3xl animate-pulse delay-1000" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#4CC9F0]/5 rounded-full blur-3xl" />
-          </div>
+        {/* ── Hero Section ── */}
+        <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center pt-16 pb-24 overflow-hidden">
 
-          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center">
-            {/* Tagline */}
-            <div className="text-center mb-4">
-              <p className="text-sm sm:text-base text-primary/80 font-medium tracking-widest uppercase letter-spacing">
-                Know Your True Nature
-              </p>
+          {/* Subtle radial vignette */}
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,transparent_40%,#0D0D0F_100%)]" />
+
+          <div className="relative z-10 w-full flex flex-col items-center px-4">
+
+            {/* ── Top ornament: lines + star ── */}
+            <div className="flex items-center gap-3 mb-5">
+              <div className="h-px w-16 sm:w-28 bg-gradient-to-r from-transparent to-primary/60" />
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M7 0L8.5 5.5L14 7L8.5 8.5L7 14L5.5 8.5L0 7L5.5 5.5Z" fill="#FFD700" />
+              </svg>
+              <div className="h-px w-16 sm:w-28 bg-gradient-to-l from-transparent to-primary/60" />
             </div>
 
-            {/* Logo */}
-            <h1 className="font-serif text-6xl sm:text-7xl lg:text-8xl font-bold text-center mb-2">
-              <span className="bg-gradient-to-r from-primary via-[#FFD700] to-primary bg-clip-text text-transparent drop-shadow-lg">
-                FOURTYPE
-              </span>
+            {/* ── Tagline ── */}
+            <p className="text-xs sm:text-sm font-medium tracking-[0.35em] uppercase text-primary/70 mb-4 font-sans">
+              Know Your True Nature
+            </p>
+
+            {/* ── FOURTYPE glow title ── */}
+            <h1 className="font-serif font-black text-center leading-none mb-5 select-none"
+              style={{
+                fontSize: 'clamp(4rem, 12vw, 9rem)',
+                color: '#FFD700',
+                textShadow: `
+                  0 0 20px #FFD700,
+                  0 0 40px #FFB300,
+                  0 0 80px #FF8C00,
+                  0 0 120px #FF6600,
+                  2px 2px 0 #7a4e00
+                `,
+              }}
+            >
+              FOURTYPE
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-center text-lg sm:text-xl text-muted-foreground mb-12 font-light tracking-wide">
+            {/* ── Subtitle ── */}
+            <p className="font-serif text-lg sm:text-2xl text-foreground/70 tracking-widest mb-5">
               The Temperament Quest
             </p>
 
-            {/* Center Video with Decorative Border */}
-            <div className="relative w-full max-w-3xl mx-auto mb-16">
-              {/* Decorative corners */}
-              <div className="absolute -top-6 -left-6 w-8 h-8 border-t-2 border-l-2 border-primary/40" />
-              <div className="absolute -top-6 -right-6 w-8 h-8 border-t-2 border-r-2 border-primary/40" />
-              <div className="absolute -bottom-6 -left-6 w-8 h-8 border-b-2 border-l-2 border-primary/40" />
-              <div className="absolute -bottom-6 -right-6 w-8 h-8 border-b-2 border-r-2 border-primary/40" />
+            {/* ── Diamond divider ── */}
+            <div className="flex items-center gap-3 mb-10">
+              <div className="h-px w-10 sm:w-20 bg-primary/30" />
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                <path d="M5 0L10 5L5 10L0 5Z" fill="#FFD700" fillOpacity="0.8" />
+              </svg>
+              <div className="h-px w-10 sm:w-20 bg-primary/30" />
+            </div>
 
-              {/* Video Container */}
-              <div className="relative bg-black/60 rounded-lg overflow-hidden aspect-video border border-primary/20">
+            {/* ── Video frame with gold L-bracket corners ── */}
+            <div className="relative w-full max-w-2xl lg:max-w-3xl mx-auto mb-10">
+              {/* L-bracket corners */}
+              <span className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-primary/80 pointer-events-none" />
+              <span className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-primary/80 pointer-events-none" />
+              <span className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-primary/80 pointer-events-none" />
+              <span className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-primary/80 pointer-events-none" />
+
+              {/* Video */}
+              <div className="overflow-hidden rounded bg-black aspect-video"
+                style={{ boxShadow: '0 0 40px rgba(255,215,0,0.08), 0 0 1px rgba(255,215,0,0.3)' }}
+              >
                 <video
                   autoPlay
                   loop
@@ -154,132 +180,130 @@ export default function HomePage() {
                   playsInline
                   className="w-full h-full object-cover"
                 >
-                  <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-a2da9931-dd77-40ca-b351-adddc5cc3a08-tiKxL7ZkSPMBtfTWvRilrBR5Q1UAoe.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
+                  <source
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-a2da9931-dd77-40ca-b351-adddc5cc3a08-tiKxL7ZkSPMBtfTWvRilrBR5Q1UAoe.mp4"
+                    type="video/mp4"
+                  />
                 </video>
               </div>
             </div>
 
-            {/* Character Cards Section */}
-            <div className="w-full">
-              <p className="text-center text-muted-foreground mb-10 text-sm sm:text-base tracking-wide">
-                Find Your True Nature
-              </p>
+            {/* ── "Find Your True Nature" ── */}
+            <p className="font-serif text-base sm:text-lg text-foreground/60 tracking-widest mb-16">
+              Find Your True Nature
+            </p>
 
-              {/* Character Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-4">
+            {/* ── CHOOSE YOUR PATH + character cards ── */}
+            <div className="w-full max-w-5xl mx-auto">
+              {/* Section header with side lines */}
+              <div className="flex items-center gap-4 justify-center mb-10">
+                <div className="h-px flex-1 max-w-xs bg-foreground/15" />
+                <p className="text-xs sm:text-sm font-medium tracking-[0.4em] uppercase text-foreground/40 font-sans whitespace-nowrap">
+                  Choose Your Path
+                </p>
+                <div className="h-px flex-1 max-w-xs bg-foreground/15" />
+              </div>
+
+              {/* Characters row */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                 {temperaments.map((temp) => (
                   <Link
                     key={temp.key}
                     href={`/temperament/${temp.key}`}
-                    className="group relative flex flex-col items-center transition-all duration-300"
+                    className="group flex flex-col items-center gap-3"
                     onMouseEnter={() => setHoveredTemp(temp.key)}
                     onMouseLeave={() => setHoveredTemp(null)}
                   >
-                    {/* Glowing Border Box */}
-                    <div 
-                      className={`relative w-full aspect-square mb-4 transition-all duration-300 ${
-                        hoveredTemp === temp.key ? 'scale-105' : ''
-                      }`}
-                      style={{
-                        border: `2px solid ${temp.color}`,
-                        borderRadius: '0.5rem',
-                        boxShadow: hoveredTemp === temp.key 
-                          ? `0 0 20px ${temp.color}, inset 0 0 20px ${temp.color}20` 
-                          : `0 0 10px ${temp.color}40`,
-                        backgroundColor: hoveredTemp === temp.key ? `${temp.color}10` : 'transparent',
-                      }}
-                    >
-                      {/* Glow effect background */}
-                      <div 
-                        className="absolute inset-0 rounded opacity-0 group-hover:opacity-40 transition-opacity duration-300 blur-xl"
-                        style={{ backgroundColor: temp.color }}
-                      />
-                      
-                      {/* Character Image */}
-                      <div className="relative w-full h-full flex items-center justify-center p-4">
-                        <Image
-                          src={temp.image}
-                          alt={temp.title}
-                          width={200}
-                          height={240}
-                          className="object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-300"
-                        />
-                      </div>
-
-                      {/* Hover Info Box */}
-                      <div 
-                        className={`absolute -bottom-40 left-1/2 -translate-x-1/2 w-48 p-4 rounded-lg border transition-all duration-300 pointer-events-none ${
-                          hoveredTemp === temp.key 
-                            ? 'opacity-100 translate-y-0' 
-                            : 'opacity-0 translate-y-2'
-                        }`}
+                    {/* Character image with radial glow */}
+                    <div className="relative flex items-end justify-center h-40 sm:h-52 w-full">
+                      <div
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full blur-2xl transition-opacity duration-300"
                         style={{
-                          backgroundColor: `${temp.color}15`,
-                          borderColor: temp.color,
+                          backgroundColor: temp.color,
+                          opacity: hoveredTemp === temp.key ? 0.35 : 0.12,
                         }}
-                      >
-                        <p className="text-xs sm:text-sm text-foreground font-medium text-center">
-                          {temp.description}
-                        </p>
-                        <div className="mt-2 flex flex-wrap gap-1 justify-center">
-                          {temp.traits.slice(0, 2).map((trait) => (
-                            <span
-                              key={trait}
-                              className="text-xs px-2 py-1 rounded"
-                              style={{ 
-                                backgroundColor: `${temp.color}30`,
-                                color: temp.color,
-                              }}
-                            >
-                              {trait}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
+                      />
+                      <Image
+                        src={temp.image}
+                        alt={temp.title}
+                        width={160}
+                        height={200}
+                        className="relative object-contain drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-2"
+                      />
                     </div>
 
-                    {/* Title and Type */}
-                    <h3 
-                      className="font-serif text-base sm:text-lg font-bold text-center transition-colors duration-300"
-                      style={{ color: hoveredTemp === temp.key ? temp.color : '#E5E7EB' }}
+                    {/* Name card with border */}
+                    <div
+                      className="w-full rounded px-3 py-3 text-center transition-all duration-300"
+                      style={{
+                        border: `1px solid ${temp.color}`,
+                        boxShadow: hoveredTemp === temp.key
+                          ? `0 0 14px ${temp.color}80, inset 0 0 10px ${temp.color}18`
+                          : `0 0 6px ${temp.color}30`,
+                        backgroundColor: hoveredTemp === temp.key
+                          ? `${temp.color}12`
+                          : 'transparent',
+                      }}
                     >
-                      {temp.title}
-                    </h3>
-                    <p 
-                      className="text-xs sm:text-sm text-muted-foreground text-center"
-                      style={{ color: temp.color }}
+                      <p
+                        className="font-serif text-sm sm:text-base font-bold tracking-widest uppercase transition-colors duration-200"
+                        style={{ color: temp.color }}
+                      >
+                        {temp.title}
+                      </p>
+                      <p className="text-xs text-foreground/50 mt-0.5 font-sans">
+                        {temp.name}
+                      </p>
+                    </div>
+
+                    {/* Hover description */}
+                    <div
+                      className="w-full rounded px-3 py-3 text-center transition-all duration-300 overflow-hidden"
+                      style={{
+                        border: `1px solid ${temp.color}60`,
+                        backgroundColor: `${temp.color}0D`,
+                        maxHeight: hoveredTemp === temp.key ? '120px' : '0px',
+                        opacity: hoveredTemp === temp.key ? 1 : 0,
+                        paddingTop: hoveredTemp === temp.key ? '0.75rem' : '0',
+                        paddingBottom: hoveredTemp === temp.key ? '0.75rem' : '0',
+                      }}
                     >
-                      {temp.name}
-                    </p>
+                      <p className="text-xs text-foreground/70 leading-relaxed font-sans mb-2">
+                        {temp.description}
+                      </p>
+                      <div className="flex gap-1 flex-wrap justify-center">
+                        {temp.traits.map((t) => (
+                          <span
+                            key={t}
+                            className="text-[10px] px-2 py-0.5 rounded-full font-sans"
+                            style={{ backgroundColor: `${temp.color}25`, color: temp.color }}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </Link>
                 ))}
               </div>
             </div>
 
-            {/* Centered CTA */}
-            <div className="mt-20 flex flex-col items-center gap-6">
+            {/* ── CTA ── */}
+            <div className="mt-16 flex flex-col items-center gap-4">
               <Link
                 href="/quiz"
-                className="group flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5"
+                className="group flex items-center gap-2 px-8 py-3 font-semibold rounded-lg transition-all duration-200 hover:-translate-y-0.5 font-sans text-sm tracking-wide"
+                style={{
+                  backgroundColor: '#FFD700',
+                  color: '#0D0D0F',
+                  boxShadow: '0 0 20px rgba(255,215,0,0.35)',
+                }}
               >
                 Take the Free Quiz
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/manifesto"
-                className="text-sm text-primary hover:text-primary/80 transition-colors font-medium"
-              >
-                Learn More About Temperaments
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-          </div>
 
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2">
-              <div className="w-1 h-2 bg-muted-foreground/50 rounded-full animate-pulse" />
-            </div>
           </div>
         </section>
 
