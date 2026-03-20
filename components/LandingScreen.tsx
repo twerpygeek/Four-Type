@@ -67,7 +67,7 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
         }}
       >
         {/* Epic Title Section */}
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center gap-4">
           {/* Decorative top element */}
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 md:w-16 h-px bg-gradient-to-r from-transparent via-[#FFD700]/50 to-transparent" />
@@ -88,7 +88,7 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
           </p>
 
           {/* Main Title with epic styling */}
-          <div className="relative">
+          <div className="relative mt-2">
             <h1
               className="font-serif text-6xl md:text-8xl font-black tracking-wider"
               style={{ 
@@ -109,7 +109,7 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
 
           {/* Subtitle */}
           <p 
-            className="font-serif text-lg md:text-2xl tracking-widest"
+            className="font-serif text-lg md:text-2xl tracking-widest mt-2"
             style={{ 
               color: '#94A3B8',
               textShadow: '0 0 10px rgba(226,232,240,0.2)',

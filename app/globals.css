@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* TemperamentQuest Dark RPG Theme */
+  /* FourType Dark RPG Theme */
   --background: #0D0D0F;
   --foreground: #E2E8F0;
   --card: #1A1A2E;

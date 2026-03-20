@@ -11,7 +11,7 @@ import { calculateScores, ScoreMap } from '@/lib/scoringKey'
 
 type AppState = 'landing' | 'name' | 'assessment' | 'loading' | 'results'
 
-export default function TemperamentQuestApp() {
+export default function FourTypeApp() {
   const [state, setState] = useState<AppState>('landing')
   const [heroName, setHeroName] = useState('')
   const [scores, setScores] = useState<ScoreMap | null>(null)

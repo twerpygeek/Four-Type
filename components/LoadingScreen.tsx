@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
 interface LoadingScreenProps {
   heroName: string
@@ -19,15 +19,6 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
   const [messageIndex, setMessageIndex] = useState(0)
   const [progress, setProgress] = useState(0)
   const [runeVisible, setRuneVisible] = useState(true)
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-    video.muted = true
-    video.loop = true
-    video.play().catch(() => {})
-  }, [])
 
   useEffect(() => {
     const msgInterval = setInterval(() => {
@@ -61,25 +52,19 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
   return (
     <main
       className="relative min-h-screen flex flex-col items-center justify-center px-4 gap-10 overflow-hidden"
-      style={{ background: '#0D0D0F' }}
+      style={{ background: 'radial-gradient(ellipse at center, #1a1a2e 0%, #0D0D0F 50%, #000000 100%)' }}
     >
-      {/* Video background */}
-      <video
-        ref={videoRef}
-        src="/videos/loading.mp4"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ minWidth: '100%', minHeight: '100%' }}
-        playsInline
-        muted
-        loop
+      {/* Ambient glow effects */}
+      <div 
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(255,215,0,0.15) 0%, transparent 70%)' }} 
       />
-      {/* Dark overlay */}
-      <div className="absolute inset-0" style={{ backgroundColor: 'rgba(13,13,15,0.75)' }} />
-      {/* Vignette */}
-      <div
-        className="absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.5) 100%)' }}
-      />
+      
+      {/* Corner decorations */}
+      <div className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 border-[#FFD700]/20 rounded-tl-lg pointer-events-none" />
+      <div className="absolute top-4 right-4 w-16 h-16 border-r-2 border-t-2 border-[#FFD700]/20 rounded-tr-lg pointer-events-none" />
+      <div className="absolute bottom-4 left-4 w-16 h-16 border-l-2 border-b-2 border-[#FFD700]/20 rounded-bl-lg pointer-events-none" />
+      <div className="absolute bottom-4 right-4 w-16 h-16 border-r-2 border-b-2 border-[#FFD700]/20 rounded-br-lg pointer-events-none" />
 
       <div className="relative z-10 flex flex-col items-center gap-8 w-full max-w-sm text-center">
         {/* Spinning rune circle */}

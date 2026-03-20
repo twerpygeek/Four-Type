@@ -583,9 +583,9 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           </button>
         </div>
 
-        <p className="font-sans text-center text-xs text-[#2A2A40]">
-          TemperamentQuest &bull; Free forever &bull; Know Thyself.
-        </p>
+          <p className="font-sans text-center text-xs text-[#2A2A40]">
+            FourType &bull; Free forever &bull; Know Thyself.
+          </p>
       </div>
 
       {/* CLASS DETAIL MODAL */}
