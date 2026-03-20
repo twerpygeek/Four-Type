@@ -268,7 +268,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               width={32}
               height={40}
               className="object-contain opacity-70"
-              style={{ width: '32px', height: 'auto' }}
+              style={{ width: '32px', height: '40px' }}
             />
             <p className="font-sans text-xs text-[#94A3B8]">
               Secondary: <span className="font-serif font-semibold" style={{ color: sec.colorHex }}>{sec.title}</span>
@@ -487,7 +487,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                     width={36}
                     height={44}
                     className="object-contain relative shrink-0"
-                    style={{ opacity: isUser ? 1 : 0.6, width: '36px', height: 'auto', maxHeight: '44px' }}
+                    style={{ opacity: isUser ? 1 : 0.6, width: '36px', height: '44px' }}
                   />
                   <div className="flex flex-col gap-0.5 relative min-w-0">
                     <p className="font-serif text-[11px] font-bold leading-tight" style={{ color: cls.colorHex }}>
