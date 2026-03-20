@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { RuneBackground } from '@/components/RuneBackground';
+import RuneBackground from '@/components/RuneBackground';
 
 export default function PhlegmaticPage() {
   const [isVisible, setIsVisible] = useState(false);

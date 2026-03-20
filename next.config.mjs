@@ -6,6 +6,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Force clean build - updated timestamp: 2026-03-20
+  cleanDistDir: true,
 }
 
 export default nextConfig

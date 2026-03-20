@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { RuneBackground } from '@/components/RuneBackground';
+import RuneBackground from '@/components/RuneBackground';
 
 export default function SanguinePage() {
   const [isVisible, setIsVisible] = useState(false);
