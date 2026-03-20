@@ -15,23 +15,23 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'FourType — The Temperament Quest',
-  description: 'Discover which of the 15 temperament blends you are. A free, gamified personality assessment based on classical temperament theory. 40 questions. No paywall.',
+  title: 'Temperament Test – Discover Your Character Class | FourType',
+  description: 'Find out who you really are under pressure. Take this free temperament test and discover your character class — Commander, Bard, Strategist, or Guardian.',
   generator: 'v0.app',
   metadataBase: new URL('https://fourtype.com'),
-  keywords: ['temperament test', 'personality quiz', 'choleric sanguine melancholic phlegmatic', 'four temperaments', 'temperament assessment', 'free personality test'],
+  keywords: ['temperament test', 'personality test', 'character type', 'four temperaments', 'personality quiz', 'free personality test', 'choleric sanguine melancholic phlegmatic'],
   icons: {
     icon: '/favicon.jpg',
     apple: '/favicon.jpg',
   },
   openGraph: {
-    title: 'FourType — The Temperament Quest',
-    description: 'Which of the 15 temperament types are you? Take the free quest — 40 questions, no paywall, know your true nature.',
+    title: 'Temperament Test – Discover Your Character Class | FourType',
+    description: 'Find out who you really are under pressure. Take this free temperament test and discover your character class — Commander, Bard, Strategist, or Guardian.',
     url: 'https://fourtype.com',
     siteName: 'FourType',
     images: [
       {
-        url: '/og-image.jpg',
+        url: 'https://fourtype.com/og-image.jpg',
         width: 1270,
         height: 952,
         alt: 'FourType — Know Your True Nature. The Commander, The Bard, The Strategist, The Guardian.',
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FourType — The Temperament Quest',
-    description: 'Which of the 15 temperament types are you? Take the free quest — 40 questions, no paywall.',
-    images: ['/og-image.jpg'],
+    title: 'Temperament Test – Discover Your Character Class | FourType',
+    description: 'Find out who you really are under pressure. Take this free temperament test and discover your character class.',
+    images: ['https://fourtype.com/og-image.jpg'],
   },
 }
 

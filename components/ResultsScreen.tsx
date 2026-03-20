@@ -123,9 +123,11 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                     width={160}
                     height={160}
                     loading="eager"
-                    className="object-contain w-auto h-full"
+                    className="object-contain"
                     style={{
                       filter: `drop-shadow(0 0 20px ${primaryColor}60)`,
+                      width: 'auto',
+                      height: 'auto',
                       maxWidth: '100%',
                       maxHeight: '140px',
                     }}
