@@ -15,21 +15,21 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'TemperamentQuest — Know Thyself. No Paywall.',
-  description: 'A free, gamified temperament assessment. Discover your character class — Sanguine, Choleric, Melancholic, or Phlegmatic.',
+  title: 'FourType — The Temperament Quest — Know Your True Nature',
+  description: 'Discover which of the four temperament types you are. A free, gamified personality assessment based on classical temperament theory.',
   generator: 'v0.app',
-  metadataBase: new URL('https://typequest.app'),
+  metadataBase: new URL('https://fourtype.com'),
   openGraph: {
-    title: 'TemperamentQuest — Discover Your Character Class',
-    description: 'Take the free temperament assessment and discover if you are The Bard, The Commander, The Strategist, or The Guardian.',
-    url: 'https://typequest.app',
-    siteName: 'TypeQuest',
+    title: 'FourType — The Temperament Quest',
+    description: 'Discover your temperament type and unlock insights into your true nature. Free personality assessment.',
+    url: 'https://fourtype.com',
+    siteName: 'FourType',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'TypeQuest - Discover Your Character Class',
+        alt: 'FourType - Know Your True Nature',
       },
     ],
     locale: 'en_US',
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TemperamentQuest — Discover Your Character Class',
-    description: 'Take the free temperament assessment and discover your true temperament.',
+    title: 'FourType — The Temperament Quest',
+    description: 'Discover your temperament type and unlock insights into your true nature.',
     images: ['/og-image.jpg'],
   },
 }

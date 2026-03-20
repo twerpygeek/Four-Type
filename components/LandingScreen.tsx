@@ -84,13 +84,13 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
               textShadow: '0 0 10px rgba(255,215,0,0.3)',
             }}
           >
-            The Free Temperament Assessment
+            Know Your True Nature
           </p>
 
           {/* Main Title with epic styling */}
           <div className="relative">
             <h1
-              className="font-serif text-5xl md:text-8xl font-bold tracking-wide"
+              className="font-serif text-6xl md:text-8xl font-black tracking-wider"
               style={{ 
                 color: '#FFD700',
                 textShadow: `
@@ -103,24 +103,20 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
                 letterSpacing: '0.05em',
               }}
             >
-              TYPE
-            </h1>
-            <h1
-              className="font-serif text-5xl md:text-8xl font-bold tracking-wide -mt-2"
-              style={{ 
-                color: '#E2E8F0',
-                textShadow: `
-                  0 0 20px rgba(226,232,240,0.3),
-                  0 0 40px rgba(226,232,240,0.1),
-                  0 4px 0 #94A3B8,
-                  0 5px 0 #64748B
-                `,
-                letterSpacing: '0.05em',
-              }}
-            >
-              QUEST
+              FOURTYPE
             </h1>
           </div>
+
+          {/* Subtitle */}
+          <p 
+            className="font-serif text-lg md:text-2xl tracking-widest"
+            style={{ 
+              color: '#94A3B8',
+              textShadow: '0 0 10px rgba(226,232,240,0.2)',
+            }}
+          >
+            The Temperament Quest
+          </p>
 
           {/* Subtitle ornament */}
           <div className="flex items-center gap-4 mt-2">
@@ -157,6 +153,17 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
             />
           </div>
         </div>
+
+        {/* Tagline below video */}
+        <p
+          className="font-serif text-xl md:text-2xl tracking-wider text-center"
+          style={{
+            color: '#E2E8F0',
+            textShadow: '0 0 10px rgba(226,232,240,0.2)',
+          }}
+        >
+          Find Your True Nature
+        </p>
 
         {/* Character showcase with epic presentation */}
         <div className="relative w-full max-w-4xl mt-4">
