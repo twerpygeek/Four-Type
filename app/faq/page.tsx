@@ -4,6 +4,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ChevronDown, ChevronRight, Search, HelpCircle, Book, Users, Brain, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 const faqCategories = [
   {
@@ -155,7 +157,9 @@ export default function FAQPage() {
     : null
 
   return (
-    <main className="min-h-screen bg-background pt-24 pb-16">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-background pt-24 pb-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -318,5 +322,7 @@ export default function FAQPage() {
         </div>
       </div>
     </main>
+    <Footer />
+    </>
   )
 }

@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { ArrowLeft, Clock, ChevronRight, Check, X } from 'lucide-react'
 import type { Metadata } from 'next'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: '4 Temperaments vs MBTI vs Big Five — How They Compare | FourType',
@@ -37,7 +39,9 @@ const discMapping = [
 
 export default function ComparisonBlogPage() {
   return (
-    <main className="min-h-screen bg-background pt-24 pb-16">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-background pt-24 pb-16">
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/blog"
@@ -290,5 +294,7 @@ export default function ComparisonBlogPage() {
         </div>
       </article>
     </main>
+    <Footer />
+    </>
   )
 }

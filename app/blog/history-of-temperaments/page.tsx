@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Clock, Calendar, ChevronRight } from 'lucide-react'
 import type { Metadata } from 'next'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'History of the 4 Temperaments: From Hippocrates to Modern Psychology | FourType',
@@ -29,7 +31,9 @@ const relatedPosts = [
 
 export default function HistoryBlogPage() {
   return (
-    <main className="min-h-screen bg-background pt-24 pb-16">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-background pt-24 pb-16">
       {/* Article Header */}
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
@@ -134,7 +138,7 @@ export default function HistoryBlogPage() {
             building blocks of nature became the philosophical foundation for everything that followed.
           </p>
 
-          <h3 className="font-serif">Hippocrates and the Four Humors (c. 460–370 BC)</h3>
+          <h3 className="font-serif">Hippocrates and the Four Humors (c. 460���370 BC)</h3>
           <p>
             Hippocrates — often called the "father of medicine" — took Empedocles idea and applied it to the human 
             body. He proposed that health and personality were governed by the balance of four bodily fluids, 
@@ -303,5 +307,7 @@ export default function HistoryBlogPage() {
         </div>
       </article>
     </main>
+    <Footer />
+    </>
   )
 }

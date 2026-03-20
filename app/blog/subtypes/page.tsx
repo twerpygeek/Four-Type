@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Clock, ChevronRight } from 'lucide-react'
 import type { Metadata } from 'next'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'The 15 Temperament Subtypes You Never Knew Existed | FourType',
@@ -46,7 +48,9 @@ const temperamentColors: Record<string, string> = {
 
 export default function SubtypesBlogPage() {
   return (
-    <main className="min-h-screen bg-background pt-24 pb-16">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-background pt-24 pb-16">
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/blog"
@@ -255,5 +259,7 @@ export default function SubtypesBlogPage() {
         </div>
       </article>
     </main>
+    <Footer />
+    </>
   )
 }

@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowLeft, Clock, ChevronRight, Users, Target, Heart, Shield } from 'lucide-react'
 import type { Metadata } from 'next'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'How to Use Temperament for Better Leadership | FourType',
@@ -117,7 +119,9 @@ const leadershipStyles = [
 
 export default function LeadershipBlogPage() {
   return (
-    <main className="min-h-screen bg-background pt-24 pb-16">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-background pt-24 pb-16">
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/blog"
@@ -339,5 +343,7 @@ export default function LeadershipBlogPage() {
         </div>
       </article>
     </main>
+    <Footer />
+    </>
   )
 }

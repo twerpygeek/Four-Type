@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { ArrowRight, ChevronDown, ChevronRight, Flame, Droplets, Wind, Mountain, BookOpen, Users, Brain, Heart, Sparkles, Zap, Shield, Target } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import RuneBackground from '@/components/RuneBackground'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 const temperaments = [
   {
@@ -143,8 +145,10 @@ export default function ManifestoPage() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-background">
-      <RuneBackground />
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-background">
+        <RuneBackground />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
@@ -558,5 +562,7 @@ export default function ManifestoPage() {
         </div>
       </section>
     </main>
+    <Footer />
+    </>
   )
 }

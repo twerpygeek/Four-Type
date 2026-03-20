@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, Clock, Tag } from 'lucide-react'
 import type { Metadata } from 'next'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Blog | FourType - Temperament Education & Insights',
@@ -86,7 +88,9 @@ export default function BlogPage() {
   const regularPosts = blogPosts.filter(p => p.slug !== featuredPost?.slug)
 
   return (
-    <main className="min-h-screen bg-background pt-24 pb-16">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-background pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -221,5 +225,7 @@ export default function BlogPage() {
         </div>
       </div>
     </main>
+    <Footer />
+    </>
   )
 }

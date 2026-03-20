@@ -12,10 +12,10 @@ const navLinks = [
   {
     label: 'Temperaments',
     children: [
-      { href: '/temperaments/sanguine', label: 'The Bard (Sanguine)' },
-      { href: '/temperaments/choleric', label: 'The Commander (Choleric)' },
-      { href: '/temperaments/melancholic', label: 'The Strategist (Melancholic)' },
-      { href: '/temperaments/phlegmatic', label: 'The Guardian (Phlegmatic)' },
+      { href: '/temperament/sanguine', label: 'The Bard (Sanguine)' },
+      { href: '/temperament/choleric', label: 'The Commander (Choleric)' },
+      { href: '/temperament/melancholic', label: 'The Strategist (Melancholic)' },
+      { href: '/temperament/phlegmatic', label: 'The Guardian (Phlegmatic)' },
     ],
   },
   { href: '/manifesto', label: 'Manifesto' },
