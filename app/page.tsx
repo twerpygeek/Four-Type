@@ -109,69 +109,80 @@ export default function HomePage() {
         <RuneBackground />
         
         {/* ── Hero Section ── */}
-        <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center pt-16 pb-24 overflow-hidden">
+        <section ref={heroRef} className="relative flex flex-col items-center justify-center pt-24 pb-20 overflow-hidden">
 
-          {/* Subtle radial vignette */}
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,transparent_40%,#0D0D0F_100%)]" />
+          {/* Radial dark vignette on edges */}
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_35%,transparent_50%,rgba(13,13,15,0.85)_100%)]" />
 
           <div className="relative z-10 w-full flex flex-col items-center px-4">
 
             {/* ── Top ornament: lines + star ── */}
-            <div className="flex items-center gap-3 mb-5">
-              <div className="h-px w-16 sm:w-28 bg-gradient-to-r from-transparent to-primary/60" />
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M7 0L8.5 5.5L14 7L8.5 8.5L7 14L5.5 8.5L0 7L5.5 5.5Z" fill="#FFD700" />
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-px w-20 sm:w-32 bg-gradient-to-r from-transparent to-[#FFD700]/50" />
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M6 0L7.2 4.8L12 6L7.2 7.2L6 12L4.8 7.2L0 6L4.8 4.8Z" fill="#FFD700" />
               </svg>
-              <div className="h-px w-16 sm:w-28 bg-gradient-to-l from-transparent to-primary/60" />
+              <div className="h-px w-20 sm:w-32 bg-gradient-to-l from-transparent to-[#FFD700]/50" />
             </div>
 
             {/* ── Tagline ── */}
-            <p className="text-xs sm:text-sm font-medium tracking-[0.35em] uppercase text-primary/70 mb-4 font-sans">
+            <p className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.45em] uppercase mb-4"
+              style={{ color: '#c9a227' }}>
               Know Your True Nature
             </p>
 
             {/* ── FOURTYPE glow title ── */}
-            <h1 className="font-serif font-black text-center leading-none mb-5 select-none"
+            <h1
+              className="font-serif font-black text-center leading-[0.9] mb-4 select-none"
               style={{
-                fontSize: 'clamp(4rem, 12vw, 9rem)',
+                fontSize: 'clamp(3.8rem, 13vw, 9.5rem)',
                 color: '#FFD700',
-                textShadow: `
-                  0 0 20px #FFD700,
-                  0 0 40px #FFB300,
-                  0 0 80px #FF8C00,
-                  0 0 120px #FF6600,
-                  2px 2px 0 #7a4e00
-                `,
+                textShadow: [
+                  '0 0 12px #FFE566',
+                  '0 0 30px #FFD700',
+                  '0 0 60px #FFA500',
+                  '0 0 100px #FF7700',
+                  '0 0 140px #cc5500',
+                  '3px 3px 0 rgba(80,40,0,0.6)',
+                ].join(', '),
               }}
             >
               FOURTYPE
             </h1>
 
             {/* ── Subtitle ── */}
-            <p className="font-serif text-lg sm:text-2xl text-foreground/70 tracking-widest mb-5">
+            <p className="font-serif text-lg sm:text-xl text-foreground/55 tracking-[0.18em] mb-4">
               The Temperament Quest
             </p>
 
             {/* ── Diamond divider ── */}
             <div className="flex items-center gap-3 mb-10">
-              <div className="h-px w-10 sm:w-20 bg-primary/30" />
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                <path d="M5 0L10 5L5 10L0 5Z" fill="#FFD700" fillOpacity="0.8" />
+              <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
+              <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
+                <path d="M4.5 0L9 4.5L4.5 9L0 4.5Z" fill="#FFD700" fillOpacity="0.7" />
               </svg>
-              <div className="h-px w-10 sm:w-20 bg-primary/30" />
+              <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
             </div>
 
             {/* ── Video frame with gold L-bracket corners ── */}
-            <div className="relative w-full max-w-2xl lg:max-w-3xl mx-auto mb-10">
-              {/* L-bracket corners */}
-              <span className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-primary/80 pointer-events-none" />
-              <span className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-primary/80 pointer-events-none" />
-              <span className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-primary/80 pointer-events-none" />
-              <span className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-primary/80 pointer-events-none" />
+            <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-[680px] mx-auto mb-10">
+              {/* L-bracket corners — each is two absolutely-positioned spans */}
+              {/* top-left */}
+              <span className="pointer-events-none absolute -top-[10px] -left-[10px] w-7 h-7 border-t-2 border-l-2 border-[#FFD700]/75" />
+              {/* top-right */}
+              <span className="pointer-events-none absolute -top-[10px] -right-[10px] w-7 h-7 border-t-2 border-r-2 border-[#FFD700]/75" />
+              {/* bottom-left */}
+              <span className="pointer-events-none absolute -bottom-[10px] -left-[10px] w-7 h-7 border-b-2 border-l-2 border-[#FFD700]/75" />
+              {/* bottom-right */}
+              <span className="pointer-events-none absolute -bottom-[10px] -right-[10px] w-7 h-7 border-b-2 border-r-2 border-[#FFD700]/75" />
 
-              {/* Video */}
-              <div className="overflow-hidden rounded bg-black aspect-video"
-                style={{ boxShadow: '0 0 40px rgba(255,215,0,0.08), 0 0 1px rgba(255,215,0,0.3)' }}
+              {/* Video container */}
+              <div
+                className="overflow-hidden bg-black"
+                style={{
+                  aspectRatio: '16/9',
+                  boxShadow: '0 0 0 1px rgba(255,215,0,0.18), 0 8px 48px rgba(0,0,0,0.7)',
+                }}
               >
                 <video
                   autoPlay
@@ -181,7 +192,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover"
                 >
                   <source
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-a2da9931-dd77-40ca-b351-adddc5cc3a08-tiKxL7ZkSPMBtfTWvRilrBR5Q1UAoe.mp4"
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-a2da9931-dd77-40ca-b351-adddc5cc3a08-PYDgy4CNaLVdiZe0hjEl7V7Jxejpnr.mp4"
                     type="video/mp4"
                   />
                 </video>
@@ -189,23 +200,24 @@ export default function HomePage() {
             </div>
 
             {/* ── "Find Your True Nature" ── */}
-            <p className="font-serif text-base sm:text-lg text-foreground/60 tracking-widest mb-16">
+            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-20"
+              style={{ color: 'rgba(255,215,0,0.55)' }}>
               Find Your True Nature
             </p>
 
             {/* ── CHOOSE YOUR PATH + character cards ── */}
             <div className="w-full max-w-5xl mx-auto">
-              {/* Section header with side lines */}
-              <div className="flex items-center gap-4 justify-center mb-10">
-                <div className="h-px flex-1 max-w-xs bg-foreground/15" />
-                <p className="text-xs sm:text-sm font-medium tracking-[0.4em] uppercase text-foreground/40 font-sans whitespace-nowrap">
+              {/* Section rule with label */}
+              <div className="flex items-center gap-5 justify-center mb-12">
+                <div className="h-px flex-1 max-w-[220px] bg-foreground/12" />
+                <p className="font-sans text-[10px] sm:text-xs font-semibold tracking-[0.45em] uppercase text-foreground/35 whitespace-nowrap">
                   Choose Your Path
                 </p>
-                <div className="h-px flex-1 max-w-xs bg-foreground/15" />
+                <div className="h-px flex-1 max-w-[220px] bg-foreground/12" />
               </div>
 
-              {/* Characters row */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+              {/* 4 character columns */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
                 {temperaments.map((temp) => (
                   <Link
                     key={temp.key}
@@ -214,69 +226,67 @@ export default function HomePage() {
                     onMouseEnter={() => setHoveredTemp(temp.key)}
                     onMouseLeave={() => setHoveredTemp(null)}
                   >
-                    {/* Character image with radial glow */}
-                    <div className="relative flex items-end justify-center h-40 sm:h-52 w-full">
+                    {/* Character with colour glow underneath */}
+                    <div className="relative flex items-end justify-center h-44 sm:h-56 w-full">
                       <div
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full blur-2xl transition-opacity duration-300"
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full blur-2xl transition-opacity duration-300"
                         style={{
                           backgroundColor: temp.color,
-                          opacity: hoveredTemp === temp.key ? 0.35 : 0.12,
+                          opacity: hoveredTemp === temp.key ? 0.4 : 0.13,
                         }}
                       />
                       <Image
                         src={temp.image}
                         alt={temp.title}
-                        width={160}
-                        height={200}
-                        className="relative object-contain drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-2"
+                        width={170}
+                        height={210}
+                        className="relative object-contain drop-shadow-2xl transition-transform duration-300 group-hover:-translate-y-3"
                       />
                     </div>
 
-                    {/* Name card with border */}
+                    {/* Bordered name card */}
                     <div
-                      className="w-full rounded px-3 py-3 text-center transition-all duration-300"
+                      className="w-full px-3 py-3 text-center transition-all duration-300"
                       style={{
                         border: `1px solid ${temp.color}`,
                         boxShadow: hoveredTemp === temp.key
-                          ? `0 0 14px ${temp.color}80, inset 0 0 10px ${temp.color}18`
-                          : `0 0 6px ${temp.color}30`,
-                        backgroundColor: hoveredTemp === temp.key
-                          ? `${temp.color}12`
-                          : 'transparent',
+                          ? `0 0 16px ${temp.color}70, inset 0 0 12px ${temp.color}15`
+                          : `0 0 5px ${temp.color}28`,
+                        backgroundColor: hoveredTemp === temp.key ? `${temp.color}0f` : 'transparent',
                       }}
                     >
                       <p
-                        className="font-serif text-sm sm:text-base font-bold tracking-widest uppercase transition-colors duration-200"
+                        className="font-serif text-sm sm:text-base font-bold tracking-[0.15em] uppercase"
                         style={{ color: temp.color }}
                       >
                         {temp.title}
                       </p>
-                      <p className="text-xs text-foreground/50 mt-0.5 font-sans">
+                      <p className="font-sans text-xs text-foreground/45 mt-0.5">
                         {temp.name}
                       </p>
                     </div>
 
-                    {/* Hover description */}
+                    {/* Animated hover info panel */}
                     <div
-                      className="w-full rounded px-3 py-3 text-center transition-all duration-300 overflow-hidden"
+                      className="w-full px-3 text-center overflow-hidden transition-all duration-300"
                       style={{
-                        border: `1px solid ${temp.color}60`,
-                        backgroundColor: `${temp.color}0D`,
-                        maxHeight: hoveredTemp === temp.key ? '120px' : '0px',
+                        border: hoveredTemp === temp.key ? `1px solid ${temp.color}50` : '1px solid transparent',
+                        backgroundColor: `${temp.color}0A`,
+                        maxHeight: hoveredTemp === temp.key ? '130px' : '0px',
                         opacity: hoveredTemp === temp.key ? 1 : 0,
-                        paddingTop: hoveredTemp === temp.key ? '0.75rem' : '0',
-                        paddingBottom: hoveredTemp === temp.key ? '0.75rem' : '0',
+                        paddingTop: hoveredTemp === temp.key ? '0.625rem' : '0',
+                        paddingBottom: hoveredTemp === temp.key ? '0.625rem' : '0',
                       }}
                     >
-                      <p className="text-xs text-foreground/70 leading-relaxed font-sans mb-2">
+                      <p className="font-sans text-[11px] text-foreground/65 leading-relaxed mb-2">
                         {temp.description}
                       </p>
                       <div className="flex gap-1 flex-wrap justify-center">
                         {temp.traits.map((t) => (
                           <span
                             key={t}
-                            className="text-[10px] px-2 py-0.5 rounded-full font-sans"
-                            style={{ backgroundColor: `${temp.color}25`, color: temp.color }}
+                            className="font-sans text-[10px] px-2 py-0.5 rounded-full"
+                            style={{ backgroundColor: `${temp.color}22`, color: temp.color }}
                           >
                             {t}
                           </span>
@@ -289,14 +299,14 @@ export default function HomePage() {
             </div>
 
             {/* ── CTA ── */}
-            <div className="mt-16 flex flex-col items-center gap-4">
+            <div className="mt-16 flex flex-col items-center gap-3">
               <Link
                 href="/quiz"
-                className="group flex items-center gap-2 px-8 py-3 font-semibold rounded-lg transition-all duration-200 hover:-translate-y-0.5 font-sans text-sm tracking-wide"
+                className="group flex items-center gap-2 px-9 py-3 font-sans font-semibold text-sm tracking-wide rounded-lg transition-all duration-200 hover:-translate-y-0.5"
                 style={{
                   backgroundColor: '#FFD700',
                   color: '#0D0D0F',
-                  boxShadow: '0 0 20px rgba(255,215,0,0.35)',
+                  boxShadow: '0 0 24px rgba(255,215,0,0.38)',
                 }}
               >
                 Take the Free Quiz
