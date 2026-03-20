@@ -1,0 +1,286 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
+import { RuneBackground } from '@/components/RuneBackground';
+
+export default function ChloricPage() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState<'traits' | 'strengths' | 'challenges'>(
+    'traits'
+  );
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const traits = [
+    'Natural leader',
+    'Decisive and determined',
+    'Goal-oriented',
+    'Direct communicator',
+    'Competitive',
+    'Action-focused',
+    'Confident',
+    'Takes charge naturally',
+  ];
+
+  const strengths = [
+    'Excellent leadership abilities',
+    'Gets things done efficiently',
+    'Natural problem-solver',
+    'Motivates teams to achieve',
+    'Strong willpower and focus',
+    'Clear vision and direction',
+    'Confident decision-maker',
+    'Drives organizational success',
+  ];
+
+  const challenges = [
+    'Can be overly aggressive',
+    'May appear domineering',
+    'Impatient with others',
+    'Difficulty delegating',
+    'Can seem cold or insensitive',
+    'Burnout from overwork',
+    'May dismiss others\' input',
+    'Struggles with empathy',
+  ];
+
+  const careerFits = [
+    'Executive Leadership',
+    'Military/Law Enforcement',
+    'Entrepreneurship',
+    'Project Management',
+    'Sales Management',
+    'Strategic Planning',
+    'Politics',
+    'Emergency Services',
+  ];
+
+  return (
+    <>
+      <RuneBackground />
+      <Navigation />
+      <main className="min-h-screen relative z-10">
+        {/* Hero Section */}
+        <section className="pt-32 pb-16 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div
+                className={`transition-all duration-1000 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+              >
+                <div className="inline-block mb-4">
+                  <span className="text-xs font-semibold text-red-500 uppercase tracking-widest">
+                    The Commander Archetype
+                  </span>
+                </div>
+                <h1 className="font-display text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                  The Choleric Temperament
+                </h1>
+                <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                  Powerful, decisive, and commanding, the Choleric personality is born to lead.
+                  These natural authorities drive ambitious goals and inspire action in others
+                  through their unwavering confidence and strategic vision.
+                </p>
+                <div className="flex gap-4">
+                  <Link
+                    href="/blog/choleric"
+                    className="px-8 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-all duration-300 transform hover:scale-105"
+                  >
+                    Read Deep Dive
+                  </Link>
+                  <Link
+                    href="/manifesto"
+                    className="px-8 py-3 border-2 border-red-600 text-red-500 font-bold rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300"
+                  >
+                    Back to Manifesto
+                  </Link>
+                </div>
+              </div>
+
+              <div className={`transition-all duration-1000 delay-300 ${
+                isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+              }`}>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-transparent rounded-lg blur-xl opacity-20 animate-pulse"></div>
+                  <Image
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-rEIrJwEHYOzxNaP1ngaLZqm7A6GdrY.png"
+                    alt="The Commander - Choleric Temperament"
+                    width={400}
+                    height={500}
+                    className="relative z-10"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Hero Image Section */}
+        <section className="relative py-12 px-4">
+          <div className="max-w-6xl mx-auto">
+            <Image
+              src="/images/choleric-depth.jpg"
+              alt="Choleric temperament representation"
+              width={1200}
+              height={400}
+              className="rounded-lg shadow-2xl w-full object-cover"
+            />
+          </div>
+        </section>
+
+        {/* Tabs Section */}
+        <section className="py-16 px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-wrap gap-4 mb-12 border-b border-gray-700">
+              {[
+                { id: 'traits', label: 'Key Traits' },
+                { id: 'strengths', label: 'Strengths' },
+                { id: 'challenges', label: 'Challenges' },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`pb-4 px-2 font-semibold transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? 'text-red-500 border-b-2 border-red-500'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {(activeTab === 'traits'
+                ? traits
+                : activeTab === 'strengths'
+                  ? strengths
+                  : challenges
+              ).map((item, index) => (
+                <div
+                  key={index}
+                  className="p-4 bg-gray-900 border border-gray-700 rounded-lg hover:border-red-500 transition-all duration-300 transform hover:scale-105 animate-fade-in"
+                >
+                  <p className="text-sm font-semibold text-white">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Career Fits */}
+        <section className="py-16 px-4 bg-gradient-to-b from-transparent via-gray-900/20 to-transparent">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">Career & Life Paths</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {careerFits.map((career, index) => (
+                <div
+                  key={index}
+                  className="p-6 bg-gray-900 border border-red-600/30 rounded-lg hover:border-red-600 transition-all duration-300 group cursor-pointer"
+                >
+                  <h3 className="text-lg font-bold text-red-500 group-hover:translate-x-2 transition-transform duration-300">
+                    {career}
+                  </h3>
+                  <p className="text-gray-400 mt-2 text-sm">
+                    Natural fit for Choleric temperaments seeking control and impact.
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Growth Section */}
+        <section className="py-16 px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-8 text-center">Personal Growth Tips</h2>
+            <div className="space-y-6">
+              {[
+                {
+                  title: 'Cultivate Empathy',
+                  description:
+                    'Practice considering others\' perspectives and feelings. True leadership includes caring for team members.',
+                },
+                {
+                  title: 'Learn to Delegate',
+                  description:
+                    'Trust others with responsibilities. Delegation multiplies your impact and develops your team.',
+                },
+                {
+                  title: 'Practice Patience',
+                  description:
+                    'Not everything requires immediate action. Reflection and patience lead to better decisions.',
+                },
+                {
+                  title: 'Rest and Recovery',
+                  description:
+                    'Your drive can lead to burnout. Schedule downtime and recovery to sustain long-term performance.',
+                },
+              ].map((tip, index) => (
+                <div
+                  key={index}
+                  className="p-6 bg-gray-900 border border-gray-700 rounded-lg hover:border-red-600 transition-all duration-300"
+                >
+                  <h3 className="text-lg font-bold text-red-500 mb-2">{tip.title}</h3>
+                  <p className="text-gray-300">{tip.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Related Section */}
+        <section className="py-16 px-4 bg-gradient-to-b from-transparent via-gray-900/20 to-transparent">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">Explore Other Temperaments</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { name: 'Sanguine', color: '#FFD700', emoji: '🎭' },
+                { name: 'Melancholic', color: '#3B82F6', emoji: '📚' },
+                { name: 'Phlegmatic', color: '#22C55E', emoji: '🌿' },
+              ].map((temp) => (
+                <Link
+                  key={temp.name}
+                  href={`/temperament/${temp.name.toLowerCase()}`}
+                  className="group p-8 bg-gray-900 border border-gray-700 rounded-lg hover:border-gray-500 transition-all duration-300 text-center"
+                >
+                  <div className="text-4xl mb-4">{temp.emoji}</div>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-500 transition-colors">
+                    {temp.name}
+                  </h3>
+                  <p className="text-gray-400 text-sm">Discover this unique temperament type</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+
+      <style jsx>{`
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
+        }
+      `}</style>
+    </>
+  );
+}

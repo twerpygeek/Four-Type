@@ -15,18 +15,18 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Temperament Test – Find Your Character Class | FourType',
-  description: 'Find out who you really are under pressure. Take this free temperament test and discover your character class — Commander, Bard, Strategist, or Guardian.',
+  title: 'Temperament Test & Education Platform | FourType - Master the 4 Temperaments',
+  description: 'Discover the 4 temperaments (Choleric, Sanguine, Melancholic, Phlegmatic) through FourType\'s comprehensive education platform. Learn temperament theory, read blog posts, explore the manifesto, and find your character class. Free education resource for understanding personality archetypes.',
   generator: 'v0.app',
   metadataBase: new URL('https://fourtype.com'),
-  keywords: ['temperament test', 'personality test', 'character type', 'four temperaments', 'personality quiz', 'free personality test', 'choleric sanguine melancholic phlegmatic'],
+  keywords: ['temperament', 'four temperaments', 'temperament types', 'choleric', 'sanguine', 'melancholic', 'phlegmatic', 'personality types', 'temperament test', 'personality theory', 'character archetypes', 'temperament education', 'psychology', 'personality psychology'],
   icons: {
     icon: '/favicon.jpg',
     apple: '/favicon.jpg',
   },
   openGraph: {
-    title: 'Temperament Test – Find Your Character Class | FourType',
-    description: 'Find out who you really are under pressure. Take this free temperament test and discover your character class — Commander, Bard, Strategist, or Guardian.',
+    title: 'Temperament Test & Education Platform | FourType',
+    description: 'Comprehensive education platform for the 4 temperaments. Learn temperament theory, explore character archetypes, read expert blog posts, and discover which temperament you are.',
     url: 'https://fourtype.com',
     siteName: 'FourType',
     images: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'FourType — Know Your True Nature. The Commander, The Bard, The Strategist, The Guardian.',
+        alt: 'FourType — Master the 4 Temperaments. The Commander, The Bard, The Strategist, The Guardian.',
       },
     ],
     locale: 'en_US',
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Temperament Test – Find Your Character Class | FourType',
-    description: 'Find out who you really are under pressure. Take this free temperament test and discover your character class.',
+    title: 'FourType - Temperament Test & Education Platform',
+    description: 'Discover the 4 temperaments with our comprehensive education platform. Learn, explore, and master temperament theory.',
     images: ['/og-image.jpg'],
   },
 }
@@ -59,7 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${cinzel.variable} ${dmSans.variable} font-sans antialiased`}>
+      <body className={`${cinzel.variable} ${dmSans.variable} font-sans antialiased`} suppressHydrationWarning>
         {children}
         <Analytics />
       </body>
