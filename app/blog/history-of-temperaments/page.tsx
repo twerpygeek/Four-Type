@@ -8,6 +8,26 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'History of the 4 Temperaments: From Hippocrates to Modern Psychology | FourType',
   description: 'The complete history of the four temperaments — from ancient Greek medicine through Galen, Kant, Wundt, Steiner, Keirsey, and LaHaye. How a 2,500-year-old idea still shapes personality science today.',
+  keywords: ['history of temperaments', 'four temperaments origin', 'Hippocrates temperaments', 'Galen personality', 'humoral theory', 'temperament history'],
+  openGraph: {
+    title: 'History of the 4 Temperaments | FourType',
+    description: 'From Hippocrates to modern psychology — the complete 2,500-year history of temperament theory.',
+    type: 'article',
+  },
+  alternates: { canonical: '/blog/history-of-temperaments' },
+}
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'History of the 4 Temperaments: From Hippocrates to Modern Psychology',
+  description: 'The complete history of the four temperaments from ancient Greek medicine through Galen, Kant, Wundt, and modern psychology.',
+  image: '/icon.png',
+  author: { '@type': 'Organization', name: 'FourType' },
+  publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: '/fourtype-logo.png' } },
+  datePublished: '2024-01-01',
+  dateModified: new Date().toISOString().split('T')[0],
+  mainEntityOfPage: { '@type': 'WebPage', '@id': '/blog/history-of-temperaments' },
 }
 
 const timeline = [
@@ -32,6 +52,7 @@ const relatedPosts = [
 export default function HistoryBlogPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <Navigation />
       <main className="min-h-screen bg-background pt-24 pb-16">
       {/* Article Header */}

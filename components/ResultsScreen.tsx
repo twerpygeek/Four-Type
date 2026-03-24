@@ -1,13 +1,57 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { ScoreMap, TemperamentKey, getDominantAndSecondary, getMaskingWarning, resolveBlend } from '@/lib/scoringKey'
 import { TEMPERAMENTS } from '@/lib/temperaments'
 import { BLENDS, getBlendColors } from '@/lib/blends'
 import ScoreChart from './ScoreChart'
 import CinematicBackground from './CinematicBackground'
 import ShareableCard from './ShareableCard'
+
+// Generate a shareable URL-safe ID
+function generateShareId(heroName: string, blendKey: string, scores: ScoreMap): string {
+  const data = `${heroName}|${blendKey}|${scores.Yellow},${scores.Red},${scores.Blue},${scores.Green}`
+  // Base64 encode and make URL safe
+  const base64 = btoa(data)
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
+// Get reading resources based on temperament
+function getReadingResources(primaryKey: TemperamentKey, blendKey: string) {
+  const temperamentMap: Record<TemperamentKey, { name: string; slug: string }> = {
+    Yellow: { name: 'Sanguine', slug: 'sanguine' },
+    Red: { name: 'Choleric', slug: 'choleric' },
+    Blue: { name: 'Melancholic', slug: 'melancholic' },
+    Green: { name: 'Phlegmatic', slug: 'phlegmatic' },
+  }
+  
+  const temp = temperamentMap[primaryKey]
+  
+  return [
+    {
+      title: `${temp.name} Temperament: Complete Guide`,
+      description: `Strengths, challenges, careers & relationships`,
+      href: `/temperament/${temp.slug}`,
+    },
+    {
+      title: `${temp.name} Blog: Deep Dive Article`,
+      description: 'Detailed exploration with practical tips',
+      href: `/blog/${temp.slug}`,
+    },
+    {
+      title: 'The 15 Temperament Subtypes',
+      description: 'Understand all the blends including yours',
+      href: '/blog/subtypes',
+    },
+    {
+      title: 'History of the 4 Temperaments',
+      description: 'From Hippocrates to modern psychology',
+      href: '/blog/history-of-temperaments',
+    },
+  ]
+}
 
 interface ResultsScreenProps {
   heroName: string
@@ -37,7 +81,47 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
   const [activeTab, setActiveTab] = useState<Tab>('strengths')
   const [showShareCard, setShowShareCard] = useState(false)
   const [viewingClass, setViewingClass] = useState<TemperamentKey | null>(null)
+  const [linkCopied, setLinkCopied] = useState(false)
   const viewingTemp = viewingClass ? TEMPERAMENTS[viewingClass] : null
+  
+  // Generate shareable URL
+  const shareId = useMemo(() => generateShareId(heroName, blendResult.blendKey, scores), [heroName, blendResult.blendKey, scores])
+  const shareUrl = `https://www.fourtype.com/share/${shareId}`
+  const readingResources = useMemo(() => getReadingResources(dominant, blendResult.blendKey), [dominant, blendResult.blendKey])
+  
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      setLinkCopied(true)
+      setTimeout(() => setLinkCopied(false), 2000)
+    } catch {
+      // Fallback
+      const textarea = document.createElement('textarea')
+      textarea.value = shareUrl
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      setLinkCopied(true)
+      setTimeout(() => setLinkCopied(false), 2000)
+    }
+  }
+  
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `I am ${blend.name}!`,
+          text: `I discovered I'm ${blend.name} (${blend.blend}). "${blend.tagline}" — What's your temperament?`,
+          url: shareUrl,
+        })
+      } catch {
+        // User cancelled
+      }
+    } else {
+      handleCopyLink()
+    }
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => setRevealed(true), 100)
@@ -540,11 +624,68 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           )}
         </div>
 
+        {/* CONTINUE YOUR JOURNEY */}
+        <div
+          className="rounded-2xl border p-5 flex flex-col gap-4"
+          style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: `${primaryColor}30` }}
+        >
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5" style={{ color: primaryColor }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            <p className="font-serif text-xs tracking-widest uppercase" style={{ color: primaryColor }}>
+              Continue Your Journey
+            </p>
+          </div>
+          
+          <p className="font-sans text-sm text-[#64748B]">
+            Dive deeper into understanding your temperament:
+          </p>
+          
+          <div className="flex flex-col gap-2">
+            {readingResources.map((resource, i) => (
+              <Link
+                key={i}
+                href={resource.href}
+                className="group flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 hover:border-opacity-50"
+                style={{ 
+                  borderColor: `${primaryColor}20`,
+                  backgroundColor: `${primaryColor}05`,
+                }}
+              >
+                <div 
+                  className="w-8 h-8 rounded flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: `${primaryColor}15` }}
+                >
+                  <span className="font-serif text-xs font-bold" style={{ color: primaryColor }}>
+                    {i + 1}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-serif text-sm text-[#E2E8F0] group-hover:text-white transition-colors">
+                    {resource.title}
+                  </p>
+                  <p className="font-sans text-xs text-[#64748B]">{resource.description}</p>
+                </div>
+                <svg 
+                  className="w-4 h-4 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" 
+                  style={{ color: primaryColor }}
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         {/* CTA BUTTONS */}
         <div className="flex flex-col gap-3">
           <button
-            onClick={() => setShowShareCard(true)}
-            className="w-full font-serif text-sm font-bold tracking-widest uppercase py-3.5 rounded-xl border-2 transition-all duration-200 cursor-pointer relative overflow-hidden group"
+            onClick={handleNativeShare}
+            className="w-full flex items-center justify-center gap-2 font-serif text-sm font-bold tracking-widest uppercase py-3.5 rounded-xl border-2 transition-all duration-200 cursor-pointer relative overflow-hidden group"
             style={{
               borderColor: primaryColor,
               color: '#0D0D0F',
@@ -559,7 +700,36 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               e.currentTarget.style.color = '#0D0D0F'
             }}
           >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
             Share My Class
+          </button>
+          
+          <button
+            onClick={handleCopyLink}
+            className="w-full flex items-center justify-center gap-2 font-sans text-xs py-3 rounded-xl border transition-all duration-200 cursor-pointer"
+            style={{
+              borderColor: linkCopied ? '#52B788' : `${primaryColor}30`,
+              color: linkCopied ? '#52B788' : '#94A3B8',
+              backgroundColor: linkCopied ? '#52B78810' : 'transparent',
+            }}
+          >
+            {linkCopied ? (
+              <>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Link Copied!
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+                Copy Shareable Link
+              </>
+            )}
           </button>
 
           <button

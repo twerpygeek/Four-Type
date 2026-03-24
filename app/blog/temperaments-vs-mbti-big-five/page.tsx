@@ -7,6 +7,24 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: '4 Temperaments vs MBTI vs Big Five — How They Compare | FourType',
   description: 'A clear comparison of the 4 temperaments, Myers-Briggs (MBTI), Big Five, and DISC personality systems. Learn how they relate and which one is right for you.',
+  keywords: ['MBTI vs temperaments', 'Big Five personality', 'DISC personality', 'personality test comparison', 'temperament types MBTI'],
+  openGraph: {
+    title: 'Temperaments vs MBTI vs Big Five | FourType',
+    description: 'Compare the four temperaments with MBTI, Big Five, and DISC personality systems.',
+    type: 'article',
+  },
+  alternates: { canonical: '/blog/temperaments-vs-mbti-big-five' },
+}
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: '4 Temperaments vs MBTI vs Big Five — How They Compare',
+  description: 'A clear comparison of the 4 temperaments, Myers-Briggs (MBTI), Big Five, and DISC personality systems.',
+  author: { '@type': 'Organization', name: 'FourType' },
+  publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: '/fourtype-logo.png' } },
+  datePublished: '2024-01-01',
+  dateModified: new Date().toISOString().split('T')[0],
 }
 
 const systems = [
@@ -40,6 +58,7 @@ const discMapping = [
 export default function ComparisonBlogPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <Navigation />
       <main className="min-h-screen bg-background pt-24 pb-16">
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

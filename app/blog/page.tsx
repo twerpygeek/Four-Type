@@ -8,6 +8,32 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'Blog | FourType - Temperament Education & Insights',
   description: 'Explore articles about the four temperaments, personality psychology, leadership, relationships, and self-development. Learn how to apply temperament theory in daily life.',
+  keywords: ['temperament blog', 'personality psychology articles', 'four temperaments guide', 'sanguine choleric melancholic phlegmatic', 'personality types', 'temperament theory'],
+  openGraph: {
+    title: 'Temperament Blog | FourType',
+    description: 'In-depth articles exploring the 4 temperaments, their history, applications, and relationships.',
+    type: 'website',
+  },
+  alternates: { canonical: '/blog' },
+}
+
+const blogListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'FourType Temperament Blog',
+  description: 'Educational articles about the four temperaments, personality psychology, and self-development.',
+  url: 'https://fourtype.com/blog',
+  publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: '/fourtype-logo.png' } },
+  blogPost: [
+    { '@type': 'BlogPosting', headline: 'History of the 4 Temperaments', url: '/blog/history-of-temperaments' },
+    { '@type': 'BlogPosting', headline: 'Sanguine Temperament Guide', url: '/blog/sanguine' },
+    { '@type': 'BlogPosting', headline: 'Choleric Temperament Guide', url: '/blog/choleric' },
+    { '@type': 'BlogPosting', headline: 'Melancholic Temperament Guide', url: '/blog/melancholic' },
+    { '@type': 'BlogPosting', headline: 'Phlegmatic Temperament Guide', url: '/blog/phlegmatic' },
+    { '@type': 'BlogPosting', headline: 'Leadership and Temperament', url: '/blog/leadership-and-temperament' },
+    { '@type': 'BlogPosting', headline: '15 Temperament Subtypes', url: '/blog/subtypes' },
+    { '@type': 'BlogPosting', headline: 'Temperaments vs MBTI vs Big Five', url: '/blog/temperaments-vs-mbti-big-five' },
+  ],
 }
 
 const blogPosts = [
@@ -92,6 +118,7 @@ export default function BlogPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListSchema) }} />
       <Navigation />
       <main className="min-h-screen bg-background pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
