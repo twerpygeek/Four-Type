@@ -130,13 +130,13 @@ export default function HomePage() {
             </p>
 
             {/* FourType logo — full width, no clipping */}
-            <div className="w-full max-w-sm sm:max-w-lg lg:max-w-2xl mx-auto flex items-center justify-center mb-3">
+            <div className="w-full max-w-6xl mx-auto flex items-center justify-center mb-6">
               <Image
                 src="/fourtype-logo.png"
                 alt="FourType — The Temperament Quest"
-                width={800}
-                height={300}
-                className="w-full h-auto object-contain drop-shadow-2xl"
+                width={1000}
+                height={350}
+                className="w-full h-auto object-contain drop-shadow-2xl filter brightness-105"
                 priority
               />
             </div>
@@ -170,14 +170,14 @@ export default function HomePage() {
             </div>
 
             {/* Find Your True Nature + Begin Quest */}
-            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-5" style={{ color: 'rgba(255,215,0,0.55)' }}>
+            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-8" style={{ color: 'rgba(255,215,0,0.55)' }}>
               Find Your True Nature
             </p>
 
             {/* Gold BEGIN YOUR QUEST button */}
             <Link
               href="/quiz"
-              className="group relative flex items-center justify-center gap-3 px-8 sm:px-12 py-3.5 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-12"
+              className="group relative flex items-center justify-center gap-3 px-8 sm:px-12 py-3.5 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-24 lg:mb-32"
               style={{
                 background: 'linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #B8860B 100%)',
                 color: '#1a1000',
@@ -196,7 +196,7 @@ export default function HomePage() {
             </Link>
 
             {/* Menu — no decorative box, plain list */}
-            <div className="w-full max-w-md mx-auto mb-16 space-y-3">
+            <div className="w-full max-w-md mx-auto space-y-3">
               {menuItems.map((item) => (
                 <Link
                   key={item.href}
