@@ -21,7 +21,7 @@ const blogPosts = [
     image: '/icon.png',
   },
   {
-    slug: 'sanguine-temperament',
+    slug: 'sanguine',
     title: 'Sanguine Temperament: Traits, Strengths & Challenges',
     excerpt: 'Everything you need to know about the Sanguine temperament — core traits, strengths, weaknesses, career fits, relationship style, and practical growth tips.',
     category: 'Temperaments',
@@ -30,7 +30,7 @@ const blogPosts = [
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Bard-QJJyqACHiDlWLpgew2foCbl5YGjLOi.png',
   },
   {
-    slug: 'choleric-temperament',
+    slug: 'choleric',
     title: 'Choleric Temperament: The Natural Leader Explained',
     excerpt: 'Discover the Choleric temperament — the rarest and most driven of the four types. Learn their leadership traits, strengths, weaknesses, career fits, and growth strategies.',
     category: 'Temperaments',
@@ -39,7 +39,7 @@ const blogPosts = [
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-rEIrJwEHYOzxNaP1ngaLZqm7A6GdrY.png',
   },
   {
-    slug: 'melancholic-temperament',
+    slug: 'melancholic',
     title: 'Melancholic Temperament: Depth, Detail & Perfectionism',
     excerpt: 'A complete guide to the Melancholic temperament — the deep thinker and perfectionist of the four types. Discover their traits, strengths, challenges, and growth strategies.',
     category: 'Temperaments',
@@ -48,7 +48,7 @@ const blogPosts = [
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-11A2ki2xYEb1yOkVrQ2xjaZ1etfh3Z.png',
   },
   {
-    slug: 'phlegmatic-temperament',
+    slug: 'phlegmatic',
     title: 'Phlegmatic Temperament: The Quiet Strength',
     excerpt: 'A complete guide to the Phlegmatic temperament — the calm peacemaker of the four types. Discover their traits, strengths, challenges, career fits, and relationship style.',
     category: 'Temperaments',
@@ -63,7 +63,7 @@ const blogPosts = [
     category: 'Leadership',
     readTime: '6 min',
     featured: true,
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_better_202603241226-P85eWQz8sUhJL1gbECUuONWrJPjzUo.jpeg',
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/blog%20images-YOx5j8T93i2oKsjJGl1c4WSMhtlLA5.jpg',
   },
   {
     slug: 'temperaments-vs-mbti-big-five',
@@ -130,11 +130,11 @@ export default function BlogPage() {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-[#4CC9F0]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
-                {featuredPost.icon && (
+                {featuredPost.image && (
                   <div className="relative w-48 h-48 flex-shrink-0">
                     <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl" />
                     <Image
-                      src={featuredPost.icon}
+                      src={featuredPost.image}
                       alt="Temperament Icon"
                       fill
                       className="object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
@@ -183,12 +183,12 @@ export default function BlogPage() {
               )}
               
               <div className="relative p-6">
-                {/* Temperament icon */}
-                {post.icon && (
+                {/* Blog post image */}
+                {post.image && (
                   <div className="relative w-24 h-24 mx-auto mb-4">
                     <Image
-                      src={post.icon}
-                      alt="Temperament Icon"
+                      src={post.image}
+                      alt={post.title}
                       fill
                       className="object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300"
                     />
