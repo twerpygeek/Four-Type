@@ -86,14 +86,17 @@ export default function HomePage() {
 
           <div className="relative z-10 w-full flex flex-col items-center px-4">
 
-            {/* FourType logo — new version includes KNOW YOUR TRUE NATURE + tagline */}
-            <div className="w-full max-w-xl sm:max-w-2xl lg:max-w-4xl mx-auto flex items-center justify-center mb-1">
+            {/* FourType logo — responsive sizing for mobile */}
+            <div className="w-full max-w-[280px] sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto flex items-center justify-center mb-1 px-2">
               <Image
                 src="/fourtype-logo.png"
                 alt="FourType — Know Your True Nature — The Temperament Quest"
                 width={900}
                 height={380}
-                className="w-full h-auto object-contain drop-shadow-2xl"
+                className="w-full h-auto object-contain"
+                style={{
+                  filter: 'drop-shadow(0 0 20px rgba(255,215,0,0.3)) drop-shadow(0 4px 20px rgba(0,0,0,0.5))',
+                }}
                 priority
               />
             </div>
@@ -152,7 +155,7 @@ export default function HomePage() {
               </svg>
             </Link>
             <p className="font-sans text-xs text-foreground/35 tracking-wider mb-12">
-              40 questions &bull; 4 temperaments &bull; Free forever
+              40 questions &bull; 15 unique blends &bull; Free forever
             </p>
 
             {/* Character Selection */}
@@ -165,7 +168,7 @@ export default function HomePage() {
                 <div className="h-px flex-1 max-w-[180px] bg-foreground/12" />
               </div>
 
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 {temperaments.map((temp) => (
                   <Link
                     key={temp.key}
@@ -174,33 +177,93 @@ export default function HomePage() {
                     onMouseEnter={() => setHoveredTemp(temp.key)}
                     onMouseLeave={() => setHoveredTemp(null)}
                   >
-                    {/* Character with glow */}
-                    <div className="relative flex items-end justify-center w-full mb-3">
+                    {/* Character with ornate frame */}
+                    <div 
+                      className="relative flex items-end justify-center w-full mb-3 p-3 transition-all duration-300"
+                      style={{
+                        background: hoveredTemp === temp.key 
+                          ? `radial-gradient(ellipse at center bottom, ${temp.color}15 0%, transparent 70%)`
+                          : 'transparent',
+                      }}
+                    >
+                      {/* Ornate corner brackets */}
+                      <div 
+                        className="absolute top-0 left-0 w-5 h-5 border-l-2 border-t-2 rounded-tl transition-all duration-300"
+                        style={{ 
+                          borderColor: hoveredTemp === temp.key ? temp.color : `${temp.color}40`,
+                          boxShadow: hoveredTemp === temp.key ? `0 0 10px ${temp.color}50` : 'none',
+                        }}
+                      />
+                      <div 
+                        className="absolute top-0 right-0 w-5 h-5 border-r-2 border-t-2 rounded-tr transition-all duration-300"
+                        style={{ 
+                          borderColor: hoveredTemp === temp.key ? temp.color : `${temp.color}40`,
+                          boxShadow: hoveredTemp === temp.key ? `0 0 10px ${temp.color}50` : 'none',
+                        }}
+                      />
+                      <div 
+                        className="absolute bottom-0 left-0 w-5 h-5 border-l-2 border-b-2 rounded-bl transition-all duration-300"
+                        style={{ 
+                          borderColor: hoveredTemp === temp.key ? temp.color : `${temp.color}40`,
+                          boxShadow: hoveredTemp === temp.key ? `0 0 10px ${temp.color}50` : 'none',
+                        }}
+                      />
+                      <div 
+                        className="absolute bottom-0 right-0 w-5 h-5 border-r-2 border-b-2 rounded-br transition-all duration-300"
+                        style={{ 
+                          borderColor: hoveredTemp === temp.key ? temp.color : `${temp.color}40`,
+                          boxShadow: hoveredTemp === temp.key ? `0 0 10px ${temp.color}50` : 'none',
+                        }}
+                      />
+                      {/* Platform glow */}
                       <div
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 sm:w-28 h-20 sm:h-28 rounded-full blur-2xl transition-opacity duration-300"
-                        style={{ backgroundColor: temp.color, opacity: hoveredTemp === temp.key ? 0.4 : 0.13 }}
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 sm:w-28 h-20 sm:h-28 rounded-full blur-2xl transition-all duration-300"
+                        style={{ 
+                          backgroundColor: temp.color, 
+                          opacity: hoveredTemp === temp.key ? 0.5 : 0.15,
+                          transform: hoveredTemp === temp.key ? 'scale(1.2)' : 'scale(1)',
+                        }}
                       />
                       <Image
                         src={temp.image}
                         alt={temp.title}
                         width={140}
                         height={175}
-                        className="relative object-contain drop-shadow-2xl transition-transform duration-300 group-hover:-translate-y-2 w-auto h-[120px] sm:h-[155px]"
+                        className="relative object-contain transition-all duration-300 group-hover:-translate-y-3 group-hover:scale-105 w-auto h-[120px] sm:h-[155px]"
+                        style={{
+                          filter: hoveredTemp === temp.key 
+                            ? `drop-shadow(0 0 20px ${temp.color}) drop-shadow(0 0 40px ${temp.color}60)`
+                            : 'drop-shadow(0 8px 16px rgba(0,0,0,0.5))',
+                        }}
                       />
                     </div>
 
-                    {/* Name card */}
+                    {/* Name card - parchment style */}
                     <div
-                      className="w-full px-2 sm:px-3 py-2 sm:py-3 text-center transition-all duration-300"
+                      className="w-full px-2 sm:px-3 py-2 sm:py-3 text-center transition-all duration-300 relative overflow-hidden"
                       style={{
-                        border: `1px solid ${temp.color}`,
+                        background: hoveredTemp === temp.key 
+                          ? `linear-gradient(135deg, ${temp.color}15 0%, ${temp.color}08 100%)`
+                          : 'linear-gradient(135deg, rgba(26,26,46,0.8) 0%, rgba(18,18,30,0.9) 100%)',
+                        border: `2px solid ${hoveredTemp === temp.key ? temp.color : `${temp.color}50`}`,
                         boxShadow: hoveredTemp === temp.key
-                          ? `0 0 16px ${temp.color}70, inset 0 0 12px ${temp.color}15`
-                          : `0 0 5px ${temp.color}28`,
-                        backgroundColor: hoveredTemp === temp.key ? `${temp.color}0f` : 'transparent',
+                          ? `0 0 25px ${temp.color}50, inset 0 0 15px ${temp.color}15`
+                          : `0 2px 10px rgba(0,0,0,0.3)`,
                       }}
                     >
-                      <p className="font-serif text-xs sm:text-sm font-bold tracking-[0.1em] sm:tracking-[0.15em] uppercase" style={{ color: temp.color }}>
+                      {/* Inner corner accents */}
+                      <div className="absolute top-0.5 left-0.5 w-2 h-2 border-l border-t transition-colors duration-300" style={{ borderColor: temp.color }} />
+                      <div className="absolute top-0.5 right-0.5 w-2 h-2 border-r border-t transition-colors duration-300" style={{ borderColor: temp.color }} />
+                      <div className="absolute bottom-0.5 left-0.5 w-2 h-2 border-l border-b transition-colors duration-300" style={{ borderColor: temp.color }} />
+                      <div className="absolute bottom-0.5 right-0.5 w-2 h-2 border-r border-b transition-colors duration-300" style={{ borderColor: temp.color }} />
+                      
+                      <p 
+                        className="font-serif text-xs sm:text-sm font-bold tracking-[0.1em] sm:tracking-[0.15em] uppercase transition-all duration-300" 
+                        style={{ 
+                          color: temp.color,
+                          textShadow: hoveredTemp === temp.key ? `0 0 10px ${temp.color}` : 'none',
+                        }}
+                      >
                         {temp.title}
                       </p>
                       <p className="font-sans text-[10px] sm:text-xs text-foreground/45 mt-0.5">{temp.name}</p>

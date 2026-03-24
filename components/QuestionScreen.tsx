@@ -244,18 +244,48 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
           </span>
         </div>
 
-        {/* === GAME CARD === */}
+        {/* === GAME CARD - PARCHMENT STYLE === */}
         <div
-          className="relative rounded-2xl overflow-hidden flex flex-col"
+          className="relative rounded-xl overflow-hidden flex flex-col"
           style={{
-            background: 'linear-gradient(160deg, #1a1a2e 0%, #12121e 100%)',
-            border: '1px solid rgba(255,215,0,0.25)',
-            boxShadow: '0 0 0 1px rgba(255,215,0,0.08), 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)',
+            background: `
+              linear-gradient(135deg, rgba(26,26,46,0.95) 0%, rgba(18,18,30,0.98) 100%),
+              repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 2px,
+                rgba(255,215,0,0.02) 2px,
+                rgba(255,215,0,0.02) 4px
+              )
+            `,
+            border: '2px solid',
+            borderImage: 'linear-gradient(135deg, #FFD700 0%, #B8860B 50%, #FFD700 100%) 1',
+            boxShadow: `
+              0 0 0 1px rgba(0,0,0,0.5),
+              0 0 30px rgba(255,215,0,0.2),
+              0 0 60px rgba(255,215,0,0.1),
+              0 20px 60px rgba(0,0,0,0.7),
+              inset 0 0 100px rgba(255,215,0,0.03),
+              inset 0 1px 0 rgba(255,215,0,0.1)
+            `,
             opacity: cardVisible ? 1 : 0,
             transform: cardVisible ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.98)',
             transition: 'opacity 0.25s ease-out, transform 0.25s ease-out',
           }}
         >
+          {/* Decorative corner runes */}
+          <div className="absolute top-2 left-2 w-6 h-6 border-l-2 border-t-2 border-[#FFD700]/50 rounded-tl pointer-events-none" />
+          <div className="absolute top-2 right-2 w-6 h-6 border-r-2 border-t-2 border-[#FFD700]/50 rounded-tr pointer-events-none" />
+          <div className="absolute bottom-2 left-2 w-6 h-6 border-l-2 border-b-2 border-[#FFD700]/50 rounded-bl pointer-events-none" />
+          <div className="absolute bottom-2 right-2 w-6 h-6 border-r-2 border-b-2 border-[#FFD700]/50 rounded-br pointer-events-none" />
+          
+          {/* Ambient glow behind card */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse at center, rgba(255,215,0,0.05) 0%, transparent 70%)',
+            }}
+          />
           {/* Top header bar */}
           <div
             className="flex items-center justify-between px-4 py-3 border-b"
@@ -313,7 +343,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
             />
 
             {/* Answer options */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-3">
               {currentQ.answers.map((answer) => {
                 const isSelected = selected === answer.letter
                 return (
@@ -322,56 +352,83 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
                     id={`answer-${answer.letter}`}
                     onClick={(e) => handleSelect(answer.letter, e)}
                     disabled={!!selected}
-                    className="group w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-left transition-all duration-200 cursor-pointer disabled:cursor-default relative overflow-hidden"
+                    className="answer-btn group w-full flex items-center gap-3 px-4 sm:px-5 py-4 sm:py-4.5 rounded-xl text-left transition-all duration-300 cursor-pointer disabled:cursor-default relative overflow-hidden"
                     style={{
                       background: isSelected
-                        ? 'linear-gradient(90deg, rgba(255,215,0,0.15) 0%, rgba(255,215,0,0.04) 100%)'
-                        : 'rgba(255,255,255,0.03)',
-                      border: `1px solid ${isSelected ? 'rgba(255,215,0,0.5)' : 'rgba(255,255,255,0.07)'}`,
-                      boxShadow: isSelected ? '0 0 20px rgba(255,215,0,0.15), inset 0 0 20px rgba(255,215,0,0.05)' : 'none',
-                    }}
-                    onMouseEnter={(e) => {
-                      if (selected) return
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.07)'
-                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'
-                    }}
-                    onMouseLeave={(e) => {
-                      if (selected) return
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.03)'
-                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
+                        ? 'linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0.08) 100%)'
+                        : 'linear-gradient(135deg, rgba(26,26,46,0.8) 0%, rgba(18,18,30,0.9) 100%)',
+                      border: `2px solid ${isSelected ? '#FFD700' : 'rgba(255,215,0,0.15)'}`,
+                      boxShadow: isSelected 
+                        ? '0 0 30px rgba(255,215,0,0.4), 0 0 60px rgba(255,215,0,0.2), inset 0 0 30px rgba(255,215,0,0.1)' 
+                        : '0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)',
+                      transform: isSelected ? 'scale(1.02)' : 'scale(1)',
                     }}
                   >
+                    {/* Hover glow overlay */}
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0.02) 100%)',
+                        boxShadow: 'inset 0 0 20px rgba(255,215,0,0.1)',
+                      }}
+                    />
+                    {/* Shimmer effect on hover */}
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.1) 50%, transparent 100%)',
+                        backgroundSize: '200% 100%',
+                        animation: 'shimmerSlide 1.5s ease-in-out infinite',
+                      }}
+                    />
                     {/* Letter badge */}
                     <div
-                      className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center font-serif text-sm font-bold transition-all duration-200 relative"
+                      className="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-lg flex items-center justify-center font-serif text-base font-bold transition-all duration-300 relative z-10 group-hover:scale-110"
                       style={{
                         background: isSelected
-                          ? 'linear-gradient(135deg, #FFD700 0%, #B8860B 100%)'
-                          : 'rgba(255,255,255,0.06)',
-                        color: isSelected ? '#0D0D0F' : '#94A3B8',
-                        boxShadow: isSelected ? '0 0 15px rgba(255,215,0,0.5)' : 'none',
-                        border: isSelected ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                          ? 'linear-gradient(135deg, #FFE55C 0%, #FFD700 50%, #B8860B 100%)'
+                          : 'linear-gradient(135deg, rgba(255,215,0,0.15) 0%, rgba(255,215,0,0.05) 100%)',
+                        color: isSelected ? '#0D0D0F' : '#B8860B',
+                        boxShadow: isSelected 
+                          ? '0 0 20px rgba(255,215,0,0.6), inset 0 1px 0 rgba(255,255,255,0.3)' 
+                          : '0 0 10px rgba(255,215,0,0.1)',
+                        border: `1px solid ${isSelected ? '#FFE55C' : 'rgba(255,215,0,0.3)'}`,
                       }}
                     >
                       {answer.letter}
                     </div>
                     {/* Answer text */}
                     <p
-                      className="text-base sm:text-lg leading-snug flex-1"
+                      className="text-base sm:text-lg leading-snug flex-1 relative z-10 transition-all duration-300 group-hover:text-[#F1F5F9]"
                       style={{
-                        color: isSelected ? '#F1F5F9' : '#CBD5E1',
+                        color: isSelected ? '#F1F5F9' : '#94A3B8',
                         fontFamily: "'Crimson Text', serif",
                         fontWeight: isSelected ? 600 : 400,
+                        textShadow: isSelected ? '0 0 10px rgba(255,215,0,0.3)' : 'none',
                       }}
                     >
                       {answer.text}
                     </p>
                     {/* Check mark on selected */}
                     {isSelected && (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0">
-                        <circle cx="8" cy="8" r="7" fill="rgba(255,215,0,0.2)" stroke="#FFD700" strokeWidth="1"/>
-                        <path d="M5 8L7 10L11 6" stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+                      <div className="relative z-10 shrink-0">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                          <circle cx="12" cy="12" r="10" fill="rgba(255,215,0,0.3)" stroke="#FFD700" strokeWidth="2"/>
+                          <path d="M8 12L11 15L16 9" stroke="#FFD700" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        <div 
+                          className="absolute inset-0 rounded-full"
+                          style={{ boxShadow: '0 0 15px rgba(255,215,0,0.5)' }}
+                        />
+                      </div>
+                    )}
+                    {/* Right arrow hint on hover (not selected) */}
+                    {!isSelected && (
+                      <div className="relative z-10 shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                          <path d="M7 4L13 10L7 16" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
                     )}
                   </button>
                 )
@@ -401,6 +458,18 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
         @keyframes pulseGlow {
           0%, 100% { text-shadow: 0 0 40px rgba(255,215,0,0.5); }
           50% { text-shadow: 0 0 60px rgba(255,215,0,0.8), 0 0 100px rgba(255,215,0,0.4); }
+        }
+        @keyframes shimmerSlide {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        .answer-btn:hover {
+          border-color: rgba(255,215,0,0.5) !important;
+          transform: translateY(-2px) scale(1.01) !important;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.4), 0 0 25px rgba(255,215,0,0.2), inset 0 1px 0 rgba(255,215,0,0.1) !important;
+        }
+        .answer-btn:active:not(:disabled) {
+          transform: translateY(0) scale(0.99) !important;
         }
       `}</style>
     </main>
