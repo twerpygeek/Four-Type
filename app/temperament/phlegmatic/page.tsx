@@ -199,41 +199,133 @@ export default function PhlegmaticPage() {
           </div>
         </section>
 
-        {/* Growth Section */}
+        {/* Strength Training Section */}
         <section className="py-16 px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">Personal Growth Tips</h2>
-            <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-white mb-4 text-center">Strength Training</h2>
+            <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+              God wired you with the specific strengths of your temperament for a reason. Use these tips to amplify the strengths you&apos;re naturally wired with.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
               {[
-                {
-                  title: 'Develop Assertiveness',
-                  description:
-                    'Your needs matter too. Practice expressing your opinions and boundaries respectfully but clearly.',
-                },
-                {
-                  title: 'Embrace Change',
-                  description:
-                    'Growth requires stepping outside comfort zones. Challenge yourself to try new things regularly.',
-                },
-                {
-                  title: 'Take Initiative',
-                  description:
-                    'Beyond supporting others, pursue your own goals. Your stability is stronger when directed purposefully.',
-                },
-                {
-                  title: 'Build Confidence',
-                  description:
-                    'You have more capability than you believe. Celebrate small wins and gradually increase your challenges.',
-                },
+                'Regularly doing something – a class, hobby, or new skill – that interests you',
+                'Advocating for yourself rather than letting resentment build',
+                'Jumping into the conversation and sharing your ideas and opinions',
+                'Matching the emotions and/or energy of others',
+                'Trusting in your abilities and remembering the times you\'ve succeeded',
+                'Responding enthusiastically',
+                'Volunteering to be a leader, captain or point person',
+                'Committing to deadlines and meeting them',
+                'Expressing your preferences when you\'re offered choices',
+                'Explaining that you need time to think, rather than leaving others confused',
+                'Sticking around until conflicts are fully resolved',
+                'Vocalizing your admiration and/or appreciation of others',
               ].map((tip, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-gray-900 border border-gray-700 rounded-lg hover:border-green-600 transition-all duration-300"
+                  className="p-4 bg-gray-900 border border-gray-700 rounded-lg hover:border-green-600 transition-all duration-300"
                 >
-                  <h3 className="text-lg font-bold text-green-400 mb-2">{tip.title}</h3>
-                  <p className="text-gray-300">{tip.description}</p>
+                  <p className="text-sm text-gray-300">{tip}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Scripture Verses Section */}
+        <section className="py-16 px-4 bg-gradient-to-b from-transparent via-gray-900/20 to-transparent">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-4 text-center">Scripture Verses</h2>
+            <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+              Your temperament is neither a weapon nor an excuse. Use these verses to stay focused on healthy ways you can grow.
+            </p>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl font-bold text-green-400 mb-6">Encouraging Verses</h3>
+                <div className="space-y-4">
+                  {[
+                    { verse: 'Come to me, all you who are weary and burdened, and I will give you rest.', ref: 'Matthew 11:28' },
+                    { verse: 'Make it your ambition to lead a quiet life: You should mind your own business and work with your hands, just as we told you, so that your daily life may win the respect of outsiders.', ref: '1 Thessalonians 4:11-12' },
+                    { verse: 'But the Lord said to Samuel, "Do not consider his appearance or his height, for I have rejected him. The Lord does not look at the things people look at. People look at the outward appearance, but the Lord looks at the heart."', ref: '1 Samuel 16:7' },
+                    { verse: 'Blessed are the peacemakers, for they will be called children of God.', ref: 'Matthew 5:9' },
+                  ].map((item, index) => (
+                    <div key={index} className="p-4 bg-gray-900 border border-green-600/30 rounded-lg">
+                      <p className="text-gray-300 text-sm italic mb-2">&ldquo;{item.verse}&rdquo;</p>
+                      <p className="text-green-400 text-xs font-semibold">{item.ref}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-bold text-gray-400 mb-6">Cautionary Verses</h3>
+                <div className="space-y-4">
+                  {[
+                    { verse: 'Lazy hands make for poverty, but diligent hands bring wealth.', ref: 'Proverbs 10:4' },
+                    { verse: 'Make every effort to keep the unity of the Spirit through the bond of peace.', ref: 'Ephesians 4:3' },
+                    { verse: 'A sluggard\'s appetite is never filled, but the desires of the diligent are fully satisfied.', ref: 'Proverbs 13:4' },
+                  ].map((item, index) => (
+                    <div key={index} className="p-4 bg-gray-900 border border-gray-700 rounded-lg">
+                      <p className="text-gray-300 text-sm italic mb-2">&ldquo;{item.verse}&rdquo;</p>
+                      <p className="text-gray-500 text-xs font-semibold">{item.ref}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Build-Up Guide Section */}
+        <section className="py-16 px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-4 text-center">Build-Up Guide</h2>
+            <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+              Knowing someone&apos;s temperament is like having a cheat sheet! Use these actions and words to build up the Phlegmatic in your life.
+            </p>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="p-6 bg-gray-900 border border-green-600/30 rounded-lg">
+                <h3 className="text-xl font-bold text-green-400 mb-6">Build Them Up By...</h3>
+                <ul className="space-y-3">
+                  {[
+                    'Letting them do one task at a time: "If you could just do ___, that would be great."',
+                    'Being kind in your criticism: "Can I reflect something back to you?"',
+                    'Asking their thoughts, opinions, and feelings: "What sounds good to you?"',
+                    'Showing curiosity about their interests: "Tell me more about that."',
+                    'Encouraging their involvement: "We\'d love to have you join us!"',
+                    'Listening completely, without interrupting',
+                    'Giving them time to process: "Think about it. We can talk more later."',
+                    'Handling conflict calmly and quietly: "Is now an okay time to talk?"',
+                  ].map((item, index) => (
+                    <li key={index} className="text-gray-300 text-sm flex items-start gap-2">
+                      <span className="text-green-400 mt-1">&#9654;</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="p-6 bg-gray-900 border border-red-900/30 rounded-lg">
+                <h3 className="text-xl font-bold text-red-400 mb-6">Caution! You May Tear Them Down By...</h3>
+                <ul className="space-y-3">
+                  {[
+                    'Expecting things done in your time frame, not theirs',
+                    'Pushing their involvement: "You\'re going. I already signed you up."',
+                    'Not listening when they speak up',
+                    'Mistaking their quiet for apathy: "Well, clearly this isn\'t important to you."',
+                    'Speaking down to them: "Do I have to do everything around here?"',
+                    'Stressing them with expectations and orders',
+                    'Not verbalizing their value – assuming they know how you feel',
+                  ].map((item, index) => (
+                    <li key={index} className="text-gray-300 text-sm flex items-start gap-2">
+                      <span className="text-red-400 mt-1">&#9654;</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </section>

@@ -100,7 +100,19 @@ export default function Footer() {
             {new Date().getFullYear()} FourType. Know your true nature.
           </p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <span>Built with ancient wisdom and modern craft</span>
+            <span>
+              Made with{' '}
+              <span className="text-red-500">❤️</span>
+              {' '}by{' '}
+              <a
+                href="https://iangoh.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                iangoh.com
+              </a>
+            </span>
           </div>
         </div>
       </div>
