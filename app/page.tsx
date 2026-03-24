@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, BookOpen, Brain, Sparkles, Scroll, Swords, Map, Users } from 'lucide-react'
+import { BookOpen, Brain, Sparkles, Users } from 'lucide-react'
 import RuneBackground from '@/components/RuneBackground'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -47,34 +47,6 @@ const temperaments = [
   },
 ]
 
-const menuItems = [
-  {
-    href: '/quiz',
-    icon: Swords,
-    label: 'Begin Quest',
-    description: 'Discover your temperament',
-    primary: true,
-  },
-  {
-    href: '/manifesto',
-    icon: Scroll,
-    label: 'The Manifesto',
-    description: 'Learn the ancient wisdom',
-  },
-  {
-    href: '/blog',
-    icon: BookOpen,
-    label: 'Chronicles',
-    description: 'Stories and insights',
-  },
-  {
-    href: '/faq',
-    icon: Map,
-    label: 'Guide',
-    description: 'Questions answered',
-  },
-]
-
 const features = [
   {
     icon: Brain,
@@ -100,7 +72,6 @@ const features = [
 
 export default function HomePage() {
   const [hoveredTemp, setHoveredTemp] = useState<string | null>(null)
-  const [hoveredMenu, setHoveredMenu] = useState<string | null>(null)
 
   return (
     <>
@@ -115,34 +86,20 @@ export default function HomePage() {
 
           <div className="relative z-10 w-full flex flex-col items-center px-4">
 
-            {/* Top ornament */}
-            <div className="flex items-center gap-4 mb-4">
-              <div className="h-px w-20 sm:w-32 bg-gradient-to-r from-transparent to-[#FFD700]/50" />
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M6 0L7.2 4.8L12 6L7.2 7.2L6 12L4.8 7.2L0 6L4.8 4.8Z" fill="#FFD700" />
-              </svg>
-              <div className="h-px w-20 sm:w-32 bg-gradient-to-l from-transparent to-[#FFD700]/50" />
-            </div>
-
-            {/* Tagline */}
-            <p className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.45em] uppercase mb-6" style={{ color: '#c9a227' }}>
-              Know Your True Nature
-            </p>
-
-            {/* FourType logo — full width, no clipping */}
-            <div className="w-full max-w-6xl mx-auto flex items-center justify-center mb-6">
+            {/* FourType logo — new version includes KNOW YOUR TRUE NATURE + tagline */}
+            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto flex items-center justify-center mb-8">
               <Image
                 src="/fourtype-logo.png"
-                alt="FourType — The Temperament Quest"
-                width={1000}
-                height={350}
-                className="w-full h-auto object-contain drop-shadow-2xl filter brightness-105"
+                alt="FourType — Know Your True Nature — The Temperament Quest"
+                width={900}
+                height={380}
+                className="w-full h-auto object-contain drop-shadow-2xl"
                 priority
               />
             </div>
 
             {/* Diamond divider */}
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-3 mb-6">
               <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
               <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
                 <path d="M4.5 0L9 4.5L4.5 9L0 4.5Z" fill="#FFD700" fillOpacity="0.7" />
@@ -151,7 +108,7 @@ export default function HomePage() {
             </div>
 
             {/* Video frame */}
-            <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-[680px] mx-auto mb-6">
+            <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-[680px] mx-auto mb-8">
               <span className="pointer-events-none absolute -top-[10px] -left-[10px] w-7 h-7 border-t-2 border-l-2 border-[#FFD700]/75" />
               <span className="pointer-events-none absolute -top-[10px] -right-[10px] w-7 h-7 border-t-2 border-r-2 border-[#FFD700]/75" />
               <span className="pointer-events-none absolute -bottom-[10px] -left-[10px] w-7 h-7 border-b-2 border-l-2 border-[#FFD700]/75" />
@@ -169,15 +126,10 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Find Your True Nature + Begin Quest */}
-            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-8" style={{ color: 'rgba(255,215,0,0.55)' }}>
-              Find Your True Nature
-            </p>
-
             {/* Gold BEGIN YOUR QUEST button */}
             <Link
               href="/quiz"
-              className="group relative flex items-center justify-center gap-3 px-8 sm:px-12 py-3.5 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-24 lg:mb-32"
+              className="group relative flex items-center justify-center gap-3 px-8 sm:px-12 py-3.5 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-6"
               style={{
                 background: 'linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #B8860B 100%)',
                 color: '#1a1000',
@@ -194,52 +146,9 @@ export default function HomePage() {
                 <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
               </svg>
             </Link>
-
-            {/* Menu — no decorative box, plain list */}
-            <div className="w-full max-w-md mx-auto space-y-3">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`group relative flex items-center gap-4 px-5 py-4 transition-all duration-300 ${
-                    item.primary
-                      ? 'bg-[#FFD700]/10 border-2 border-[#FFD700]/60 hover:bg-[#FFD700]/18 hover:border-[#FFD700]'
-                      : 'bg-foreground/5 border border-foreground/10 hover:bg-foreground/10 hover:border-foreground/20'
-                  }`}
-                  onMouseEnter={() => setHoveredMenu(item.href)}
-                  onMouseLeave={() => setHoveredMenu(null)}
-                  style={{
-                    boxShadow: hoveredMenu === item.href
-                      ? item.primary
-                        ? '0 0 20px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.05)'
-                        : '0 0 12px rgba(255,255,255,0.07)'
-                      : 'none',
-                  }}
-                >
-                  <div className={`w-10 h-10 flex items-center justify-center flex-shrink-0 ${
-                    item.primary ? 'text-[#FFD700]' : 'text-foreground/50 group-hover:text-foreground/80'
-                  } transition-colors`}>
-                    <item.icon className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className={`font-serif text-base sm:text-lg font-semibold tracking-wide ${
-                      item.primary ? 'text-[#FFD700]' : 'text-foreground/75 group-hover:text-foreground'
-                    } transition-colors`}>
-                      {item.label}
-                    </p>
-                    <p className="text-xs text-foreground/40 group-hover:text-foreground/55 transition-colors">
-                      {item.description}
-                    </p>
-                  </div>
-                  <ArrowRight className={`w-5 h-5 flex-shrink-0 transition-all duration-300 group-hover:translate-x-1 ${
-                    item.primary ? 'text-[#FFD700]/60 group-hover:text-[#FFD700]' : 'text-foreground/25 group-hover:text-foreground/50'
-                  }`} />
-                  {item.primary && (
-                    <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#FFD700] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  )}
-                </Link>
-              ))}
-            </div>
+            <p className="font-sans text-xs text-foreground/35 tracking-wider mb-20">
+              40 questions &bull; 4 temperaments &bull; Free forever
+            </p>
 
             {/* Character Selection */}
             <div className="w-full max-w-4xl mx-auto">
