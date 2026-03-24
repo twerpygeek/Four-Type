@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, BookOpen, Users, Brain, Sparkles, Scroll, Swords, Map } from 'lucide-react'
+import { ArrowRight, BookOpen, Brain, Sparkles, Scroll, Swords, Map, Users } from 'lucide-react'
 import RuneBackground from '@/components/RuneBackground'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -14,7 +14,6 @@ const temperaments = [
     title: 'The Bard',
     name: 'Sanguine',
     color: '#FFD700',
-    bgGlow: 'from-[#FFD700]/20 to-transparent',
     description: 'The enthusiastic connector who lights up every room with infectious energy and optimism.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Bard-QJJyqACHiDlWLpgew2foCbl5YGjLOi.png',
     traits: ['Charismatic', 'Creative', 'Spontaneous'],
@@ -24,7 +23,6 @@ const temperaments = [
     title: 'The Commander',
     name: 'Choleric',
     color: '#E63946',
-    bgGlow: 'from-[#E63946]/20 to-transparent',
     description: 'The natural leader who takes charge, drives results, and turns vision into reality.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-rEIrJwEHYOzxNaP1ngaLZqm7A6GdrY.png',
     traits: ['Decisive', 'Ambitious', 'Strategic'],
@@ -34,7 +32,6 @@ const temperaments = [
     title: 'The Strategist',
     name: 'Melancholic',
     color: '#4CC9F0',
-    bgGlow: 'from-[#4CC9F0]/20 to-transparent',
     description: 'The deep thinker who sees patterns others miss and holds the world to high standards.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-11A2ki2xYEb1yOkVrQ2xjaZ1etfh3Z.png',
     traits: ['Analytical', 'Perfectionist', 'Loyal'],
@@ -44,7 +41,6 @@ const temperaments = [
     title: 'The Guardian',
     name: 'Phlegmatic',
     color: '#52B788',
-    bgGlow: 'from-[#52B788]/20 to-transparent',
     description: 'The calm peacemaker who brings harmony, listens deeply, and holds teams together.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Guardian-98lWuYWNazfR3hvOW2FUE3dkp13BLy.png',
     traits: ['Patient', 'Diplomatic', 'Reliable'],
@@ -111,13 +107,14 @@ export default function HomePage() {
       <Navigation />
       <main className="min-h-screen bg-background">
         <RuneBackground />
-        
+
         {/* Hero Section */}
-        <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-12 overflow-hidden">
+        <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-16 overflow-hidden">
           {/* Radial dark vignette */}
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_35%,transparent_50%,rgba(13,13,15,0.85)_100%)]" />
 
           <div className="relative z-10 w-full flex flex-col items-center px-4">
+
             {/* Top ornament */}
             <div className="flex items-center gap-4 mb-4">
               <div className="h-px w-20 sm:w-32 bg-gradient-to-r from-transparent to-[#FFD700]/50" />
@@ -128,27 +125,24 @@ export default function HomePage() {
             </div>
 
             {/* Tagline */}
-            <p className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.45em] uppercase mb-4" style={{ color: '#c9a227' }}>
+            <p className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.45em] uppercase mb-6" style={{ color: '#c9a227' }}>
               Know Your True Nature
             </p>
 
-            {/* FOURTYPE logo image */}
-            <Image
-              src="/fourtype-logo.png"
-              alt="FourType — The Temperament Quest"
-              width={400}
-              height={150}
-              className="relative z-10 h-auto w-auto max-w-xs sm:max-w-sm lg:max-w-md object-contain drop-shadow-2xl mb-4 filter brightness-110"
-              priority
-            />
-
-            {/* Subtitle */}
-            <p className="font-serif text-lg sm:text-xl text-foreground/55 tracking-[0.18em] mb-8">
-              The Temperament Quest
-            </p>
+            {/* FourType logo — full width, no clipping */}
+            <div className="w-full max-w-sm sm:max-w-lg lg:max-w-2xl mx-auto flex items-center justify-center mb-3">
+              <Image
+                src="/fourtype-logo.png"
+                alt="FourType — The Temperament Quest"
+                width={800}
+                height={300}
+                className="w-full h-auto object-contain drop-shadow-2xl"
+                priority
+              />
+            </div>
 
             {/* Diamond divider */}
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-5">
               <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
               <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
                 <path d="M4.5 0L9 4.5L4.5 9L0 4.5Z" fill="#FFD700" fillOpacity="0.7" />
@@ -156,13 +150,12 @@ export default function HomePage() {
               <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
             </div>
 
-            {/* Video frame with gold L-bracket corners */}
-            <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-[680px] mx-auto mb-8">
+            {/* Video frame */}
+            <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-[680px] mx-auto mb-6">
               <span className="pointer-events-none absolute -top-[10px] -left-[10px] w-7 h-7 border-t-2 border-l-2 border-[#FFD700]/75" />
               <span className="pointer-events-none absolute -top-[10px] -right-[10px] w-7 h-7 border-t-2 border-r-2 border-[#FFD700]/75" />
               <span className="pointer-events-none absolute -bottom-[10px] -left-[10px] w-7 h-7 border-b-2 border-l-2 border-[#FFD700]/75" />
               <span className="pointer-events-none absolute -bottom-[10px] -right-[10px] w-7 h-7 border-b-2 border-r-2 border-[#FFD700]/75" />
-
               <div
                 className="overflow-hidden bg-black"
                 style={{
@@ -176,110 +169,79 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* "Find Your True Nature" */}
-            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-6" style={{ color: 'rgba(255,215,0,0.55)' }}>
+            {/* Find Your True Nature + Begin Quest */}
+            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-5" style={{ color: 'rgba(255,215,0,0.55)' }}>
               Find Your True Nature
             </p>
 
-            {/* Prominent gold BEGIN YOUR QUEST button */}
+            {/* Gold BEGIN YOUR QUEST button */}
             <Link
               href="/quiz"
-              className="group relative flex items-center justify-center gap-3 px-8 sm:px-10 py-3 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-12"
+              className="group relative flex items-center justify-center gap-3 px-8 sm:px-12 py-3.5 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-12"
               style={{
                 background: 'linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #B8860B 100%)',
                 color: '#1a1000',
-                boxShadow: '0 0 30px rgba(255,215,0,0.5), 0 6px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3)',
+                boxShadow: '0 0 35px rgba(255,215,0,0.5), 0 6px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3)',
                 borderRadius: '8px',
                 border: '1.5px solid rgba(255,215,0,0.9)',
               }}
             >
-              {/* Star left */}
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                 <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
               </svg>
               Begin Your Quest
-              {/* Star right */}
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                 <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
               </svg>
             </Link>
 
-            {/* Game-like Menu Interface */}
-            <div className="w-full max-w-md mx-auto mb-16">
-              <div className="relative">
-                {/* Decorative frame */}
-                <div className="absolute -inset-4 border border-[#FFD700]/20 pointer-events-none" />
-                <div className="absolute -inset-4">
-                  <span className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#FFD700]/60" />
-                  <span className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#FFD700]/60" />
-                  <span className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#FFD700]/60" />
-                  <span className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#FFD700]/60" />
-                </div>
-
-                {/* Menu items */}
-                <div className="space-y-3 p-2">
-                  {menuItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`group relative flex items-center gap-4 px-5 py-4 transition-all duration-300 ${
-                        item.primary
-                          ? 'bg-[#FFD700]/10 border-2 border-[#FFD700]/60 hover:bg-[#FFD700]/20 hover:border-[#FFD700]'
-                          : 'bg-foreground/5 border border-foreground/10 hover:bg-foreground/10 hover:border-foreground/20'
-                      }`}
-                      onMouseEnter={() => setHoveredMenu(item.href)}
-                      onMouseLeave={() => setHoveredMenu(null)}
-                      style={{
-                        boxShadow: hoveredMenu === item.href
-                          ? item.primary
-                            ? '0 0 20px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.05)'
-                            : '0 0 15px rgba(255,255,255,0.1)'
-                          : 'none',
-                      }}
-                    >
-                      {/* Icon */}
-                      <div
-                        className={`w-10 h-10 flex items-center justify-center transition-all duration-300 ${
-                          item.primary ? 'text-[#FFD700]' : 'text-foreground/60 group-hover:text-foreground'
-                        }`}
-                      >
-                        <item.icon className="w-5 h-5" />
-                      </div>
-
-                      {/* Text */}
-                      <div className="flex-1">
-                        <p
-                          className={`font-serif text-base sm:text-lg font-semibold tracking-wide transition-colors ${
-                            item.primary ? 'text-[#FFD700]' : 'text-foreground/80 group-hover:text-foreground'
-                          }`}
-                        >
-                          {item.label}
-                        </p>
-                        <p className="text-xs text-foreground/40 group-hover:text-foreground/60 transition-colors">
-                          {item.description}
-                        </p>
-                      </div>
-
-                      {/* Arrow */}
-                      <ArrowRight
-                        className={`w-5 h-5 transition-all duration-300 group-hover:translate-x-1 ${
-                          item.primary ? 'text-[#FFD700]/60 group-hover:text-[#FFD700]' : 'text-foreground/30 group-hover:text-foreground/60'
-                        }`}
-                      />
-
-                      {/* Glow line on hover */}
-                      {item.primary && (
-                        <div
-                          className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#FFD700] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
-                        />
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+            {/* Menu — no decorative box, plain list */}
+            <div className="w-full max-w-md mx-auto mb-16 space-y-3">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`group relative flex items-center gap-4 px-5 py-4 transition-all duration-300 ${
+                    item.primary
+                      ? 'bg-[#FFD700]/10 border-2 border-[#FFD700]/60 hover:bg-[#FFD700]/18 hover:border-[#FFD700]'
+                      : 'bg-foreground/5 border border-foreground/10 hover:bg-foreground/10 hover:border-foreground/20'
+                  }`}
+                  onMouseEnter={() => setHoveredMenu(item.href)}
+                  onMouseLeave={() => setHoveredMenu(null)}
+                  style={{
+                    boxShadow: hoveredMenu === item.href
+                      ? item.primary
+                        ? '0 0 20px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.05)'
+                        : '0 0 12px rgba(255,255,255,0.07)'
+                      : 'none',
+                  }}
+                >
+                  <div className={`w-10 h-10 flex items-center justify-center flex-shrink-0 ${
+                    item.primary ? 'text-[#FFD700]' : 'text-foreground/50 group-hover:text-foreground/80'
+                  } transition-colors`}>
+                    <item.icon className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className={`font-serif text-base sm:text-lg font-semibold tracking-wide ${
+                      item.primary ? 'text-[#FFD700]' : 'text-foreground/75 group-hover:text-foreground'
+                    } transition-colors`}>
+                      {item.label}
+                    </p>
+                    <p className="text-xs text-foreground/40 group-hover:text-foreground/55 transition-colors">
+                      {item.description}
+                    </p>
+                  </div>
+                  <ArrowRight className={`w-5 h-5 flex-shrink-0 transition-all duration-300 group-hover:translate-x-1 ${
+                    item.primary ? 'text-[#FFD700]/60 group-hover:text-[#FFD700]' : 'text-foreground/25 group-hover:text-foreground/50'
+                  }`} />
+                  {item.primary && (
+                    <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#FFD700] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  )}
+                </Link>
+              ))}
             </div>
 
-            {/* Character Selection — hover reveals detail card */}
+            {/* Character Selection */}
             <div className="w-full max-w-4xl mx-auto">
               <div className="flex items-center gap-5 justify-center mb-10">
                 <div className="h-px flex-1 max-w-[180px] bg-foreground/12" />
@@ -330,9 +292,9 @@ export default function HomePage() {
                       <p className="font-sans text-[10px] sm:text-xs text-foreground/45 mt-0.5">{temp.name}</p>
                     </div>
 
-                    {/* Hover detail card — floats above */}
+                    {/* Hover detail card */}
                     <div
-                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-52 pointer-events-none z-20 transition-all duration-200"
+                      className="absolute bottom-full left-1/2 mb-3 w-52 pointer-events-none z-20 transition-all duration-200"
                       style={{
                         opacity: hoveredTemp === temp.key ? 1 : 0,
                         transform: `translateX(-50%) translateY(${hoveredTemp === temp.key ? '0px' : '8px'})`,
@@ -363,7 +325,6 @@ export default function HomePage() {
                             </span>
                           ))}
                         </div>
-                        {/* Arrow pointing down */}
                         <div
                           className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 rotate-45"
                           style={{ backgroundColor: '#13131a', borderRight: `1px solid ${temp.color}60`, borderBottom: `1px solid ${temp.color}60` }}
@@ -373,35 +334,8 @@ export default function HomePage() {
                   </Link>
                 ))}
               </div>
-
-              {/* Prominent gold BEGIN YOUR QUEST button */}
-              <div className="flex flex-col items-center mt-12 gap-3">
-                <Link
-                  href="/quiz"
-                  className="group relative flex items-center justify-center gap-3 px-10 py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02]"
-                  style={{
-                    background: 'linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #B8860B 100%)',
-                    color: '#1a1000',
-                    boxShadow: '0 0 30px rgba(255,215,0,0.45), 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3)',
-                    borderRadius: '6px',
-                    border: '1px solid rgba(255,215,0,0.8)',
-                  }}
-                >
-                  {/* Inner glow on hover */}
-                  <span className="absolute inset-0 rounded-[5px] opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: 'radial-gradient(ellipse at center, rgba(255,255,200,0.15) 0%, transparent 70%)' }} />
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className="flex-shrink-0">
-                    <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
-                  </svg>
-                  Begin Your Quest
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className="flex-shrink-0">
-                    <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
-                  </svg>
-                </Link>
-                <p className="font-sans text-xs text-foreground/35 tracking-wider">
-                  40 questions &bull; 4 temperaments &bull; Free forever
-                </p>
-              </div>
             </div>
+
           </div>
         </section>
 
@@ -416,7 +350,6 @@ export default function HomePage() {
                 Understanding your temperament is the first step to understanding yourself and connecting with others.
               </p>
             </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {features.map((feature) => (
                 <div
@@ -438,29 +371,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="relative py-24 lg:py-32 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-[#E63946]/10" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
-          
-          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              Ready to Begin Your Quest?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Take our comprehensive temperament assessment and receive detailed insights about your personality, 
-              strengths, and growth areas.
-            </p>
-            <Link
-              href="/quiz"
-              className="inline-flex items-center gap-2 px-10 py-5 bg-primary text-primary-foreground font-semibold text-lg rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5"
-            >
-              <Swords className="w-5 h-5" />
-              Begin Quest
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </section>
       </main>
       <Footer />
     </>

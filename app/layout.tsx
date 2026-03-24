@@ -15,27 +15,40 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Temperament Test & Education Platform | FourType - Master the 4 Temperaments',
-  description: 'Discover the 4 temperaments (Choleric, Sanguine, Melancholic, Phlegmatic) through FourType\'s comprehensive education platform. Learn temperament theory, read blog posts, explore the manifesto, and find your character class. Free education resource for understanding personality archetypes.',
-  generator: 'v0.app',
+  title: {
+    default: 'FourType — Know Your True Nature | The Temperament Quest',
+    template: '%s | FourType',
+  },
+  description: 'Take the free 40-question temperament test and discover if you are The Commander (Choleric), The Bard (Sanguine), The Strategist (Melancholic), or The Guardian (Phlegmatic). Based on 2,500 years of temperament science. Free forever. No paywall.',
   metadataBase: new URL('https://www.fourtype.com'),
-  keywords: ['temperament', 'four temperaments', 'temperament types', 'choleric', 'sanguine', 'melancholic', 'phlegmatic', 'personality types', 'temperament test', 'personality theory', 'character archetypes', 'temperament education', 'psychology', 'personality psychology'],
+  alternates: {
+    canonical: 'https://www.fourtype.com',
+  },
+  keywords: [
+    'temperament test', 'four temperaments', 'free personality test', 'what is my temperament',
+    'choleric sanguine melancholic phlegmatic', 'temperament quiz', 'personality type quiz',
+    'know your temperament', 'temperament types explained', 'four humors personality',
+    'choleric personality', 'sanguine personality', 'melancholic personality', 'phlegmatic personality',
+    'temperament vs personality', 'ancient personality types', 'Hippocrates temperaments',
+    'character archetypes', '15 temperament subtypes', 'temperament blend', 'FourType',
+    'fourtype.com', 'temperament education', 'personality psychology', 'self discovery quiz',
+  ],
   icons: {
     icon: '/favicon.png',
     apple: '/favicon.png',
     shortcut: '/favicon.png',
   },
   openGraph: {
-    title: 'FourType — The Temperament Quest | Know Your True Nature',
-    description: 'Discover your temperament through 40 questions. The Commander, The Bard, The Strategist, The Guardian. Free forever. No paywall.',
+    title: 'FourType — Know Your True Nature | Free 40-Question Temperament Quest',
+    description: 'Discover your temperament through 40 questions. The Commander, The Bard, The Strategist, The Guardian — and 15 unique subtypes. Free forever. No paywall. FourType.com',
     url: 'https://www.fourtype.com',
     siteName: 'FourType',
     images: [
       {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 900,
-        alt: 'FourType — Know Your True Nature. The Temperament Quest.',
+        url: 'https://www.fourtype.com/og-image.jpg',
+        width: 1280,
+        height: 960,
+        alt: 'FourType — Know Your True Nature. The Temperament Quest. 40 questions. 4 temperaments. Free forever.',
       },
     ],
     locale: 'en_US',
@@ -43,9 +56,20 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FourType — The Temperament Quest',
-    description: 'Discover your temperament through 40 questions. Free forever.',
-    images: ['/og-image.jpg'],
+    title: 'FourType — Free 40-Question Temperament Test',
+    description: 'Discover if you are The Commander, The Bard, The Strategist, or The Guardian. 40 questions. Free forever. FourType.com',
+    images: ['https://www.fourtype.com/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 
@@ -58,8 +82,38 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'FourType',
+    alternateName: 'FourType — The Temperament Quest',
+    url: 'https://www.fourtype.com',
+    description: 'Free 40-question temperament test based on the four classical temperaments: Choleric (The Commander), Sanguine (The Bard), Melancholic (The Strategist), Phlegmatic (The Guardian). Discover your type, your blend, and 15 unique subtypes.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://www.fourtype.com/blog?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'FourType',
+      url: 'https://www.fourtype.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.fourtype.com/fourtype-logo.png',
+      },
+    },
+    sameAs: ['https://www.fourtype.com'],
+  }
+
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`${cinzel.variable} ${dmSans.variable} font-sans antialiased`} suppressHydrationWarning>
         {children}
         <Analytics />

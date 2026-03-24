@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const footerLinks = {
   learn: [
@@ -27,11 +28,14 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center">
-                <span className="font-serif text-primary font-bold text-xl">4</span>
-              </div>
-              <span className="font-serif text-xl text-foreground">FourType</span>
+            <Link href="/" className="inline-flex mb-4">
+              <Image
+                src="/fourtype-logo.png"
+                alt="FourType — The Temperament Quest"
+                width={160}
+                height={55}
+                className="h-10 w-auto object-contain"
+              />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Discover your true nature through the ancient wisdom of the four temperaments, reimagined for modern understanding.
