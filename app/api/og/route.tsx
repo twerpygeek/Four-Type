@@ -5,245 +5,246 @@ import { TemperamentKey } from '@/lib/scoringKey'
 
 export const runtime = 'edge'
 
-// Character image URLs for each temperament
+const FALLBACK_IMAGE = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/fourtype.com%20thumbnail-iBvxwyPcRpCgv7EglTmjplknAe7sh9.jpg'
+
+// Character image URLs — served from Vercel Blob CDN
 const CHARACTER_IMAGES: Record<TemperamentKey, string> = {
   Yellow: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Bard-euLHMUxeRi6LvSmqlycXvdRStXiMmI.png',
-  Red: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-vXB8vIN16kna1cGrklqseOHC3gASWk.png',
-  Blue: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-41w0Pxn7bABu8gSFUNO21vLrx42NVP.png',
-  Green: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Guardian-zhzjVLCvu9ZK1JKMFkSwdcY4YCabE5.png',
+  Red:    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-vXB8vIN16kna1cGrklqseOHC3gASWk.png',
+  Blue:   'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-41w0Pxn7bABu8gSFUNO21vLrx42NVP.png',
+  Green:  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Guardian-zhzjVLCvu9ZK1JKMFkSwdcY4YCabE5.png',
+}
+
+// Background colours per temperament (dark tint)
+const BG_COLORS: Record<TemperamentKey, string> = {
+  Yellow: '#1a1500',
+  Red:    '#1a0505',
+  Blue:   '#020d14',
+  Green:  '#011208',
 }
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const blendKey = searchParams.get('blend') as BlendKey | null
   const heroName = searchParams.get('name') || 'A Hero'
-  
-  // Default fallback
+
+  // ── Fallback: no valid blend → use the site thumbnail ──────────────────────
   if (!blendKey || !(blendKey in BLENDS)) {
     return new ImageResponse(
       (
-        <div
-          style={{
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#0D0D0F',
-            fontFamily: 'serif',
-          }}
-        >
-          <div style={{ fontSize: 72, color: '#FFD700', fontWeight: 'bold' }}>
-            FOURTYPE
-          </div>
-          <div style={{ fontSize: 24, color: '#94A3B8', marginTop: 16 }}>
-            Discover Your Temperament
-          </div>
+        <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+          <img
+            src={FALLBACK_IMAGE}
+            width={1200}
+            height={630}
+            style={{ width: '100%', height: '100%' }}
+          />
         </div>
       ),
       { width: 1200, height: 630 }
     )
   }
-  
+
   const blend = BLENDS[blendKey]
   const blendColors = getBlendColors(blend)
   const primaryColor = blendColors.primary
+  const secondaryColor = blendColors.secondary
   const characterImage = CHARACTER_IMAGES[blend.primary]
+  const bgColor = BG_COLORS[blend.primary]
+  const hasSecondary = blend.secondary !== 'Pure' && blend.secondary !== 'Triple'
+
+  // Truncate tagline so it never overflows
+  const tagline = blend.tagline.length > 60
+    ? blend.tagline.slice(0, 57) + '...'
+    : blend.tagline
 
   return new ImageResponse(
     (
       <div
         style={{
-          height: '100%',
-          width: '100%',
           display: 'flex',
-          backgroundColor: '#0D0D0F',
-          fontFamily: 'serif',
+          width: 1200,
+          height: 630,
+          backgroundColor: bgColor,
+          fontFamily: 'Georgia, serif',
           position: 'relative',
           overflow: 'hidden',
         }}
       >
-        {/* Background gradient */}
+        {/* Coloured left-edge accent bar */}
         <div
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
-            right: 0,
-            bottom: 0,
-            background: `radial-gradient(ellipse at 30% 50%, ${primaryColor}25 0%, transparent 60%), radial-gradient(ellipse at bottom right, ${primaryColor}15 0%, transparent 50%)`,
+            width: 8,
+            height: '100%',
+            backgroundColor: primaryColor,
           }}
         />
-        
-        {/* Left side - Character */}
+
+        {/* ── Left panel: character ─────────────────────────── */}
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-end',
             justifyContent: 'center',
-            width: '40%',
+            width: 420,
             height: '100%',
-            position: 'relative',
+            paddingLeft: 24,
+            paddingBottom: 0,
+            flexShrink: 0,
           }}
         >
-          {/* Character glow */}
+          {/* Character card box */}
           <div
             style={{
-              position: 'absolute',
-              width: 350,
-              height: 350,
-              borderRadius: '50%',
-              background: `radial-gradient(circle, ${primaryColor}40 0%, transparent 70%)`,
-              filter: 'blur(40px)',
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              width: 340,
+              height: 520,
+              borderRadius: 20,
+              border: `2px solid ${primaryColor}`,
+              backgroundColor: '#00000060',
+              overflow: 'hidden',
             }}
-          />
-          {/* Character image */}
-          <img
-            src={characterImage}
-            alt={blend.name}
-            width={320}
-            height={400}
-            style={{
-              objectFit: 'contain',
-              filter: `drop-shadow(0 0 30px ${primaryColor}80)`,
-              position: 'relative',
-            }}
-          />
+          >
+            <img
+              src={characterImage}
+              width={320}
+              height={500}
+              style={{ width: 320, height: 500 }}
+            />
+          </div>
         </div>
-        
-        {/* Right side - Content */}
+
+        {/* ── Right panel: text ─────────────────────────────── */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            width: '60%',
-            height: '100%',
+            flex: 1,
+            paddingLeft: 52,
             paddingRight: 60,
-            paddingLeft: 20,
-            position: 'relative',
+            height: '100%',
           }}
         >
-          {/* Top branding */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+          {/* Branding row */}
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 28 }}>
             <div
               style={{
-                width: 32,
-                height: 32,
-                borderRadius: 6,
-                backgroundColor: primaryColor,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                width: 36,
+                height: 36,
+                borderRadius: 8,
+                backgroundColor: primaryColor,
+                marginRight: 10,
               }}
             >
-              <span style={{ color: '#0D0D0F', fontSize: 18, fontWeight: 'bold' }}>F</span>
+              <span style={{ color: '#0D0D0F', fontSize: 20, fontWeight: 'bold' }}>F</span>
             </div>
-            <span style={{ color: '#64748B', fontSize: 14, letterSpacing: '0.25em' }}>FOURTYPE</span>
+            <span style={{ color: '#888', fontSize: 15, letterSpacing: 4 }}>FOURTYPE</span>
           </div>
 
-          {/* Hero name */}
-          <div style={{ color: '#94A3B8', fontSize: 26, marginBottom: 8 }}>
+          {/* "name is" */}
+          <div style={{ display: 'flex', color: '#94A3B8', fontSize: 24, marginBottom: 6 }}>
             {heroName} is
           </div>
-          
-          {/* Blend name */}
+
+          {/* Blend name — large */}
           <div
             style={{
-              fontSize: 72,
-              fontWeight: 900,
+              display: 'flex',
               color: primaryColor,
+              fontSize: blend.name.length > 14 ? 62 : 74,
+              fontWeight: 900,
               lineHeight: 1,
-              marginBottom: 12,
-              textShadow: `0 0 60px ${primaryColor}60`,
+              marginBottom: 14,
             }}
           >
             {blend.name.toUpperCase()}
           </div>
-          
-          {/* Blend type */}
-          <div style={{ color: '#E2E8F0', fontSize: 28, marginBottom: 20 }}>
+
+          {/* Blend subtitle */}
+          <div style={{ display: 'flex', color: '#D1D5DB', fontSize: 26, marginBottom: 22 }}>
             {blend.blend}
           </div>
-          
-          {/* Color stripe + RPG Class */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
-            <div style={{ display: 'flex', gap: 6 }}>
+
+          {/* Colour dots + RPG class */}
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 28 }}>
+            <div
+              style={{
+                width: 54,
+                height: 7,
+                borderRadius: 4,
+                backgroundColor: primaryColor,
+                marginRight: hasSecondary ? 6 : 0,
+              }}
+            />
+            {hasSecondary && (
               <div
                 style={{
-                  width: 60,
-                  height: 6,
-                  borderRadius: 3,
-                  backgroundColor: primaryColor,
+                  width: 36,
+                  height: 7,
+                  borderRadius: 4,
+                  backgroundColor: secondaryColor,
+                  marginRight: 20,
                 }}
               />
-              {blend.secondary !== 'Pure' && blend.secondary !== 'Triple' && (
-                <div
-                  style={{
-                    width: 40,
-                    height: 6,
-                    borderRadius: 3,
-                    backgroundColor: blendColors.secondary,
-                  }}
-                />
-              )}
-            </div>
+            )}
+            {!hasSecondary && <div style={{ marginRight: 20, display: 'flex' }} />}
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                padding: '8px 20px',
+                paddingTop: 8,
+                paddingBottom: 8,
+                paddingLeft: 20,
+                paddingRight: 20,
                 borderRadius: 30,
-                border: `2px solid ${primaryColor}60`,
-                backgroundColor: `${primaryColor}15`,
+                border: `1.5px solid ${primaryColor}`,
+                backgroundColor: '#00000040',
               }}
             >
-              <span style={{ color: primaryColor, fontSize: 18, fontWeight: 'bold' }}>
+              <span style={{ color: primaryColor, fontSize: 17, fontWeight: 'bold' }}>
                 {blend.rpgClass}
               </span>
             </div>
           </div>
-          
+
           {/* Tagline */}
-          <div
-            style={{
-              color: '#CBD5E1',
-              fontSize: 22,
-              fontStyle: 'italic',
-              maxWidth: 500,
-              lineHeight: 1.4,
-              marginBottom: 28,
-            }}
-          >
-            &ldquo;{blend.tagline}&rdquo;
+          <div style={{ display: 'flex', color: '#CBD5E1', fontSize: 22, fontStyle: 'italic', marginBottom: 36 }}>
+            {'"'}{tagline}{'"'}
           </div>
-          
-          {/* CTA */}
+
+          {/* CTA strip */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 8,
-              padding: '12px 24px',
-              borderRadius: 8,
-              backgroundColor: `${primaryColor}20`,
-              border: `1px solid ${primaryColor}40`,
+              paddingTop: 12,
+              paddingBottom: 12,
+              paddingLeft: 22,
+              paddingRight: 22,
+              borderRadius: 10,
+              backgroundColor: '#ffffff0d',
+              border: '1px solid #ffffff20',
             }}
           >
-            <span style={{ color: '#E2E8F0', fontSize: 18 }}>
-              What&apos;s your type?
+            <span style={{ color: '#9CA3AF', fontSize: 17, marginRight: 10 }}>
+              What is your type?
             </span>
-            <span style={{ color: primaryColor, fontSize: 18, fontWeight: 'bold' }}>
+            <span style={{ color: primaryColor, fontSize: 17, fontWeight: 'bold' }}>
               fourtype.com
             </span>
           </div>
         </div>
       </div>
     ),
-    {
-      width: 1200,
-      height: 630,
-    }
+    { width: 1200, height: 630 }
   )
 }
