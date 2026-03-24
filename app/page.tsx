@@ -87,7 +87,7 @@ export default function HomePage() {
           <div className="relative z-10 w-full flex flex-col items-center px-4">
 
             {/* FourType logo — new version includes KNOW YOUR TRUE NATURE + tagline */}
-            <div className="w-full max-w-2xl lg:max-w-3xl mx-auto flex items-center justify-center mb-8">
+            <div className="w-full max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto flex items-center justify-center mb-4">
               <Image
                 src="/fourtype-logo.png"
                 alt="FourType — Know Your True Nature — The Temperament Quest"
@@ -99,7 +99,7 @@ export default function HomePage() {
             </div>
 
             {/* Diamond divider */}
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4">
               <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
               <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
                 <path d="M4.5 0L9 4.5L4.5 9L0 4.5Z" fill="#FFD700" fillOpacity="0.7" />
@@ -108,7 +108,7 @@ export default function HomePage() {
             </div>
 
             {/* Video frame */}
-            <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-[680px] mx-auto mb-8">
+            <div className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl mx-auto mb-6">
               <span className="pointer-events-none absolute -top-[10px] -left-[10px] w-7 h-7 border-t-2 border-l-2 border-[#FFD700]/75" />
               <span className="pointer-events-none absolute -top-[10px] -right-[10px] w-7 h-7 border-t-2 border-r-2 border-[#FFD700]/75" />
               <span className="pointer-events-none absolute -bottom-[10px] -left-[10px] w-7 h-7 border-b-2 border-l-2 border-[#FFD700]/75" />
@@ -126,10 +126,15 @@ export default function HomePage() {
               </div>
             </div>
 
+            {/* Importance statement */}
+            <p className="text-center text-sm sm:text-base text-foreground/60 max-w-lg mx-auto mb-6 leading-relaxed">
+              Understanding your temperament unlocks the key to why you think, feel, and act the way you do.
+            </p>
+
             {/* Gold BEGIN YOUR QUEST button */}
             <Link
               href="/quiz"
-              className="group relative flex items-center justify-center gap-3 px-8 sm:px-12 py-3.5 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-6"
+              className="group relative flex items-center justify-center gap-3 px-8 sm:px-12 py-3.5 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-4"
               style={{
                 background: 'linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #B8860B 100%)',
                 color: '#1a1000',
@@ -146,7 +151,7 @@ export default function HomePage() {
                 <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
               </svg>
             </Link>
-            <p className="font-sans text-xs text-foreground/35 tracking-wider mb-20">
+            <p className="font-sans text-xs text-foreground/35 tracking-wider mb-12">
               40 questions &bull; 4 temperaments &bull; Free forever
             </p>
 
