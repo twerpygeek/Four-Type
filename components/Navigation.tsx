@@ -57,9 +57,9 @@ export default function Navigation() {
             <Image
               src="/fourtype-logo.png"
               alt="FourType — The Temperament Quest"
-              width={180}
-              height={60}
-              className="h-10 sm:h-12 w-auto object-contain group-hover:opacity-90 transition-opacity"
+              width={240}
+              height={90}
+              className="h-14 sm:h-16 w-auto object-contain group-hover:opacity-90 transition-opacity"
               priority
             />
           </Link>

@@ -80,14 +80,14 @@ export default function HomePage() {
         <RuneBackground />
 
         {/* Hero Section */}
-        <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-16 overflow-hidden">
+        <section className="relative min-h-screen flex flex-col items-center justify-center pt-16 pb-12 overflow-hidden">
           {/* Radial dark vignette */}
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_35%,transparent_50%,rgba(13,13,15,0.85)_100%)]" />
 
           <div className="relative z-10 w-full flex flex-col items-center px-4">
 
             {/* FourType logo — new version includes KNOW YOUR TRUE NATURE + tagline */}
-            <div className="w-full max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto flex items-center justify-center mb-2">
+            <div className="w-full max-w-xl sm:max-w-2xl lg:max-w-4xl mx-auto flex items-center justify-center mb-1">
               <Image
                 src="/fourtype-logo.png"
                 alt="FourType — Know Your True Nature — The Temperament Quest"
@@ -99,7 +99,7 @@ export default function HomePage() {
             </div>
 
             {/* Diamond divider */}
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-3 mb-2">
               <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
               <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
                 <path d="M4.5 0L9 4.5L4.5 9L0 4.5Z" fill="#FFD700" fillOpacity="0.7" />
