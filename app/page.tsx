@@ -132,20 +132,18 @@ export default function HomePage() {
               Know Your True Nature
             </p>
 
-            {/* FOURTYPE glow title */}
-            <h1
-              className="font-serif font-black text-center leading-[0.9] mb-4 select-none"
-              style={{
-                fontSize: 'clamp(3.5rem, 12vw, 9rem)',
-                color: '#FFD700',
-                textShadow: '0 0 12px #FFE566, 0 0 30px #FFD700, 0 0 60px #FFA500, 0 0 100px #FF7700, 0 0 140px #cc5500, 3px 3px 0 rgba(80,40,0,0.6)',
-              }}
-            >
-              FOURTYPE
-            </h1>
+            {/* FOURTYPE logo image */}
+            <Image
+              src="/fourtype-logo.png"
+              alt="FourType — The Temperament Quest"
+              width={400}
+              height={150}
+              className="relative z-10 h-auto w-auto max-w-xs sm:max-w-sm lg:max-w-md object-contain drop-shadow-2xl mb-4 filter brightness-110"
+              priority
+            />
 
             {/* Subtitle */}
-            <p className="font-serif text-lg sm:text-xl text-foreground/55 tracking-[0.18em] mb-4">
+            <p className="font-serif text-lg sm:text-xl text-foreground/55 tracking-[0.18em] mb-8">
               The Temperament Quest
             </p>
 
@@ -179,9 +177,32 @@ export default function HomePage() {
             </div>
 
             {/* "Find Your True Nature" */}
-            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-12" style={{ color: 'rgba(255,215,0,0.55)' }}>
+            <p className="font-serif text-base sm:text-lg tracking-[0.2em] mb-6" style={{ color: 'rgba(255,215,0,0.55)' }}>
               Find Your True Nature
             </p>
+
+            {/* Prominent gold BEGIN YOUR QUEST button */}
+            <Link
+              href="/quiz"
+              className="group relative flex items-center justify-center gap-3 px-8 sm:px-10 py-3 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-12"
+              style={{
+                background: 'linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #B8860B 100%)',
+                color: '#1a1000',
+                boxShadow: '0 0 30px rgba(255,215,0,0.5), 0 6px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3)',
+                borderRadius: '8px',
+                border: '1.5px solid rgba(255,215,0,0.9)',
+              }}
+            >
+              {/* Star left */}
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
+              </svg>
+              Begin Your Quest
+              {/* Star right */}
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
+              </svg>
+            </Link>
 
             {/* Game-like Menu Interface */}
             <div className="w-full max-w-md mx-auto mb-16">
