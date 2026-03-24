@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 const footerLinks = {
   learn: [
+    { href: '/what-is-temperament-test', label: 'What is a Temperament Test?' },
     { href: '/manifesto', label: 'The Manifesto' },
     { href: '/blog/history-of-temperaments', label: 'History' },
     { href: '/blog/temperaments-vs-mbti-big-five', label: 'Comparisons' },

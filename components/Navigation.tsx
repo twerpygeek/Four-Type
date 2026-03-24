@@ -19,7 +19,16 @@ const navLinks = [
       { href: '/temperament/phlegmatic', label: 'The Guardian (Phlegmatic)' },
     ],
   },
-  { href: '/manifesto', label: 'Manifesto' },
+  {
+    label: 'Learn',
+    children: [
+      { href: '/what-is-temperament-test', label: 'What is a Temperament Test?' },
+      { href: '/manifesto', label: 'The Manifesto' },
+      { href: '/blog/history-of-temperaments', label: 'History' },
+      { href: '/blog/temperaments-vs-mbti-big-five', label: 'Comparisons' },
+      { href: '/blog/subtypes', label: '15 Subtypes' },
+    ],
+  },
   { href: '/blog', label: 'Blog' },
   { href: '/faq', label: 'FAQ' },
 ]
@@ -28,7 +37,7 @@ export default function Navigation() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [temperamentOpen, setTemperamentOpen] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,7 +49,7 @@ export default function Navigation() {
 
   useEffect(() => {
     setIsOpen(false)
-    setTemperamentOpen(false)
+    setOpenDropdown(null)
   }, [pathname])
 
   return (
@@ -71,8 +80,8 @@ export default function Navigation() {
                 <div
                   key={link.label}
                   className="relative"
-                  onMouseEnter={() => setTemperamentOpen(true)}
-                  onMouseLeave={() => setTemperamentOpen(false)}
+                  onMouseEnter={() => setOpenDropdown(link.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}
                 >
                   <button
                     className={cn(
@@ -81,9 +90,9 @@ export default function Navigation() {
                     )}
                   >
                     {link.label}
-                    <ChevronDown className={cn('w-4 h-4 transition-transform', temperamentOpen && 'rotate-180')} />
+                    <ChevronDown className={cn('w-4 h-4 transition-transform', openDropdown === link.label && 'rotate-180')} />
                   </button>
-                  {temperamentOpen && (
+                  {openDropdown === link.label && (
                     <div className="absolute top-full left-0 pt-2 w-64">
                       <div className="bg-card border border-border rounded-xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                         {link.children.map((child) => (
@@ -148,13 +157,13 @@ export default function Navigation() {
               link.children ? (
                 <div key={link.label} className="space-y-1">
                   <button
-                    onClick={() => setTemperamentOpen(!temperamentOpen)}
+                    onClick={() => setOpenDropdown(openDropdown === link.label ? null : link.label)}
                     className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-lg text-muted-foreground"
                   >
                     {link.label}
-                    <ChevronDown className={cn('w-4 h-4 transition-transform', temperamentOpen && 'rotate-180')} />
+                    <ChevronDown className={cn('w-4 h-4 transition-transform', openDropdown === link.label && 'rotate-180')} />
                   </button>
-                  {temperamentOpen && (
+                  {openDropdown === link.label && (
                     <div className="pl-4 space-y-1">
                       {link.children.map((child) => (
                         <Link
