@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/api/',
     },
-    sitemap: 'https://fourtype.com/sitemap.xml',
+    sitemap: 'https://www.fourtype.com/sitemap.xml',
   }
 }
