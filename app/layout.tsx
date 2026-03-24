@@ -16,10 +16,10 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'FourType — Know Your True Nature | The Temperament Quest',
+    default: 'FourType — Discover Your Temperament',
     template: '%s | FourType',
   },
-  description: 'Take the free 40-question temperament test and discover if you are The Commander (Choleric), The Bard (Sanguine), The Strategist (Melancholic), or The Guardian (Phlegmatic). Based on 2,500 years of temperament science. Free forever. No paywall.',
+  description: 'Understanding your temperament unlocks the key to why you think, feel, and act the way you do. Take the free 40-question quiz to discover if you are The Commander, The Bard, The Strategist, or The Guardian.',
   metadataBase: new URL('https://www.fourtype.com'),
   alternates: {
     canonical: 'https://www.fourtype.com',
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     shortcut: '/favicon.png',
   },
   openGraph: {
-    title: 'FourType — Know Your True Nature | Free 40-Question Temperament Quest',
-    description: 'Discover your temperament through 40 questions. The Commander, The Bard, The Strategist, The Guardian — and 15 unique subtypes. Free forever. No paywall. FourType.com',
+    title: 'FourType — Discover Your Temperament | Free 40-Question Quiz',
+    description: 'Understanding your temperament unlocks the key to why you think, feel, and act the way you do. Discover if you are The Commander, The Bard, The Strategist, or The Guardian.',
     url: 'https://www.fourtype.com',
     siteName: 'FourType',
     images: [
@@ -56,8 +56,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FourType — Free 40-Question Temperament Test',
-    description: 'Discover if you are The Commander, The Bard, The Strategist, or The Guardian. 40 questions. Free forever. FourType.com',
+    title: 'FourType — Discover Your Temperament',
+    description: 'Understanding your temperament unlocks the key to why you think, feel, and act the way you do. Free 40-question quiz.',
     images: ['https://www.fourtype.com/og-image.jpg'],
   },
   robots: {
@@ -88,7 +88,7 @@ export default function RootLayout({
     name: 'FourType',
     alternateName: 'FourType — The Temperament Quest',
     url: 'https://www.fourtype.com',
-    description: 'Free 40-question temperament test based on the four classical temperaments: Choleric (The Commander), Sanguine (The Bard), Melancholic (The Strategist), Phlegmatic (The Guardian). Discover your type, your blend, and 15 unique subtypes.',
+    description: 'Understanding your temperament unlocks the key to why you think, feel, and act the way you do. Take the free 40-question temperament test to discover your type: The Commander (Choleric), The Bard (Sanguine), The Strategist (Melancholic), or The Guardian (Phlegmatic). Based on 2,500 years of temperament science. Free forever.',
     potentialAction: {
       '@type': 'SearchAction',
       target: 'https://www.fourtype.com/blog?q={search_term_string}',
