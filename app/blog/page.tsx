@@ -18,8 +18,7 @@ const blogPosts = [
     category: 'History',
     readTime: '8 min',
     featured: true,
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-11A2ki2xYEb1yOkVrQ2xjaZ1etfh3Z.png',
-    icon: '/icon.png',
+    image: '/icon.png',
   },
   {
     slug: 'sanguine-temperament',
@@ -29,7 +28,6 @@ const blogPosts = [
     readTime: '7 min',
     color: '#FFD700',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Bard-QJJyqACHiDlWLpgew2foCbl5YGjLOi.png',
-    icon: '/icon.png',
   },
   {
     slug: 'choleric-temperament',
@@ -39,7 +37,6 @@ const blogPosts = [
     readTime: '7 min',
     color: '#E63946',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-rEIrJwEHYOzxNaP1ngaLZqm7A6GdrY.png',
-    icon: '/icon.png',
   },
   {
     slug: 'melancholic-temperament',
@@ -49,7 +46,6 @@ const blogPosts = [
     readTime: '8 min',
     color: '#4CC9F0',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-11A2ki2xYEb1yOkVrQ2xjaZ1etfh3Z.png',
-    icon: '/icon.png',
   },
   {
     slug: 'phlegmatic-temperament',
@@ -59,7 +55,6 @@ const blogPosts = [
     readTime: '8 min',
     color: '#52B788',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Guardian-98lWuYWNazfR3hvOW2FUE3dkp13BLy.png',
-    icon: '/icon.png',
   },
   {
     slug: 'leadership-and-temperament',
@@ -68,7 +63,7 @@ const blogPosts = [
     category: 'Leadership',
     readTime: '6 min',
     featured: true,
-    icon: '/icon.png',
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_better_202603241226-P85eWQz8sUhJL1gbECUuONWrJPjzUo.jpeg',
   },
   {
     slug: 'temperaments-vs-mbti-big-five',
@@ -76,7 +71,7 @@ const blogPosts = [
     excerpt: 'A clear comparison of the 4 temperaments, Myers-Briggs (MBTI), Big Five, and DISC personality systems. Learn how they relate and which one is right for you.',
     category: 'Comparison',
     readTime: '7 min',
-    icon: '/icon.png',
+    image: '/icon.png',
   },
   {
     slug: 'subtypes',
@@ -85,7 +80,7 @@ const blogPosts = [
     category: 'Deep Dive',
     readTime: '10 min',
     featured: true,
-    icon: '/icon.png',
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_better_202603241223-1XkEeb3BizSaXrANQ3lL5DNCWuTuNB.jpeg',
   },
 ]
 
@@ -134,18 +129,18 @@ export default function BlogPage() {
             className="group block relative overflow-hidden rounded-3xl bg-card border border-border hover:border-primary/30 transition-all duration-300 mb-12"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-[#4CC9F0]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="relative p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
-              {featuredPost.image && (
-                <div className="relative w-48 h-64 flex-shrink-0">
-                  <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl" />
-                  <Image
-                    src={featuredPost.image}
-                    alt={featuredPost.title}
-                    fill
-                    className="object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              )}
+              <div className="relative p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
+                {featuredPost.icon && (
+                  <div className="relative w-48 h-48 flex-shrink-0">
+                    <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl" />
+                    <Image
+                      src={featuredPost.icon}
+                      alt="Temperament Icon"
+                      fill
+                      className="object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
               <div className="flex-1 text-center md:text-left">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 mb-4">
                   <span className="text-xs font-semibold text-primary">Featured</span>
@@ -188,12 +183,12 @@ export default function BlogPage() {
               )}
               
               <div className="relative p-6">
-                {/* Character image if available */}
-                {post.image && (
-                  <div className="relative w-20 h-28 mx-auto mb-4">
+                {/* Temperament icon */}
+                {post.icon && (
+                  <div className="relative w-24 h-24 mx-auto mb-4">
                     <Image
-                      src={post.image}
-                      alt=""
+                      src={post.icon}
+                      alt="Temperament Icon"
                       fill
                       className="object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300"
                     />
