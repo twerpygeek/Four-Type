@@ -8,6 +8,25 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'The 15 Temperament Subtypes You Never Knew Existed | FourType',
   description: 'Go beyond the 4 temperaments and discover the 15 subtypes that make each person unique. Learn your blend\'s traits, strengths, risks, and growth path.',
+  keywords: ['temperament blends', 'temperament subtypes', 'sanguine choleric blend', 'melancholic phlegmatic', 'personality combinations', '15 temperament types'],
+  openGraph: {
+    title: '15 Temperament Subtypes | FourType',
+    description: 'Discover the 15 temperament blends that make each person unique.',
+    type: 'article',
+  },
+  alternates: { canonical: '/blog/subtypes' },
+}
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'The 15 Temperament Subtypes You Never Knew Existed',
+  description: 'Go beyond the 4 temperaments and discover the 15 subtypes that make each person unique.',
+  image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_better_202603241223-1XkEeb3BizSaXrANQ3lL5DNCWuTuNB.jpeg',
+  author: { '@type': 'Organization', name: 'FourType' },
+  publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: '/fourtype-logo.png' } },
+  datePublished: '2024-01-01',
+  dateModified: new Date().toISOString().split('T')[0],
 }
 
 const subtypes = {
@@ -49,6 +68,7 @@ const temperamentColors: Record<string, string> = {
 export default function SubtypesBlogPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <Navigation />
       <main className="min-h-screen bg-background pt-24 pb-16">
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

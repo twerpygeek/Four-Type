@@ -8,6 +8,26 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'How to Use Temperament for Better Leadership | FourType',
   description: 'Discover how each of the 4 temperaments approaches leadership. Learn your natural leadership style, your blind spots, and how to build a balanced team.',
+  keywords: ['leadership styles', 'temperament leadership', 'team building', 'leadership personality', 'four temperaments management'],
+  openGraph: {
+    title: 'Temperament and Leadership | FourType',
+    description: 'Discover how each temperament leads differently and build a balanced team.',
+    type: 'article',
+    images: [{ url: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/blog%20images-YOx5j8T93i2oKsjJGl1c4WSMhtlLA5.jpg', width: 1200, height: 630, alt: 'Leadership and Temperament' }],
+  },
+  alternates: { canonical: '/blog/leadership-and-temperament' },
+}
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How to Use Temperament for Better Leadership',
+  description: 'Discover how each of the 4 temperaments approaches leadership and build a balanced team.',
+  image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/blog%20images-YOx5j8T93i2oKsjJGl1c4WSMhtlLA5.jpg',
+  author: { '@type': 'Organization', name: 'FourType' },
+  publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: '/fourtype-logo.png' } },
+  datePublished: '2024-01-01',
+  dateModified: new Date().toISOString().split('T')[0],
 }
 
 const leadershipStyles = [
@@ -120,6 +140,7 @@ const leadershipStyles = [
 export default function LeadershipBlogPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <Navigation />
       <main className="min-h-screen bg-background pt-24 pb-16">
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
