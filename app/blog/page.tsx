@@ -19,6 +19,7 @@ const blogPosts = [
     readTime: '8 min',
     featured: true,
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-11A2ki2xYEb1yOkVrQ2xjaZ1etfh3Z.png',
+    icon: '/icon.png',
   },
   {
     slug: 'sanguine-temperament',
@@ -28,6 +29,7 @@ const blogPosts = [
     readTime: '7 min',
     color: '#FFD700',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Bard-QJJyqACHiDlWLpgew2foCbl5YGjLOi.png',
+    icon: '/icon.png',
   },
   {
     slug: 'choleric-temperament',
@@ -37,6 +39,7 @@ const blogPosts = [
     readTime: '7 min',
     color: '#E63946',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-rEIrJwEHYOzxNaP1ngaLZqm7A6GdrY.png',
+    icon: '/icon.png',
   },
   {
     slug: 'melancholic-temperament',
@@ -46,6 +49,7 @@ const blogPosts = [
     readTime: '8 min',
     color: '#4CC9F0',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-11A2ki2xYEb1yOkVrQ2xjaZ1etfh3Z.png',
+    icon: '/icon.png',
   },
   {
     slug: 'phlegmatic-temperament',
@@ -55,6 +59,7 @@ const blogPosts = [
     readTime: '8 min',
     color: '#52B788',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Guardian-98lWuYWNazfR3hvOW2FUE3dkp13BLy.png',
+    icon: '/icon.png',
   },
   {
     slug: 'leadership-and-temperament',
@@ -63,6 +68,7 @@ const blogPosts = [
     category: 'Leadership',
     readTime: '6 min',
     featured: true,
+    icon: '/icon.png',
   },
   {
     slug: 'temperaments-vs-mbti-big-five',
@@ -70,6 +76,7 @@ const blogPosts = [
     excerpt: 'A clear comparison of the 4 temperaments, Myers-Briggs (MBTI), Big Five, and DISC personality systems. Learn how they relate and which one is right for you.',
     category: 'Comparison',
     readTime: '7 min',
+    icon: '/icon.png',
   },
   {
     slug: 'subtypes',
@@ -78,6 +85,7 @@ const blogPosts = [
     category: 'Deep Dive',
     readTime: '10 min',
     featured: true,
+    icon: '/icon.png',
   },
 ]
 
