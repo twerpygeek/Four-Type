@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, BookOpen, Users, Brain, Sparkles, ChevronRight, Scroll, Swords, Map } from 'lucide-react'
+import { ArrowRight, BookOpen, Users, Brain, Sparkles, Scroll, Swords, Map } from 'lucide-react'
 import RuneBackground from '@/components/RuneBackground'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -258,8 +258,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Character Selection */}
-            <div className="w-full max-w-5xl mx-auto">
+            {/* Character Selection — hover reveals detail card */}
+            <div className="w-full max-w-4xl mx-auto">
               <div className="flex items-center gap-5 justify-center mb-10">
                 <div className="h-px flex-1 max-w-[180px] bg-foreground/12" />
                 <p className="font-sans text-[10px] sm:text-xs font-semibold tracking-[0.45em] uppercase text-foreground/35 whitespace-nowrap">
@@ -268,13 +268,12 @@ export default function HomePage() {
                 <div className="h-px flex-1 max-w-[180px] bg-foreground/12" />
               </div>
 
-              {/* Character cards */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 {temperaments.map((temp) => (
                   <Link
                     key={temp.key}
                     href={`/temperament/${temp.key}`}
-                    className="group flex flex-col items-center"
+                    className="group relative flex flex-col items-center"
                     onMouseEnter={() => setHoveredTemp(temp.key)}
                     onMouseLeave={() => setHoveredTemp(null)}
                   >
@@ -282,17 +281,14 @@ export default function HomePage() {
                     <div className="relative flex items-end justify-center w-full mb-3">
                       <div
                         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 sm:w-28 h-20 sm:h-28 rounded-full blur-2xl transition-opacity duration-300"
-                        style={{
-                          backgroundColor: temp.color,
-                          opacity: hoveredTemp === temp.key ? 0.4 : 0.13,
-                        }}
+                        style={{ backgroundColor: temp.color, opacity: hoveredTemp === temp.key ? 0.4 : 0.13 }}
                       />
                       <Image
                         src={temp.image}
                         alt={temp.title}
                         width={140}
                         height={175}
-                        className="relative object-contain drop-shadow-2xl transition-transform duration-300 group-hover:-translate-y-2 w-auto h-[120px] sm:h-[160px]"
+                        className="relative object-contain drop-shadow-2xl transition-transform duration-300 group-hover:-translate-y-2 w-auto h-[120px] sm:h-[155px]"
                       />
                     </div>
 
@@ -307,90 +303,83 @@ export default function HomePage() {
                         backgroundColor: hoveredTemp === temp.key ? `${temp.color}0f` : 'transparent',
                       }}
                     >
-                      <p
-                        className="font-serif text-xs sm:text-base font-bold tracking-[0.1em] sm:tracking-[0.15em] uppercase"
-                        style={{ color: temp.color }}
-                      >
+                      <p className="font-serif text-xs sm:text-sm font-bold tracking-[0.1em] sm:tracking-[0.15em] uppercase" style={{ color: temp.color }}>
                         {temp.title}
                       </p>
-                      <p className="font-sans text-[10px] sm:text-xs text-foreground/45 mt-0.5">
-                        {temp.name}
-                      </p>
+                      <p className="font-sans text-[10px] sm:text-xs text-foreground/45 mt-0.5">{temp.name}</p>
+                    </div>
+
+                    {/* Hover detail card — floats above */}
+                    <div
+                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-52 pointer-events-none z-20 transition-all duration-200"
+                      style={{
+                        opacity: hoveredTemp === temp.key ? 1 : 0,
+                        transform: `translateX(-50%) translateY(${hoveredTemp === temp.key ? '0px' : '8px'})`,
+                      }}
+                    >
+                      <div
+                        className="rounded-lg p-4"
+                        style={{
+                          backgroundColor: '#13131a',
+                          border: `1px solid ${temp.color}60`,
+                          boxShadow: `0 8px 32px rgba(0,0,0,0.7), 0 0 20px ${temp.color}20`,
+                        }}
+                      >
+                        <p className="font-serif text-xs font-bold tracking-widest uppercase mb-2" style={{ color: temp.color }}>
+                          {temp.title}
+                        </p>
+                        <p className="font-sans text-[11px] text-foreground/70 leading-relaxed mb-3">
+                          {temp.description}
+                        </p>
+                        <div className="flex flex-wrap gap-1">
+                          {temp.traits.map((t) => (
+                            <span
+                              key={t}
+                              className="font-sans text-[10px] px-2 py-0.5 rounded-full"
+                              style={{ backgroundColor: `${temp.color}20`, color: temp.color }}
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                        {/* Arrow pointing down */}
+                        <div
+                          className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3 h-3 rotate-45"
+                          style={{ backgroundColor: '#13131a', borderRight: `1px solid ${temp.color}60`, borderBottom: `1px solid ${temp.color}60` }}
+                        />
+                      </div>
                     </div>
                   </Link>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* The Four Types Section */}
-        <section className="relative py-24 lg:py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-                The Four Types
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Each temperament represents a fundamental pattern of personality that shapes how you think, feel, and act.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-              {temperaments.map((temp) => (
+              {/* Prominent gold BEGIN YOUR QUEST button */}
+              <div className="flex flex-col items-center mt-12 gap-3">
                 <Link
-                  key={temp.key}
-                  href={`/temperament/${temp.key}`}
-                  className="group relative overflow-hidden rounded-2xl bg-card border border-border hover:border-opacity-50 transition-all duration-300 hover:-translate-y-1"
+                  href="/quiz"
+                  className="group relative flex items-center justify-center gap-3 px-10 py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02]"
+                  style={{
+                    background: 'linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #B8860B 100%)',
+                    color: '#1a1000',
+                    boxShadow: '0 0 30px rgba(255,215,0,0.45), 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3)',
+                    borderRadius: '6px',
+                    border: '1px solid rgba(255,215,0,0.8)',
+                  }}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${temp.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                  
-                  <div className="relative p-6 lg:p-8 flex gap-6">
-                    <div className="relative w-24 h-32 flex-shrink-0">
-                      <div 
-                        className="absolute inset-0 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"
-                        style={{ backgroundColor: temp.color }}
-                      />
-                      <Image
-                        src={temp.image}
-                        alt={temp.title}
-                        width={96}
-                        height={128}
-                        className="object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300 w-auto h-auto max-w-full max-h-full"
-                      />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span 
-                          className="text-xs font-semibold px-2 py-1 rounded-full"
-                          style={{ backgroundColor: `${temp.color}20`, color: temp.color }}
-                        >
-                          {temp.name}
-                        </span>
-                      </div>
-                      <h3 className="font-serif text-xl lg:text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                        {temp.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                        {temp.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {temp.traits.map((trait) => (
-                          <span
-                            key={trait}
-                            className="text-xs px-2 py-1 rounded-md bg-secondary/50 text-muted-foreground"
-                          >
-                            {trait}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0 self-center" />
-                  </div>
+                  {/* Inner glow on hover */}
+                  <span className="absolute inset-0 rounded-[5px] opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: 'radial-gradient(ellipse at center, rgba(255,255,200,0.15) 0%, transparent 70%)' }} />
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className="flex-shrink-0">
+                    <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
+                  </svg>
+                  Begin Your Quest
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className="flex-shrink-0">
+                    <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
+                  </svg>
                 </Link>
-              ))}
+                <p className="font-sans text-xs text-foreground/35 tracking-wider">
+                  40 questions &bull; 4 temperaments &bull; Free forever
+                </p>
+              </div>
             </div>
           </div>
         </section>
