@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://fourtype.com'
+  const baseUrl = 'https://www.fourtype.com'
 
   return [
     {
@@ -11,10 +11,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${baseUrl}/quiz`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/what-is-temperament-test`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/manifesto`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/faq`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/blog/history-of-temperaments`,
@@ -41,40 +65,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/manifesto`,
+      url: `${baseUrl}/temperament/choleric`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.95,
-    },
-    {
-      url: `${baseUrl}/faq`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.85,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/temperament/sanguine`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/temperament/choleric`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.85,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/temperament/melancholic`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.85,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/temperament/phlegmatic`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.85,
+      priority: 0.8,
     },
   ]
 }
