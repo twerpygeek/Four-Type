@@ -7,6 +7,7 @@ import { Blend, getBlendColors } from '@/lib/blends'
 import { Temperament, TEMPERAMENTS } from '@/lib/temperaments'
 import { TemperamentKey } from '@/lib/scoringKey'
 import CinematicBackground from '@/components/CinematicBackground'
+import { YouTubeEmbed } from '@/components/YouTubeEmbed'
 
 interface SharePageClientProps {
   heroName: string
@@ -308,18 +309,7 @@ export default function SharePageClient({
               </p>
             </div>
           </div>
-          <div className="w-full" style={{ aspectRatio: '16 / 9' }}>
-            <iframe
-              width="100%"
-              height="100%"
-              src="https://www.youtube.com/embed/MFi57x7BBXE?rel=0"
-              title="Why Study Temperaments - FourType"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              loading="lazy"
-            />
-          </div>
+          <YouTubeEmbed videoId="MFi57x7BBXE" title="Why Study Temperaments - FourType" className="rounded-none border-0" />
         </div>
 
         {/* Reading Resources */}
