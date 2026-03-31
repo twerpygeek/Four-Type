@@ -1,10 +1,10 @@
 import { MetadataRoute } from 'next'
-import { SUBTYPES } from '@/lib/subtypes'
+import { getAllSubtypes } from '@/lib/subtypes'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.fourtype.com'
 
-  const subtypeUrls = SUBTYPES.map(subtype => ({
+  const subtypeUrls = getAllSubtypes().map(subtype => ({
     url: `${baseUrl}/subtype/${subtype.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
