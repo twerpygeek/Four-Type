@@ -3,8 +3,13 @@ import { notFound } from 'next/navigation'
 import { getSubtype, getAllSubtypes } from '@/lib/subtypes'
 import SubtypePageClient from './SubtypePageClient'
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const subtype = getSubtype(params.slug)
+type PageProps = {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const subtype = getSubtype(slug)
   
   if (!subtype) {
     return {
@@ -37,8 +42,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function SubtypePage({ params }: { params: { slug: string } }) {
-  const subtype = getSubtype(params.slug)
+export default async function SubtypePage({ params }: PageProps) {
+  const { slug } = await params
+  const subtype = getSubtype(slug)
   
   if (!subtype) {
     notFound()
