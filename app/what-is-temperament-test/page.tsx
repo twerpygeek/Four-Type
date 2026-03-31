@@ -5,6 +5,7 @@ import { ArrowRight, Flame, Wind, Mountain, Droplets, BookOpen, Brain, Heart, Us
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import RuneBackground from '@/components/RuneBackground'
+import { YouTubeEmbed } from '@/components/YouTubeEmbed'
 
 export const metadata: Metadata = {
   title: 'What Is a Temperament Test? | Free 4 Temperament Personality Quiz',
@@ -294,18 +295,7 @@ export default function WhatIsTemperamentTestPage() {
 
             {/* Video Section */}
             <div className="mb-16 w-full">
-              <div className="relative w-full rounded-2xl overflow-hidden border border-border shadow-xl bg-black" style={{ aspectRatio: '16 / 9' }}>
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/MFi57x7BBXE?rel=0"
-                  title="Why Study Temperaments - FourType"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  loading="lazy"
-                />
-              </div>
+              <YouTubeEmbed videoId="MFi57x7BBXE" title="Why Study Temperaments - FourType" />
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6">
