@@ -14,13 +14,20 @@ interface SubtypePageClientProps {
 
 export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
   const color = getSubtypeColor(subtype.primary)
-  const secondaryColor = subtype.secondary ? getSubtypeColor(subtype.secondary) : null
+  const secondaryColor = subtype.secondary && subtype.secondary !== 'pure' ? getSubtypeColor(subtype.secondary as 'sanguine' | 'choleric' | 'melancholic' | 'phlegmatic') : null
   
-  // Determine element icon
-  const ElementIcon = subtype.element === 'Fire' ? Flame :
-                     subtype.element === 'Air' ? Wind :
-                     subtype.element === 'Earth' ? Mountain :
-                     subtype.element === 'Water' ? Droplets : null
+  // Determine element icon based on primary temperament
+  const elementMap: Record<string, string> = {
+    sanguine: 'Air',
+    choleric: 'Fire',
+    melancholic: 'Earth',
+    phlegmatic: 'Water'
+  }
+  const element = elementMap[subtype.primary]
+  const ElementIcon = element === 'Fire' ? Flame :
+                     element === 'Air' ? Wind :
+                     element === 'Earth' ? Mountain :
+                     element === 'Water' ? Droplets : null
 
   return (
     <div className="min-h-screen bg-background">
@@ -50,11 +57,11 @@ export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
               </h1>
               
               <p className="text-2xl text-muted-foreground mb-6 italic">
-                {subtype.subtitle}
+                {subtype.title}
               </p>
               
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                {subtype.description}
+                {subtype.tagline}
               </p>
               
               {/* Core Stats */}
@@ -62,24 +69,26 @@ export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
                 <div className="flex items-start gap-3">
                   <Target className="w-5 h-5 mt-1 flex-shrink-0" style={{ color }} />
                   <div>
-                    <h3 className="font-semibold mb-1">Core Drive</h3>
-                    <p className="text-muted-foreground">{subtype.coreDrive}</p>
+                    <h3 className="font-semibold mb-1">Axes</h3>
+                    <p className="text-muted-foreground">{subtype.axes}</p>
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-3">
-                  <Sparkles className="w-5 h-5 mt-1 flex-shrink-0" style={{ color }} />
-                  <div>
-                    <h3 className="font-semibold mb-1">Superpower</h3>
-                    <p className="text-muted-foreground">{subtype.superpower}</p>
+                {subtype.developmentPriority && (
+                  <div className="flex items-start gap-3">
+                    <Sparkles className="w-5 h-5 mt-1 flex-shrink-0" style={{ color }} />
+                    <div>
+                      <h3 className="font-semibold mb-1">Development Priority</h3>
+                      <p className="text-muted-foreground">{subtype.developmentPriority}</p>
+                    </div>
                   </div>
-                </div>
+                )}
                 
                 <div className="flex items-start gap-3">
                   <Heart className="w-5 h-5 mt-1 flex-shrink-0" style={{ color }} />
                   <div>
-                    <h3 className="font-semibold mb-1">Kryptonite</h3>
-                    <p className="text-muted-foreground">{subtype.kryptonite}</p>
+                    <h3 className="font-semibold mb-1">Stress Response</h3>
+                    <p className="text-muted-foreground">{subtype.stressResponse}</p>
                   </div>
                 </div>
               </div>
@@ -95,8 +104,8 @@ export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
                 }}
               >
                 <div className="space-y-2 border-b pb-6" style={{ borderColor: `${color}20` }}>
-                  <h2 className="text-sm font-semibold tracking-widest uppercase text-muted-foreground">Characteristics</h2>
-                  <p className="text-sm text-muted-foreground">{subtype.characterization}</p>
+                  <h2 className="text-sm font-semibold tracking-widest uppercase text-muted-foreground">Overview</h2>
+                  <p className="text-sm text-muted-foreground">{subtype.overview}</p>
                 </div>
                 
                 <div className="space-y-4">
@@ -116,16 +125,16 @@ export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
                     </div>
                   )}
                   
-                  {subtype.challenges && (
+                  {subtype.weaknesses && (
                     <div>
                       <h3 className="font-semibold mb-3 flex items-center gap-2" style={{ color }}>
                         <Target className="w-4 h-4" /> Challenges
                       </h3>
                       <ul className="space-y-2">
-                        {subtype.challenges.map((challenge, i) => (
+                        {subtype.weaknesses.map((weakness, i) => (
                           <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
                             <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ backgroundColor: color }} />
-                            {challenge}
+                            {weakness}
                           </li>
                         ))}
                       </ul>
@@ -141,39 +150,58 @@ export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               <div className="rounded-xl border p-6" style={{ backgroundColor: `${color}05`, borderColor: `${color}20` }}>
                 <h3 className="font-serif text-2xl font-bold mb-4" style={{ color }}>Communication Style</h3>
-                <p className="text-muted-foreground leading-relaxed">{subtype.communicationStyle}</p>
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-sm font-semibold text-foreground">Pace:</span>
+                    <p className="text-muted-foreground">{subtype.communicationStyle.pace}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm font-semibold text-foreground">Tone:</span>
+                    <p className="text-muted-foreground">{subtype.communicationStyle.tone}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm font-semibold text-foreground">Preferred Input:</span>
+                    <p className="text-muted-foreground">{subtype.communicationStyle.preferredInput}</p>
+                  </div>
+                  {subtype.communicationStyle.petPeeve && (
+                    <div>
+                      <span className="text-sm font-semibold text-foreground">Pet Peeve:</span>
+                      <p className="text-muted-foreground">{subtype.communicationStyle.petPeeve}</p>
+                    </div>
+                  )}
+                </div>
               </div>
               
-              {subtype.relationshipStyle && (
+              {subtype.relationshipPatterns && (
                 <div className="rounded-xl border p-6" style={{ backgroundColor: secondaryColor ? `${secondaryColor}05` : `${color}05`, borderColor: secondaryColor ? `${secondaryColor}20` : `${color}20` }}>
                   <h3 className="font-serif text-2xl font-bold mb-4" style={{ color: secondaryColor || color }}>Relationship Approach</h3>
-                  <p className="text-muted-foreground leading-relaxed">{subtype.relationshipStyle}</p>
+                  <p className="text-muted-foreground leading-relaxed">{subtype.relationshipPatterns}</p>
                 </div>
               )}
             </div>
           )}
           
           {/* Career & Growth */}
-          {(subtype.idealCareers || subtype.growthPath) && (
+          {(subtype.career?.idealRoles || subtype.recoveryStrategy) && (
             <div className="grid md:grid-cols-2 gap-8 mb-16">
-              {subtype.idealCareers && (
+              {subtype.career?.idealRoles && (
                 <div className="rounded-xl border p-6" style={{ backgroundColor: `${color}05`, borderColor: `${color}20` }}>
                   <h3 className="font-serif text-2xl font-bold mb-4" style={{ color }}>Ideal Careers</h3>
                   <ul className="space-y-2">
-                    {subtype.idealCareers.map((career, i) => (
+                    {subtype.career.idealRoles.map((role, i) => (
                       <li key={i} className="text-muted-foreground flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: color }} />
-                        {career}
+                        {role}
                       </li>
                     ))}
                   </ul>
                 </div>
               )}
               
-              {subtype.growthPath && (
+              {subtype.recoveryStrategy && (
                 <div className="rounded-xl border p-6" style={{ backgroundColor: secondaryColor ? `${secondaryColor}05` : `${color}05`, borderColor: secondaryColor ? `${secondaryColor}20` : `${color}20` }}>
-                  <h3 className="font-serif text-2xl font-bold mb-4" style={{ color: secondaryColor || color }}>Path to Growth</h3>
-                  <p className="text-muted-foreground leading-relaxed">{subtype.growthPath}</p>
+                  <h3 className="font-serif text-2xl font-bold mb-4" style={{ color: secondaryColor || color }}>Recovery Strategy</h3>
+                  <p className="text-muted-foreground leading-relaxed">{subtype.recoveryStrategy}</p>
                 </div>
               )}
             </div>
@@ -186,18 +214,19 @@ export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
               <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {subtype.famousExamples.map((example, i) => (
                   <div key={i} className="p-4 rounded-lg" style={{ backgroundColor: `${color}10` }}>
-                    <p className="font-semibold text-sm">{example}</p>
+                    <p className="font-semibold text-sm">{example.name}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{example.description}</p>
                   </div>
                 ))}
               </div>
             </div>
           )}
           
-          {/* Motto */}
-          {subtype.motto && (
+          {/* Tagline */}
+          {subtype.tagline && (
             <div className="text-center py-12 border-t border-b" style={{ borderColor: `${color}20` }}>
               <p className="text-2xl font-serif italic text-muted-foreground mb-3">
-                "{subtype.motto}"
+                {subtype.tagline}
               </p>
               <p className="text-sm text-muted-foreground">The essence of {subtype.name}</p>
             </div>

@@ -3,8 +3,13 @@ import { notFound } from 'next/navigation'
 import { getSubtype, getAllSubtypes } from '@/lib/subtypes'
 import SubtypePageClient from './SubtypePageClient'
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const subtype = getSubtype(params.slug)
+type PageProps = {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const subtype = getSubtype(slug)
   
   if (!subtype) {
     return {
@@ -14,19 +19,19 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
   
   return {
-    title: `${subtype.name} - ${subtype.subtitle} | FourType`,
-    description: subtype.description,
-    keywords: ['temperament', 'personality', subtype.name.toLowerCase(), subtype.subtitle.toLowerCase()],
+    title: `${subtype.name} - ${subtype.title} | FourType`,
+    description: subtype.tagline,
+    keywords: ['temperament', 'personality', subtype.name.toLowerCase(), subtype.title.toLowerCase(), subtype.primary],
     openGraph: {
-      title: `${subtype.name} - ${subtype.subtitle}`,
-      description: subtype.description,
+      title: `${subtype.name} - ${subtype.title}`,
+      description: subtype.tagline,
       type: 'website',
       url: `https://www.fourtype.com/subtype/${subtype.slug}`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${subtype.name} - ${subtype.subtitle}`,
-      description: subtype.description,
+      title: `${subtype.name} - ${subtype.title}`,
+      description: subtype.tagline,
     },
   }
 }
@@ -37,8 +42,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function SubtypePage({ params }: { params: { slug: string } }) {
-  const subtype = getSubtype(params.slug)
+export default async function SubtypePage({ params }: PageProps) {
+  const { slug } = await params
+  const subtype = getSubtype(slug)
   
   if (!subtype) {
     notFound()
