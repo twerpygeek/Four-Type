@@ -308,13 +308,16 @@ export default function SharePageClient({
               </p>
             </div>
           </div>
-          <div className="aspect-video w-full">
+          <div className="w-full" style={{ aspectRatio: '16 / 9' }}>
             <iframe
-              src="https://www.youtube.com/embed/MFi57x7BBXE"
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/MFi57x7BBXE?rel=0"
               title="Why Study Temperaments - FourType"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
-              className="w-full h-full"
+              loading="lazy"
             />
           </div>
         </div>

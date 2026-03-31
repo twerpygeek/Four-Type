@@ -293,14 +293,17 @@ export default function WhatIsTemperamentTestPage() {
             </div>
 
             {/* Video Section */}
-            <div className="mb-16">
-              <div className="relative aspect-video w-full max-w-3xl mx-auto rounded-2xl overflow-hidden border border-border shadow-xl">
+            <div className="mb-16 w-full">
+              <div className="relative w-full rounded-2xl overflow-hidden border border-border shadow-xl bg-black" style={{ aspectRatio: '16 / 9' }}>
                 <iframe
-                  src="https://www.youtube.com/embed/MFi57x7BBXE"
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/MFi57x7BBXE?rel=0"
                   title="Why Study Temperaments - FourType"
+                  frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
-                  className="absolute inset-0 w-full h-full"
+                  loading="lazy"
                 />
               </div>
             </div>
