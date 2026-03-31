@@ -7,6 +7,7 @@ import { BookOpen, Brain, Sparkles, Users } from 'lucide-react'
 import RuneBackground from '@/components/RuneBackground'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import { YouTubeEmbed } from '@/components/YouTubeEmbed'
 
 const temperaments = [
   {
@@ -323,9 +324,12 @@ export default function HomePage() {
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
                 Why Study Temperaments?
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
                 Understanding your temperament is the first step to understanding yourself and connecting with others.
               </p>
+              <div className="w-full max-w-4xl mx-auto mb-16">
+                <YouTubeEmbed videoId="MFi57x7BBXE" title="Why Study Temperaments - FourType" />
+              </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {features.map((feature) => (
