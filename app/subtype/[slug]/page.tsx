@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { SUBTYPES } from '@/lib/subtypes'
+import { getSubtype, getAllSubtypes } from '@/lib/subtypes'
 import SubtypePageClient from './SubtypePageClient'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const subtype = SUBTYPES.find(s => s.slug === params.slug)
+  const subtype = getSubtype(params.slug)
   
   if (!subtype) {
     return {
@@ -32,13 +32,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export async function generateStaticParams() {
-  return SUBTYPES.map(subtype => ({
+  return getAllSubtypes().map(subtype => ({
     slug: subtype.slug,
   }))
 }
 
 export default function SubtypePage({ params }: { params: { slug: string } }) {
-  const subtype = SUBTYPES.find(s => s.slug === params.slug)
+  const subtype = getSubtype(params.slug)
   
   if (!subtype) {
     notFound()
