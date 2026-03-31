@@ -83,7 +83,12 @@ export default function MelancholicPageClient() {
 
         {/* Hero Image */}
         <section className="relative py-12 px-4">
-          <div className="max-w-6xl mx-auto"><Image src="/images/melancholic-depth.jpg" alt="Melancholic temperament artistic representation showing depth and contemplation" width={1200} height={400} className="rounded-lg shadow-2xl w-full object-cover" /></div>
+          <div className="max-w-6xl mx-auto"><Image src="/images/melancholic-hero.jpg" alt="The Strategist - Melancholic Temperament character card showing Earth element, Autumn season, and Serotonin neurochemical" width={1200} height={600} className="rounded-lg shadow-2xl w-full object-cover" /></div>
+        </section>
+        
+        {/* Subtypes Image Section */}
+        <section className="relative py-12 px-4">
+          <div className="max-w-6xl mx-auto"><Image src="/images/melancholic-subtypes.jpg" alt="Earth Core: The Melancholic Subtypes - Pure Melancholic, Mel-San, Mel-Chol, and Mel-Phleg variations" width={1200} height={600} className="rounded-lg shadow-2xl w-full object-cover" /></div>
         </section>
 
         {/* In-Depth Overview */}

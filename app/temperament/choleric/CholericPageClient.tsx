@@ -145,7 +145,14 @@ export default function CholericPageClient() {
         {/* Hero Image */}
         <section className="relative py-12 px-4">
           <div className="max-w-6xl mx-auto">
-            <Image src="/images/choleric-depth.jpg" alt="Choleric temperament artistic representation showing power and leadership" width={1200} height={400} className="rounded-lg shadow-2xl w-full object-cover" />
+            <Image src="/images/choleric-hero.jpg" alt="The Commander - Choleric Temperament character card showing Fire element, Summer season, and Testosterone neurochemical" width={1200} height={600} className="rounded-lg shadow-2xl w-full object-cover" />
+          </div>
+        </section>
+        
+        {/* Subtypes Image Section */}
+        <section className="relative py-12 px-4">
+          <div className="max-w-6xl mx-auto">
+            <Image src="/images/choleric-subtypes.jpg" alt="Fire Core: The Choleric Subtypes - Pure Choleric, Chol-San, Chol-Mel, and Chol-Phleg variations" width={1200} height={600} className="rounded-lg shadow-2xl w-full object-cover" />
           </div>
         </section>
 
