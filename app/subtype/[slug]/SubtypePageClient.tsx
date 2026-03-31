@@ -141,7 +141,26 @@ export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               <div className="rounded-xl border p-6" style={{ backgroundColor: `${color}05`, borderColor: `${color}20` }}>
                 <h3 className="font-serif text-2xl font-bold mb-4" style={{ color }}>Communication Style</h3>
-                <p className="text-muted-foreground leading-relaxed">{subtype.communicationStyle}</p>
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-sm font-semibold text-foreground">Pace:</span>
+                    <p className="text-muted-foreground">{subtype.communicationStyle.pace}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm font-semibold text-foreground">Tone:</span>
+                    <p className="text-muted-foreground">{subtype.communicationStyle.tone}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm font-semibold text-foreground">Preferred Input:</span>
+                    <p className="text-muted-foreground">{subtype.communicationStyle.preferredInput}</p>
+                  </div>
+                  {subtype.communicationStyle.petPeeve && (
+                    <div>
+                      <span className="text-sm font-semibold text-foreground">Pet Peeve:</span>
+                      <p className="text-muted-foreground">{subtype.communicationStyle.petPeeve}</p>
+                    </div>
+                  )}
+                </div>
               </div>
               
               {subtype.relationshipStyle && (
