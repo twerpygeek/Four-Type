@@ -31,31 +31,32 @@ const articleSchema = {
 
 const subtypes = {
   sanguine: [
-    { code: 'San-Chol', name: 'The Energizer', traits: 'Super-extroverted, explosive but brief emotions, speaks before thinking', strengths: 'Charming, decisive, creative, natural salesperson', risks: 'Can be obnoxious when threatened, hurtful without realizing' },
-    { code: 'San-Mel', name: 'The Performer', traits: 'Highly emotional, rapid mood swings, outgoing yet introspective', strengths: 'Creative depth with ability to communicate it', risks: 'Critical nature surfaces easily, prone to getting down' },
-    { code: 'San-Phleg', name: 'The Charmer', traits: 'Outgoing nature tempered by grace, warm and easygoing', strengths: 'Universally likeable, approachable, steady warmth', risks: 'May lack drive, avoids difficult conversations' },
+    { code: 'San-Chol', name: 'The Energizer', slug: 'sanguine-choleric', traits: 'Super-extroverted, explosive but brief emotions, speaks before thinking', strengths: 'Charming, decisive, creative, natural salesperson', risks: 'Can be obnoxious when threatened, hurtful without realizing' },
+    { code: 'San-Mel', name: 'The Performer', slug: 'sanguine-melancholic', traits: 'Highly emotional, rapid mood swings, outgoing yet introspective', strengths: 'Creative depth with ability to communicate it', risks: 'Critical nature surfaces easily, prone to getting down' },
+    { code: 'San-Phleg', name: 'The Charmer', slug: 'sanguine-phlegmatic', traits: 'Outgoing nature tempered by grace, warm and easygoing', strengths: 'Universally likeable, approachable, steady warmth', risks: 'May lack drive, avoids difficult conversations' },
   ],
   choleric: [
-    { code: 'Chol-San', name: 'The Captain', traits: 'Driven by results with social charm, practical, forceful yet personable', strengths: 'Motivating leader, action-oriented, persuasive', risks: 'Impatient, win/lose mindset, can bulldoze relationships' },
-    { code: 'Chol-Mel', name: 'The Strategist', traits: 'Analytical and decisive, visionary with attention to detail', strengths: 'Goal-oriented, creative, organized, high standards', risks: 'Perfectionistic, prone to overthinking, demanding' },
-    { code: 'Chol-Phleg', name: 'The Diplomat', traits: 'Decisive yet calm, diplomatic, goal-driven but measured', strengths: 'Balanced leader, adaptable, empathetic yet effective', risks: 'May avoid confrontation despite strong opinions' },
+    { code: 'Chol-San', name: 'The Captain', slug: 'choleric-sanguine', traits: 'Driven by results with social charm, practical, forceful yet personable', strengths: 'Motivating leader, action-oriented, persuasive', risks: 'Impatient, win/lose mindset, can bulldoze relationships' },
+    { code: 'Chol-Mel', name: 'The Strategist', slug: 'choleric-melancholic', traits: 'Analytical and decisive, visionary with attention to detail', strengths: 'Goal-oriented, creative, organized, high standards', risks: 'Perfectionistic, prone to overthinking, demanding' },
+    { code: 'Chol-Phleg', name: 'The Diplomat', slug: 'choleric-phlegmatic', traits: 'Decisive yet calm, diplomatic, goal-driven but measured', strengths: 'Balanced leader, adaptable, empathetic yet effective', risks: 'May avoid confrontation despite strong opinions' },
   ],
   melancholic: [
-    { code: 'Mel-San', name: 'The Artist', traits: 'Emotional depth with outward expressiveness, idealistic yet sociable', strengths: 'Artistic vision with ability to share it', risks: 'Mood swings, torn between social needs and solitude' },
-    { code: 'Mel-Chol', name: 'The Perfectionist-Driver', traits: 'Detail-oriented with drive, analytical and determined', strengths: 'Thorough, ambitious, disciplined, high-quality results', risks: 'Harsh self-critic, can be rigid, demands perfection' },
-    { code: 'Mel-Phleg', name: 'The Philosopher', traits: 'Most introverted blend, deeply appreciates art/literature/music', strengths: 'Deep self-understanding, thoughtful, perceptive', risks: 'Insecurity, struggles to connect, sees the negative' },
+    { code: 'Mel-San', name: 'The Artist', slug: 'melancholic-sanguine', traits: 'Emotional depth with outward expressiveness, idealistic yet sociable', strengths: 'Artistic vision with ability to share it', risks: 'Mood swings, torn between social needs and solitude' },
+    { code: 'Mel-Chol', name: 'The Perfectionist-Driver', slug: 'melancholic-choleric', traits: 'Detail-oriented with drive, analytical and determined', strengths: 'Thorough, ambitious, disciplined, high-quality results', risks: 'Harsh self-critic, can be rigid, demands perfection' },
+    { code: 'Mel-Phleg', name: 'The Philosopher', slug: 'melancholic-phlegmatic', traits: 'Most introverted blend, deeply appreciates art/literature/music', strengths: 'Deep self-understanding, thoughtful, perceptive', risks: 'Insecurity, struggles to connect, sees the negative' },
   ],
   phlegmatic: [
-    { code: 'Phleg-San', name: 'The Buddy', traits: 'Easy-going with social warmth, relaxed and friendly, quietly humorous', strengths: 'Likeable, cooperative, brings calm energy', risks: 'Can be too passive, avoids responsibility, lacks urgency' },
-    { code: 'Phleg-Chol', name: 'The Quiet Commander', traits: 'Steady with hidden determination, diplomatic but firm when needed', strengths: 'Reliable under pressure, balanced judgment', risks: 'Stubbornness disguised as patience, slow to act' },
-    { code: 'Phleg-Mel', name: 'The Gentle Soul', traits: 'Quiet and thoughtful, gentle, people-focused introvert', strengths: 'Harmonious, careful, cooperative, deeply loyal', risks: 'Difficulty expressing opinions, paralyzed by perfectionism' },
+    { code: 'Phleg-San', name: 'The Buddy', slug: 'phlegmatic-sanguine', traits: 'Easy-going with social warmth, relaxed and friendly, quietly humorous', strengths: 'Likeable, cooperative, brings calm energy', risks: 'Can be too passive, avoids responsibility, lacks urgency' },
+    { code: 'Phleg-Chol', name: 'The Quiet Commander', slug: 'phlegmatic-choleric', traits: 'Steady with hidden determination, diplomatic but firm when needed', strengths: 'Reliable under pressure, balanced judgment', risks: 'Stubbornness disguised as patience, slow to act' },
+    { code: 'Phleg-Mel', name: 'The Gentle Soul', slug: 'phlegmatic-melancholic', traits: 'Quiet and thoughtful, gentle, people-focused introvert', strengths: 'Harmonious, careful, cooperative, deeply loyal', risks: 'Difficulty expressing opinions, paralyzed by perfectionism' },
   ],
 }
 
 const pureTypes = [
-  { code: 'Pure Sanguine', strengths: 'Magnetic personality, infectious enthusiasm, ultimate connector', risks: 'Extremely scattered, no balancing depth or drive, profoundly unreliable', color: '#FFD700' },
-  { code: 'Pure Choleric', strengths: 'Unstoppable executor, fearless leader, peak productivity', risks: 'Ruthless, alienating, zero tolerance for weakness, burnout-prone', color: '#E63946' },
-  { code: 'Pure Melancholic', strengths: 'Genius-level insight, unmatched attention to detail, profound creativity', risks: 'Crippling perfectionism, social isolation, chronic dissatisfaction', color: '#4CC9F0' },
+  { code: 'Pure Sanguine', slug: 'pure-sanguine', strengths: 'Magnetic personality, infectious enthusiasm, ultimate connector', risks: 'Extremely scattered, no balancing depth or drive, profoundly unreliable', color: '#FFD700' },
+  { code: 'Pure Choleric', slug: 'pure-choleric', strengths: 'Unstoppable executor, fearless leader, peak productivity', risks: 'Ruthless, alienating, zero tolerance for weakness, burnout-prone', color: '#E63946' },
+  { code: 'Pure Melancholic', slug: 'pure-melancholic', strengths: 'Genius-level insight, unmatched attention to detail, profound creativity', risks: 'Crippling perfectionism, social isolation, chronic dissatisfaction', color: '#4CC9F0' },
+  { code: 'Pure Phlegmatic', slug: 'pure-phlegmatic', strengths: 'Ultimate peacemaker, unshakable calm, deeply reliable', risks: 'May lack initiative, avoids necessary conflict, too passive', color: '#52B788' },
 ]
 
 const temperamentColors: Record<string, string> = {
@@ -192,6 +193,14 @@ export default function SubtypesBlogPage() {
                           <p className="text-sm text-muted-foreground">{subtype.risks}</p>
                         </div>
                       </div>
+                      <Link
+                        href={`/subtype/${subtype.slug}`}
+                        className="inline-flex items-center gap-1 mt-4 text-sm font-medium transition-colors hover:opacity-80"
+                        style={{ color: temperamentColors[category] }}
+                      >
+                        Learn more about {subtype.name}
+                        <ChevronRight className="w-4 h-4" />
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -231,16 +240,16 @@ export default function SubtypesBlogPage() {
                     <p className="text-sm text-muted-foreground">{type.risks}</p>
                   </div>
                 </div>
+                <Link
+                  href={`/subtype/${type.slug}`}
+                  className="inline-flex items-center gap-1 mt-4 text-sm font-medium transition-colors hover:opacity-80"
+                  style={{ color: type.color }}
+                >
+                  Learn more about {type.code}
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
               </div>
             ))}
-          </div>
-
-          <div className="mt-6 p-4 rounded-xl bg-secondary/30 border border-border">
-            <p className="text-sm text-muted-foreground">
-              <strong className="text-foreground">What about Pure Phlegmatic?</strong> Most temperament lists omit 
-              Pure Phlegmatic. Some argue it is because a person with no secondary drive would lack the motivation 
-              to be observable as a distinct type. This remains an open question in temperament theory.
-            </p>
           </div>
         </div>
 

@@ -1204,3 +1204,14 @@ export function getAllSubtypes(): Subtype[] {
 export function getSubtypesByPrimary(primary: 'sanguine' | 'choleric' | 'melancholic' | 'phlegmatic'): Subtype[] {
   return getAllSubtypes().filter(s => s.primary === primary)
 }
+
+// Get color for a temperament type
+export function getSubtypeColor(temperament: 'sanguine' | 'choleric' | 'melancholic' | 'phlegmatic'): string {
+  const colors: Record<string, string> = {
+    sanguine: '#FFD700',
+    choleric: '#E63946',
+    melancholic: '#4CC9F0',
+    phlegmatic: '#52B788',
+  }
+  return colors[temperament] || '#FFD700'
+}
