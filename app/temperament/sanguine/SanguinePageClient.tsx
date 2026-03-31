@@ -192,10 +192,23 @@ export default function SanguinePageClient() {
         <section className="relative py-12 px-4">
           <div className="max-w-6xl mx-auto">
             <Image
-              src="/images/sanguine-depth.jpg"
-              alt="Sanguine temperament artistic representation showing warmth and social energy"
+              src="/images/sanguine-hero.jpg"
+              alt="The Bard - Sanguine Temperament character card showing Air element, Spring season, and Dopamine neurochemical"
               width={1200}
-              height={400}
+              height={600}
+              className="rounded-lg shadow-2xl w-full object-cover"
+            />
+          </div>
+        </section>
+        
+        {/* Subtypes Image Section */}
+        <section className="relative py-12 px-4">
+          <div className="max-w-6xl mx-auto">
+            <Image
+              src="/images/sanguine-subtypes.jpg"
+              alt="Air Core: The Sanguine Subtypes - Pure Sanguine, San-Chol, San-Mel, and San-Phleg variations"
+              width={1200}
+              height={600}
               className="rounded-lg shadow-2xl w-full object-cover"
             />
           </div>

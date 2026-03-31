@@ -83,7 +83,12 @@ export default function PhlegmaticPageClient() {
 
         {/* Hero Image */}
         <section className="relative py-12 px-4">
-          <div className="max-w-6xl mx-auto"><Image src="/images/phlegmatic-depth.jpg" alt="Phlegmatic temperament artistic representation showing peace and stability" width={1200} height={400} className="rounded-lg shadow-2xl w-full object-cover" /></div>
+          <div className="max-w-6xl mx-auto"><Image src="/images/phlegmatic-hero.jpg" alt="The Guardian - Phlegmatic Temperament character card showing Water element, Winter season, and Estrogen/Oxytocin neurochemical" width={1200} height={600} className="rounded-lg shadow-2xl w-full object-cover" /></div>
+        </section>
+        
+        {/* Subtypes Image Section */}
+        <section className="relative py-12 px-4">
+          <div className="max-w-6xl mx-auto"><Image src="/images/phlegmatic-subtypes.jpg" alt="Water Core: The Phlegmatic Subtypes - Pure Phlegmatic, Phleg-San, Phleg-Chol, and Phleg-Mel variations" width={1200} height={600} className="rounded-lg shadow-2xl w-full object-cover" /></div>
         </section>
 
         {/* In-Depth Overview */}
