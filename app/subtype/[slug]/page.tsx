@@ -19,19 +19,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
   
   return {
-    title: `${subtype.name} - ${subtype.subtitle} | FourType`,
-    description: subtype.description,
-    keywords: ['temperament', 'personality', subtype.name.toLowerCase(), subtype.subtitle.toLowerCase()],
+    title: `${subtype.name} - ${subtype.title} | FourType`,
+    description: subtype.tagline,
+    keywords: ['temperament', 'personality', subtype.name.toLowerCase(), subtype.title.toLowerCase(), subtype.primary],
     openGraph: {
-      title: `${subtype.name} - ${subtype.subtitle}`,
-      description: subtype.description,
+      title: `${subtype.name} - ${subtype.title}`,
+      description: subtype.tagline,
       type: 'website',
       url: `https://www.fourtype.com/subtype/${subtype.slug}`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${subtype.name} - ${subtype.subtitle}`,
-      description: subtype.description,
+      title: `${subtype.name} - ${subtype.title}`,
+      description: subtype.tagline,
     },
   }
 }
