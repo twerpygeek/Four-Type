@@ -285,11 +285,27 @@ export default function WhatIsTemperamentTestPage() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-                Why Take a Temperament Test?
+                Why Study Temperaments?
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Understanding your temperament unlocks powerful insights that can transform your life.
               </p>
+            </div>
+
+            {/* Video Section */}
+            <div className="mb-16 w-full">
+              <div className="relative w-full rounded-2xl overflow-hidden border border-border shadow-xl bg-black" style={{ aspectRatio: '16 / 9' }}>
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/MFi57x7BBXE?rel=0"
+                  title="Why Study Temperaments - FourType"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6">
