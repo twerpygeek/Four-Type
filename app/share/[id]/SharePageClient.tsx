@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Blend, getBlendColors } from '@/lib/blends'
 import { Temperament, TEMPERAMENTS } from '@/lib/temperaments'
 import { TemperamentKey } from '@/lib/scoringKey'
+import { SUBTYPES } from '@/lib/subtypes'
 import CinematicBackground from '@/components/CinematicBackground'
 import { YouTubeEmbed } from '@/components/YouTubeEmbed'
 
@@ -310,6 +311,21 @@ export default function SharePageClient({
             </div>
           </div>
           <YouTubeEmbed videoId="MFi57x7BBXE" title="Why Study Temperaments - FourType" className="rounded-none border-0" />
+        </div>
+
+        {/* Learn More CTA */}
+        <div className="w-full text-center p-6 rounded-2xl border" style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: '#2A2A40' }}>
+          <p className="text-muted-foreground mb-4 font-sans text-sm">Want to learn more about your temperament?</p>
+          <Link
+            href={`/subtype/${SUBTYPES.find(s => s.rpgClass === blend.rpgClass)?.slug || 'the-bard'}`}
+            className="inline-block px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 font-serif"
+            style={{
+              backgroundColor: primaryColor,
+              color: '#0D0D0F',
+            }}
+          >
+            Explore Full Profile
+          </Link>
         </div>
 
         {/* Reading Resources */}

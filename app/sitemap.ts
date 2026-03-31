@@ -1,7 +1,15 @@
 import { MetadataRoute } from 'next'
+import { SUBTYPES } from '@/lib/subtypes'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.fourtype.com'
+
+  const subtypeUrls = SUBTYPES.map(subtype => ({
+    url: `${baseUrl}/subtype/${subtype.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
 
   return [
     {
@@ -41,6 +49,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${baseUrl}/blog/subtypes`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
       url: `${baseUrl}/blog/history-of-temperaments`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -48,12 +62,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/blog/leadership-and-temperament`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/subtypes`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
@@ -88,5 +96,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    ...subtypeUrls,
   ]
 }
