@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T09:31:54.409Z",
+  "generatedAt": "2026-07-02T09:39:11.446Z",
   "site": "https://www.fourtype.com",
   "routes": [
     {
@@ -53,6 +53,10 @@
     {
       "html": "https://www.fourtype.com/4-temperament-test",
       "markdown": "https://www.fourtype.com/4-temperament-test.md"
+    },
+    {
+      "html": "https://www.fourtype.com/four-temperaments-test",
+      "markdown": "https://www.fourtype.com/four-temperaments-test.md"
     },
     {
       "html": "https://www.fourtype.com/temperament-test-for-couples",

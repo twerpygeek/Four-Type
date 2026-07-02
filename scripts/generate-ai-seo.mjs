@@ -18,6 +18,7 @@ const routes = [
   '/melancholic-test',
   '/phlegmatic-test',
   '/4-temperament-test',
+  '/four-temperaments-test',
   '/temperament-test-for-couples',
   '/four-temperaments',
   '/subtypes',
