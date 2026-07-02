@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Heart, Brain, BookOpen } from 'lucide-react'
+import Footer from '@/components/Footer'
+import { LegacyBlogSeo } from '@/components/LegacyBlogSeo'
+import Navigation from '@/components/Navigation'
 
 export const metadata: Metadata = {
   title: 'Temperament & Anxiety: How Your Type Affects Stress | FourType',
@@ -10,32 +13,22 @@ export const metadata: Metadata = {
     title: 'Temperament & Anxiety: Understanding Your Stress Response',
     description: 'Learn how each temperament type experiences anxiety and discover evidence-based coping strategies.',
     type: 'article',
-    publishedTime: new Date().toISOString(),
+    publishedTime: '2024-03-25',
     authors: ['FourType'],
   },
-}
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: 'Temperament & Anxiety: How Your Type Affects Stress Response',
-  description: 'Discover how the four temperament types experience and manage anxiety differently.',
-  image: 'https://www.fourtype.com/og-image.jpg',
-  datePublished: new Date().toISOString(),
-  author: {
-    '@type': 'Organization',
-    name: 'FourType',
-    url: 'https://www.fourtype.com',
-  },
+  alternates: { canonical: '/blog/temperament-anxiety' },
 }
 
 export default function TemperamentAnxietyPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <LegacyBlogSeo
+        title="Temperament & Anxiety: How Your Type Affects Stress Response"
+        description="Discover how the four temperament types experience and manage anxiety differently."
+        path="/blog/temperament-anxiety"
+        published="2024-03-25"
       />
+      <Navigation />
       <main className="min-h-screen bg-background">
         <div className="max-w-4xl mx-auto px-4 py-16">
           {/* Hero */}
@@ -174,6 +167,7 @@ export default function TemperamentAnxietyPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   )
 }

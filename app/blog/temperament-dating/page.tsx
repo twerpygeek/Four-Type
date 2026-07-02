@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Heart, Sparkles } from 'lucide-react'
+import Footer from '@/components/Footer'
+import { LegacyBlogSeo } from '@/components/LegacyBlogSeo'
+import Navigation from '@/components/Navigation'
 
 export const metadata: Metadata = {
   title: 'Temperament & Dating: Personality Compatibility Guide | FourType',
@@ -10,32 +13,22 @@ export const metadata: Metadata = {
     title: 'Temperament & Dating: Find Your Personality Match',
     description: 'Understand temperament compatibility and build stronger relationships based on personality type.',
     type: 'article',
-    publishedTime: new Date().toISOString(),
+    publishedTime: '2024-03-26',
     authors: ['FourType'],
   },
-}
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: 'Temperament & Dating: Personality Compatibility Guide',
-  description: 'Explore temperament compatibility in relationships and learn dating strategies for each type.',
-  image: 'https://www.fourtype.com/og-image.jpg',
-  datePublished: new Date().toISOString(),
-  author: {
-    '@type': 'Organization',
-    name: 'FourType',
-    url: 'https://www.fourtype.com',
-  },
+  alternates: { canonical: '/blog/temperament-dating' },
 }
 
 export default function TemperamentDatingPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <LegacyBlogSeo
+        title="Temperament & Dating: Personality Compatibility Guide"
+        description="Explore temperament compatibility in relationships and learn dating strategies for each type."
+        path="/blog/temperament-dating"
+        published="2024-03-26"
       />
+      <Navigation />
       <main className="min-h-screen bg-background">
         <div className="max-w-4xl mx-auto px-4 py-16">
           {/* Hero */}
@@ -196,6 +189,7 @@ export default function TemperamentDatingPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   )
 }

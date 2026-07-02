@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, BookOpen, Brain } from 'lucide-react'
+import Footer from '@/components/Footer'
+import { LegacyBlogSeo } from '@/components/LegacyBlogSeo'
+import Navigation from '@/components/Navigation'
 
 export const metadata: Metadata = {
   title: 'From Hippocrates to Brain Scans: The Science Behind Temperament | FourType',
@@ -10,32 +13,22 @@ export const metadata: Metadata = {
     title: 'From Hippocrates to Brain Scans: The Science of Temperament',
     description: 'Discover why temperament theory has endured for 2,400 years and what modern science reveals about personality types.',
     type: 'article',
-    publishedTime: new Date().toISOString(),
+    publishedTime: '2024-03-28',
     authors: ['FourType'],
   },
-}
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: 'From Hippocrates to Brain Scans: The Science Behind Temperament',
-  description: 'Explore the scientific foundation of temperament theory across 2,400 years of research.',
-  image: 'https://www.fourtype.com/og-image.jpg',
-  datePublished: new Date().toISOString(),
-  author: {
-    '@type': 'Organization',
-    name: 'FourType',
-    url: 'https://www.fourtype.com',
-  },
+  alternates: { canonical: '/blog/temperament-science' },
 }
 
 export default function TemperamentSciencePage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <LegacyBlogSeo
+        title="From Hippocrates to Brain Scans: The Science Behind Temperament"
+        description="Explore the scientific foundation of temperament theory across 2,400 years of research."
+        path="/blog/temperament-science"
+        published="2024-03-28"
       />
+      <Navigation />
       <main className="min-h-screen bg-background">
         <div className="max-w-4xl mx-auto px-4 py-16">
           {/* Hero */}
@@ -219,6 +212,7 @@ export default function TemperamentSciencePage() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   )
 }
