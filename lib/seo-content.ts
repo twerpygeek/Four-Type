@@ -1198,6 +1198,94 @@ export const blogArticles: BlogArticle[] = [
     ],
   },
   {
+    slug: 'choleric-sanguine-melancholic-phlegmatic-test',
+    title: 'Choleric Sanguine Melancholic Phlegmatic Test: Compare the Four Temperaments',
+    shortTitle: 'Choleric Sanguine Melancholic Phlegmatic Test',
+    description: 'Take a practical Choleric, Sanguine, Melancholic, and Phlegmatic test path and learn how to compare the four temperaments without forcing yourself into a flat label.',
+    keywords: ['choleric sanguine melancholic phlegmatic test', 'choleric sanguine melancholic phlegmatic quiz', 'four temperament types test', 'four temperaments personality test', 'which temperament am I test', 'choleric test sanguine test melancholic test phlegmatic test', '4 temperament types test'],
+    category: 'Guides',
+    readTime: '9 min',
+    accent: 'purple',
+    icon: ArrowRightLeft,
+    image: '/images/blog/choleric-sanguine-melancholic-phlegmatic-test.jpg',
+    imageAlt: 'Four temperament archetypes around a glowing compass for the Choleric Sanguine Melancholic Phlegmatic test',
+    published: '2026-07-02',
+    blocks: [
+      {
+        type: 'section',
+        title: 'The four names are a comparison, not four boxes',
+        body: [
+          'People search for a Choleric, Sanguine, Melancholic, Phlegmatic test when they already know the four classic temperament names and want to know which one fits. The useful answer is not simply a label. It is a comparison of which pattern leads, which pattern supports it, and where your behavior changes by context.',
+          'FourType treats the four temperaments as a practical map. Choleric shows action and direction. Sanguine shows expression and connection. Melancholic shows depth and standards. Phlegmatic shows steadiness and harmony. Most people can recognize pieces of more than one pattern.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'What the test compares',
+        intro: 'A balanced four temperaments test should make each type visible through real behavior, not stereotype.',
+        items: [
+          { title: 'Choleric', body: 'How quickly you decide, challenge friction, take command, and push toward visible progress.', accent: 'red' },
+          { title: 'Sanguine', body: 'How much you seek interaction, novelty, enthusiasm, shared energy, and expressive connection.', accent: 'gold' },
+          { title: 'Melancholic', body: 'How strongly you value accuracy, meaning, preparation, quality, and private reflection.', accent: 'blue' },
+          { title: 'Phlegmatic', body: 'How naturally you protect calm, loyalty, patience, mediation, and relational steadiness.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'Why your second-highest temperament matters',
+        body: [
+          'A test that only announces one winner can miss the most useful part of the result. A Choleric-Sanguine and a Choleric-Melancholic may both be decisive, but one moves through charisma and momentum while the other moves through standards and strategy.',
+          'That is why FourType points toward subtype interpretation. Your primary temperament shows the main direction. Your secondary temperament often explains the flavor: warmer, sharper, quieter, steadier, more analytical, or more socially expressive.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'How the four types can look similar',
+        intro: 'Mistyping often happens because two temperaments can produce the same surface behavior for different reasons.',
+        items: [
+          { title: 'Choleric vs Sanguine energy', body: 'Both can be bold. Choleric energy pushes outcomes; Sanguine energy pulls people into shared momentum.', accent: 'red' },
+          { title: 'Melancholic vs Phlegmatic quiet', body: 'Both can be reserved. Melancholic quiet often analyzes; Phlegmatic quiet often stabilizes.', accent: 'blue' },
+          { title: 'Choleric vs Melancholic standards', body: 'Both can be demanding. Choleric standards focus on results; Melancholic standards focus on correctness.', accent: 'purple' },
+          { title: 'Sanguine vs Phlegmatic warmth', body: 'Both can be easy to like. Sanguine warmth animates the room; Phlegmatic warmth calms it.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'How to take the test honestly',
+        body: [
+          'Answer based on your repeated default, especially when you are tired, hurried, disappointed, or challenged. Temperament becomes clearer when life is not perfectly arranged around your preferences.',
+          'Avoid choosing the answer that sounds most admirable. A Choleric answer is not better than a Phlegmatic answer; a Melancholic answer is not deeper than a Sanguine answer. Each pattern has gifts, blind spots, and growth work.',
+        ],
+      },
+      {
+        type: 'section',
+        title: 'What to read after your result',
+        body: [
+          'After you know your likely pattern, read the guide for your primary temperament and then compare your subtype. If your result surprises you, the question-design and accuracy guides can help you decide whether the result reflects your real behavior or a temporary season.',
+          'The goal is not to memorize four ancient labels. The goal is to understand your action style, social rhythm, emotional processing, conflict pattern, and growth edge well enough to use the result.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'The best result is the one you can use',
+        body: 'A Choleric, Sanguine, Melancholic, Phlegmatic test is most useful when it gives you both clarity and nuance: a likely main pattern, a visible score spread, and a path for learning what to do next.',
+        bullets: ['Compare all four temperament scores.', 'Look for a clear primary pattern.', 'Check whether the second score changes the interpretation.', 'Read subtype pages when scores are close.', 'Use the result for self-awareness, not self-excuse.'],
+      },
+    ],
+    related: [
+      { href: '/quiz', title: 'Take the Free Quiz', description: 'Start the FourType temperament test.' },
+      { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'How to Tell the Four Temperaments Apart', description: 'Compare the four classic temperament patterns.' },
+      { href: '/blog/temperament-test-questions', title: 'Temperament Test Questions', description: 'See what a useful temperament quiz should ask.' },
+      { href: '/subtypes', title: 'Temperament Subtypes', description: 'Explore mixed Choleric, Sanguine, Melancholic, and Phlegmatic results.' },
+    ],
+    faq: [
+      { question: 'What is a Choleric Sanguine Melancholic Phlegmatic test?', answer: 'It is a four temperaments test that compares the classic Choleric, Sanguine, Melancholic, and Phlegmatic behavior patterns to identify your likely primary temperament and possible blend.' },
+      { question: 'Can I be more than one of the four temperaments?', answer: 'Yes. Many people have a primary temperament with a strong secondary pattern. FourType uses subtype interpretation to explain common blends rather than forcing everyone into a pure type.' },
+      { question: 'Which temperament is best?', answer: 'No temperament is best. Choleric, Sanguine, Melancholic, and Phlegmatic patterns each have strengths, blind spots, stress habits, and growth paths.' },
+      { question: 'How do I know if my result is accurate?', answer: 'Look for repeated behavior across stress, relationships, work rhythm, and conflict. If your top two scores are close, read the subtype and methodology pages before treating the result as final.' },
+    ],
+  },
+  {
     slug: 'temperament-compatibility-chart',
     title: 'Four Temperaments Compatibility Chart: Which Types Get Along?',
     shortTitle: 'Four Temperaments Compatibility Chart',
@@ -1533,6 +1621,7 @@ export const coreGuideLinks: LinkCard[] = [
   { href: '/four-temperaments-test', title: 'Four Temperaments Test', description: 'Find your classic Choleric, Sanguine, Melancholic, or Phlegmatic pattern.' },
   { href: '/blog/4-temperaments-test-free', title: '4 Temperaments Test Free', description: 'Take the free quiz and learn how to read your score spread.' },
   { href: '/blog/temperament-test-questions', title: 'Temperament Test Questions', description: 'See what useful quiz questions should ask.' },
+  { href: '/blog/choleric-sanguine-melancholic-phlegmatic-test', title: 'Choleric Sanguine Melancholic Phlegmatic Test', description: 'Compare the four classic temperament test patterns.' },
   { href: '/blog/best-free-four-temperaments-test', title: 'Best Free Four Temperaments Test', description: 'Learn what makes a free quiz worth taking.' },
   { href: '/blog/ospp-four-temperaments-test', title: 'OSPP Four Temperaments Test', description: 'Compare OSPP-style temperament tests with FourType.' },
   { href: '/blog/four-humors-test', title: 'Four Humors Test', description: 'Understand the historical roots of the four temperaments.' },
@@ -1546,6 +1635,7 @@ export const relationshipGuideLinks: LinkCard[] = [
 ]
 
 export const typeTestLinks: LinkCard[] = [
+  { href: '/blog/choleric-sanguine-melancholic-phlegmatic-test', title: 'Four Temperament Types Test', description: 'Compare Choleric, Sanguine, Melancholic, and Phlegmatic together.' },
   { href: '/choleric-test', title: 'Choleric Test', description: 'Check whether drive, decisiveness, and challenge lead your temperament.' },
   { href: '/sanguine-test', title: 'Sanguine Test', description: 'Check whether connection, expression, and enthusiasm lead your temperament.' },
   { href: '/melancholic-test', title: 'Melancholic Test', description: 'Check whether depth, quality, and analysis lead your temperament.' },
