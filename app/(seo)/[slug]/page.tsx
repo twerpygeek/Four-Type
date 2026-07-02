@@ -7,7 +7,7 @@ import Footer from '@/components/Footer'
 import { ContentBlocks } from '@/components/ContentBlocks'
 import { FaqSection } from '@/components/FaqSection'
 import { InternalLinkHub } from '@/components/InternalLinkHub'
-import { accentStyles, breadcrumbJsonLd, faqJsonLd, getSeoPage, guideLinksForSeoPage, quizActionJsonLd, seoPages } from '@/lib/seo-content'
+import { accentStyles, breadcrumbJsonLd, faqJsonLd, getSeoPage, guideLinksForSeoPage, itemListJsonLd, quizActionJsonLd, seoPages } from '@/lib/seo-content'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -44,6 +44,7 @@ export default async function SeoLandingPage({ params }: Props) {
 
   const Icon = page.icon
   const accent = accentStyles[page.accent]
+  const relatedGuideLinks = guideLinksForSeoPage(page.slug).filter((link) => link.href !== `/${page.slug}`)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -55,6 +56,7 @@ export default async function SeoLandingPage({ params }: Props) {
     mainEntityOfPage: `https://www.fourtype.com/${page.slug}`,
   }
   const faqSchema = faqJsonLd(page.faq)
+  const relatedGuidesSchema = itemListJsonLd('Related temperament test guides', relatedGuideLinks)
   const breadcrumbSchema = breadcrumbJsonLd([
     { href: '/', title: 'FourType', description: 'FourType home' },
     { href: '/temperament-test', title: 'Temperament Test', description: 'Main temperament test guide' },
@@ -66,6 +68,7 @@ export default async function SeoLandingPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(quizActionJsonLd) }} />
+      {relatedGuidesSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(relatedGuidesSchema) }} />}
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
       <Navigation />
       <main className="min-h-screen bg-background">
@@ -87,7 +90,7 @@ export default async function SeoLandingPage({ params }: Props) {
           </div>
 
           <ContentBlocks blocks={page.blocks} />
-          <InternalLinkHub title="Keep Exploring Temperament Tests" links={guideLinksForSeoPage(page.slug)} />
+          <InternalLinkHub title="Keep Exploring Temperament Tests" links={relatedGuideLinks} />
           <FaqSection faq={page.faq} />
 
           <div className="bg-secondary/30 border border-border rounded-xl p-8 text-center">
