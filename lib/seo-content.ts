@@ -58,6 +58,8 @@ export type SeoPage = {
   faq?: { question: string; answer: string }[]
 }
 
+export type LinkCard = { href: string; title: string; description: string }
+
 export type BlogArticle = {
   slug: string
   title: string
@@ -73,7 +75,7 @@ export type BlogArticle = {
   published: string
   blocks: ContentBlock[]
   faq?: { question: string; answer: string }[]
-  related: { href: string; title: string; description: string }[]
+  related: LinkCard[]
 }
 
 export type FaqItem = NonNullable<SeoPage['faq']>[number]
@@ -238,6 +240,11 @@ export const seoPages: SeoPage[] = [
         ],
       },
     ],
+    faq: [
+      { question: 'Is a temperament test useful for couples?', answer: 'Yes. A temperament test can help couples name differences in pace, conflict style, emotional needs, and repair patterns without turning those differences into blame.' },
+      { question: 'Which temperament pairing is best for relationships?', answer: 'There is no single best pairing. Complementary pairings can balance each other, while similar pairings may feel easier at first. Respect and communication matter more than the exact match.' },
+      { question: 'Should partners get the same temperament result?', answer: 'No. Partners do not need the same temperament to have a strong relationship. Different temperaments often work well when both people understand the other person’s default pattern.' },
+    ],
   },
   {
     slug: 'four-temperaments',
@@ -270,6 +277,11 @@ export const seoPages: SeoPage[] = [
         ],
       },
     ],
+    faq: [
+      { question: 'What are the four temperaments?', answer: 'The four temperaments are Choleric, Sanguine, Melancholic, and Phlegmatic. They describe patterns in drive, sociability, emotional depth, steadiness, stress response, and communication.' },
+      { question: 'Are the four temperaments still useful today?', answer: 'Yes, when used responsibly. The four temperaments are not modern clinical categories, but they can be useful as practical language for self-reflection and relationships.' },
+      { question: 'Can I have more than one temperament?', answer: 'Yes. Many people have a strong primary temperament and a noticeable secondary temperament, which is why FourType includes subtype interpretation.' },
+    ],
   },
   {
     slug: 'subtypes',
@@ -298,6 +310,11 @@ export const seoPages: SeoPage[] = [
         bullets: ['Primary = default pattern', 'Secondary = flavor and compensation', 'Score spread = confidence level', 'Context can amplify different traits'],
       },
     ],
+    faq: [
+      { question: 'What are temperament subtypes?', answer: 'Temperament subtypes describe how a primary temperament blends with a secondary temperament. The blend helps explain why two people with the same main type can still feel different.' },
+      { question: 'Does the order of a temperament blend matter?', answer: 'Yes. A Choleric-Sanguine and a Sanguine-Choleric share ingredients, but the first temperament usually describes the default drive while the second colors the style.' },
+      { question: 'How do I find my temperament subtype?', answer: 'Take the FourType quiz and compare your top two scores. A strong second score often points toward your likely subtype.' },
+    ],
   },
   {
     slug: 'methodology',
@@ -325,6 +342,11 @@ export const seoPages: SeoPage[] = [
         body: 'FourType is not a medical, psychiatric, or employment-screening diagnosis. It is a self-reflection framework for education, communication, and personal growth.',
         bullets: ['Do not use it to label someone permanently.', 'Do not use it to make clinical claims.', 'Do use it to ask better questions about patterns.'],
       },
+    ],
+    faq: [
+      { question: 'How is the FourType temperament test scored?', answer: 'FourType maps each answer toward Choleric, Sanguine, Melancholic, or Phlegmatic tendencies, then reads the top score, secondary score, and overall spread.' },
+      { question: 'Why does score spread matter?', answer: 'Score spread shows how dominant or blended your result is. A close spread needs more nuance than a result where one temperament is clearly ahead.' },
+      { question: 'Is FourType a clinical assessment?', answer: 'No. FourType is an educational self-reflection tool. It should not be used for diagnosis, employment screening, or clinical decisions.' },
     ],
   },
   {
@@ -356,6 +378,11 @@ export const seoPages: SeoPage[] = [
         ],
       },
     ],
+    faq: [
+      { question: 'Are temperaments the same as MBTI?', answer: 'No. MBTI focuses on cognitive preferences, while temperament focuses more on emotional pace, activation, stress response, and interpersonal style.' },
+      { question: 'Can I use MBTI and temperament together?', answer: 'Yes. The two frameworks can be used together as long as you treat them as different lenses rather than identical systems.' },
+      { question: 'Which is better: temperament or MBTI?', answer: 'Neither is automatically better. Temperament is often simpler for understanding conflict and stress patterns, while MBTI can be useful for cognitive preference language.' },
+    ],
   },
   {
     slug: 'premium',
@@ -384,6 +411,11 @@ export const seoPages: SeoPage[] = [
         body: 'The best use of a paid report is not certainty. It is a more detailed mirror that helps you make better choices.',
         bullets: ['Subtype interpretation', 'Stress and recovery patterns', 'Communication guidance', 'Relationship dynamics', 'Growth prompts'],
       },
+    ],
+    faq: [
+      { question: 'What is in a premium temperament report?', answer: 'A premium temperament report can add deeper subtype interpretation, communication guidance, stress patterns, relationship notes, and growth prompts beyond the basic quiz result.' },
+      { question: 'Should I take the free quiz before getting a report?', answer: 'Yes. The free quiz gives you the primary pattern and score spread needed before deeper report guidance is useful.' },
+      { question: 'Is a premium report a diagnosis?', answer: 'No. A premium FourType report is still self-reflection guidance, not a medical, psychiatric, or employment diagnosis.' },
     ],
   },
 ]
@@ -494,7 +526,7 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     related: [
-      { href: '/blog/history-of-temperaments', title: 'History of the Four Temperaments', description: 'A longer historical guide from ancient medicine to modern psychology.' },
+      { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'Choleric, Sanguine, Melancholic, Phlegmatic', description: 'A practical guide to telling the four patterns apart.' },
       { href: '/four-temperaments', title: 'The Four Temperaments', description: 'A clear modern explanation of the four types.' },
     ],
     faq: [
@@ -612,7 +644,7 @@ export const blogArticles: BlogArticle[] = [
     ],
     related: [
       { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Compare communication and conflict patterns together.' },
-      { href: '/blog/temperament-dating', title: 'Temperament & Dating', description: 'A dating-focused guide to the four types.' },
+      { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'How to Tell the Types Apart', description: 'Spot the four temperament patterns in real life.' },
     ],
     faq: [
       { question: 'Which temperaments are most compatible?', answer: 'Complementary pairings such as Choleric and Phlegmatic or Sanguine and Phlegmatic can work well because one type balances the other. Compatibility depends more on respect and communication than on a fixed perfect match.' },
@@ -669,7 +701,7 @@ export const blogArticles: BlogArticle[] = [
     ],
     related: [
       { href: '/methodology', title: 'FourType Methodology', description: 'How scoring and subtype interpretation work.' },
-      { href: '/what-is-temperament-test', title: 'What Is a Temperament Test?', description: 'A deeper guide to the model and quiz.' },
+      { href: '/temperament-test', title: 'Temperament Test', description: 'A deeper guide to the model and quiz.' },
     ],
     faq: [
       { question: 'Are temperament tests accurate?', answer: 'Temperament tests can be useful for self-reflection when they ask behavior-based questions and explain score spread. They should not be treated as clinical diagnoses or permanent labels.' },
@@ -754,6 +786,55 @@ export const allContentPages = [
   })),
 ]
 
+export const coreGuideLinks: LinkCard[] = [
+  { href: '/temperament-test', title: 'Temperament Test', description: 'Start with the main free four temperaments quiz guide.' },
+  { href: '/free-temperament-test', title: 'Free Temperament Test', description: 'See what the free FourType result includes.' },
+  { href: '/4-temperament-test', title: '4 Temperament Test', description: 'Compare Choleric, Sanguine, Melancholic, and Phlegmatic.' },
+  { href: '/blog/best-free-four-temperaments-test', title: 'Best Free Four Temperaments Test', description: 'Learn what makes a free quiz worth taking.' },
+  { href: '/blog/ospp-four-temperaments-test', title: 'OSPP Four Temperaments Test', description: 'Compare OSPP-style temperament tests with FourType.' },
+  { href: '/blog/four-humors-test', title: 'Four Humors Test', description: 'Understand the historical roots of the four temperaments.' },
+]
+
+export const relationshipGuideLinks: LinkCard[] = [
+  { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Compare communication and conflict patterns together.' },
+  { href: '/blog/temperament-compatibility-chart', title: 'Temperament Compatibility Chart', description: 'See how the four temperaments relate in relationships.' },
+  { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'How to Tell the Four Temperaments Apart', description: 'Spot the real-life differences between the four patterns.' },
+  { href: '/subtypes', title: 'Temperament Subtypes', description: 'Go beyond the primary label with blended subtype patterns.' },
+]
+
+export const methodologyGuideLinks: LinkCard[] = [
+  { href: '/methodology', title: 'FourType Methodology', description: 'How the temperament test is scored and interpreted.' },
+  { href: '/blog/temperament-test-accuracy', title: 'Temperament Test Accuracy', description: 'How to judge quiz reliability without overclaiming.' },
+  { href: '/temperaments-vs-mbti', title: 'Temperaments vs MBTI', description: 'Compare temperament with other personality frameworks.' },
+  { href: '/four-temperaments', title: 'The Four Temperaments', description: 'A clear guide to the classical four-type model.' },
+]
+
+export const popularGuideLinks: LinkCard[] = [
+  ...coreGuideLinks.slice(1, 4),
+  ...methodologyGuideLinks.slice(0, 2),
+  relationshipGuideLinks[1],
+]
+
+export function guideLinksForSeoPage(slug: string): LinkCard[] {
+  if (slug === 'temperament-test-for-couples') {
+    return relationshipGuideLinks
+  }
+
+  if (slug === 'methodology' || slug === 'temperaments-vs-mbti') {
+    return methodologyGuideLinks
+  }
+
+  if (slug === 'four-temperaments' || slug === 'subtypes') {
+    return [
+      { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'How to Tell the Four Temperaments Apart', description: 'Compare the four types through stress response and real behavior.' },
+      ...relationshipGuideLinks.slice(1, 3),
+      ...methodologyGuideLinks.slice(0, 1),
+    ]
+  }
+
+  return popularGuideLinks
+}
+
 export function getSeoPage(slug: string) {
   return seoPages.find((page) => page.slug === slug)
 }
@@ -799,6 +880,17 @@ export function faqsToMarkdown(faq?: FaqItem[]) {
     '## Frequently asked questions',
     '',
     ...faq.flatMap((item) => [`### ${item.question}`, '', item.answer, '']),
+  ].join('\n')
+}
+
+export function linksToMarkdown(title: string, links: LinkCard[]) {
+  if (!links.length) return ''
+
+  return [
+    `## ${title}`,
+    '',
+    ...links.flatMap((link) => [`- [${link.title}](https://www.fourtype.com${link.href}) - ${link.description}`]),
+    '',
   ].join('\n')
 }
 

@@ -26,6 +26,13 @@ const blogListSchema = {
   url: 'https://fourtype.com/blog',
   publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: '/fourtype-logo.png' } },
   blogPost: [
+    ...blogArticles.map((article) => ({
+      '@type': 'BlogPosting',
+      headline: article.title,
+      url: `https://www.fourtype.com/blog/${article.slug}`,
+      datePublished: article.published,
+      description: article.description,
+    })),
     { '@type': 'BlogPosting', headline: 'History of the 4 Temperaments', url: '/blog/history-of-temperaments' },
     { '@type': 'BlogPosting', headline: 'Sanguine Temperament Guide', url: '/blog/sanguine' },
     { '@type': 'BlogPosting', headline: 'Choleric Temperament Guide', url: '/blog/choleric' },

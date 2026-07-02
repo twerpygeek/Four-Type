@@ -1,4 +1,4 @@
-import { blogArticles, contentToMarkdown, faqsToMarkdown, getBlogArticle, getSeoPage, seoPages } from '@/lib/seo-content'
+import { blogArticles, contentToMarkdown, faqsToMarkdown, getBlogArticle, getSeoPage, guideLinksForSeoPage, linksToMarkdown, popularGuideLinks, seoPages } from '@/lib/seo-content'
 
 export const dynamic = 'force-static'
 
@@ -46,13 +46,19 @@ export async function GET(_request: Request, { params }: Props) {
   if (joined.startsWith('blog/')) {
     const article = getBlogArticle(joined.replace('blog/', ''))
     if (!article) return notFound()
-    return markdownResponse(`${contentToMarkdown(article.title, article.description, article.blocks)}\n${faqsToMarkdown(article.faq)}`, `/blog/${article.slug}`)
+    return markdownResponse(
+      `${contentToMarkdown(article.title, article.description, article.blocks)}\n${linksToMarkdown('Popular temperament test guides', popularGuideLinks)}\n${linksToMarkdown('Related guides', article.related)}\n${faqsToMarkdown(article.faq)}`,
+      `/blog/${article.slug}`,
+    )
   }
 
   const page = getSeoPage(joined)
   if (!page) return notFound()
 
-  return markdownResponse(`${contentToMarkdown(page.title, page.description, page.blocks)}\n${faqsToMarkdown(page.faq)}`, `/${page.slug}`)
+  return markdownResponse(
+    `${contentToMarkdown(page.title, page.description, page.blocks)}\n${linksToMarkdown('Keep exploring temperament tests', guideLinksForSeoPage(page.slug))}\n${faqsToMarkdown(page.faq)}`,
+    `/${page.slug}`,
+  )
 }
 
 function markdownResponse(markdown: string, canonicalPath: string) {

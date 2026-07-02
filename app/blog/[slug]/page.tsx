@@ -7,7 +7,8 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { ContentBlocks } from '@/components/ContentBlocks'
 import { FaqSection } from '@/components/FaqSection'
-import { accentStyles, blogArticles, faqJsonLd, getBlogArticle } from '@/lib/seo-content'
+import { InternalLinkHub } from '@/components/InternalLinkHub'
+import { accentStyles, blogArticles, faqJsonLd, getBlogArticle, popularGuideLinks } from '@/lib/seo-content'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -97,6 +98,7 @@ export default async function BlogArticlePage({ params }: Props) {
           </div>
 
           <ContentBlocks blocks={article.blocks} />
+          <InternalLinkHub title="Popular Temperament Test Guides" links={popularGuideLinks} />
           <FaqSection faq={article.faq} />
 
           <div className="bg-secondary/30 border border-border rounded-xl p-8 text-center">

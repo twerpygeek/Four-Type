@@ -6,7 +6,8 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { ContentBlocks } from '@/components/ContentBlocks'
 import { FaqSection } from '@/components/FaqSection'
-import { accentStyles, faqJsonLd, getSeoPage, seoPages } from '@/lib/seo-content'
+import { InternalLinkHub } from '@/components/InternalLinkHub'
+import { accentStyles, faqJsonLd, getSeoPage, guideLinksForSeoPage, seoPages } from '@/lib/seo-content'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -79,6 +80,7 @@ export default async function SeoLandingPage({ params }: Props) {
           </div>
 
           <ContentBlocks blocks={page.blocks} />
+          <InternalLinkHub title="Keep Exploring Temperament Tests" links={guideLinksForSeoPage(page.slug)} />
           <FaqSection faq={page.faq} />
 
           <div className="bg-secondary/30 border border-border rounded-xl p-8 text-center">
