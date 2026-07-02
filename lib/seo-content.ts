@@ -128,10 +128,21 @@ export const seoPages: SeoPage[] = [
         ],
       },
       {
+        type: 'grid',
+        title: 'What you get from the FourType temperament test',
+        intro: 'The quiz is designed to be quick enough to finish in one sitting and specific enough to make the result useful afterward.',
+        items: [
+          { title: '40 questions', body: 'A focused temperament quiz built around repeated behavior, stress response, motivation, communication, and recovery.', accent: 'gold' },
+          { title: 'Four-type score spread', body: 'See how strongly your answers point toward Choleric, Sanguine, Melancholic, and Phlegmatic patterns.', accent: 'blue' },
+          { title: 'Subtype direction', body: 'Use your top two scores to understand blended temperament results when one label is not enough.', accent: 'green' },
+          { title: 'Free result', body: 'Start without a signup or paywall, then use the guide pages to understand your result in everyday life.', accent: 'purple' },
+        ],
+      },
+      {
         type: 'callout',
-        title: 'Best use of your result',
-        body: 'Use your temperament result as a mirror, not a box. The most useful question is not “What label am I?” but “What pattern keeps showing up, and how can I work with it wisely?”',
-        bullets: ['Notice your stress triggers.', 'Improve communication with opposite types.', 'Choose work rhythms that fit your natural energy.', 'Read your subtype for more nuance.'],
+        title: 'Temperament test vs personality test',
+        body: 'A general personality test may describe broad traits. A temperament test is more focused: it looks at your first move under pressure, how you relate to people, what drains or energizes you, and what pattern keeps showing up across work, conflict, and relationships.',
+        bullets: ['Use it to notice stress triggers.', 'Use it to improve communication with opposite types.', 'Use it to choose work rhythms that fit your natural energy.', 'Use the subtype guide when your top two scores are close.'],
       },
       {
         type: 'section',
