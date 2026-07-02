@@ -303,6 +303,182 @@ export const seoPages: SeoPage[] = [
     ],
   },
   {
+    slug: 'choleric-test',
+    shortTitle: 'Choleric Test',
+    title: 'Choleric Test: Are You the Driven, Decisive Type?',
+    description: 'Take a Choleric test to see whether your strongest temperament pattern is direct, goal-focused, decisive, and energized by challenge.',
+    keywords: ['choleric test', 'am I choleric', 'choleric temperament test', 'choleric personality test', 'choleric quiz'],
+    eyebrow: 'Commander Pattern Check',
+    icon: Flame,
+    accent: 'red',
+    priority: 0.87,
+    changeFrequency: 'monthly',
+    ctaLabel: 'Take the Choleric Test',
+    blocks: [
+      {
+        type: 'section',
+        title: 'What a Choleric test should check',
+        body: [
+          'A Choleric test should look beyond confidence or ambition. The deeper signal is how you respond when something needs direction, pressure rises, or progress stalls.',
+          'Choleric patterns tend to move toward action, control, efficiency, and challenge. That can become powerful leadership, but it can also become impatience when others need more time.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'Signs you may be Choleric',
+        items: [
+          { title: 'You decide quickly', body: 'You would rather make a call and adjust than stay stuck in endless discussion.', accent: 'red' },
+          { title: 'You notice inefficiency', body: 'Slow systems, vague ownership, and avoidant leadership bother you quickly.', accent: 'gold' },
+          { title: 'You protect progress', body: 'Under stress, you push for momentum and can become more forceful.', accent: 'purple' },
+          { title: 'You respect competence', body: 'You trust people who show clarity, skill, and follow-through.', accent: 'blue' },
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Why the full quiz matters',
+        body: 'Many Choleric traits overlap with Sanguine energy or Melancholic standards. A full temperament test compares all four patterns so you can see whether Choleric is primary, secondary, or just a learned role.',
+        bullets: ['Compare your top two scores.', 'Check whether drive or connection leads.', 'Notice what happens under stress.', 'Read your subtype before locking in a label.'],
+      },
+    ],
+    faq: [
+      { question: 'How do I know if I am Choleric?', answer: 'You may be Choleric if you naturally take charge, move quickly toward goals, dislike delays, and become more controlling or forceful under stress.' },
+      { question: 'Is Choleric the same as being bossy?', answer: 'No. Choleric describes drive, decisiveness, and action orientation. It can become bossy when immature, but mature Choleric energy can be protective, focused, and effective.' },
+      { question: 'Can Choleric be my secondary temperament?', answer: 'Yes. A strong Choleric secondary can make another primary type more direct, ambitious, or decisive.' },
+    ],
+  },
+  {
+    slug: 'sanguine-test',
+    shortTitle: 'Sanguine Test',
+    title: 'Sanguine Test: Are You the Social, Expressive Type?',
+    description: 'Take a Sanguine test to see whether your strongest temperament pattern is expressive, optimistic, people-focused, and energized by connection.',
+    keywords: ['sanguine test', 'am I sanguine', 'sanguine temperament test', 'sanguine personality test', 'sanguine quiz'],
+    eyebrow: 'Bard Pattern Check',
+    icon: MessageCircle,
+    accent: 'gold',
+    priority: 0.87,
+    changeFrequency: 'monthly',
+    ctaLabel: 'Take the Sanguine Test',
+    blocks: [
+      {
+        type: 'section',
+        title: 'What a Sanguine test should check',
+        body: [
+          'A Sanguine test should not only ask whether you are outgoing. It should look at what gives you energy, how quickly your attention moves, and how much connection matters to your sense of aliveness.',
+          'Sanguine patterns tend to move toward people, humor, novelty, storytelling, and shared momentum. At their best, they bring warmth and courage into the room.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'Signs you may be Sanguine',
+        items: [
+          { title: 'You gain energy from people', body: 'Conversation, shared experience, and spontaneous connection wake you up.', accent: 'gold' },
+          { title: 'You move with enthusiasm', body: 'You can start quickly when something feels exciting or alive.', accent: 'red' },
+          { title: 'You tell stories naturally', body: 'You often process life by talking, joking, performing, or making meaning socially.', accent: 'pink' },
+          { title: 'You resist dull routine', body: 'Too much sameness can make you restless, scattered, or checked out.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Why the full quiz matters',
+        body: 'Sanguine can be confused with Choleric because both can be energetic, or with Phlegmatic because both can be agreeable. The full FourType quiz compares what actually leads your behavior.',
+        bullets: ['Look for people-first versus task-first energy.', 'Compare enthusiasm with follow-through.', 'Watch what drains you fastest.', 'Use score spread to identify blends.'],
+      },
+    ],
+    faq: [
+      { question: 'How do I know if I am Sanguine?', answer: 'You may be Sanguine if you are energized by people, novelty, humor, storytelling, and shared experiences, especially when life feels too dull or isolated.' },
+      { question: 'Can introverts be Sanguine?', answer: 'Some people with Sanguine influence are not constantly social, but the pattern usually still shows through expressiveness, warmth, spontaneity, or a strong need for meaningful connection.' },
+      { question: 'What is the difference between Sanguine and Choleric?', answer: 'Sanguine is usually people-first and energy-seeking, while Choleric is task-first and goal-seeking. Both can be active, but they protect different things under stress.' },
+    ],
+  },
+  {
+    slug: 'melancholic-test',
+    shortTitle: 'Melancholic Test',
+    title: 'Melancholic Test: Are You the Deep, Analytical Type?',
+    description: 'Take a Melancholic test to see whether your strongest temperament pattern is thoughtful, precise, meaning-focused, and driven by quality.',
+    keywords: ['melancholic test', 'am I melancholic', 'melancholic temperament test', 'melancholic personality test', 'melancholic quiz'],
+    eyebrow: 'Strategist Pattern Check',
+    icon: Search,
+    accent: 'blue',
+    priority: 0.87,
+    changeFrequency: 'monthly',
+    ctaLabel: 'Take the Melancholic Test',
+    blocks: [
+      {
+        type: 'section',
+        title: 'What a Melancholic test should check',
+        body: [
+          'A Melancholic test should not reduce the type to sadness. In temperament language, Melancholic points to depth, analysis, sensitivity, meaning, and high standards.',
+          'Melancholic patterns tend to protect accuracy and quality. They often notice what others miss, think several steps ahead, and feel uneasy when things seem shallow or careless.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'Signs you may be Melancholic',
+        items: [
+          { title: 'You notice details', body: 'You catch inconsistencies, missing context, and quality issues quickly.', accent: 'blue' },
+          { title: 'You need meaning', body: 'A task feels easier when you understand why it matters.', accent: 'purple' },
+          { title: 'You think deeply', body: 'You process internally and may revisit conversations long after they happen.', accent: 'gold' },
+          { title: 'You protect standards', body: 'Under stress, you may become critical, anxious, or perfectionistic.', accent: 'red' },
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Why the full quiz matters',
+        body: 'Melancholic can be confused with Phlegmatic because both may be quiet, or with Choleric because both can have high standards. A full temperament test separates depth, drive, peace, and connection.',
+        bullets: ['Compare internal intensity with outward calm.', 'Notice whether quality or control leads.', 'Look at stress response.', 'Check whether Melancholic is primary or secondary.'],
+      },
+    ],
+    faq: [
+      { question: 'How do I know if I am Melancholic?', answer: 'You may be Melancholic if you naturally think deeply, notice details, care about meaning and quality, and become anxious or critical when things feel careless.' },
+      { question: 'Does Melancholic mean depressed?', answer: 'No. In temperament language, Melancholic does not mean clinically depressed. It describes depth, sensitivity, analysis, and high standards.' },
+      { question: 'Can Melancholic be mixed with another temperament?', answer: 'Yes. Melancholic can appear as a primary type or as a secondary influence that adds depth, precision, or sensitivity to another temperament.' },
+    ],
+  },
+  {
+    slug: 'phlegmatic-test',
+    shortTitle: 'Phlegmatic Test',
+    title: 'Phlegmatic Test: Are You the Calm, Steady Type?',
+    description: 'Take a Phlegmatic test to see whether your strongest temperament pattern is calm, loyal, peace-seeking, supportive, and steady under pressure.',
+    keywords: ['phlegmatic test', 'am I phlegmatic', 'phlegmatic temperament test', 'phlegmatic personality test', 'phlegmatic quiz'],
+    eyebrow: 'Guardian Pattern Check',
+    icon: Users,
+    accent: 'green',
+    priority: 0.87,
+    changeFrequency: 'monthly',
+    ctaLabel: 'Take the Phlegmatic Test',
+    blocks: [
+      {
+        type: 'section',
+        title: 'What a Phlegmatic test should check',
+        body: [
+          'A Phlegmatic test should look at your relationship to peace, steadiness, pressure, loyalty, and conflict. The pattern is quieter than the others, but it is not weak.',
+          'Phlegmatic patterns tend to protect trust and stability. They often stabilize groups, listen patiently, and keep relationships from becoming unnecessarily tense.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'Signs you may be Phlegmatic',
+        items: [
+          { title: 'You protect peace', body: 'You notice tension quickly and often try to lower the emotional temperature.', accent: 'green' },
+          { title: 'You are steady', body: 'People may rely on your consistency, patience, and calm presence.', accent: 'blue' },
+          { title: 'You dislike pressure', body: 'Forceful demands can make you withdraw, delay, or become quietly stubborn.', accent: 'purple' },
+          { title: 'You value loyalty', body: 'Trust, familiarity, and dependable relationships matter deeply to you.', accent: 'gold' },
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Why the full quiz matters',
+        body: 'Phlegmatic can be confused with Melancholic because both may be reserved, or with Sanguine because both can be agreeable. The full quiz shows whether peace, meaning, connection, or action leads.',
+        bullets: ['Watch whether calm or depth leads.', 'Notice conflict response.', 'Compare loyalty with social energy.', 'Use subtype guidance if your scores are close.'],
+      },
+    ],
+    faq: [
+      { question: 'How do I know if I am Phlegmatic?', answer: 'You may be Phlegmatic if you naturally seek peace, value loyalty, avoid unnecessary conflict, and stay steady when others become intense.' },
+      { question: 'Are Phlegmatic people lazy?', answer: 'No. Phlegmatic people are often steady and reliable. They may simply need clear motivation, trust, and a calm environment before taking initiative.' },
+      { question: 'What is the difference between Phlegmatic and Melancholic?', answer: 'Both can be quiet, but Phlegmatic tends to protect peace and stability, while Melancholic tends to protect meaning, accuracy, and quality.' },
+    ],
+  },
+  {
     slug: '4-temperament-test',
     shortTitle: '4 Temperament Test',
     title: '4 Temperament Test: Choleric, Sanguine, Melancholic, and Phlegmatic Explained',
@@ -938,6 +1114,13 @@ export const relationshipGuideLinks: LinkCard[] = [
   { href: '/subtypes', title: 'Temperament Subtypes', description: 'Go beyond the primary label with blended subtype patterns.' },
 ]
 
+export const typeTestLinks: LinkCard[] = [
+  { href: '/choleric-test', title: 'Choleric Test', description: 'Check whether drive, decisiveness, and challenge lead your temperament.' },
+  { href: '/sanguine-test', title: 'Sanguine Test', description: 'Check whether connection, expression, and enthusiasm lead your temperament.' },
+  { href: '/melancholic-test', title: 'Melancholic Test', description: 'Check whether depth, quality, and analysis lead your temperament.' },
+  { href: '/phlegmatic-test', title: 'Phlegmatic Test', description: 'Check whether calm, loyalty, and peace lead your temperament.' },
+]
+
 export const methodologyGuideLinks: LinkCard[] = [
   { href: '/methodology', title: 'FourType Methodology', description: 'How the temperament test is scored and interpreted.' },
   { href: '/blog/temperament-test-accuracy', title: 'Temperament Test Accuracy', description: 'How to judge quiz reliability without overclaiming.' },
@@ -951,6 +1134,15 @@ export const popularGuideLinks: LinkCard[] = [
 ]
 
 export function guideLinksForSeoPage(slug: string): LinkCard[] {
+  if (slug.endsWith('-test') && ['choleric-test', 'sanguine-test', 'melancholic-test', 'phlegmatic-test'].includes(slug)) {
+    return [
+      { href: '/temperament-test', title: 'Full Temperament Test', description: 'Compare all four temperaments before deciding your type.' },
+      { href: '/what-is-my-temperament', title: 'What Is My Temperament?', description: 'Use the broader self-check to compare all four patterns.' },
+      { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'How to Tell the Four Temperaments Apart', description: 'See the differences between Choleric, Sanguine, Melancholic, and Phlegmatic.' },
+      ...typeTestLinks.filter((link) => link.href !== `/${slug}`).slice(0, 3),
+    ]
+  }
+
   if (slug === 'temperament-test-for-couples') {
     return relationshipGuideLinks
   }
@@ -962,6 +1154,7 @@ export function guideLinksForSeoPage(slug: string): LinkCard[] {
   if (slug === 'four-temperaments' || slug === 'subtypes') {
     return [
       { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'How to Tell the Four Temperaments Apart', description: 'Compare the four types through stress response and real behavior.' },
+      ...typeTestLinks,
       ...relationshipGuideLinks.slice(1, 3),
       ...methodologyGuideLinks.slice(0, 1),
     ]
