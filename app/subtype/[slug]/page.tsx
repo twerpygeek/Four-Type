@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { breadcrumbJsonLd, quizActionJsonLd } from '@/lib/seo-content'
+import { breadcrumbJsonLd, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, quizActionJsonLd, temperamentTopicJsonLd } from '@/lib/seo-content'
 import { getSubtype, getAllSubtypes } from '@/lib/subtypes'
 import SubtypePageClient from './SubtypePageClient'
 
@@ -79,6 +79,7 @@ export default async function SubtypePage({ params }: PageProps) {
     headline: `${subtype.name}: ${subtype.title}`,
     description: subtype.tagline,
     url: canonicalUrl,
+    isPartOf: fourTypeWebsiteRef,
     mainEntity: {
       '@type': 'DefinedTerm',
       name: subtype.name,
@@ -91,19 +92,18 @@ export default async function SubtypePage({ params }: PageProps) {
       },
     },
     about: [
-      subtype.primary,
-      subtype.secondary,
-      'temperament subtype',
-      'four temperaments',
+      ...temperamentTopicJsonLd,
+      { '@type': 'DefinedTerm', name: `${subtype.primary} temperament`, url: `https://www.fourtype.com/${subtype.primary}-test` },
+      subtype.secondary === 'pure' ? null : { '@type': 'DefinedTerm', name: `${subtype.secondary} temperament`, url: `https://www.fourtype.com/${subtype.secondary}-test` },
+      { '@type': 'DefinedTerm', name: 'Temperament subtype', url: 'https://www.fourtype.com/subtypes' },
     ].filter(Boolean),
-    publisher: {
-      '@type': 'Organization',
-      name: 'FourType',
-      url: 'https://www.fourtype.com',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://www.fourtype.com/fourtype-logo.png',
-      },
+    publisher: fourTypeOrganizationRef,
+    mainEntityOfPage: canonicalUrl,
+    potentialAction: {
+      '@type': 'TakeAction',
+      target: 'https://www.fourtype.com/quiz',
+      name: 'Take the free temperament test',
+      object: fourTypeQuizAppRef,
     },
   }
   const breadcrumbSchema = breadcrumbJsonLd([

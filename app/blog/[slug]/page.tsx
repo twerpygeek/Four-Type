@@ -8,7 +8,7 @@ import Footer from '@/components/Footer'
 import { ContentBlocks } from '@/components/ContentBlocks'
 import { FaqSection } from '@/components/FaqSection'
 import { InternalLinkHub } from '@/components/InternalLinkHub'
-import { accentStyles, blogArticles, breadcrumbJsonLd, faqJsonLd, getBlogArticle, itemListJsonLd, popularGuideLinks, quizActionJsonLd } from '@/lib/seo-content'
+import { accentStyles, blogArticles, breadcrumbJsonLd, faqJsonLd, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, getBlogArticle, itemListJsonLd, popularGuideLinks, quizActionJsonLd, temperamentTopicJsonLd } from '@/lib/seo-content'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -60,8 +60,12 @@ export default async function BlogArticlePage({ params }: Props) {
     image: `https://www.fourtype.com${article.image}`,
     datePublished: article.published,
     dateModified: article.published,
-    author: { '@type': 'Organization', name: 'FourType', url: 'https://www.fourtype.com' },
-    publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: 'https://www.fourtype.com/fourtype-logo.png' } },
+    inLanguage: 'en-US',
+    author: fourTypeOrganizationRef,
+    publisher: fourTypeOrganizationRef,
+    isPartOf: fourTypeWebsiteRef,
+    about: temperamentTopicJsonLd,
+    mainEntity: fourTypeQuizAppRef,
     mainEntityOfPage: `https://www.fourtype.com/blog/${article.slug}`,
   }
   const faqSchema = faqJsonLd(article.faq)

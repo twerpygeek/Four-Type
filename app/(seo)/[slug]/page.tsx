@@ -7,7 +7,7 @@ import Footer from '@/components/Footer'
 import { ContentBlocks } from '@/components/ContentBlocks'
 import { FaqSection } from '@/components/FaqSection'
 import { InternalLinkHub } from '@/components/InternalLinkHub'
-import { accentStyles, breadcrumbJsonLd, faqJsonLd, getSeoPage, guideLinksForSeoPage, itemListJsonLd, quizActionJsonLd, seoPages } from '@/lib/seo-content'
+import { accentStyles, breadcrumbJsonLd, faqJsonLd, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, getSeoPage, guideLinksForSeoPage, itemListJsonLd, quizActionJsonLd, seoPages, temperamentTopicJsonLd } from '@/lib/seo-content'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -50,9 +50,16 @@ export default async function SeoLandingPage({ params }: Props) {
     '@type': 'Article',
     headline: page.title,
     description: page.description,
+    image: 'https://www.fourtype.com/og-image.jpg',
     url: `https://www.fourtype.com/${page.slug}`,
-    author: { '@type': 'Organization', name: 'FourType', url: 'https://www.fourtype.com' },
-    publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: 'https://www.fourtype.com/fourtype-logo.png' } },
+    datePublished: '2026-07-02',
+    dateModified: '2026-07-02',
+    inLanguage: 'en-US',
+    author: fourTypeOrganizationRef,
+    publisher: fourTypeOrganizationRef,
+    isPartOf: fourTypeWebsiteRef,
+    about: temperamentTopicJsonLd,
+    mainEntity: fourTypeQuizAppRef,
     mainEntityOfPage: `https://www.fourtype.com/${page.slug}`,
   }
   const faqSchema = faqJsonLd(page.faq)

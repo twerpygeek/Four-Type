@@ -1793,14 +1793,29 @@ export function itemListJsonLd(name: string, items: LinkCard[]) {
   }
 }
 
+export const fourTypeOrganizationRef = { '@id': 'https://www.fourtype.com/#organization' }
+export const fourTypeWebsiteRef = { '@id': 'https://www.fourtype.com/#website' }
+export const fourTypeQuizAppRef = { '@id': 'https://www.fourtype.com/quiz#app' }
+
+export const temperamentTopicJsonLd = [
+  { '@type': 'DefinedTerm', name: 'Temperament test', url: 'https://www.fourtype.com/temperament-test' },
+  { '@type': 'DefinedTerm', name: 'Four temperaments test', url: 'https://www.fourtype.com/four-temperaments-test' },
+  { '@type': 'DefinedTerm', name: 'Choleric temperament', url: 'https://www.fourtype.com/choleric-test' },
+  { '@type': 'DefinedTerm', name: 'Sanguine temperament', url: 'https://www.fourtype.com/sanguine-test' },
+  { '@type': 'DefinedTerm', name: 'Melancholic temperament', url: 'https://www.fourtype.com/melancholic-test' },
+  { '@type': 'DefinedTerm', name: 'Phlegmatic temperament', url: 'https://www.fourtype.com/phlegmatic-test' },
+]
+
 export const quizActionJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
+  '@id': 'https://www.fourtype.com/quiz#app',
   name: 'FourType Temperament Test',
   applicationCategory: 'LifestyleApplication',
   operatingSystem: 'Web',
   url: 'https://www.fourtype.com/quiz',
   description: 'A free 40-question temperament test for identifying Choleric, Sanguine, Melancholic, Phlegmatic, and blended subtype patterns.',
+  publisher: fourTypeOrganizationRef,
   offers: {
     '@type': 'Offer',
     price: '0',
