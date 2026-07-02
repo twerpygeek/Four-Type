@@ -16,10 +16,10 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'FourType — Discover Your Temperament',
+    default: 'Free Temperament Test | FourType',
     template: '%s | FourType',
   },
-  description: 'Understanding your temperament unlocks the key to why you think, feel, and act the way you do. Take the free 40-question quiz to discover if you are The Commander, The Bard, The Strategist, or The Guardian.',
+  description: 'Take the free FourType temperament test to discover whether you are Choleric, Sanguine, Melancholic, Phlegmatic, or a blended subtype.',
   metadataBase: new URL('https://www.fourtype.com'),
   alternates: {
     canonical: 'https://www.fourtype.com',
@@ -91,7 +91,7 @@ export default function RootLayout({
     description: 'Understanding your temperament unlocks the key to why you think, feel, and act the way you do. Take the free 40-question temperament test to discover your type: The Commander (Choleric), The Bard (Sanguine), The Strategist (Melancholic), or The Guardian (Phlegmatic). Based on 2,500 years of temperament science. Free forever.',
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://www.fourtype.com/blog?q={search_term_string}',
+      target: 'https://www.fourtype.com/search?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
     publisher: {
