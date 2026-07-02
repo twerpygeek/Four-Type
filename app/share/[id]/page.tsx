@@ -46,6 +46,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
       title: 'Share Your Temperament | FourType',
       description: 'Discover your temperament at FourType.com',
+      robots: {
+        index: false,
+        follow: true,
+      },
     }
   }
   
@@ -57,6 +61,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
+    robots: {
+      index: false,
+      follow: true,
+    },
+    alternates: {
+      canonical: 'https://www.fourtype.com/quiz',
+    },
     openGraph: {
       title: `${data.heroName} is ${blend.name}!`,
       description: `"${blend.tagline}" — ${blend.lore.slice(0, 150)}...`,

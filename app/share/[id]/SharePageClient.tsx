@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Blend, getBlendColors } from '@/lib/blends'
 import { Temperament, TEMPERAMENTS } from '@/lib/temperaments'
 import { TemperamentKey } from '@/lib/scoringKey'
-import { getAllSubtypes } from '@/lib/subtypes'
+import { getSubtypeByBlendKey } from '@/lib/subtypes'
 import CinematicBackground from '@/components/CinematicBackground'
 import { YouTubeEmbed } from '@/components/YouTubeEmbed'
 
@@ -29,6 +29,7 @@ export default function SharePageClient({
   const primaryColor = blendColors.primary
   const total = Object.values(scores).reduce((a, b) => a + b, 0)
   const [copied, setCopied] = useState(false)
+  const subtype = getSubtypeByBlendKey(blend.key)
   
   const shareUrl = `https://www.fourtype.com/share/${shareId}`
   
@@ -317,7 +318,7 @@ export default function SharePageClient({
         <div className="w-full text-center p-6 rounded-2xl border" style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: '#2A2A40' }}>
           <p className="text-muted-foreground mb-4 font-sans text-sm">Want to learn more about your temperament?</p>
           <Link
-            href={`/subtype/${getAllSubtypes().find(s => s.blendKey === blend.key)?.slug || 'pure-sanguine'}`}
+            href={subtype ? `/subtype/${subtype.slug}` : '/subtypes'}
             className="inline-block px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90 font-serif"
             style={{
               backgroundColor: primaryColor,
@@ -409,8 +410,16 @@ function getReadingResources(primaryKey: TemperamentKey, blendKey: string) {
   }
   
   const temp = temperamentMap[primaryKey]
+  const subtype = getSubtypeByBlendKey(blendKey)
   
   return [
+    ...(subtype ? [
+      {
+        title: `${subtype.name}: Full Subtype Profile`,
+        description: subtype.tagline,
+        href: `/subtype/${subtype.slug}`,
+      },
+    ] : []),
     {
       title: `${temp.name} Temperament: Complete Guide`,
       description: `Deep dive into the ${temp.name} personality`,
@@ -431,5 +440,5 @@ function getReadingResources(primaryKey: TemperamentKey, blendKey: string) {
       description: 'From Hippocrates to modern psychology',
       href: '/blog/history-of-temperaments',
     },
-  ]
+  ].slice(0, 5)
 }
