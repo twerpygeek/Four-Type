@@ -70,6 +70,9 @@ export default async function BlogArticlePage({ params }: Props) {
     { href: '/blog', title: 'Blog', description: 'FourType temperament articles' },
     { href: `/blog/${article.slug}`, title: article.shortTitle, description: article.description },
   ])
+  const relatedGuideLinks = [...article.related, ...popularGuideLinks].filter((item, index, links) => (
+    links.findIndex((link) => link.href === item.href) === index
+  )).slice(0, 8)
 
   return (
     <>
@@ -104,8 +107,20 @@ export default async function BlogArticlePage({ params }: Props) {
             />
           </div>
 
+          <div className={`mb-14 rounded-xl border p-6 md:flex md:items-center md:justify-between md:gap-6 ${accent.bg}`}>
+            <div>
+              <p className={`text-sm font-semibold tracking-widest uppercase ${accent.text}`}>Free Temperament Test</p>
+              <p className="mt-2 text-lg font-serif font-bold">Get your Choleric, Sanguine, Melancholic, and Phlegmatic score spread.</p>
+              <p className="mt-2 text-sm text-muted-foreground">The article is easier to use once you know your own temperament pattern.</p>
+            </div>
+            <Link href="/quiz" className={`mt-5 inline-flex items-center gap-2 px-5 py-3 rounded-lg font-semibold transition-colors md:mt-0 md:shrink-0 ${accent.button}`}>
+              Take the Free Quiz
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
           <ContentBlocks blocks={article.blocks} />
-          <InternalLinkHub title="Popular Temperament Test Guides" links={popularGuideLinks} />
+          <InternalLinkHub title="Related Temperament Test Guides" links={relatedGuideLinks} />
           <FaqSection faq={article.faq} />
 
           <div className="bg-secondary/30 border border-border rounded-xl p-8 text-center">
