@@ -139,6 +139,14 @@ export const seoPages: SeoPage[] = [
         ],
       },
       {
+        type: 'section',
+        title: 'How to read your temperament test result',
+        body: [
+          'Your strongest score points to the temperament pattern you reach for most often. Choleric usually moves toward challenge and control, Sanguine toward connection and expression, Melancholic toward meaning and quality, and Phlegmatic toward peace and steadiness.',
+          'Your second-highest score matters too. A Choleric-Sanguine result will not feel the same as Choleric-Melancholic, and a Phlegmatic-Melancholic result will not feel the same as Phlegmatic-Sanguine. That is why FourType treats subtype direction as part of the result instead of hiding it behind a single label.',
+        ],
+      },
+      {
         type: 'callout',
         title: 'Temperament test vs personality test',
         body: 'A general personality test may describe broad traits. A temperament test is more focused: it looks at your first move under pressure, how you relate to people, what drains or energizes you, and what pattern keeps showing up across work, conflict, and relationships.',
