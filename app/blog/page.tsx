@@ -18,34 +18,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/blog' },
 }
 
-const blogListSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Blog',
-  name: 'FourType Temperament Blog',
-  description: 'Educational articles about the four temperaments, personality psychology, and self-development.',
-  url: 'https://fourtype.com/blog',
-  publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: '/fourtype-logo.png' } },
-  blogPost: [
-    ...blogArticles.map((article) => ({
-      '@type': 'BlogPosting',
-      headline: article.title,
-      url: `https://www.fourtype.com/blog/${article.slug}`,
-      datePublished: article.published,
-      description: article.description,
-    })),
-    { '@type': 'BlogPosting', headline: 'History of the 4 Temperaments', url: '/blog/history-of-temperaments' },
-    { '@type': 'BlogPosting', headline: 'Sanguine Temperament Guide', url: '/blog/sanguine' },
-    { '@type': 'BlogPosting', headline: 'Choleric Temperament Guide', url: '/blog/choleric' },
-    { '@type': 'BlogPosting', headline: 'Melancholic Temperament Guide', url: '/blog/melancholic' },
-    { '@type': 'BlogPosting', headline: 'Phlegmatic Temperament Guide', url: '/blog/phlegmatic' },
-    { '@type': 'BlogPosting', headline: 'Leadership and Temperament', url: '/blog/leadership-and-temperament' },
-    { '@type': 'BlogPosting', headline: '15 Temperament Subtypes', url: '/blog/subtypes' },
-    { '@type': 'BlogPosting', headline: 'Temperaments vs MBTI vs Big Five', url: '/blog/temperaments-vs-mbti-big-five' },
-  ],
-}
-
-const blogPosts = [
-  ...blogArticles.map((article) => ({
+const dynamicBlogPosts = blogArticles.map((article) => ({
     slug: article.slug,
     title: article.title,
     excerpt: article.description,
@@ -61,7 +34,9 @@ const blogPosts = [
       gold: '#FFD700',
     }[article.accent],
     image: article.image,
-  })),
+  }))
+
+const staticBlogPosts = [
   {
     slug: 'history-of-temperaments',
     title: 'History of the 4 Temperaments: From Hippocrates to Modern Psychology',
@@ -133,9 +108,63 @@ const blogPosts = [
     featured: true,
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_better_202603241223-1XkEeb3BizSaXrANQ3lL5DNCWuTuNB.jpeg',
   },
+  {
+    slug: 'temperament-anxiety',
+    title: 'Temperament & Anxiety: How Your Type Affects Stress',
+    excerpt: 'Discover how the four temperament types experience and manage anxiety differently, with stress triggers and coping strategies for each pattern.',
+    category: 'Wellbeing',
+    readTime: '7 min',
+    color: '#4CC9F0',
+    image: '/images/temperament-wheel.jpg',
+  },
+  {
+    slug: 'temperament-dating',
+    title: 'Temperament & Dating: Personality Compatibility Guide',
+    excerpt: 'Explore temperament compatibility in relationships, including communication tips, dating patterns, and how each type connects under stress.',
+    category: 'Relationships',
+    readTime: '7 min',
+    color: '#F472B6',
+    image: '/images/blog/temperament-compatibility-chart.jpg',
+  },
+  {
+    slug: 'temperament-work',
+    title: 'Temperament at Work: Team Building & Productivity by Type',
+    excerpt: 'Use temperament patterns to understand workplace productivity, leadership pace, team dynamics, and collaboration friction.',
+    category: 'Work',
+    readTime: '8 min',
+    color: '#52B788',
+    image: '/images/leadership-temperaments.jpg',
+  },
+  {
+    slug: 'temperament-science',
+    title: 'The Science of Temperament: Ancient Wisdom Meets Modern Psychology',
+    excerpt: 'Understand what modern psychology can and cannot say about temperament, from ancient humors to contemporary personality research.',
+    category: 'Science',
+    readTime: '8 min',
+    color: '#A78BFA',
+    image: '/images/comparison-mbti.jpg',
+  },
 ]
 
-const categories = ['All', 'Temperaments', 'Relationships', 'Methodology', 'History', 'Guides', 'Leadership', 'Comparison', 'Deep Dive']
+const blogPosts = [...dynamicBlogPosts, ...staticBlogPosts]
+
+const blogListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'FourType Temperament Blog',
+  description: 'Educational articles about the four temperaments, personality psychology, and self-development.',
+  url: 'https://www.fourtype.com/blog',
+  publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: 'https://www.fourtype.com/fourtype-logo.png' } },
+  blogPost: blogPosts.map((post) => ({
+    '@type': 'BlogPosting',
+    headline: post.title,
+    url: `https://www.fourtype.com/blog/${post.slug}`,
+    description: post.excerpt,
+    image: post.image?.startsWith('/') ? `https://www.fourtype.com${post.image}` : post.image,
+  })),
+}
+
+const categories = ['All', 'Temperaments', 'Relationships', 'Methodology', 'History', 'Guides', 'Leadership', 'Comparison', 'Deep Dive', 'Wellbeing', 'Work', 'Science']
 
 export default function BlogPage() {
   const featuredPost = blogPosts.find(p => p.featured && p.slug === 'history-of-temperaments')
