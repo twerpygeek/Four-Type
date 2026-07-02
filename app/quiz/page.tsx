@@ -157,6 +157,14 @@ function QuizSeoSection() {
                 question: 'How should I answer the quiz?',
                 answer: 'Answer as your default self, especially under ordinary stress. Avoid choosing the answer that sounds most impressive or ideal.',
               },
+              {
+                question: 'What are the four temperament results?',
+                answer: 'The four main results are Choleric, Sanguine, Melancholic, and Phlegmatic. FourType also points you toward a blended subtype when your top two scores are close.',
+              },
+              {
+                question: 'How long does the temperament test take?',
+                answer: 'The FourType temperament test has 40 questions and usually takes under 10 minutes.',
+              },
             ].map((item) => (
               <div key={item.question} className="rounded-xl border border-border bg-secondary/20 p-5">
                 <h3 className="font-serif text-lg font-bold mb-2">{item.question}</h3>

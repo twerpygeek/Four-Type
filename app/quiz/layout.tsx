@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { breadcrumbJsonLd, faqJsonLd, itemListJsonLd, quizActionJsonLd } from '@/lib/seo-content'
+import { breadcrumbJsonLd, faqJsonLd, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, itemListJsonLd, quizActionJsonLd, temperamentTopicJsonLd } from '@/lib/seo-content'
 
 export const metadata: Metadata = {
   title: 'Free Temperament Test | 40-Question Personality Quiz',
@@ -56,6 +56,14 @@ export default function QuizLayout({
       question: 'How should I answer the quiz?',
       answer: 'Answer as your default self, especially under ordinary stress. Avoid choosing the answer that sounds most impressive or ideal.',
     },
+    {
+      question: 'What are the four temperament results?',
+      answer: 'The four main temperament results are Choleric, Sanguine, Melancholic, and Phlegmatic. FourType also shows blended subtype direction when your top two scores are close.',
+    },
+    {
+      question: 'How long does the temperament test take?',
+      answer: 'The FourType temperament test has 40 questions and usually takes under 10 minutes.',
+    },
   ])
   const quizGuideSchema = itemListJsonLd('FourType quiz support guides', [
     { href: '/temperament-test', title: 'Temperament Test Guide', description: 'Learn what the FourType temperament test measures and how to read your result.' },
@@ -69,23 +77,31 @@ export default function QuizLayout({
   const quizSchema = {
     '@context': 'https://schema.org',
     '@type': 'Quiz',
+    '@id': 'https://www.fourtype.com/quiz#quiz',
     name: 'FourType Temperament Test',
+    alternateName: ['Free Temperament Test', 'Four Temperaments Test', '4 Temperament Test'],
     url: 'https://www.fourtype.com/quiz',
     description: 'A free 40-question temperament quiz for comparing Choleric, Sanguine, Melancholic, Phlegmatic, and blended subtype patterns.',
+    image: 'https://www.fourtype.com/og-image.jpg',
+    inLanguage: 'en-US',
     educationalUse: 'Self assessment',
     assesses: 'Four temperaments pattern: Choleric, Sanguine, Melancholic, Phlegmatic, and blended subtypes',
     isAccessibleForFree: true,
-    provider: {
-      '@type': 'Organization',
-      name: 'FourType',
-      url: 'https://www.fourtype.com',
+    numberOfQuestions: 40,
+    timeRequired: 'PT10M',
+    provider: fourTypeOrganizationRef,
+    publisher: fourTypeOrganizationRef,
+    creator: fourTypeOrganizationRef,
+    isPartOf: fourTypeWebsiteRef,
+    mainEntity: fourTypeQuizAppRef,
+    mainEntityOfPage: 'https://www.fourtype.com/quiz',
+    about: temperamentTopicJsonLd,
+    potentialAction: {
+      '@type': 'TakeAction',
+      target: 'https://www.fourtype.com/quiz',
+      name: 'Take the free temperament test',
+      object: fourTypeQuizAppRef,
     },
-    about: [
-      { '@type': 'DefinedTerm', name: 'Choleric temperament', url: 'https://www.fourtype.com/choleric-test' },
-      { '@type': 'DefinedTerm', name: 'Sanguine temperament', url: 'https://www.fourtype.com/sanguine-test' },
-      { '@type': 'DefinedTerm', name: 'Melancholic temperament', url: 'https://www.fourtype.com/melancholic-test' },
-      { '@type': 'DefinedTerm', name: 'Phlegmatic temperament', url: 'https://www.fourtype.com/phlegmatic-test' },
-    ],
   }
 
   return (
