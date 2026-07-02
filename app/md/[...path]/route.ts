@@ -1,4 +1,4 @@
-import { blogArticles, contentToMarkdown, faqsToMarkdown, getBlogArticle, getSeoPage, guideLinksForSeoPage, linksToMarkdown, popularGuideLinks, seoPages } from '@/lib/seo-content'
+import { blogArticles, contentToMarkdown, faqsToMarkdown, getBlogArticle, getSeoPage, guideLinksForSeoPage, linksToMarkdown, popularGuideLinks, seoPages, staticContentPages } from '@/lib/seo-content'
 
 export const dynamic = 'force-static'
 
@@ -45,11 +45,20 @@ const coreMarkdown: Record<string, { canonical: string; title: string; body: str
 }
 
 export function generateStaticParams() {
-  return [
+  const paths = [
     ...Object.keys(coreMarkdown).map((key) => ({ path: key.split('/') })),
     ...seoPages.map((page) => ({ path: [page.slug] })),
     ...blogArticles.map((article) => ({ path: ['blog', article.slug] })),
+    ...staticContentPages.map((page) => ({ path: page.href.replace(/^\//, '').split('/') })),
   ]
+
+  const seen = new Set<string>()
+  return paths.filter(({ path }) => {
+    const key = path.join('/')
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
 }
 
 export async function GET(_request: Request, { params }: Props) {
@@ -63,10 +72,19 @@ export async function GET(_request: Request, { params }: Props) {
 
   if (joined.startsWith('blog/')) {
     const article = getBlogArticle(joined.replace('blog/', ''))
-    if (!article) return notFound()
+    if (article) {
+      return markdownResponse(
+        `${contentToMarkdown(article.title, article.description, article.blocks)}\n${linksToMarkdown('Popular temperament test guides', popularGuideLinks)}\n${linksToMarkdown('Related guides', article.related)}\n${faqsToMarkdown(article.faq)}`,
+        `/blog/${article.slug}`,
+      )
+    }
+  }
+
+  const staticPage = staticContentPages.find((page) => page.href === `/${joined}`)
+  if (staticPage) {
     return markdownResponse(
-      `${contentToMarkdown(article.title, article.description, article.blocks)}\n${linksToMarkdown('Popular temperament test guides', popularGuideLinks)}\n${linksToMarkdown('Related guides', article.related)}\n${faqsToMarkdown(article.faq)}`,
-      `/blog/${article.slug}`,
+      `# ${staticPage.title}\n\n${staticPage.description}\n\n${staticPage.markdownBody}\n\n${linksToMarkdown('Keep exploring temperament tests', popularGuideLinks)}\n`,
+      staticPage.href,
     )
   }
 

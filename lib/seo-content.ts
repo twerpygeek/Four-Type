@@ -60,6 +60,12 @@ export type SeoPage = {
 
 export type LinkCard = { href: string; title: string; description: string }
 
+export type DiscoverablePage = LinkCard & {
+  priority: number
+  changeFrequency: 'weekly' | 'monthly'
+  markdownBody?: string
+}
+
 export type BlogArticle = {
   slug: string
   title: string
@@ -1131,6 +1137,137 @@ export const blogArticles: BlogArticle[] = [
   },
 ]
 
+export const staticContentPages: DiscoverablePage[] = [
+  {
+    href: '/blog/choleric',
+    title: 'Choleric Temperament Guide',
+    description: 'Discover the Choleric temperament, including leadership traits, strengths, weaknesses, careers, and growth strategies.',
+    priority: 0.82,
+    changeFrequency: 'monthly',
+    markdownBody: 'The Choleric temperament describes a direct, decisive, goal-focused pattern. Choleric people often move toward leadership, challenge, and action under pressure. Use this guide with the FourType temperament test to compare Choleric traits against Sanguine, Melancholic, and Phlegmatic patterns.',
+  },
+  {
+    href: '/blog/sanguine',
+    title: 'Sanguine Temperament Guide',
+    description: 'Discover the Sanguine temperament, including social energy, strengths, weaknesses, relationships, and growth strategies.',
+    priority: 0.82,
+    changeFrequency: 'monthly',
+    markdownBody: 'The Sanguine temperament describes an expressive, social, optimistic pattern. Sanguine people often seek connection, energy, storytelling, novelty, and shared experience. Use this guide with the FourType temperament test to compare Sanguine traits against Choleric, Melancholic, and Phlegmatic patterns.',
+  },
+  {
+    href: '/blog/melancholic',
+    title: 'Melancholic Temperament Guide',
+    description: 'Discover the Melancholic temperament, including depth, standards, strengths, weaknesses, careers, and growth strategies.',
+    priority: 0.82,
+    changeFrequency: 'monthly',
+    markdownBody: 'The Melancholic temperament describes a reflective, analytical, standards-driven pattern. Melancholic people often care about depth, meaning, accuracy, beauty, and quality. Use this guide with the FourType temperament test to compare Melancholic traits against Choleric, Sanguine, and Phlegmatic patterns.',
+  },
+  {
+    href: '/blog/phlegmatic',
+    title: 'Phlegmatic Temperament Guide',
+    description: 'Discover the Phlegmatic temperament, including calm, loyalty, strengths, weaknesses, relationships, and growth strategies.',
+    priority: 0.82,
+    changeFrequency: 'monthly',
+    markdownBody: 'The Phlegmatic temperament describes a calm, steady, loyal pattern. Phlegmatic people often protect peace, trust, stability, support, and emotional steadiness. Use this guide with the FourType temperament test to compare Phlegmatic traits against Choleric, Sanguine, and Melancholic patterns.',
+  },
+  {
+    href: '/blog/history-of-temperaments',
+    title: 'History of the 4 Temperaments',
+    description: 'Trace the four temperaments from ancient Greek medicine through modern personality psychology.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'The history of the four temperaments runs from Hippocrates and Galen through later personality frameworks. Use this article to understand where Choleric, Sanguine, Melancholic, and Phlegmatic language came from before taking the modern FourType temperament test.',
+  },
+  {
+    href: '/blog/leadership-and-temperament',
+    title: 'Temperament and Leadership',
+    description: 'Learn how each temperament approaches leadership, teamwork, pressure, and decision-making.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'Temperament affects leadership pace, communication, conflict, delegation, and decision-making. This guide shows how Choleric, Sanguine, Melancholic, and Phlegmatic leaders can use their strengths without overusing them.',
+  },
+  {
+    href: '/blog/temperaments-vs-mbti-big-five',
+    title: '4 Temperaments vs MBTI vs Big Five',
+    description: 'Compare the four temperaments with MBTI, Big Five, and DISC personality frameworks.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'The four temperaments, MBTI, Big Five, and DISC all describe personality from different angles. This comparison explains where temperament language is useful and where more modern frameworks may be better.',
+  },
+  {
+    href: '/blog/subtypes',
+    title: '15 Temperament Subtypes',
+    description: 'Explore the blended temperament subtypes that appear when primary and secondary patterns combine.',
+    priority: 0.85,
+    changeFrequency: 'monthly',
+    markdownBody: 'Temperament subtypes explain why two people with the same primary type can still feel different. This guide introduces the 15 blended patterns across Choleric, Sanguine, Melancholic, and Phlegmatic combinations.',
+  },
+  {
+    href: '/blog/temperament-anxiety',
+    title: 'Temperament and Anxiety',
+    description: 'Understand how each temperament tends to experience stress, worry, overload, and recovery.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'Each temperament can experience anxiety and stress differently. This article explains common stress triggers and recovery patterns for Choleric, Sanguine, Melancholic, and Phlegmatic people without treating temperament as a diagnosis.',
+  },
+  {
+    href: '/blog/temperament-dating',
+    title: 'Temperament and Dating',
+    description: 'Use temperament patterns to understand dating, compatibility, communication, and relationship friction.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'Temperament can help partners understand emotional pace, conflict style, affection, and communication. This relationship guide pairs naturally with the FourType temperament test for couples.',
+  },
+  {
+    href: '/blog/temperament-work',
+    title: 'Temperament at Work',
+    description: 'Apply temperament types to team building, productivity, leadership, and workplace communication.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'Temperament at work affects meetings, deadlines, feedback, planning, and collaboration. This guide helps teams use Choleric, Sanguine, Melancholic, and Phlegmatic patterns more productively.',
+  },
+  {
+    href: '/blog/temperament-science',
+    title: 'The Science Behind Temperament',
+    description: 'Explore the historical and modern research context behind temperament theory.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'Temperament has ancient roots and modern parallels in personality psychology. This article explains the scientific context carefully, showing what the model can and cannot claim.',
+  },
+  {
+    href: '/temperament/choleric',
+    title: 'Choleric Temperament',
+    description: 'A complete profile of the Choleric temperament, including traits, strengths, careers, and growth.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'The Choleric temperament is direct, decisive, driven, and action-oriented. Use this profile to compare Choleric traits with your FourType temperament test result.',
+  },
+  {
+    href: '/temperament/sanguine',
+    title: 'Sanguine Temperament',
+    description: 'A complete profile of the Sanguine temperament, including traits, strengths, relationships, and growth.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'The Sanguine temperament is expressive, social, energetic, and connection-oriented. Use this profile to compare Sanguine traits with your FourType temperament test result.',
+  },
+  {
+    href: '/temperament/melancholic',
+    title: 'Melancholic Temperament',
+    description: 'A complete profile of the Melancholic temperament, including traits, depth, standards, and growth.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'The Melancholic temperament is reflective, analytical, sensitive to meaning, and careful about quality. Use this profile to compare Melancholic traits with your FourType temperament test result.',
+  },
+  {
+    href: '/temperament/phlegmatic',
+    title: 'Phlegmatic Temperament',
+    description: 'A complete profile of the Phlegmatic temperament, including calm, loyalty, stability, and growth.',
+    priority: 0.8,
+    changeFrequency: 'monthly',
+    markdownBody: 'The Phlegmatic temperament is calm, steady, loyal, and peace-oriented. Use this profile to compare Phlegmatic traits with your FourType temperament test result.',
+  },
+]
+
 export const allContentPages = [
   ...seoPages.map((page) => ({
     href: `/${page.slug}`,
@@ -1146,6 +1283,7 @@ export const allContentPages = [
     priority: 0.82,
     changeFrequency: 'monthly' as const,
   })),
+  ...staticContentPages,
 ]
 
 export const coreGuideLinks: LinkCard[] = [
