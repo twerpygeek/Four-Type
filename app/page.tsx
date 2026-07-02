@@ -8,95 +8,50 @@ import RuneBackground from '@/components/RuneBackground'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { YouTubeEmbed } from '@/components/YouTubeEmbed'
+import { homeCopy, type HomeLocale } from '@/lib/home-i18n'
 
 const temperaments = [
   {
     key: 'sanguine',
-    title: 'The Bard',
-    name: 'Sanguine',
     color: '#FFD700',
-    description: 'The enthusiastic connector who lights up every room with infectious energy and optimism.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Bard-QJJyqACHiDlWLpgew2foCbl5YGjLOi.png',
-    traits: ['Charismatic', 'Creative', 'Spontaneous'],
   },
   {
     key: 'choleric',
-    title: 'The Commander',
-    name: 'Choleric',
     color: '#E63946',
-    description: 'The natural leader who takes charge, drives results, and turns vision into reality.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-rEIrJwEHYOzxNaP1ngaLZqm7A6GdrY.png',
-    traits: ['Decisive', 'Ambitious', 'Strategic'],
   },
   {
     key: 'melancholic',
-    title: 'The Strategist',
-    name: 'Melancholic',
     color: '#4CC9F0',
-    description: 'The deep thinker who sees patterns others miss and holds the world to high standards.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-11A2ki2xYEb1yOkVrQ2xjaZ1etfh3Z.png',
-    traits: ['Analytical', 'Perfectionist', 'Loyal'],
   },
   {
     key: 'phlegmatic',
-    title: 'The Guardian',
-    name: 'Phlegmatic',
     color: '#52B788',
-    description: 'The calm peacemaker who brings harmony, listens deeply, and holds teams together.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Guardian-98lWuYWNazfR3hvOW2FUE3dkp13BLy.png',
-    traits: ['Patient', 'Diplomatic', 'Reliable'],
   },
 ]
 
-const features = [
-  {
-    icon: Brain,
-    title: '2,500 Years of Wisdom',
-    description: 'From Hippocrates to modern psychology, the temperaments have stood the test of time.',
-  },
-  {
-    icon: Users,
-    title: 'Understand Yourself & Others',
-    description: 'Learn why you react the way you do, and how to connect better with every type.',
-  },
-  {
-    icon: BookOpen,
-    title: 'Actionable Insights',
-    description: 'Practical strategies for growth, relationships, leadership, and daily life.',
-  },
-  {
-    icon: Sparkles,
-    title: '15 Unique Subtypes',
-    description: 'Go beyond the basics with detailed blend profiles for deeper self-discovery.',
-  },
-]
-
-const temperamentTestGuides = [
-  {
-    href: '/temperament-test',
-    title: 'Temperament Test',
-    description: 'Start with the main free temperament test guide and learn how FourType reads your score spread.',
-  },
-  {
-    href: '/four-temperaments-test',
-    title: 'Four Temperaments Test',
-    description: 'Compare Choleric, Sanguine, Melancholic, and Phlegmatic before taking the free quiz.',
-  },
-  {
-    href: '/blog/temperament-test-questions',
-    title: 'Temperament Test Questions',
-    description: 'See what useful behavior-based temperament test questions should measure.',
-  },
-  {
-    href: '/blog/temperament-test-accuracy',
-    title: 'Temperament Test Accuracy',
-    description: 'Learn how to judge temperament quiz results responsibly without overclaiming.',
-  },
-]
+const featureIcons = [Brain, Users, BookOpen, Sparkles]
 
 export default function HomePage() {
+  return <HomeExperience locale="en" />
+}
+
+export function HomeExperience({ locale = 'en' }: { locale?: HomeLocale }) {
   const [hoveredTemp, setHoveredTemp] = useState<string | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const copy = homeCopy[locale]
+  const quizHref = locale === 'en' ? '/quiz' : `/${locale}/quiz`
+  const localizedTemperaments = temperaments.map((temp) => ({
+    ...temp,
+    ...copy.temperaments[temp.key],
+  }))
+  const features = copy.features.map((feature, index) => ({
+    ...feature,
+    icon: featureIcons[index],
+  }))
 
   useEffect(() => {
     const video = videoRef.current
@@ -112,7 +67,7 @@ export default function HomePage() {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'FourType temperament test guide cluster',
-    itemListElement: temperamentTestGuides.map((guide, index) => ({
+    itemListElement: copy.guides.map((guide, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: guide.title,
@@ -139,7 +94,7 @@ export default function HomePage() {
             <div className="w-full max-w-[280px] sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto flex items-center justify-center mb-1 px-2">
               <Image
                 src="/fourtype-logo.png"
-                alt="FourType — Know Your True Nature — The Temperament Quest"
+                alt={copy.heroAlt}
                 width={900}
                 height={380}
                 className="w-full h-auto object-contain"
@@ -189,12 +144,12 @@ export default function HomePage() {
 
             {/* Importance statement */}
             <p className="text-center text-sm sm:text-base text-foreground/60 max-w-lg mx-auto mb-6 leading-relaxed">
-              Understanding your temperament unlocks the key to why you think, feel, and act the way you do.
+              {copy.heroStatement}
             </p>
 
             {/* Gold BEGIN YOUR QUEST button */}
             <Link
-              href="/quiz"
+              href={quizHref}
               className="group relative flex items-center justify-center gap-3 px-8 sm:px-12 py-3.5 sm:py-4 font-serif font-bold text-base sm:text-lg tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] mb-4"
               style={{
                 background: 'linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #B8860B 100%)',
@@ -207,13 +162,13 @@ export default function HomePage() {
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                 <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
               </svg>
-              Begin Your Quest
+              {copy.heroCta}
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                 <path d="M9 1L11 7H17L12 11L14 17L9 13L4 17L6 11L1 7H7L9 1Z" fill="currentColor" />
               </svg>
             </Link>
             <p className="font-sans text-xs text-foreground/35 tracking-wider mb-12">
-              40 questions &bull; 15 unique blends &bull; Free forever
+              {copy.heroMeta}
             </p>
 
             {/* Character Selection */}
@@ -221,13 +176,13 @@ export default function HomePage() {
               <div className="flex items-center gap-5 justify-center mb-10">
                 <div className="h-px flex-1 max-w-[180px] bg-foreground/12" />
                 <p className="font-sans text-[10px] sm:text-xs font-semibold tracking-[0.45em] uppercase text-foreground/35 whitespace-nowrap">
-                  Choose Your Path
+                  {copy.choosePath}
                 </p>
                 <div className="h-px flex-1 max-w-[180px] bg-foreground/12" />
               </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-                {temperaments.map((temp) => (
+                {localizedTemperaments.map((temp) => (
                   <Link
                     key={temp.key}
                     href={`/temperament/${temp.key}`}
@@ -378,18 +333,14 @@ export default function HomePage() {
         <section className="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-background">
           <div className="max-w-3xl mx-auto">
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6 sr-only">
-              Free Four Temperaments Test — Discover Your Personality Type Online
+              {copy.introSrTitle}
             </h1>
             <div className="prose prose-invert max-w-none">
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
-                The four temperaments is an ancient framework for understanding personality that has influenced psychology for over 2,500 years. Originating with Hippocrates, this timeless model identifies four core personality types: <strong className="text-foreground">Sanguine</strong> (the enthusiastic connector), <strong className="text-foreground">Choleric</strong> (the driven leader), <strong className="text-foreground">Melancholic</strong> (the thoughtful analyst), and <strong className="text-foreground">Phlegmatic</strong> (the calm peacemaker).
-              </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
-                Unlike personality frameworks like the Myers-Briggs Type Indicator (MBTI) or Big Five personality traits, the four temperaments focus on your core motivations, stress responses, and natural strengths. Our free temperament test goes deeper — it identifies not just your primary type, but your unique blend of all four temperaments, revealing 15 distinct personality subtypes for a complete picture of who you are.
-              </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Take our 40-question online personality test to discover your temperament profile, understand how you naturally think and feel, learn practical strategies for growth, and improve your relationships with others. Whether you&apos;re seeking personal development, professional growth, or simply curious about personality psychology, this free temperament assessment offers actionable insights based on centuries of wisdom and modern psychology.
-              </p>
+              {copy.introParagraphs.map((paragraph) => (
+                <p key={paragraph} className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+                  {paragraph}
+                </p>
+              ))}
             </div>
           </div>
         </section>
@@ -398,19 +349,18 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto">
             <div className="mb-10 max-w-3xl">
               <p className="text-xs font-semibold tracking-[0.35em] uppercase text-primary mb-3">
-                Temperament Test Guides
+                {copy.guideEyebrow}
               </p>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                Start With The Free Temperament Test, Then Read The Pattern
+                {copy.guideTitle}
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Use these core FourType guides to understand the free temperament test, compare the four classic
-                patterns, review the question design, and judge your result with the right amount of confidence.
+                {copy.guideDescription}
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {temperamentTestGuides.map((guide) => (
+              {copy.guides.map((guide) => (
                 <Link
                   key={guide.href}
                   href={guide.href}
@@ -424,7 +374,7 @@ export default function HomePage() {
                     {guide.description}
                   </p>
                   <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
-                    Read guide
+                    {copy.readGuide}
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </Link>
@@ -442,7 +392,7 @@ export default function HomePage() {
                   50,000+
                 </p>
                 <p className="text-sm sm:text-base text-muted-foreground">
-                  People Tested
+                  {copy.stats.peopleTested}
                 </p>
               </div>
               <div>
@@ -450,7 +400,7 @@ export default function HomePage() {
                   15
                 </p>
                 <p className="text-sm sm:text-base text-muted-foreground">
-                  Unique Temperament Blends
+                  {copy.stats.blends}
                 </p>
               </div>
               <div>
@@ -458,7 +408,7 @@ export default function HomePage() {
                   2,500+
                 </p>
                 <p className="text-sm sm:text-base text-muted-foreground">
-                  Years of Wisdom
+                  {copy.stats.wisdom}
                 </p>
               </div>
             </div>
@@ -468,13 +418,13 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-                Why Study Temperaments?
+                {copy.whyTitle}
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
-                Understanding your temperament is the first step to understanding yourself and connecting with others.
+                {copy.whyDescription}
               </p>
               <div className="w-full max-w-4xl mx-auto mb-16">
-                <YouTubeEmbed videoId="MFi57x7BBXE" title="Why Study Temperaments - FourType" />
+                <YouTubeEmbed videoId="MFi57x7BBXE" title={copy.videoTitle} />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

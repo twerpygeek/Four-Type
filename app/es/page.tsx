@@ -1,7 +1,8 @@
-import { LocalizedPage, localizedMetadata } from '@/components/LocalizedPage'
+import { localizedMetadata } from '@/components/LocalizedPage'
+import { HomeExperience } from '@/app/page'
 
 export const metadata = localizedMetadata('es', 'home')
 
 export default function EsHomePage() {
-  return <LocalizedPage locale="es" pageKey="home" />
+  return <HomeExperience locale="es" />
 }
