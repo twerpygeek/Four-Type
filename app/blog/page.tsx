@@ -34,6 +34,7 @@ const dynamicBlogPosts = blogArticles.map((article) => ({
       gold: '#FFD700',
     }[article.accent],
     image: article.image,
+    published: article.published,
   }))
 
 const staticBlogPosts = [
@@ -45,6 +46,7 @@ const staticBlogPosts = [
     readTime: '8 min',
     featured: true,
     image: '/icon.png',
+    published: '2024-03-20',
   },
   {
     slug: 'sanguine',
@@ -54,6 +56,7 @@ const staticBlogPosts = [
     readTime: '7 min',
     color: '#FFD700',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Bard-QJJyqACHiDlWLpgew2foCbl5YGjLOi.png',
+    published: '2024-03-21',
   },
   {
     slug: 'choleric',
@@ -63,6 +66,7 @@ const staticBlogPosts = [
     readTime: '7 min',
     color: '#E63946',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Commander-rEIrJwEHYOzxNaP1ngaLZqm7A6GdrY.png',
+    published: '2024-03-21',
   },
   {
     slug: 'melancholic',
@@ -72,6 +76,7 @@ const staticBlogPosts = [
     readTime: '8 min',
     color: '#4CC9F0',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Strategist-11A2ki2xYEb1yOkVrQ2xjaZ1etfh3Z.png',
+    published: '2024-03-21',
   },
   {
     slug: 'phlegmatic',
@@ -81,6 +86,7 @@ const staticBlogPosts = [
     readTime: '8 min',
     color: '#52B788',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/The%20Guardian-98lWuYWNazfR3hvOW2FUE3dkp13BLy.png',
+    published: '2024-03-21',
   },
   {
     slug: 'leadership-and-temperament',
@@ -90,6 +96,7 @@ const staticBlogPosts = [
     readTime: '6 min',
     featured: true,
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/blog%20images-YOx5j8T93i2oKsjJGl1c4WSMhtlLA5.jpg',
+    published: '2024-03-22',
   },
   {
     slug: 'temperaments-vs-mbti-big-five',
@@ -98,6 +105,7 @@ const staticBlogPosts = [
     category: 'Comparison',
     readTime: '7 min',
     image: '/icon.png',
+    published: '2024-03-23',
   },
   {
     slug: 'subtypes',
@@ -107,6 +115,7 @@ const staticBlogPosts = [
     readTime: '10 min',
     featured: true,
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_better_202603241223-1XkEeb3BizSaXrANQ3lL5DNCWuTuNB.jpeg',
+    published: '2024-03-24',
   },
   {
     slug: 'temperament-anxiety',
@@ -116,6 +125,7 @@ const staticBlogPosts = [
     readTime: '7 min',
     color: '#4CC9F0',
     image: '/images/temperament-wheel.jpg',
+    published: '2024-03-25',
   },
   {
     slug: 'temperament-dating',
@@ -125,6 +135,7 @@ const staticBlogPosts = [
     readTime: '7 min',
     color: '#F472B6',
     image: '/images/blog/temperament-compatibility-chart.jpg',
+    published: '2024-03-26',
   },
   {
     slug: 'temperament-work',
@@ -134,6 +145,7 @@ const staticBlogPosts = [
     readTime: '8 min',
     color: '#52B788',
     image: '/images/leadership-temperaments.jpg',
+    published: '2024-03-27',
   },
   {
     slug: 'temperament-science',
@@ -143,6 +155,7 @@ const staticBlogPosts = [
     readTime: '8 min',
     color: '#A78BFA',
     image: '/images/comparison-mbti.jpg',
+    published: '2024-03-28',
   },
 ]
 
@@ -161,6 +174,8 @@ const blogListSchema = {
     url: `https://www.fourtype.com/blog/${post.slug}`,
     description: post.excerpt,
     image: post.image?.startsWith('/') ? `https://www.fourtype.com${post.image}` : post.image,
+    datePublished: post.published,
+    dateModified: post.published,
   })),
 }
 
