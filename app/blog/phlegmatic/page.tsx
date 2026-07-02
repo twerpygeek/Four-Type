@@ -1,10 +1,19 @@
 import { BlogPostTemplate } from '@/components/BlogPostTemplate';
+import { coreGuideLinks, methodologyGuideLinks, relationshipGuideLinks } from '@/lib/seo-content';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Phlegmatic Temperament: The Quiet Strength | FourType Blog',
   description: 'Discover the Phlegmatic temperament in detail. Learn about calm strengths, supportive traits, challenges, and how to embrace your peaceful nature.',
-  keywords: ['phlegmatic temperament', 'phlegmatic personality', 'calm personality', 'supportive traits'],
+  keywords: ['phlegmatic temperament', 'phlegmatic personality', 'phlegmatic temperament test', 'calm personality', 'supportive traits'],
+  alternates: { canonical: 'https://www.fourtype.com/blog/phlegmatic' },
+  openGraph: {
+    title: 'Phlegmatic Temperament: The Quiet Strength',
+    description: 'Discover the Phlegmatic temperament in detail, including calm strengths, supportive traits, relationships, and growth.',
+    url: 'https://www.fourtype.com/blog/phlegmatic',
+    type: 'article',
+    images: [{ url: 'https://www.fourtype.com/images/phlegmatic-depth.jpg', width: 1200, height: 400, alt: 'Phlegmatic Temperament - The Guardian' }],
+  },
 };
 
 export default function PhlegmaticBlogPage() {
@@ -17,6 +26,9 @@ export default function PhlegmaticBlogPage() {
       readTime="8"
       image="/images/phlegmatic-depth.jpg"
       imageAlt="Phlegmatic Temperament - The Guardian"
+      canonicalPath="/blog/phlegmatic"
+      description={metadata.description as string}
+      published="2024-03-25"
       sections={[
         {
           heading: 'Understanding the Phlegmatic Temperament',
@@ -65,6 +77,18 @@ export default function PhlegmaticBlogPage() {
             'Taking initiative on projects develops leadership capability. Starting projects, suggesting ideas, and taking charge when needed builds confidence and demonstrates capability to others.',
           ],
         },
+      ]}
+      relatedLinks={[
+        { href: '/temperament-test', title: 'Take the Temperament Test', description: 'Find out whether Phlegmatic is your primary pattern or part of your subtype.' },
+        { href: '/4-temperament-test', title: '4 Temperament Test', description: 'Compare Phlegmatic with Choleric, Sanguine, and Melancholic patterns.' },
+        relationshipGuideLinks[1],
+        methodologyGuideLinks[1],
+        coreGuideLinks[3],
+      ]}
+      faq={[
+        { question: 'What is a Phlegmatic temperament?', answer: 'A Phlegmatic temperament is a calm, steady, loyal pattern associated with peace, support, patience, diplomacy, and emotional steadiness.' },
+        { question: 'How do I know if I am Phlegmatic?', answer: 'You may be Phlegmatic if you naturally avoid conflict, value stability, support others quietly, and become passive or withdrawn when pressured.' },
+        { question: 'Are Phlegmatic people lazy?', answer: 'No. Phlegmatic people are often steady and reliable, but they may need clear motivation, safety, and purpose before taking initiative.' },
       ]}
       relatedTopics={[
         'Guardian Archetype',

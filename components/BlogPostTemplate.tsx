@@ -4,6 +4,9 @@ import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import RuneBackground from '@/components/RuneBackground';
+import { FaqSection } from '@/components/FaqSection';
+import { InternalLinkHub } from '@/components/InternalLinkHub';
+import { faqJsonLd, type FaqItem, type LinkCard } from '@/lib/seo-content';
 
 interface BlogPostProps {
   title: string;
@@ -13,10 +16,15 @@ interface BlogPostProps {
   readTime: string;
   image: string;
   imageAlt: string;
+  canonicalPath?: string;
+  description?: string;
+  published?: string;
   sections: {
     heading: string;
     content: string[];
   }[];
+  faq?: FaqItem[];
+  relatedLinks?: LinkCard[];
   relatedTopics?: string[];
 }
 
@@ -28,11 +36,33 @@ export function BlogPostTemplate({
   readTime,
   image,
   imageAlt,
+  canonicalPath,
+  description,
+  published,
   sections,
+  faq,
+  relatedLinks = [],
   relatedTopics = [],
 }: BlogPostProps) {
+  const canonicalUrl = canonicalPath ? `https://www.fourtype.com${canonicalPath}` : undefined;
+  const articleSchema = canonicalUrl ? {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title,
+    description: description ?? subtitle,
+    image: `https://www.fourtype.com${image}`,
+    datePublished: published ?? date,
+    dateModified: published ?? date,
+    author: { '@type': 'Organization', name: author, url: 'https://www.fourtype.com' },
+    publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: 'https://www.fourtype.com/fourtype-logo.png' } },
+    mainEntityOfPage: canonicalUrl,
+  } : null;
+  const faqSchema = faqJsonLd(faq);
+
   return (
     <>
+      {articleSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />}
+      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
       <RuneBackground />
       <Navigation />
       <main className="min-h-screen relative z-10">
@@ -98,6 +128,9 @@ export function BlogPostTemplate({
               ))}
             </article>
 
+            <InternalLinkHub title="Temperament Test Guides" links={relatedLinks} />
+            <FaqSection faq={faq} />
+
             {/* Related Topics */}
             {relatedTopics.length > 0 && (
               <div className="mt-16 pt-12 border-t border-gray-800">
@@ -120,15 +153,15 @@ export function BlogPostTemplate({
         {/* CTA Section */}
         <section className="py-16 px-4 bg-gradient-to-b from-transparent via-gray-900/20 to-transparent">
           <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">Explore All Temperaments</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">Find Your Temperament Pattern</h3>
             <p className="text-gray-300 mb-8">
-              Discover more about each temperament type and how they shape personality and behavior.
+              Take the free FourType quiz, then compare your result with the guide above.
             </p>
             <Link
-              href="/manifesto"
+              href="/quiz"
               className="inline-block px-8 py-3 bg-[#FFD700] text-black font-bold rounded-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105"
             >
-              View the Manifesto
+              Take the Free Temperament Test
             </Link>
           </div>
         </section>

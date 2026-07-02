@@ -1,10 +1,19 @@
 import { BlogPostTemplate } from '@/components/BlogPostTemplate';
+import { coreGuideLinks, methodologyGuideLinks, relationshipGuideLinks } from '@/lib/seo-content';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Choleric Temperament: The Natural Leader Explained | FourType Blog',
   description: 'Comprehensive guide to the Choleric temperament. Discover leadership traits, strengths, challenges, and how to maximize your commanding potential.',
-  keywords: ['choleric temperament', 'choleric personality', 'natural leader', 'leadership traits'],
+  keywords: ['choleric temperament', 'choleric personality', 'choleric temperament test', 'natural leader', 'leadership traits'],
+  alternates: { canonical: 'https://www.fourtype.com/blog/choleric' },
+  openGraph: {
+    title: 'Choleric Temperament: The Natural Leader Explained',
+    description: 'Comprehensive guide to the Choleric temperament, including traits, strengths, challenges, relationships, and growth.',
+    url: 'https://www.fourtype.com/blog/choleric',
+    type: 'article',
+    images: [{ url: 'https://www.fourtype.com/images/choleric-depth.jpg', width: 1200, height: 400, alt: 'Choleric Temperament - The Commander' }],
+  },
 };
 
 export default function ChloricBlogPage() {
@@ -17,6 +26,9 @@ export default function ChloricBlogPage() {
       readTime="8"
       image="/images/choleric-depth.jpg"
       imageAlt="Choleric Temperament - The Commander"
+      canonicalPath="/blog/choleric"
+      description={metadata.description as string}
+      published="2024-03-20"
       sections={[
         {
           heading: 'Understanding the Choleric Temperament',
@@ -65,6 +77,18 @@ export default function ChloricBlogPage() {
             'Learning to delegate effectively paradoxically amplifies Choleric impact. Trusting others with responsibility multiplies output and develops future leaders—a legacy more valuable than any single achievement.',
           ],
         },
+      ]}
+      relatedLinks={[
+        { href: '/temperament-test', title: 'Take the Temperament Test', description: 'Find out whether Choleric is your primary pattern or part of your subtype.' },
+        { href: '/4-temperament-test', title: '4 Temperament Test', description: 'Compare Choleric with Sanguine, Melancholic, and Phlegmatic patterns.' },
+        relationshipGuideLinks[1],
+        methodologyGuideLinks[1],
+        coreGuideLinks[3],
+      ]}
+      faq={[
+        { question: 'What is a Choleric temperament?', answer: 'A Choleric temperament is a driven, direct, goal-focused pattern associated with decisiveness, leadership, challenge, and action under pressure.' },
+        { question: 'How do I know if I am Choleric?', answer: 'You may be Choleric if you naturally move toward goals, make decisions quickly, dislike delays, and become more controlling or forceful under stress.' },
+        { question: 'Can Choleric people be caring?', answer: 'Yes. Choleric care often shows through protection, problem-solving, loyalty, and practical action rather than soft emotional expression.' },
       ]}
       relatedTopics={[
         'Commander Archetype',

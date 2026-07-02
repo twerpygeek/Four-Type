@@ -22,13 +22,31 @@ const coreMarkdown: Record<string, { canonical: string; title: string; body: str
     title: 'What Is a Temperament Test?',
     body: 'A temperament test identifies your core behavioral patterns across the four classical temperaments: Choleric, Sanguine, Melancholic, and Phlegmatic.',
   },
+  'blog/choleric': {
+    canonical: '/blog/choleric',
+    title: 'Choleric Temperament: The Natural Leader Explained',
+    body: 'The Choleric temperament describes a direct, decisive, goal-focused pattern. Choleric people often move toward leadership, challenge, and action under pressure. Use this guide with the FourType temperament test to compare Choleric traits against Sanguine, Melancholic, and Phlegmatic patterns.',
+  },
+  'blog/sanguine': {
+    canonical: '/blog/sanguine',
+    title: 'Sanguine Temperament: Traits, Strengths & Challenges',
+    body: 'The Sanguine temperament describes an expressive, social, optimistic pattern. Sanguine people often seek connection, energy, storytelling, novelty, and shared experience. Use this guide with the FourType temperament test to compare Sanguine traits against Choleric, Melancholic, and Phlegmatic patterns.',
+  },
+  'blog/melancholic': {
+    canonical: '/blog/melancholic',
+    title: 'Melancholic Temperament: Depth, Detail & Perfectionism',
+    body: 'The Melancholic temperament describes a reflective, analytical, standards-driven pattern. Melancholic people often care about depth, meaning, accuracy, beauty, and quality. Use this guide with the FourType temperament test to compare Melancholic traits against Choleric, Sanguine, and Phlegmatic patterns.',
+  },
+  'blog/phlegmatic': {
+    canonical: '/blog/phlegmatic',
+    title: 'Phlegmatic Temperament: The Quiet Strength',
+    body: 'The Phlegmatic temperament describes a calm, steady, loyal pattern. Phlegmatic people often protect peace, trust, stability, support, and emotional steadiness. Use this guide with the FourType temperament test to compare Phlegmatic traits against Choleric, Sanguine, and Melancholic patterns.',
+  },
 }
 
 export function generateStaticParams() {
   return [
-    { path: ['index'] },
-    { path: ['quiz'] },
-    { path: ['what-is-temperament-test'] },
+    ...Object.keys(coreMarkdown).map((key) => ({ path: key.split('/') })),
     ...seoPages.map((page) => ({ path: [page.slug] })),
     ...blogArticles.map((article) => ({ path: ['blog', article.slug] })),
   ]

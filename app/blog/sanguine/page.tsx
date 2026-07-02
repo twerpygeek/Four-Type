@@ -1,10 +1,19 @@
 import { BlogPostTemplate } from '@/components/BlogPostTemplate';
+import { coreGuideLinks, methodologyGuideLinks, relationshipGuideLinks } from '@/lib/seo-content';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Sanguine Temperament: Traits, Strengths & Challenges | FourType Blog',
   description: 'Deep dive into the Sanguine temperament. Understand traits, strengths, challenges, and how to thrive as an extroverted, enthusiastic personality.',
-  keywords: ['sanguine temperament', 'sanguine traits', 'sanguine personality', 'extroverted personality'],
+  keywords: ['sanguine temperament', 'sanguine traits', 'sanguine personality', 'sanguine temperament test', 'extroverted personality'],
+  alternates: { canonical: 'https://www.fourtype.com/blog/sanguine' },
+  openGraph: {
+    title: 'Sanguine Temperament: Traits, Strengths & Challenges',
+    description: 'Deep dive into the Sanguine temperament, including traits, strengths, challenges, relationships, and growth.',
+    url: 'https://www.fourtype.com/blog/sanguine',
+    type: 'article',
+    images: [{ url: 'https://www.fourtype.com/images/sanguine-depth.jpg', width: 1200, height: 400, alt: 'Sanguine Temperament - The Bard' }],
+  },
 };
 
 export default function SanguineBlogPage() {
@@ -17,6 +26,9 @@ export default function SanguineBlogPage() {
       readTime="8"
       image="/images/sanguine-depth.jpg"
       imageAlt="Sanguine Temperament - The Bard"
+      canonicalPath="/blog/sanguine"
+      description={metadata.description as string}
+      published="2024-03-15"
       sections={[
         {
           heading: 'What is the Sanguine Temperament?',
@@ -65,6 +77,18 @@ export default function SanguineBlogPage() {
             'Creating accountability systems and goal-tracking mechanisms helps Sanguines channel their energy productively. When coupled with their natural motivation and enthusiasm, structure becomes their ally rather than their constraint.',
           ],
         },
+      ]}
+      relatedLinks={[
+        { href: '/temperament-test', title: 'Take the Temperament Test', description: 'Find out whether Sanguine is your primary pattern or part of your subtype.' },
+        { href: '/4-temperament-test', title: '4 Temperament Test', description: 'Compare Sanguine with Choleric, Melancholic, and Phlegmatic patterns.' },
+        relationshipGuideLinks[1],
+        methodologyGuideLinks[1],
+        coreGuideLinks[3],
+      ]}
+      faq={[
+        { question: 'What is a Sanguine temperament?', answer: 'A Sanguine temperament is an expressive, social, optimistic pattern associated with connection, enthusiasm, storytelling, and energy around people.' },
+        { question: 'How do I know if I am Sanguine?', answer: 'You may be Sanguine if you gain energy from people, enjoy novelty, communicate expressively, and become restless or scattered when life feels dull or isolating.' },
+        { question: 'What is the main weakness of a Sanguine?', answer: 'Sanguines often struggle with consistency, follow-through, and depth when their attention moves quickly toward the next exciting person or idea.' },
       ]}
       relatedTopics={[
         'Bard Archetype',

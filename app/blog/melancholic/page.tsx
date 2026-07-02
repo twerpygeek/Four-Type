@@ -1,10 +1,19 @@
 import { BlogPostTemplate } from '@/components/BlogPostTemplate';
+import { coreGuideLinks, methodologyGuideLinks, relationshipGuideLinks } from '@/lib/seo-content';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Melancholic Temperament: Depth, Detail & Perfectionism | FourType Blog',
   description: 'Explore the Melancholic temperament in depth. Understand analytical traits, perfectionism, challenges, and how to leverage your meticulous nature.',
-  keywords: ['melancholic temperament', 'melancholic personality', 'perfectionist', 'analytical personality'],
+  keywords: ['melancholic temperament', 'melancholic personality', 'melancholic temperament test', 'perfectionist', 'analytical personality'],
+  alternates: { canonical: 'https://www.fourtype.com/blog/melancholic' },
+  openGraph: {
+    title: 'Melancholic Temperament: Depth, Detail & Perfectionism',
+    description: 'Explore the Melancholic temperament in depth, including analytical traits, perfectionism, relationships, and growth.',
+    url: 'https://www.fourtype.com/blog/melancholic',
+    type: 'article',
+    images: [{ url: 'https://www.fourtype.com/images/melancholic-depth.jpg', width: 1200, height: 400, alt: 'Melancholic Temperament - The Strategist' }],
+  },
 };
 
 export default function MelancholicBlogPage() {
@@ -17,6 +26,9 @@ export default function MelancholicBlogPage() {
       readTime="9"
       image="/images/melancholic-depth.jpg"
       imageAlt="Melancholic Temperament - The Strategist"
+      canonicalPath="/blog/melancholic"
+      description={metadata.description as string}
+      published="2024-03-22"
       sections={[
         {
           heading: 'The Melancholic Temperament Explained',
@@ -65,6 +77,18 @@ export default function MelancholicBlogPage() {
             'Developing confidence in decision-making, even with incomplete information, builds leadership capability. Setting decision deadlines and trusting instincts, particularly in time-sensitive situations, strengthens Melancholic professionals.',
           ],
         },
+      ]}
+      relatedLinks={[
+        { href: '/temperament-test', title: 'Take the Temperament Test', description: 'Find out whether Melancholic is your primary pattern or part of your subtype.' },
+        { href: '/4-temperament-test', title: '4 Temperament Test', description: 'Compare Melancholic with Choleric, Sanguine, and Phlegmatic patterns.' },
+        relationshipGuideLinks[1],
+        methodologyGuideLinks[1],
+        coreGuideLinks[3],
+      ]}
+      faq={[
+        { question: 'What is a Melancholic temperament?', answer: 'A Melancholic temperament is a reflective, analytical, standards-driven pattern associated with depth, meaning, quality, accuracy, and careful thought.' },
+        { question: 'How do I know if I am Melancholic?', answer: 'You may be Melancholic if you think deeply, notice details, care about meaning and quality, and become anxious or critical when things feel shallow or poorly done.' },
+        { question: 'Are Melancholic people always sad?', answer: 'No. In temperament language, Melancholic does not mean someone is always sad. It points to depth, sensitivity, analysis, and high standards.' },
       ]}
       relatedTopics={[
         'Strategist Archetype',

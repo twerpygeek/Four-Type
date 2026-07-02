@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T08:54:20.836Z",
+  "generatedAt": "2026-07-02T09:04:27.030Z",
   "site": "https://www.fourtype.com",
   "routes": [
     {
@@ -61,6 +61,22 @@
     {
       "html": "https://www.fourtype.com/blog/choleric-sanguine-melancholic-phlegmatic",
       "markdown": "https://www.fourtype.com/blog/choleric-sanguine-melancholic-phlegmatic.md"
+    },
+    {
+      "html": "https://www.fourtype.com/blog/choleric",
+      "markdown": "https://www.fourtype.com/blog/choleric.md"
+    },
+    {
+      "html": "https://www.fourtype.com/blog/sanguine",
+      "markdown": "https://www.fourtype.com/blog/sanguine.md"
+    },
+    {
+      "html": "https://www.fourtype.com/blog/melancholic",
+      "markdown": "https://www.fourtype.com/blog/melancholic.md"
+    },
+    {
+      "html": "https://www.fourtype.com/blog/phlegmatic",
+      "markdown": "https://www.fourtype.com/blog/phlegmatic.md"
     },
     {
       "html": "https://www.fourtype.com/blog/ospp-four-temperaments-test",
