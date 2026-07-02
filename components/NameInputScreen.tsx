@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import type { QuizCopy } from '@/lib/quiz-i18n'
 import RuneBackground from './RuneBackground'
 
 interface NameInputScreenProps {
   onStart: (name: string) => void
+  copy: QuizCopy['name']
 }
 
-export default function NameInputScreen({ onStart }: NameInputScreenProps) {
+export default function NameInputScreen({ onStart, copy }: NameInputScreenProps) {
   const [name, setName] = useState('')
   const [error, setError] = useState('')
 
@@ -15,7 +17,7 @@ export default function NameInputScreen({ onStart }: NameInputScreenProps) {
     e.preventDefault()
     const trimmed = name.trim()
     if (!trimmed) {
-      setError('Your hero needs a name.')
+      setError(copy.error)
       return
     }
     onStart(trimmed)
@@ -53,16 +55,16 @@ export default function NameInputScreen({ onStart }: NameInputScreenProps) {
 
         <div className="flex flex-col gap-2">
           <p className="font-serif text-xs tracking-[0.4em] uppercase text-[#64748B]">
-            Hero Initiation
+            {copy.eyebrow}
           </p>
           <h2
             className="font-serif text-3xl md:text-4xl font-bold"
             style={{ color: '#E2E8F0' }}
           >
-            Enter the name of your hero
+            {copy.title}
           </h2>
           <p className="font-sans text-sm text-[#64748B] leading-relaxed">
-            This quest will reveal the temperament you were born with — answer honestly, as your true self.
+            {copy.description}
           </p>
         </div>
 
@@ -74,7 +76,7 @@ export default function NameInputScreen({ onStart }: NameInputScreenProps) {
               setName(e.target.value)
               setError('')
             }}
-            placeholder="Your name or alias..."
+            placeholder={copy.placeholder}
             maxLength={40}
             autoFocus
             className="w-full px-4 py-3 rounded-lg font-sans text-base border-2 bg-transparent outline-none transition-all duration-200 text-center"
@@ -94,12 +96,11 @@ export default function NameInputScreen({ onStart }: NameInputScreenProps) {
           className="w-full rounded-lg border p-4 text-left flex flex-col gap-2"
           style={{ borderColor: '#2A2A40', backgroundColor: '#1A1A2E' }}
         >
-          <p className="font-serif text-xs text-[#FFD700] tracking-widest uppercase">Quest Rules</p>
+          <p className="font-serif text-xs text-[#FFD700] tracking-widest uppercase">{copy.rulesTitle}</p>
           <ul className="font-sans text-xs text-[#64748B] leading-relaxed space-y-1">
-            <li>Choose the ONE answer you most naturally identify with</li>
-            <li>Answer as your true self — not who you wish to be</li>
-            <li>Follow your first instinct; do not overthink</li>
-            <li>No temperament is better than any other</li>
+            {copy.rules.map((rule) => (
+              <li key={rule}>{rule}</li>
+            ))}
           </ul>
         </div>
 
@@ -124,7 +125,7 @@ export default function NameInputScreen({ onStart }: NameInputScreenProps) {
             e.currentTarget.style.boxShadow = 'none'
           }}
         >
-          Begin the Assessment
+          {copy.startButton}
         </button>
       </form>
     </main>

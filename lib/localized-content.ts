@@ -39,7 +39,7 @@ export const localizedPages: Record<LocaleCode, Record<LocalizedPageKey, {
           title: '用中文了解你的气质模式',
           body: [
             'FourType 帮你比较四种经典气质：胆汁质、多血质、抑郁质、黏液质。测试关注真实行为、压力反应、沟通方式和关系模式。',
-            '目前测试流程仍以英文为主，但这些中文页面可以先帮你理解测试目的、结果含义和四种气质的差异。',
+            '现在中文入口、题目流程和核心结果摘要都已经本地化，你可以直接用中文完成测试。',
           ],
         },
       ],
@@ -50,7 +50,7 @@ export const localizedPages: Record<LocaleCode, Record<LocalizedPageKey, {
         { title: '黏液质', body: '稳定、温和、重视和平、信任和长期关系。' },
       ],
       faq: [
-        { question: 'FourType 有中文测试吗？', answer: '我们先提供中文说明页面和语言入口。完整中文题目与结果翻译可以作为下一阶段继续加入。' },
+        { question: 'FourType 有中文测试吗？', answer: '有。中文入口、40 题测试流程和核心结果摘要已经加入。' },
         { question: '这个气质测试免费吗？', answer: '是的，核心 FourType 气质测试可以免费开始。' },
       ],
     },
@@ -117,14 +117,14 @@ export const localizedPages: Record<LocaleCode, Record<LocalizedPageKey, {
       title: '开始 FourType 免费气质测试',
       description: '开始 40 题 FourType 气质测试，了解你的四气质分数和混合型方向。',
       eyebrow: '开始测试',
-      cta: '进入英文测试',
+      cta: '开始中文测试',
       ctaHref: '/quiz',
       sections: [
         {
           title: '测试前你需要知道',
           body: [
             '请按照你平时的行为作答，特别是普通压力下的反应。不要选择听起来最理想的答案。',
-            '中文测试流程可以后续继续完善；现在你可以通过英文测试获得主要结果。',
+            '中文题目和核心结果摘要已经加入。请按照第一直觉选择最自然的答案。',
           ],
         },
       ],
@@ -135,7 +135,7 @@ export const localizedPages: Record<LocaleCode, Record<LocalizedPageKey, {
         { title: '混合型', body: '关注最高两项分数。' },
       ],
       faq: [
-        { question: '测试题目现在是中文吗？', answer: '目前核心测试仍是英文。中文入口和说明已加入，完整测试翻译可继续扩展。' },
+        { question: '测试题目现在是中文吗？', answer: '是的。中文版本包含 40 题测试流程和主要结果摘要。' },
       ],
     },
   },
@@ -151,7 +151,7 @@ export const localizedPages: Record<LocaleCode, Record<LocalizedPageKey, {
           title: 'Entiende tu patrón de temperamento',
           body: [
             'FourType compara los cuatro temperamentos clásicos: Colérico, Sanguíneo, Melancólico y Flemático. El objetivo es observar conducta real, respuesta al estrés, comunicación y relaciones.',
-            'El test completo todavía está principalmente en inglés, pero estas páginas en español te ayudan a entender el modelo, el resultado y cómo usarlo.',
+            'El flujo de preguntas y el resumen principal de resultados ya están localizados en español para que puedas completar el test directamente.',
           ],
         },
       ],
@@ -162,7 +162,7 @@ export const localizedPages: Record<LocaleCode, Record<LocalizedPageKey, {
         { title: 'Flemático', body: 'Calmo, estable, leal y orientado a la paz.' },
       ],
       faq: [
-        { question: '¿FourType está disponible en español?', answer: 'Ya hay páginas de entrada en español. La traducción completa del test y los resultados puede añadirse como siguiente fase.' },
+        { question: '¿FourType está disponible en español?', answer: 'Sí. La entrada, las 40 preguntas y el resumen principal de resultados ya están en español.' },
         { question: '¿El test de temperamento es gratis?', answer: 'Sí. El test principal de FourType se puede empezar gratis.' },
       ],
     },
@@ -229,14 +229,14 @@ export const localizedPages: Record<LocaleCode, Record<LocalizedPageKey, {
       title: 'Empezar el test de temperamento FourType',
       description: 'Empieza el test de 40 preguntas para descubrir tu distribución entre los cuatro temperamentos.',
       eyebrow: 'Empezar test',
-      cta: 'Ir al test en inglés',
+      cta: 'Empezar el test en español',
       ctaHref: '/quiz',
       sections: [
         {
           title: 'Antes de empezar',
           body: [
             'Responde según tu conducta normal, especialmente bajo presión. Evita elegir la respuesta que suena más ideal.',
-            'El flujo completo del test aún está en inglés; las páginas en español sirven como entrada y explicación.',
+            'Las preguntas y el resumen principal de resultados ya están en español. Elige la respuesta que más se parezca a tu conducta natural.',
           ],
         },
       ],
@@ -247,7 +247,7 @@ export const localizedPages: Record<LocaleCode, Record<LocalizedPageKey, {
         { title: 'Subtipo', body: 'Usa tus dos puntuaciones más altas.' },
       ],
       faq: [
-        { question: '¿Las preguntas ya están en español?', answer: 'El test principal aún está en inglés. La traducción completa puede añadirse como siguiente fase.' },
+        { question: '¿Las preguntas ya están en español?', answer: 'Sí. La versión en español incluye las 40 preguntas y el resumen principal del resultado.' },
       ],
     },
   },

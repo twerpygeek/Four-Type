@@ -1,28 +1,22 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import type { QuizCopy } from '@/lib/quiz-i18n'
 
 interface LoadingScreenProps {
   heroName: string
   onComplete: () => void
+  copy: QuizCopy['loading']
 }
 
-const ORACLE_MESSAGES = [
-  'Consulting the ancient scrolls...',
-  'Weighing your answers against the four winds...',
-  'The oracle peers into your soul...',
-  'Aligning your nature with the stars...',
-  'Your destiny is being forged...',
-]
-
-export default function LoadingScreen({ heroName, onComplete }: LoadingScreenProps) {
+export default function LoadingScreen({ heroName, onComplete, copy }: LoadingScreenProps) {
   const [messageIndex, setMessageIndex] = useState(0)
   const [progress, setProgress] = useState(0)
   const [runeVisible, setRuneVisible] = useState(true)
 
   useEffect(() => {
     const msgInterval = setInterval(() => {
-      setMessageIndex((prev) => (prev + 1) % ORACLE_MESSAGES.length)
+      setMessageIndex((prev) => (prev + 1) % copy.messages.length)
     }, 700)
 
     const startTime = Date.now()
@@ -47,7 +41,7 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
       clearInterval(progressInterval)
       clearInterval(runeInterval)
     }
-  }, [onComplete])
+  }, [copy.messages.length, onComplete])
 
   return (
     <main
@@ -100,7 +94,7 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
 
         <div className="flex flex-col gap-2">
           <p className="font-serif text-xs tracking-[0.4em] uppercase text-[#64748B]">
-            The Oracle Speaks
+            {copy.eyebrow}
           </p>
           <h2 className="font-serif text-2xl font-bold" style={{ color: '#E2E8F0' }}>
             {heroName}...
@@ -109,7 +103,7 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
             className="font-sans text-sm text-[#64748B] min-h-[1.5rem] transition-opacity duration-300"
             key={messageIndex}
           >
-            {ORACLE_MESSAGES[messageIndex]}
+            {copy.messages[messageIndex]}
           </p>
         </div>
 
@@ -125,7 +119,7 @@ export default function LoadingScreen({ heroName, onComplete }: LoadingScreenPro
               }}
             />
           </div>
-          <p className="font-sans text-xs text-[#64748B]">Calculating your destiny...</p>
+          <p className="font-sans text-xs text-[#64748B]">{copy.progressLabel}</p>
         </div>
       </div>
 

@@ -5,6 +5,7 @@ import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { AnswerLetter } from '@/lib/questions'
 import { calculateScores, ScoreMap } from '@/lib/scoringKey'
+import { getQuizCopy, getQuizQuestions, type QuizLocale } from '@/lib/quiz-i18n'
 import NameInputScreen from '@/components/NameInputScreen'
 import QuestionScreen from '@/components/QuestionScreen'
 import LoadingScreen from '@/components/LoadingScreen'
@@ -13,10 +14,16 @@ import ResultsScreen from '@/components/ResultsScreen'
 type Stage = 'name' | 'quiz' | 'loading' | 'results'
 
 export default function QuizPage() {
+  return <QuizExperience locale="en" />
+}
+
+export function QuizExperience({ locale = 'en', showSeo = true }: { locale?: QuizLocale; showSeo?: boolean }) {
   const [stage, setStage] = useState<Stage>('name')
   const [heroName, setHeroName] = useState('')
   const [answers, setAnswers] = useState<Record<number, AnswerLetter>>({})
   const [scores, setScores] = useState<ScoreMap>({ Yellow: 0, Red: 0, Blue: 0, Green: 0 })
+  const copy = getQuizCopy(locale)
+  const questions = getQuizQuestions(locale)
 
   // Handle name submission
   function handleNameSubmit(name: string) {
@@ -47,19 +54,19 @@ export default function QuizPage() {
   let screen: ReactNode
   switch (stage) {
     case 'name':
-      screen = <NameInputScreen onStart={handleNameSubmit} />
+      screen = <NameInputScreen onStart={handleNameSubmit} copy={copy.name} />
       break
 
     case 'quiz':
-      screen = <QuestionScreen heroName={heroName} onComplete={handleQuizComplete} />
+      screen = <QuestionScreen heroName={heroName} onComplete={handleQuizComplete} copy={copy.question} questions={questions} />
       break
 
     case 'loading':
-      screen = <LoadingScreen heroName={heroName} onComplete={handleLoadingComplete} />
+      screen = <LoadingScreen heroName={heroName} onComplete={handleLoadingComplete} copy={copy.loading} />
       break
 
     case 'results':
-      screen = <ResultsScreen heroName={heroName} scores={scores} onRetake={handleRetake} />
+      screen = <ResultsScreen heroName={heroName} scores={scores} onRetake={handleRetake} copy={copy.results} locale={locale} />
       break
 
     default:
@@ -69,7 +76,7 @@ export default function QuizPage() {
   return (
     <>
       {screen}
-      {stage === 'name' && <QuizSeoSection />}
+      {showSeo && stage === 'name' && <QuizSeoSection />}
     </>
   )
 }

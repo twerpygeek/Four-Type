@@ -3,15 +3,17 @@
 import { useEffect, useState } from 'react'
 import { ScoreMap, TemperamentKey } from '@/lib/scoringKey'
 import { TEMPERAMENTS } from '@/lib/temperaments'
+import type { QuizCopy } from '@/lib/quiz-i18n'
 
 interface ScoreChartProps {
   scores: ScoreMap
   dominant: TemperamentKey
+  copy?: QuizCopy['results']
 }
 
 const ORDER: TemperamentKey[] = ['Yellow', 'Red', 'Blue', 'Green']
 
-export default function ScoreChart({ scores, dominant }: ScoreChartProps) {
+export default function ScoreChart({ scores, dominant, copy }: ScoreChartProps) {
   const [animated, setAnimated] = useState(false)
 
   useEffect(() => {
@@ -25,6 +27,8 @@ export default function ScoreChart({ scores, dominant }: ScoreChartProps) {
     <div className="flex flex-col gap-3 w-full">
       {ORDER.map((key) => {
         const t = TEMPERAMENTS[key]
+        const title = copy?.classTitles[key] ?? t.title
+        const name = copy?.temperamentNames[key] ?? t.name
         const score = scores[key]
         const pct = (score / total) * 100
         const isDominant = key === dominant
@@ -38,17 +42,17 @@ export default function ScoreChart({ scores, dominant }: ScoreChartProps) {
                     className="font-serif text-[9px] tracking-widest uppercase px-2 py-0.5 rounded-full border"
                     style={{ borderColor: t.colorHex, color: t.colorHex }}
                   >
-                    Dominant
+                    {copy?.dominant ?? 'Dominant'}
                   </span>
                 )}
                 <span
                   className="font-serif text-xs font-semibold"
                   style={{ color: t.colorHex }}
                 >
-                  {t.title}
+                  {title}
                 </span>
                 <span className="font-sans text-xs text-[#64748B]">
-                  {t.name}
+                  {name}
                 </span>
               </div>
               <span

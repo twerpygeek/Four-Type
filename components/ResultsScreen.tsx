@@ -7,6 +7,7 @@ import { ScoreMap, TemperamentKey, getDominantAndSecondary, getMaskingWarning, r
 import { TEMPERAMENTS } from '@/lib/temperaments'
 import { BLENDS, getBlendColors } from '@/lib/blends'
 import { getSubtypeByBlendKey } from '@/lib/subtypes'
+import { getLocalizedBlendSummary, type QuizCopy, type QuizLocale } from '@/lib/quiz-i18n'
 import ScoreChart from './ScoreChart'
 import CinematicBackground from './CinematicBackground'
 import ShareableCard from './ShareableCard'
@@ -68,14 +69,28 @@ interface ResultsScreenProps {
   heroName: string
   scores: ScoreMap
   onRetake: () => void
+  copy: QuizCopy['results']
+  locale: QuizLocale
 }
 
 type Tab = 'strengths' | 'shadow' | 'communication' | 'partners' | 'deeper' | 'growth'
 
-export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScreenProps) {
+export default function ResultsScreen({ heroName, scores, onRetake, copy, locale }: ResultsScreenProps) {
   // Resolve the 15-type blend
   const blendResult = resolveBlend(scores)
   const blend = BLENDS[blendResult.blendKey]
+  const localizedBlend = getLocalizedBlendSummary(locale, blendResult.blendKey)
+  const resultName = localizedBlend?.name ?? blend.name
+  const resultBlend = localizedBlend?.blend ?? blend.blend
+  const resultRpgClass = localizedBlend?.rpgClass ?? blend.rpgClass
+  const resultTagline = localizedBlend?.tagline ?? blend.tagline
+  const resultDrive = localizedBlend?.drive ?? blend.drive
+  const resultLore = localizedBlend?.lore ?? blend.lore
+  const resultStrengths = localizedBlend?.strengths ?? blend.strengths
+  const resultShadows = localizedBlend?.shadows ?? blend.shadows
+  const resultUnderStress = localizedBlend?.underStress ?? blend.underStress
+  const resultSpeakTo = localizedBlend?.speakTo ?? blend.speakTo
+  const resultNeverDo = localizedBlend?.neverDo ?? blend.neverDo
   const blendColors = getBlendColors(blend)
   
   // Legacy temperament data for character images and some content
@@ -83,6 +98,10 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
   const masking = getMaskingWarning(scores)
   const t = TEMPERAMENTS[dominant]
   const sec = TEMPERAMENTS[secondary]
+  const dominantName = copy.temperamentNames[dominant] ?? t.name
+  const dominantTitle = copy.classTitles[dominant] ?? t.title
+  const secondaryName = copy.temperamentNames[secondary] ?? sec.name
+  const secondaryTitle = copy.classTitles[secondary] ?? sec.title
   
   // Primary color for styling (from blend)
   const primaryColor = blendColors.primary
@@ -122,8 +141,8 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `I am ${blend.name}!`,
-          text: `I discovered I'm ${blend.name} (${blend.blend}). "${blend.tagline}" — What's your temperament?`,
+          title: `I am ${resultName}!`,
+          text: `I discovered I'm ${resultName} (${resultBlend}). "${resultTagline}" — What's your temperament?`,
           url: shareUrl,
         })
       } catch {
@@ -141,27 +160,27 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
 
   function getInterpretation(): string {
     if (blendResult.flag === 'pure') {
-      return `Pure ${t.name} — rare and singular`
+      return copy.interpretation.pure(dominantName)
     }
     if (blendResult.flag === 'triple') {
-      return `Triple blend — the rarest type in the system`
+      return copy.interpretation.triple
     }
     if (blendResult.flag === 'bilingual') {
-      return `Bilingual in two temperaments — ${t.name} and ${sec.name}`
+      return copy.interpretation.bilingual(dominantName, secondaryName)
     }
     if (masking === 'diagonal') {
-      return `This rare diagonal combination may indicate masking — learned behavior vs. true wiring`
+      return copy.interpretation.diagonal
     }
-    return blend.drive
+    return resultDrive
   }
 
   const tabs: { key: Tab; label: string }[] = [
-    { key: 'strengths', label: 'Strengths' },
-    { key: 'shadow', label: 'Shadow' },
-    { key: 'deeper', label: 'Analysis' },
-    { key: 'communication', label: 'Style' },
-    { key: 'partners', label: 'Match' },
-    { key: 'growth', label: 'Growth' },
+    { key: 'strengths', label: copy.tabs.strengths },
+    { key: 'shadow', label: copy.tabs.shadow },
+    { key: 'deeper', label: copy.tabs.deeper },
+    { key: 'communication', label: copy.tabs.communication },
+    { key: 'partners', label: copy.tabs.partners },
+    { key: 'growth', label: copy.tabs.growth },
   ]
 
   return (
@@ -182,7 +201,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           }}
         >
           <p className="font-sans text-xs tracking-[0.4em] uppercase text-[#64748B]">
-            Your Character Class
+            {copy.characterClass}
           </p>
 
           {/* Character illustration with animated glow */}
@@ -214,7 +233,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                 <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
                   <Image
                     src={t.characterImage}
-                    alt={blend.name}
+                    alt={resultName}
                     width={160}
                     height={160}
                     loading="eager"
@@ -244,19 +263,19 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
 
           <div className="flex flex-col gap-1">
             <p className="font-serif text-sm text-[#64748B]">
-              {heroName}, you are
+              {copy.youAre(heroName)}
             </p>
             <h1
               className="font-serif text-4xl md:text-5xl font-black text-balance"
               style={{ color: primaryColor, textShadow: `0 0 40px ${primaryColor}50` }}
             >
-              {blend.name.toUpperCase()}
+              {resultName.toUpperCase()}
             </h1>
             <p
               className="font-serif text-base font-semibold"
               style={{ color: '#E2E8F0' }}
             >
-              {blend.blend}
+              {resultBlend}
             </p>
             {/* Dual color stripe showing the blend */}
             <div className="flex items-center justify-center gap-1 mt-2">
@@ -285,7 +304,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               className="font-serif text-sm font-bold"
               style={{ color: primaryColor }}
             >
-              {blend.rpgClass}
+              {resultRpgClass}
             </span>
           </div>
 
@@ -329,18 +348,18 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             style={{ backgroundColor: primaryColor }}
           />
           <p className="font-serif text-xs tracking-widest uppercase relative" style={{ color: primaryColor }}>
-            Identity Lore
+            {copy.identityLore}
           </p>
           <blockquote
             className="font-sans text-sm text-[#94A3B8] leading-relaxed italic text-pretty relative"
           >
-            &ldquo;{blend.lore}&rdquo;
+            &ldquo;{resultLore}&rdquo;
           </blockquote>
           <p className="font-sans text-xs text-[#64748B] relative">
-            <span style={{ color: primaryColor }}>Core Drive:</span> {blend.drive}
+            <span style={{ color: primaryColor }}>{copy.coreDrive}:</span> {resultDrive}
           </p>
           <p className="font-sans text-xs text-[#64748B] relative">
-            <span style={{ color: primaryColor }}>Tagline:</span> {blend.tagline}
+            <span style={{ color: primaryColor }}>{copy.tagline}:</span> {resultTagline}
           </p>
         </div>
 
@@ -350,9 +369,9 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: '#2A2A40' }}
         >
           <p className="font-serif text-xs tracking-widest uppercase text-[#64748B]">
-            Score Breakdown
+            {copy.scoreBreakdown}
           </p>
-          <ScoreChart scores={scores} dominant={dominant} />
+          <ScoreChart scores={scores} dominant={dominant} copy={copy} />
 
           {/* Secondary */}
           <div
@@ -361,15 +380,15 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           >
             <Image
               src={sec.characterImage}
-              alt={sec.title}
+              alt={secondaryTitle}
               width={32}
               height={40}
               className="object-contain opacity-70"
               style={{ width: '32px', height: '40px' }}
             />
             <p className="font-sans text-xs text-[#94A3B8]">
-              Secondary: <span className="font-serif font-semibold" style={{ color: sec.colorHex }}>{sec.title}</span>
-              <span className="text-[#64748B]"> ({sec.name})</span>
+              {copy.secondary}: <span className="font-serif font-semibold" style={{ color: sec.colorHex }}>{secondaryTitle}</span>
+              <span className="text-[#64748B]"> ({secondaryName})</span>
             </p>
           </div>
 
@@ -382,8 +401,8 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               <span className="text-[#E63946] text-xs mt-0.5 shrink-0">!</span>
               <p className="font-sans text-xs text-[#94A3B8] leading-relaxed">
                 {masking === 'diagonal'
-                  ? 'This rare diagonal combination may indicate masking — learned behavior vs. true wiring. Take note.'
-                  : 'Your scores suggest masking — you may have adapted your personality to meet external expectations. Focus on your dominant temperament for now.'}
+                  ? copy.masking.diagonal
+                  : copy.masking.general}
               </p>
             </div>
           )}
@@ -419,7 +438,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           <div className="p-5">
             {activeTab === 'strengths' && (
               <ul className="flex flex-col gap-2">
-                {blend.strengths.map((s, i) => (
+                {resultStrengths.map((s, i) => (
                   <li key={i} className="flex items-start gap-3 font-sans text-sm text-[#94A3B8] leading-relaxed">
                     <span className="shrink-0 mt-1 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }} />
                     {s}
@@ -430,7 +449,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
 
             {activeTab === 'shadow' && (
               <ul className="flex flex-col gap-2">
-                {blend.shadows.map((w, i) => (
+                {resultShadows.map((w, i) => (
                   <li key={i} className="flex items-start gap-3 font-sans text-sm text-[#94A3B8] leading-relaxed">
                     <span className="shrink-0 mt-1 w-1.5 h-1.5 rounded-full bg-[#E63946]" />
                     {w}
@@ -438,7 +457,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                 ))}
                 <li className="flex items-start gap-3 font-sans text-sm leading-relaxed mt-2 pt-3 border-t" style={{ borderColor: '#2A2A40', color: '#94A3B8' }}>
                   <span className="shrink-0 mt-1 w-1.5 h-1.5 rounded-full bg-[#FFD700]" />
-                  <span><span className="font-semibold text-[#E2E8F0]">Under stress:</span> {blend.underStress}</span>
+                  <span><span className="font-semibold text-[#E2E8F0]">{copy.underStress}</span> {resultUnderStress}</span>
                 </li>
               </ul>
             )}
@@ -450,10 +469,10 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                   style={{ borderColor: `${primaryColor}40`, backgroundColor: `${primaryColor}08` }}
                 >
                   <p className="font-serif text-xs uppercase tracking-widest mb-1" style={{ color: primaryColor }}>
-                    Speak to {blend.name}
+                    {copy.speakTo(resultName)}
                   </p>
                   <p className="font-sans text-sm text-[#E2E8F0] leading-relaxed">
-                    {blend.speakTo}
+                    {resultSpeakTo}
                   </p>
                 </div>
                 <div
@@ -461,10 +480,10 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                   style={{ borderColor: '#E6394640', backgroundColor: '#E6394608' }}
                 >
                   <p className="font-serif text-xs uppercase tracking-widest mb-1 text-[#E63946]">
-                    Never Do
+                    {copy.neverDo}
                   </p>
                   <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
-                    {blend.neverDo}
+                    {resultNeverDo}
                   </p>
                 </div>
               </div>
@@ -473,15 +492,15 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             {activeTab === 'partners' && (
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
-                  <p className="font-serif text-xs uppercase tracking-widest text-[#52B788]">Best Partners</p>
+                  <p className="font-serif text-xs uppercase tracking-widest text-[#52B788]">{copy.bestPartners}</p>
                   <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">{t.bestPartners}</p>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <p className="font-serif text-xs uppercase tracking-widest text-[#E63946]">Friction With</p>
+                  <p className="font-serif text-xs uppercase tracking-widest text-[#E63946]">{copy.frictionWith}</p>
                   <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">{t.frictionWith}</p>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <p className="font-serif text-xs uppercase tracking-widest" style={{ color: primaryColor }}>Famous {blend.name}s</p>
+                  <p className="font-serif text-xs uppercase tracking-widest" style={{ color: primaryColor }}>{copy.famous(resultName)}</p>
                   <p className="font-sans text-sm text-[#94A3B8]">{blend.famous.join(', ')}</p>
                 </div>
               </div>
@@ -490,35 +509,35 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             {activeTab === 'deeper' && (
               <div className="flex flex-col gap-5">
                 <div className="flex flex-col gap-2">
-                  <p className="font-serif text-xs uppercase tracking-widest" style={{ color: primaryColor }}>Identity Stack</p>
+                  <p className="font-serif text-xs uppercase tracking-widest" style={{ color: primaryColor }}>{copy.identityStack}</p>
                   <div className="grid gap-2">
                     <div className="rounded-lg border px-3 py-2" style={{ borderColor: `${primaryColor}30`, backgroundColor: `${primaryColor}08` }}>
-                      <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B]">Primary Drive</p>
-                      <p className="font-sans text-sm text-[#E2E8F0]">{blend.drive}</p>
+                      <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B]">{copy.primaryDrive}</p>
+                      <p className="font-sans text-sm text-[#E2E8F0]">{resultDrive}</p>
                     </div>
                     <div className="rounded-lg border px-3 py-2" style={{ borderColor: `${primaryColor}30`, backgroundColor: `${primaryColor}08` }}>
-                      <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B]">Likely MBTI</p>
+                      <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B]">{copy.likelyMbti}</p>
                       <p className="font-sans text-sm text-[#E2E8F0]">{blend.mbti.join(' / ')}</p>
                     </div>
                     <div className="rounded-lg border px-3 py-2" style={{ borderColor: `${primaryColor}30`, backgroundColor: `${primaryColor}08` }}>
-                      <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B]">Enneagram Pattern</p>
+                      <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B]">{copy.enneagramPattern}</p>
                       <p className="font-sans text-sm text-[#E2E8F0]">{blend.enneagram.join(' or ')}</p>
                     </div>
                     <div className="rounded-lg border px-3 py-2" style={{ borderColor: `${primaryColor}30`, backgroundColor: `${primaryColor}08` }}>
-                      <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B]">RPG Class</p>
-                      <p className="font-sans text-sm text-[#E2E8F0]">{blend.rpgClass}</p>
+                      <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B]">{copy.rpgClass}</p>
+                      <p className="font-sans text-sm text-[#E2E8F0]">{resultRpgClass}</p>
                     </div>
                   </div>
                   <p className="font-sans text-[10px] text-[#4A5568] italic mt-1">
-                    Inferred from your pattern — not definitive typing
+                    {copy.inferredNote}
                   </p>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <p className="font-serif text-xs uppercase tracking-widest text-[#FFD700]">In Relationships</p>
+                  <p className="font-serif text-xs uppercase tracking-widest text-[#FFD700]">{copy.inRelationships}</p>
                   <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">{t.inRelationships}</p>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <p className="font-serif text-xs uppercase tracking-widest text-[#4CC9F0]">At Work</p>
+                  <p className="font-serif text-xs uppercase tracking-widest text-[#4CC9F0]">{copy.atWork}</p>
                   <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">{t.atWork}</p>
                 </div>
               </div>
@@ -527,7 +546,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             {activeTab === 'growth' && (
               <div className="flex flex-col gap-4">
                 <p className="font-sans text-sm text-[#64748B] italic">
-                  Areas to develop for a more balanced life:
+                  {copy.growthIntro}
                 </p>
                 <ul className="flex flex-col gap-3">
                   {t.growthAreas.map((area, i) => (
@@ -553,14 +572,16 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
           style={{ backgroundColor: 'rgba(26, 26, 46, 0.8)', borderColor: '#2A2A40' }}
         >
           <p className="font-serif text-xs tracking-widest uppercase text-[#64748B]">
-            All Character Classes
+            {copy.allClasses}
           </p>
           <p className="font-sans text-xs text-[#4A5568] -mt-1">
-            Tap any class to learn more
+            {copy.tapClass}
           </p>
           <div className="grid grid-cols-2 gap-3">
             {(['Yellow', 'Red', 'Blue', 'Green'] as TemperamentKey[]).map((key) => {
               const cls = TEMPERAMENTS[key]
+              const classTitle = copy.classTitles[key] ?? cls.title
+              const temperamentName = copy.temperamentNames[key] ?? cls.name
               const isUser = key === dominant
               return (
                 <button
@@ -588,10 +609,10 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                   />
                   <div className="flex flex-col gap-0.5 relative min-w-0">
                     <p className="font-serif text-[11px] font-bold leading-tight" style={{ color: cls.colorHex }}>
-                      {cls.title}
-                      {isUser && <span className="ml-1 text-[8px] opacity-60">YOU</span>}
+                      {classTitle}
+                      {isUser && <span className="ml-1 text-[8px] opacity-60">{copy.you}</span>}
                     </p>
-                    <p className="font-sans text-[10px] text-[#64748B]">{cls.name}</p>
+                    <p className="font-sans text-[10px] text-[#64748B]">{temperamentName}</p>
                   </div>
                 </button>
               )
@@ -606,7 +627,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
         >
           <div className="flex items-center justify-between">
             <p className="font-serif text-xs tracking-widest uppercase text-[#64748B]">
-              Share Your Results
+              {copy.shareResults}
             </p>
             <button
               onClick={() => setShowShareCard(!showShareCard)}
@@ -616,7 +637,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                 color: primaryColor,
               }}
             >
-              {showShareCard ? 'Hide' : 'Show'} Card
+              {showShareCard ? copy.hideCard : copy.showCard}
             </button>
           </div>
 
@@ -630,7 +651,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
 
           {!showShareCard && (
             <p className="font-sans text-sm text-[#64748B] text-center py-4">
-              Generate a shareable character card to post on social media
+              {copy.shareCardPrompt}
             </p>
           )}
         </div>
@@ -645,12 +666,12 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
             <p className="font-serif text-xs tracking-widest uppercase" style={{ color: primaryColor }}>
-              Continue Your Journey
+              {copy.continueJourney}
             </p>
           </div>
           
           <p className="font-sans text-sm text-[#64748B]">
-            Dive deeper into understanding your temperament:
+            {copy.journeyIntro}
           </p>
           
           <div className="flex flex-col gap-2">
@@ -714,7 +735,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
             </svg>
-            Share My Class
+            {copy.shareButton}
           </button>
           
           <button
@@ -731,14 +752,14 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                Link Copied!
+                {copy.copiedButton}
               </>
             ) : (
               <>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                 </svg>
-                Copy Shareable Link
+                {copy.copyButton}
               </>
             )}
           </button>
@@ -760,12 +781,12 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               e.currentTarget.style.color = '#64748B'
             }}
           >
-            Retake Quest
+            {copy.retakeButton}
           </button>
         </div>
 
           <p className="font-sans text-center text-xs text-[#2A2A40]">
-            FourType &bull; Free forever &bull; Know Thyself.
+            {copy.footer}
           </p>
       </div>
 
@@ -813,10 +834,10 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
               </div>
               <div className="flex flex-col gap-1">
                 <h3 className="font-serif text-2xl font-black" style={{ color: viewingTemp.colorHex }}>
-                  {viewingTemp.title.toUpperCase()}
+                  {(copy.classTitles[viewingTemp.key] ?? viewingTemp.title).toUpperCase()}
                 </h3>
                 <p className="font-sans text-sm text-[#94A3B8]">
-                  {viewingTemp.name} &bull; {viewingTemp.language}
+                  {copy.temperamentNames[viewingTemp.key] ?? viewingTemp.name} &bull; {copy.temperamentLanguages[viewingTemp.key] ?? viewingTemp.language}
                 </p>
                 <p className="font-sans text-xs text-[#64748B]">{viewingTemp.rpgClass}</p>
               </div>
@@ -835,14 +856,14 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             {/* Core Need */}
             <div className="flex flex-col gap-1">
               <p className="font-serif text-xs uppercase tracking-widest" style={{ color: viewingTemp.colorHex }}>
-                Core Need
+                {copy.coreNeed}
               </p>
               <p className="font-sans text-sm text-[#E2E8F0]">{viewingTemp.coreNeed}</p>
             </div>
 
             {/* Strengths */}
             <div className="flex flex-col gap-2">
-              <p className="font-serif text-xs uppercase tracking-widest text-[#52B788]">Strengths</p>
+              <p className="font-serif text-xs uppercase tracking-widest text-[#52B788]">{copy.strengths}</p>
               <ul className="flex flex-col gap-1">
                 {viewingTemp.strengths.slice(0, 4).map((s, i) => (
                   <li key={i} className="flex items-start gap-2 font-sans text-sm text-[#94A3B8]">
@@ -855,7 +876,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
 
             {/* Shadow */}
             <div className="flex flex-col gap-2">
-              <p className="font-serif text-xs uppercase tracking-widest text-[#E63946]">Shadow Side</p>
+              <p className="font-serif text-xs uppercase tracking-widest text-[#E63946]">{copy.shadowSide}</p>
               <ul className="flex flex-col gap-1">
                 {viewingTemp.weaknesses.slice(0, 3).map((w, i) => (
                   <li key={i} className="flex items-start gap-2 font-sans text-sm text-[#94A3B8]">
@@ -869,7 +890,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
             {/* Famous */}
             <div className="flex flex-col gap-1">
               <p className="font-serif text-xs uppercase tracking-widest text-[#64748B]">
-                Famous {viewingTemp.title}s
+                {copy.famous(copy.classTitles[viewingTemp.key] ?? viewingTemp.title)}
               </p>
               <p className="font-sans text-sm text-[#94A3B8]">{viewingTemp.famous.join(', ')}</p>
             </div>
@@ -880,7 +901,7 @@ export default function ResultsScreen({ heroName, scores, onRetake }: ResultsScr
                 style={{ borderColor: `${viewingTemp.colorHex}40`, backgroundColor: `${viewingTemp.colorHex}10` }}
               >
                 <p className="font-serif text-xs font-bold" style={{ color: viewingTemp.colorHex }}>
-                  This is your dominant type!
+                  {copy.thisIsDominant}
                 </p>
               </div>
             )}

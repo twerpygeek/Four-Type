@@ -1,30 +1,19 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { QUESTIONS, AnswerLetter, Question } from '@/lib/questions'
+import type { AnswerLetter, Question } from '@/lib/questions'
+import type { QuizCopy } from '@/lib/quiz-i18n'
 import XPProgressBar from './XPProgressBar'
-import CinematicBackground from './CinematicBackground'
 import VideoBackground from './VideoBackground'
 
 interface QuestionScreenProps {
   heroName: string
   onComplete: (answers: Record<number, AnswerLetter>) => void
+  copy: QuizCopy['question']
+  questions: Question[]
 }
 
-const LEVEL_GATE_MESSAGES: Record<number, string> = {
-  10: 'Level Up! You\'ve crossed the first threshold.',
-  20: 'Level Up! The oracle grows attentive.',
-  30: 'Level Up! Your true nature emerges.',
-}
-
-const SECTION_NAMES: Record<number, string> = {
-  1: 'CHAPTER I',
-  2: 'CHAPTER II',
-  3: 'CHAPTER III',
-  4: 'CHAPTER IV',
-}
-
-export default function QuestionScreen({ heroName, onComplete }: QuestionScreenProps) {
+export default function QuestionScreen({ heroName, onComplete, copy, questions }: QuestionScreenProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<number, AnswerLetter>>({})
   const [selected, setSelected] = useState<AnswerLetter | null>(null)
@@ -33,9 +22,8 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
   const [chapterTransition, setChapterTransition] = useState<string | null>(null)
   const sparkCanvasRef = useRef<HTMLCanvasElement>(null)
 
-  const currentQ: Question = QUESTIONS[currentIndex]
+  const currentQ: Question = questions[currentIndex]
   const questionNumber = currentIndex + 1
-  const prevSection = currentIndex > 0 ? QUESTIONS[currentIndex - 1].section : 1
 
   // Spark particle burst on answer selection
   const spawnSparks = useCallback((x: number, y: number) => {
@@ -110,20 +98,20 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
       setAnswers(newAnswers)
 
       // Check level gate
-      const msg = LEVEL_GATE_MESSAGES[questionNumber]
+      const msg = copy.levelGateMessages[questionNumber]
       if (msg) {
         setLevelMsg(msg)
         setTimeout(() => setLevelMsg(null), 2500)
       }
 
-      if (currentIndex + 1 >= QUESTIONS.length) {
+      if (currentIndex + 1 >= questions.length) {
         onComplete(newAnswers)
       } else {
         // Check section transition
-        const nextQ = QUESTIONS[currentIndex + 1]
+        const nextQ = questions[currentIndex + 1]
         if (nextQ.section !== currentQ.section) {
           // Show chapter transition
-          setChapterTransition(SECTION_NAMES[nextQ.section])
+          setChapterTransition(copy.sectionNames[nextQ.section])
           setTimeout(() => {
             setChapterTransition(null)
             setCardVisible(false)
@@ -199,7 +187,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
           }}
         >
           <div className="text-center px-6">
-            <p className="font-serif text-xs tracking-[0.5em] uppercase text-[#64748B] mb-2">Entering</p>
+            <p className="font-serif text-xs tracking-[0.5em] uppercase text-[#64748B] mb-2">{copy.entering}</p>
             <h2
               className="font-serif text-3xl md:text-5xl font-black text-[#FFD700]"
               style={{
@@ -231,7 +219,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
 
       <div className="relative z-10 w-full max-w-xl mx-auto flex flex-col gap-4">
         {/* Progress bar */}
-        <XPProgressBar current={questionNumber} total={QUESTIONS.length} heroName={heroName} />
+        <XPProgressBar current={questionNumber} total={questions.length} heroName={heroName} />
 
         {/* Section label */}
         <div className="flex items-center gap-2 px-1">
@@ -304,7 +292,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
                 <path d="M1 9L9 1M9 1H5M9 1V5" stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               <span className="font-serif text-[11px] font-bold tracking-[0.15em] uppercase text-[#FFD700]">
-                Quest {questionNumber}
+                {copy.questLabel} {questionNumber}
               </span>
             </div>
 
@@ -312,7 +300,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
             <div className="flex items-center gap-1.5">
               <span className="font-mono text-xs text-[#E2E8F0] font-bold">{questionNumber}</span>
               <span className="font-mono text-[10px] text-[#2A2A40]">/</span>
-              <span className="font-mono text-[10px] text-[#64748B]">{QUESTIONS.length}</span>
+              <span className="font-mono text-[10px] text-[#64748B]">{questions.length}</span>
             </div>
           </div>
 
@@ -445,7 +433,7 @@ export default function QuestionScreen({ heroName, onComplete }: QuestionScreenP
 
         {/* Keyboard hint */}
         <p className="font-sans text-center text-[10px] text-[#2A2A40] pb-2">
-          Press A, B, C, or D to answer quickly
+          {copy.keyboardHint}
         </p>
       </div>
 

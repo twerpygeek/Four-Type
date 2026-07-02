@@ -46,6 +46,7 @@ export function LocalizedPage({ locale, pageKey }: Props) {
   const page = localizedPages[locale][pageKey]
   const localeInfo = localizedLocales[locale]
   const canonicalPath = localizedPath(locale, pageKey)
+  const ctaHref = page.ctaHref === '/quiz' ? localizedPath(locale, 'quiz') : page.ctaHref
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -89,7 +90,7 @@ export function LocalizedPage({ locale, pageKey }: Props) {
               {page.description}
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link href={page.ctaHref} className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+              <Link href={ctaHref} className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
                 {page.cta}
                 <ArrowRight className="h-4 w-4" />
               </Link>

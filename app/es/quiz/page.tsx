@@ -1,7 +1,8 @@
-import { LocalizedPage, localizedMetadata } from '@/components/LocalizedPage'
+import { localizedMetadata } from '@/components/LocalizedPage'
+import { QuizExperience } from '@/app/quiz/page'
 
 export const metadata = localizedMetadata('es', 'quiz')
 
 export default function EsQuizPage() {
-  return <LocalizedPage locale="es" pageKey="quiz" />
+  return <QuizExperience locale="es" showSeo={false} />
 }
