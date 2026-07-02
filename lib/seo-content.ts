@@ -170,6 +170,139 @@ export const seoPages: SeoPage[] = [
     ],
   },
   {
+    slug: 'temperament-quiz',
+    shortTitle: 'Temperament Quiz',
+    title: 'Temperament Quiz: Discover Your Four Temperaments Pattern',
+    description: 'Take a free temperament quiz to discover whether your strongest pattern is Choleric, Sanguine, Melancholic, Phlegmatic, or a blended subtype.',
+    keywords: ['temperament quiz', 'free temperament quiz', 'four temperament quiz', 'personality temperament quiz', 'choleric sanguine melancholic phlegmatic quiz'],
+    eyebrow: 'Fast Four Temperaments Quiz',
+    icon: HelpCircle,
+    accent: 'gold',
+    priority: 0.92,
+    changeFrequency: 'weekly',
+    ctaLabel: 'Take the Temperament Quiz',
+    blocks: [
+      {
+        type: 'section',
+        title: 'A temperament quiz should give you more than a label',
+        body: [
+          'A good temperament quiz helps you notice your repeated patterns: how you respond to pressure, how you connect with people, what motivates you, and what tends to drain you.',
+          'FourType turns the classic Choleric, Sanguine, Melancholic, and Phlegmatic model into a practical quiz experience with score spread and subtype direction. That matters because many people are blends rather than pure types.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'What the quiz looks for',
+        intro: 'The best clues are usually visible in everyday behavior, not in idealized self-image.',
+        items: [
+          { title: 'Decision pace', body: 'Do you move quickly toward action, gather context, seek harmony, or follow energy?', accent: 'red' },
+          { title: 'Social energy', body: 'Do people charge you, drain you, focus you, or help you feel safe?', accent: 'gold' },
+          { title: 'Stress response', body: 'Under pressure, do you push, perform, perfect, or withdraw?', accent: 'blue' },
+          { title: 'Growth pattern', body: 'Your result points toward habits that help your temperament mature.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'How to answer for the clearest result',
+        body: 'Answer as your repeated default self, especially under ordinary stress. Do not answer as your best day, your job title, or the person you wish you were.',
+        bullets: ['Choose what you usually do.', 'Move quickly through the quiz.', 'Compare your top two scores.', 'Use the result as a mirror, not a box.'],
+      },
+    ],
+    faq: [
+      { question: 'What is a temperament quiz?', answer: 'A temperament quiz is a personality-style questionnaire that helps identify your likely Choleric, Sanguine, Melancholic, or Phlegmatic pattern.' },
+      { question: 'Is the FourType temperament quiz free?', answer: 'Yes. The core FourType temperament quiz is free and gives you a useful result with primary pattern, score spread, and subtype direction.' },
+      { question: 'How long does the temperament quiz take?', answer: 'Most people can complete the FourType quiz quickly because it uses 40 focused questions about repeated behavior and stress response.' },
+    ],
+  },
+  {
+    slug: 'what-is-my-temperament',
+    shortTitle: 'What Is My Temperament?',
+    title: 'What Is My Temperament? Find Your Choleric, Sanguine, Melancholic, or Phlegmatic Pattern',
+    description: 'Wondering “what is my temperament?” Learn the signs of each type and take the free FourType quiz to identify your strongest pattern.',
+    keywords: ['what is my temperament', 'what temperament am I', 'find my temperament', 'my temperament test', 'which temperament am I'],
+    eyebrow: 'Find Your Pattern',
+    icon: Search,
+    accent: 'blue',
+    priority: 0.91,
+    changeFrequency: 'weekly',
+    ctaLabel: 'Find My Temperament',
+    blocks: [
+      {
+        type: 'section',
+        title: 'Start with what you protect under stress',
+        body: [
+          'If you are asking “what is my temperament?”, do not start with stereotypes. Start with what you instinctively protect when pressure rises.',
+          'Choleric protects control and progress. Sanguine protects connection and energy. Melancholic protects meaning and quality. Phlegmatic protects peace and trust.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'Quick self-check',
+        items: [
+          { title: 'You may be Choleric if...', body: 'You move toward goals quickly, dislike delay, and feel calmer when someone takes charge.', accent: 'red' },
+          { title: 'You may be Sanguine if...', body: 'You light up around people, ideas, stories, humor, and shared momentum.', accent: 'gold' },
+          { title: 'You may be Melancholic if...', body: 'You notice details, care about depth, and feel uneasy when things seem careless.', accent: 'blue' },
+          { title: 'You may be Phlegmatic if...', body: 'You value calm, loyalty, stability, and keeping relationships from becoming unnecessarily tense.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Why the quiz is better than guessing',
+        body: 'Most people relate to more than one temperament. A quiz gives you a score spread so you can see whether you have a dominant type or a blended subtype.',
+        bullets: ['Look at your primary temperament.', 'Read your secondary score.', 'Compare your stress pattern.', 'Use subtype guidance when two types feel close.'],
+      },
+    ],
+    faq: [
+      { question: 'How do I know what my temperament is?', answer: 'Look at your repeated stress response, motivation, social energy, and conflict style. A temperament quiz can help clarify your strongest pattern and secondary influence.' },
+      { question: 'Can I have two temperaments?', answer: 'Yes. Many people have a primary temperament and a strong secondary temperament, which creates a subtype or blend.' },
+      { question: 'What if I relate to all four temperaments?', answer: 'Relating to all four is common. Focus on what shows up most under pressure and compare your quiz score spread rather than forcing a pure label.' },
+    ],
+  },
+  {
+    slug: 'personality-temperament-test',
+    shortTitle: 'Personality Temperament Test',
+    title: 'Personality Temperament Test: Understand Your Natural Pattern',
+    description: 'Take a personality temperament test to understand your natural behavior, stress response, communication style, and four temperaments subtype.',
+    keywords: ['personality temperament test', 'personality temperament quiz', 'temperament personality test', 'personality type temperament test'],
+    eyebrow: 'Personality Meets Temperament',
+    icon: Brain,
+    accent: 'purple',
+    priority: 0.89,
+    changeFrequency: 'weekly',
+    ctaLabel: 'Take the Personality Temperament Test',
+    blocks: [
+      {
+        type: 'section',
+        title: 'Temperament is the practical layer of personality',
+        body: [
+          'Personality can mean many things: habits, values, identity, cognitive preferences, emotional style, and learned roles. Temperament focuses on the natural patterns that tend to show up early and repeat under pressure.',
+          'FourType uses the four temperaments as a practical personality language. The point is not to explain every part of you. The point is to name a repeatable pattern you can observe and work with.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'What a personality temperament test can reveal',
+        items: [
+          { title: 'Motivation', body: 'What naturally gets you moving: challenge, connection, meaning, or peace.', accent: 'gold' },
+          { title: 'Communication', body: 'How direct, expressive, careful, or diplomatic you tend to be.', accent: 'blue' },
+          { title: 'Conflict style', body: 'Whether you push, smooth, analyze, joke, withdraw, or seek resolution.', accent: 'red' },
+          { title: 'Growth edge', body: 'The habit your temperament most often needs to practice to mature.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Use it responsibly',
+        body: 'A personality temperament test is useful for self-understanding, relationships, and communication. It should not be used as a diagnosis, hiring filter, or permanent identity box.',
+        bullets: ['Use the result to ask better questions.', 'Compare behavior, not ego.', 'Respect that context changes expression.', 'Let the result guide growth, not excuses.'],
+      },
+    ],
+    faq: [
+      { question: 'What is a personality temperament test?', answer: 'A personality temperament test is a quiz that identifies your natural behavior pattern, often using the four temperaments: Choleric, Sanguine, Melancholic, and Phlegmatic.' },
+      { question: 'Is temperament the same as personality?', answer: 'No. Temperament is one layer of personality. It focuses on natural patterns in energy, emotion, stress response, communication, and motivation.' },
+      { question: 'Is FourType a personality test?', answer: 'FourType is a temperament-based personality quiz for self-reflection. It is educational, not clinical or diagnostic.' },
+    ],
+  },
+  {
     slug: '4-temperament-test',
     shortTitle: '4 Temperament Test',
     title: '4 Temperament Test: Choleric, Sanguine, Melancholic, and Phlegmatic Explained',
@@ -788,6 +921,9 @@ export const allContentPages = [
 
 export const coreGuideLinks: LinkCard[] = [
   { href: '/temperament-test', title: 'Temperament Test', description: 'Start with the main free four temperaments quiz guide.' },
+  { href: '/temperament-quiz', title: 'Temperament Quiz', description: 'Use the quiz-focused path to identify your four temperaments pattern.' },
+  { href: '/what-is-my-temperament', title: 'What Is My Temperament?', description: 'Compare the signs of each temperament before taking the quiz.' },
+  { href: '/personality-temperament-test', title: 'Personality Temperament Test', description: 'Understand temperament as a practical layer of personality.' },
   { href: '/free-temperament-test', title: 'Free Temperament Test', description: 'See what the free FourType result includes.' },
   { href: '/4-temperament-test', title: '4 Temperament Test', description: 'Compare Choleric, Sanguine, Melancholic, and Phlegmatic.' },
   { href: '/blog/best-free-four-temperaments-test', title: 'Best Free Four Temperaments Test', description: 'Learn what makes a free quiz worth taking.' },
@@ -810,9 +946,8 @@ export const methodologyGuideLinks: LinkCard[] = [
 ]
 
 export const popularGuideLinks: LinkCard[] = [
-  ...coreGuideLinks.slice(1, 4),
+  ...coreGuideLinks.slice(1, 6),
   ...methodologyGuideLinks.slice(0, 2),
-  relationshipGuideLinks[1],
 ]
 
 export function guideLinksForSeoPage(slug: string): LinkCard[] {

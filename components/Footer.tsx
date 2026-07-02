@@ -4,6 +4,9 @@ import Image from 'next/image'
 const footerLinks = {
   learn: [
     { href: '/temperament-test', label: 'Temperament Test' },
+    { href: '/temperament-quiz', label: 'Temperament Quiz' },
+    { href: '/what-is-my-temperament', label: 'What Is My Temperament?' },
+    { href: '/personality-temperament-test', label: 'Personality Temperament Test' },
     { href: '/four-temperaments', label: 'Four Temperaments' },
     { href: '/what-is-temperament-test', label: 'What is a Temperament Test?' },
     { href: '/methodology', label: 'Methodology' },
