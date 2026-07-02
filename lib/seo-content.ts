@@ -1774,6 +1774,23 @@ export function breadcrumbJsonLd(items: LinkCard[]) {
   }
 }
 
+export function itemListJsonLd(name: string, items: LinkCard[]) {
+  if (!items.length) return null
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.title,
+      description: item.description,
+      url: `https://www.fourtype.com${item.href}`,
+    })),
+  }
+}
+
 export const quizActionJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',

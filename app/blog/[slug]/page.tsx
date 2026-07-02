@@ -8,7 +8,7 @@ import Footer from '@/components/Footer'
 import { ContentBlocks } from '@/components/ContentBlocks'
 import { FaqSection } from '@/components/FaqSection'
 import { InternalLinkHub } from '@/components/InternalLinkHub'
-import { accentStyles, blogArticles, breadcrumbJsonLd, faqJsonLd, getBlogArticle, popularGuideLinks, quizActionJsonLd } from '@/lib/seo-content'
+import { accentStyles, blogArticles, breadcrumbJsonLd, faqJsonLd, getBlogArticle, itemListJsonLd, popularGuideLinks, quizActionJsonLd } from '@/lib/seo-content'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -73,12 +73,14 @@ export default async function BlogArticlePage({ params }: Props) {
   const relatedGuideLinks = [...article.related, ...popularGuideLinks].filter((item, index, links) => (
     links.findIndex((link) => link.href === item.href) === index
   )).slice(0, 8)
+  const relatedGuidesSchema = itemListJsonLd('Related temperament test guides', relatedGuideLinks)
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(quizActionJsonLd) }} />
+      {relatedGuidesSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(relatedGuidesSchema) }} />}
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
       <Navigation />
       <main className="min-h-screen bg-background">
