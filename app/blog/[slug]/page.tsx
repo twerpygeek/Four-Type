@@ -6,7 +6,8 @@ import { ArrowRight } from 'lucide-react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { ContentBlocks } from '@/components/ContentBlocks'
-import { accentStyles, blogArticles, getBlogArticle } from '@/lib/seo-content'
+import { FaqSection } from '@/components/FaqSection'
+import { accentStyles, blogArticles, faqJsonLd, getBlogArticle } from '@/lib/seo-content'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -62,10 +63,12 @@ export default async function BlogArticlePage({ params }: Props) {
     publisher: { '@type': 'Organization', name: 'FourType', logo: { '@type': 'ImageObject', url: 'https://www.fourtype.com/fourtype-logo.png' } },
     mainEntityOfPage: `https://www.fourtype.com/blog/${article.slug}`,
   }
+  const faqSchema = faqJsonLd(article.faq)
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
       <Navigation />
       <main className="min-h-screen bg-background">
         <article className="max-w-4xl mx-auto px-4 py-24 md:py-28">
@@ -94,6 +97,7 @@ export default async function BlogArticlePage({ params }: Props) {
           </div>
 
           <ContentBlocks blocks={article.blocks} />
+          <FaqSection faq={article.faq} />
 
           <div className="bg-secondary/30 border border-border rounded-xl p-8 text-center">
             <h2 className="text-2xl font-serif font-bold mb-3">Know Your Type Before You Compare</h2>

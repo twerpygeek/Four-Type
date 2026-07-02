@@ -55,6 +55,7 @@ export type SeoPage = {
   heroImage?: string
   ctaLabel?: string
   blocks: ContentBlock[]
+  faq?: { question: string; answer: string }[]
 }
 
 export type BlogArticle = {
@@ -71,8 +72,11 @@ export type BlogArticle = {
   imageAlt: string
   published: string
   blocks: ContentBlock[]
+  faq?: { question: string; answer: string }[]
   related: { href: string; title: string; description: string }[]
 }
+
+export type FaqItem = NonNullable<SeoPage['faq']>[number]
 
 export const accentStyles: Record<Accent, { border: string; text: string; bg: string; button: string }> = {
   gold: { border: 'border-yellow-400', text: 'text-yellow-400', bg: 'bg-yellow-400/10 border-yellow-400/20', button: 'bg-yellow-500 hover:bg-yellow-400 text-black' },
@@ -122,6 +126,12 @@ export const seoPages: SeoPage[] = [
         bullets: ['Notice your stress triggers.', 'Improve communication with opposite types.', 'Choose work rhythms that fit your natural energy.', 'Read your subtype for more nuance.'],
       },
     ],
+    faq: [
+      { question: 'What is a temperament test?', answer: 'A temperament test is a personality quiz that identifies your default behavioral pattern across the four classical temperaments: Choleric, Sanguine, Melancholic, and Phlegmatic.' },
+      { question: 'Is FourType a free temperament test?', answer: 'Yes. FourType offers a free 40-question temperament test that gives you a primary temperament, score spread, and subtype direction.' },
+      { question: 'What are the four temperament types?', answer: 'The four temperament types are Choleric, Sanguine, Melancholic, and Phlegmatic. They describe patterns in energy, stress response, communication, motivation, and relationship style.' },
+      { question: 'Is a temperament test the same as a diagnosis?', answer: 'No. A temperament test is a self-reflection tool, not a clinical or medical diagnosis. It should be used as practical pattern language, not a permanent label.' },
+    ],
   },
   {
     slug: 'free-temperament-test',
@@ -150,6 +160,11 @@ export const seoPages: SeoPage[] = [
         body: 'You can take the quiz without creating an account. The free result is enough to understand your likely temperament and begin comparing your communication, stress, and relationship patterns.',
         bullets: ['40 questions', 'Four temperament score spread', 'Primary pattern', 'Subtype guidance', 'Shareable result page'],
       },
+    ],
+    faq: [
+      { question: 'Where can I take a free temperament test?', answer: 'You can take the FourType temperament test for free at fourtype.com/quiz. It does not require payment to see your basic temperament result.' },
+      { question: 'What does the free FourType result include?', answer: 'The free result includes your main temperament pattern, your score spread across the four temperaments, and guidance toward your likely subtype.' },
+      { question: 'Do I need an account to take the test?', answer: 'No. The core FourType quiz can be taken without creating an account.' },
     ],
   },
   {
@@ -184,6 +199,11 @@ export const seoPages: SeoPage[] = [
           'FourType adds subtype interpretation because many people are blends. A Sanguine-Choleric will look different from a Choleric-Sanguine even though both share energy and drive.',
         ],
       },
+    ],
+    faq: [
+      { question: 'What is the 4 temperament test?', answer: 'The 4 temperament test compares your answers across Choleric, Sanguine, Melancholic, and Phlegmatic patterns to identify your most likely temperament style.' },
+      { question: 'Which of the four temperaments is rarest?', answer: 'Rarity depends on the sample and test method. FourType focuses less on rarity and more on whether your result explains your actual stress, work, and relationship patterns.' },
+      { question: 'Can someone be a mix of two temperaments?', answer: 'Yes. Many people are blends, which is why FourType includes subtype guidance instead of forcing every result into a pure four-type label.' },
     ],
   },
   {
@@ -420,6 +440,11 @@ export const blogArticles: BlogArticle[] = [
       { href: '/methodology', title: 'FourType Methodology', description: 'How FourType scores and interprets results.' },
       { href: '/blog/temperament-test-accuracy', title: 'Temperament Test Accuracy', description: 'How to judge reliability in temperament quizzes.' },
     ],
+    faq: [
+      { question: 'What is the OSPP four temperaments test?', answer: 'The OSPP four temperaments test is a searched-for temperament quiz based on the classical four temperament labels. People usually look for it when they want a simple Choleric, Sanguine, Melancholic, or Phlegmatic result.' },
+      { question: 'How is FourType different from OSPP?', answer: 'FourType focuses on a polished quiz journey, practical result interpretation, score spread, subtype guidance, and educational pages that explain how to use temperament responsibly.' },
+      { question: 'Should I take OSPP or FourType?', answer: 'If you want a practical free temperament quiz with subtype direction and follow-up guides, FourType is a strong place to start. You can still compare results from multiple tests as hypotheses, not final labels.' },
+    ],
   },
   {
     slug: 'four-humors-test',
@@ -472,6 +497,11 @@ export const blogArticles: BlogArticle[] = [
       { href: '/blog/history-of-temperaments', title: 'History of the Four Temperaments', description: 'A longer historical guide from ancient medicine to modern psychology.' },
       { href: '/four-temperaments', title: 'The Four Temperaments', description: 'A clear modern explanation of the four types.' },
     ],
+    faq: [
+      { question: 'What is a four humors test?', answer: 'A four humors test refers to the ancient idea that personality patterns were linked to blood, yellow bile, black bile, and phlegm. Modern temperament tests use the behavioral patterns without treating the old medical theory as literal science.' },
+      { question: 'Are the four humors and four temperaments the same?', answer: 'They are historically connected but not identical. The four humors are the ancient medical origin story; the four temperaments are the personality pattern language that survived from that tradition.' },
+      { question: 'Does FourType believe the four humors are medically true?', answer: 'No. FourType uses the four temperaments as a self-reflection framework and does not make medical or clinical claims based on the ancient four humors theory.' },
+    ],
   },
   {
     slug: 'best-free-four-temperaments-test',
@@ -523,6 +553,11 @@ export const blogArticles: BlogArticle[] = [
     related: [
       { href: '/free-temperament-test', title: 'Free Temperament Test', description: 'Start the FourType quiz without signup or payment.' },
       { href: '/blog/temperament-test-accuracy', title: 'Temperament Test Accuracy', description: 'Learn how to judge a test result responsibly.' },
+    ],
+    faq: [
+      { question: 'What is the best free four temperaments test?', answer: 'The best free four temperaments test should ask behavior-based questions, show your score spread, explain your likely subtype, and avoid clinical or destiny-style claims.' },
+      { question: 'Is FourType free?', answer: 'Yes. FourType’s core 40-question temperament test is free and gives you a useful result without requiring payment for the basic interpretation.' },
+      { question: 'How do I get the most accurate free temperament result?', answer: 'Answer based on your repeated default behavior, especially under stress. Avoid answering as your ideal self or as the role you play at work.' },
     ],
   },
   {
@@ -579,6 +614,11 @@ export const blogArticles: BlogArticle[] = [
       { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Compare communication and conflict patterns together.' },
       { href: '/blog/temperament-dating', title: 'Temperament & Dating', description: 'A dating-focused guide to the four types.' },
     ],
+    faq: [
+      { question: 'Which temperaments are most compatible?', answer: 'Complementary pairings such as Choleric and Phlegmatic or Sanguine and Phlegmatic can work well because one type balances the other. Compatibility depends more on respect and communication than on a fixed perfect match.' },
+      { question: 'Can opposite temperaments have a good relationship?', answer: 'Yes. Opposite temperaments can work very well when both people respect different emotional pace, conflict style, and communication needs.' },
+      { question: 'Should couples take a temperament test together?', answer: 'Yes. Taking the test separately and comparing results can help couples discuss stress patterns, communication style, and conflict repair without turning types into labels.' },
+    ],
   },
   {
     slug: 'temperament-test-accuracy',
@@ -630,6 +670,11 @@ export const blogArticles: BlogArticle[] = [
     related: [
       { href: '/methodology', title: 'FourType Methodology', description: 'How scoring and subtype interpretation work.' },
       { href: '/what-is-temperament-test', title: 'What Is a Temperament Test?', description: 'A deeper guide to the model and quiz.' },
+    ],
+    faq: [
+      { question: 'Are temperament tests accurate?', answer: 'Temperament tests can be useful for self-reflection when they ask behavior-based questions and explain score spread. They should not be treated as clinical diagnoses or permanent labels.' },
+      { question: 'Why did I get a mixed temperament result?', answer: 'A mixed result usually means your top two scores are close or you have a strong secondary temperament. FourType uses subtype guidance to make those blends easier to understand.' },
+      { question: 'Can my temperament change?', answer: 'Your default temperament pattern may stay fairly stable, but habits, roles, stress, and maturity can change how it shows up in daily life.' },
     ],
   },
   {
@@ -683,6 +728,11 @@ export const blogArticles: BlogArticle[] = [
     related: [
       { href: '/4-temperament-test', title: '4 Temperament Test', description: 'A focused guide to the four-type quiz.' },
       { href: '/four-temperaments', title: 'The Four Temperaments', description: 'The classical framework explained clearly.' },
+    ],
+    faq: [
+      { question: 'How do I know if I am Choleric or Sanguine?', answer: 'Both can be energetic, but Choleric is usually task-first and control-oriented, while Sanguine is people-first and connection-oriented.' },
+      { question: 'How do I know if I am Melancholic or Phlegmatic?', answer: 'Both can be quiet, but Melancholic tends to protect meaning, standards, and accuracy, while Phlegmatic tends to protect peace, steadiness, and trust.' },
+      { question: 'What if I relate to all four temperaments?', answer: 'Look at your strongest pattern under stress and compare your top two scores. Many people relate to multiple types because they are blends rather than pure temperaments.' },
     ],
   },
 ]
@@ -740,4 +790,31 @@ export function contentToMarkdown(title: string, description: string, blocks: Co
 
   lines.push('## Take the FourType quiz', '', 'Start here: https://www.fourtype.com/quiz', '')
   return lines.join('\n')
+}
+
+export function faqsToMarkdown(faq?: FaqItem[]) {
+  if (!faq?.length) return ''
+
+  return [
+    '## Frequently asked questions',
+    '',
+    ...faq.flatMap((item) => [`### ${item.question}`, '', item.answer, '']),
+  ].join('\n')
+}
+
+export function faqJsonLd(faq?: FaqItem[]) {
+  if (!faq?.length) return null
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }
 }
