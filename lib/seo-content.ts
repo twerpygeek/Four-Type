@@ -431,7 +431,7 @@ export const blogArticles: BlogArticle[] = [
     readTime: '8 min',
     accent: 'blue',
     icon: Scale,
-    image: '/images/blog/ospp-four-temperaments-test.png',
+    image: '/images/blog/ospp-four-temperaments-test.jpg',
     imageAlt: 'Four temperament archetypes comparing two glowing assessment scrolls',
     published: '2026-07-02',
     blocks: [
@@ -488,7 +488,7 @@ export const blogArticles: BlogArticle[] = [
     readTime: '9 min',
     accent: 'gold',
     icon: BookOpen,
-    image: '/images/blog/four-humors-test.png',
+    image: '/images/blog/four-humors-test.jpg',
     imageAlt: 'Ancient four humors symbols transforming into four modern temperament archetypes',
     published: '2026-07-02',
     blocks: [
@@ -545,7 +545,7 @@ export const blogArticles: BlogArticle[] = [
     readTime: '8 min',
     accent: 'green',
     icon: CheckCircle2,
-    image: '/images/blog/best-free-four-temperaments-test.png',
+    image: '/images/blog/best-free-four-temperaments-test.jpg',
     imageAlt: 'A seeker choosing a free temperament test path guided by four temperament archetypes',
     published: '2026-07-02',
     blocks: [
@@ -602,7 +602,7 @@ export const blogArticles: BlogArticle[] = [
     readTime: '9 min',
     accent: 'pink',
     icon: Heart,
-    image: '/images/blog/temperament-compatibility-chart.png',
+    image: '/images/blog/temperament-compatibility-chart.jpg',
     imageAlt: 'Four temperament archetypes gathered around a glowing compatibility map',
     published: '2026-07-02',
     blocks: [
@@ -662,7 +662,7 @@ export const blogArticles: BlogArticle[] = [
     readTime: '8 min',
     accent: 'purple',
     icon: ShieldCheck,
-    image: '/images/blog/temperament-test-accuracy.png',
+    image: '/images/blog/temperament-test-accuracy.jpg',
     imageAlt: 'Four temperament archetypes examining a luminous quiz scroll and scales',
     published: '2026-07-02',
     blocks: [
@@ -719,7 +719,7 @@ export const blogArticles: BlogArticle[] = [
     readTime: '10 min',
     accent: 'gold',
     icon: Search,
-    image: '/images/blog/four-temperaments-differences.png',
+    image: '/images/blog/four-temperaments-differences.jpg',
     imageAlt: 'Four temperament archetypes standing in a comparison formation',
     published: '2026-07-02',
     blocks: [
