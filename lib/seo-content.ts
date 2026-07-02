@@ -147,6 +147,17 @@ export const seoPages: SeoPage[] = [
         ],
       },
       {
+        type: 'grid',
+        title: 'Example temperament test questions',
+        intro: 'Good temperament test questions compare what you repeatedly do in real situations, not which label sounds most impressive.',
+        items: [
+          { title: 'Under pressure', body: 'Do you push for action, talk it through, analyze the details, or lower the emotional temperature?', accent: 'red' },
+          { title: 'In conflict', body: 'Do you confront directly, smooth with humor, withdraw to think, or mediate quietly?', accent: 'green' },
+          { title: 'When starting work', body: 'Do you chase the goal, gather people, plan carefully, or create a steady rhythm?', accent: 'blue' },
+          { title: 'When drained', body: 'Do you become forceful, scattered, critical, or avoidant? Stress patterns often reveal temperament clearly.', accent: 'purple' },
+        ],
+      },
+      {
         type: 'callout',
         title: 'Temperament test vs personality test',
         body: 'A general personality test may describe broad traits. A temperament test is more focused: it looks at your first move under pressure, how you relate to people, what drains or energizes you, and what pattern keeps showing up across work, conflict, and relationships.',
