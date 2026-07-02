@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { BookOpen, Brain, Sparkles, Users } from 'lucide-react'
+import { ArrowRight, BookOpen, Brain, Sparkles, Users } from 'lucide-react'
 import RuneBackground from '@/components/RuneBackground'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -71,6 +71,29 @@ const features = [
   },
 ]
 
+const temperamentTestGuides = [
+  {
+    href: '/temperament-test',
+    title: 'Temperament Test',
+    description: 'Start with the main free temperament test guide and learn how FourType reads your score spread.',
+  },
+  {
+    href: '/four-temperaments-test',
+    title: 'Four Temperaments Test',
+    description: 'Compare Choleric, Sanguine, Melancholic, and Phlegmatic before taking the free quiz.',
+  },
+  {
+    href: '/blog/temperament-test-questions',
+    title: 'Temperament Test Questions',
+    description: 'See what useful behavior-based temperament test questions should measure.',
+  },
+  {
+    href: '/blog/temperament-test-accuracy',
+    title: 'Temperament Test Accuracy',
+    description: 'Learn how to judge temperament quiz results responsibly without overclaiming.',
+  },
+]
+
 export default function HomePage() {
   const [hoveredTemp, setHoveredTemp] = useState<string | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -85,8 +108,22 @@ export default function HomePage() {
     })
   }, [])
 
+  const temperamentTestGuidesSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'FourType temperament test guide cluster',
+    itemListElement: temperamentTestGuides.map((guide, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: guide.title,
+      description: guide.description,
+      url: `https://www.fourtype.com${guide.href}`,
+    })),
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(temperamentTestGuidesSchema) }} />
       <Navigation />
       <main className="min-h-screen bg-background">
         <RuneBackground />
@@ -353,6 +390,45 @@ export default function HomePage() {
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                 Take our 40-question online personality test to discover your temperament profile, understand how you naturally think and feel, learn practical strategies for growth, and improve your relationships with others. Whether you&apos;re seeking personal development, professional growth, or simply curious about personality psychology, this free temperament assessment offers actionable insights based on centuries of wisdom and modern psychology.
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-card/30 border-y border-border">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-10 max-w-3xl">
+              <p className="text-xs font-semibold tracking-[0.35em] uppercase text-primary mb-3">
+                Temperament Test Guides
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-4">
+                Start With The Free Temperament Test, Then Read The Pattern
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                Use these core FourType guides to understand the free temperament test, compare the four classic
+                patterns, review the question design, and judge your result with the right amount of confidence.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {temperamentTestGuides.map((guide) => (
+                <Link
+                  key={guide.href}
+                  href={guide.href}
+                  className="group relative overflow-hidden rounded-lg border border-border bg-background/70 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50"
+                >
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                  <h3 className="font-serif text-lg font-bold text-foreground mb-3">
+                    {guide.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+                    {guide.description}
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                    Read guide
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
