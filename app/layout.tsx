@@ -23,6 +23,11 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.fourtype.com'),
   alternates: {
     canonical: 'https://www.fourtype.com',
+    languages: {
+      en: 'https://www.fourtype.com',
+      'zh-CN': 'https://www.fourtype.com/zh-CN',
+      es: 'https://www.fourtype.com/es',
+    },
   },
   keywords: [
     'temperament test', 'four temperaments', 'free personality test', 'what is my temperament',

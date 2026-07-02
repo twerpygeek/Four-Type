@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://www.fourtype.com/quiz',
+    languages: {
+      en: 'https://www.fourtype.com/quiz',
+      'zh-CN': 'https://www.fourtype.com/zh-CN/quiz',
+      es: 'https://www.fourtype.com/es/quiz',
+    },
   },
   openGraph: {
     title: 'Free Temperament Test | Discover Your True Nature',

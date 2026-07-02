@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -140,7 +141,8 @@ export default function Navigation() {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex items-center gap-3">
+            <LanguageSwitcher />
             <Link
               href="/quiz"
               className="px-5 py-2.5 bg-primary text-primary-foreground font-medium text-sm rounded-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
@@ -205,6 +207,9 @@ export default function Navigation() {
               )
             )}
             <div className="pt-4">
+              <LanguageSwitcher compact />
+            </div>
+            <div className="pt-3">
               <Link
                 href="/quiz"
                 className="block w-full text-center px-5 py-3 bg-primary text-primary-foreground font-medium text-sm rounded-lg hover:bg-primary/90 transition-colors"

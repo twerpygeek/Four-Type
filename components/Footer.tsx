@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 
 const footerLinks = {
   testGuides: [
@@ -132,6 +133,7 @@ export default function Footer() {
             {new Date().getFullYear()} FourType. Know your true nature.
           </p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <LanguageSwitcher />
             <span>
               Made with{' '}
               <span className="text-red-500">❤️</span>

@@ -8,6 +8,7 @@ import { ContentBlocks } from '@/components/ContentBlocks'
 import { FaqSection } from '@/components/FaqSection'
 import { InternalLinkHub } from '@/components/InternalLinkHub'
 import { accentStyles, breadcrumbJsonLd, faqJsonLd, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, getSeoPage, guideLinksForSeoPage, itemListJsonLd, quizActionJsonLd, seoPages, temperamentTopicJsonLd } from '@/lib/seo-content'
+import { localizedPath, type LocalizedPageKey } from '@/lib/localized-content'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -21,12 +22,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const page = getSeoPage(slug)
   if (!page) return {}
+  const localizedPageKey = ['temperament-test', 'four-temperaments-test'].includes(page.slug)
+    ? page.slug as LocalizedPageKey
+    : null
 
   return {
     title: page.title,
     description: page.description,
     keywords: page.keywords,
-    alternates: { canonical: `https://www.fourtype.com/${page.slug}` },
+    alternates: {
+      canonical: `https://www.fourtype.com/${page.slug}`,
+      ...(localizedPageKey ? {
+        languages: {
+          en: `https://www.fourtype.com/${page.slug}`,
+          'zh-CN': `https://www.fourtype.com${localizedPath('zh-CN', localizedPageKey)}`,
+          es: `https://www.fourtype.com${localizedPath('es', localizedPageKey)}`,
+        },
+      } : {}),
+    },
     openGraph: {
       title: page.title,
       description: page.description,

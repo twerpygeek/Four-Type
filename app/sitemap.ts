@@ -1,9 +1,37 @@
 import { MetadataRoute } from 'next'
 import { getAllSubtypes } from '@/lib/subtypes'
 import { allContentPages } from '@/lib/seo-content'
+import { localizedPagePaths, localizedLocales } from '@/lib/localized-content'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.fourtype.com'
+  const localizedAlternates: Record<string, Record<string, string>> = {
+    '/': {
+      en: baseUrl,
+      'zh-CN': `${baseUrl}/zh-CN`,
+      es: `${baseUrl}/es`,
+    },
+    '/quiz': {
+      en: `${baseUrl}/quiz`,
+      'zh-CN': `${baseUrl}/zh-CN/quiz`,
+      es: `${baseUrl}/es/quiz`,
+    },
+    '/temperament-test': {
+      en: `${baseUrl}/temperament-test`,
+      'zh-CN': `${baseUrl}/zh-CN/temperament-test`,
+      es: `${baseUrl}/es/temperament-test`,
+    },
+    '/four-temperaments-test': {
+      en: `${baseUrl}/four-temperaments-test`,
+      'zh-CN': `${baseUrl}/zh-CN/four-temperaments-test`,
+      es: `${baseUrl}/es/four-temperaments-test`,
+    },
+  }
+
+  function alternatesFor(path: string) {
+    const languages = localizedAlternates[path]
+    return languages ? { languages } : undefined
+  }
 
   const subtypeUrls = getAllSubtypes().flatMap(subtype => [
     {
@@ -26,6 +54,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date('2026-07-02'),
       changeFrequency: page.changeFrequency,
       priority: page.priority,
+      alternates: alternatesFor(page.href),
     },
     {
       url: `${baseUrl}${page.href}.md`,
@@ -34,6 +63,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
   ])
+  const localizedUrls = Object.keys(localizedLocales).flatMap((locale) => (
+    Object.values(localizedPagePaths).map((path) => {
+      const englishPath = path || '/'
+      return {
+      url: `${baseUrl}/${locale}${path}`,
+      lastModified: new Date('2026-07-02'),
+      changeFrequency: 'weekly' as const,
+      priority: path === '' ? 0.88 : 0.84,
+      alternates: alternatesFor(englishPath),
+    }
+    })
+  ))
 
   return [
     {
@@ -41,12 +82,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
+      alternates: alternatesFor('/'),
     },
     {
       url: `${baseUrl}/quiz`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.95,
+      alternates: alternatesFor('/quiz'),
     },
     {
       url: `${baseUrl}/what-is-temperament-test`,
@@ -103,6 +146,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     ...seoUrls,
+    ...localizedUrls,
     ...subtypeUrls,
   ]
 }

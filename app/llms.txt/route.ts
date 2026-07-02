@@ -1,5 +1,6 @@
 import { allContentPages } from '@/lib/seo-content'
 import { getAllSubtypes } from '@/lib/subtypes'
+import { localizedLocales, localizedPages, localizedPath, type LocalizedPageKey } from '@/lib/localized-content'
 
 export const dynamic = 'force-static'
 
@@ -20,6 +21,14 @@ export function GET() {
     '',
     '## High-intent temperament resources',
     ...allContentPages.map((page) => `- ${page.title}: https://www.fourtype.com${page.href} - ${page.description}`),
+    '',
+    '## Localized temperament resources',
+    ...Object.keys(localizedLocales).flatMap((locale) => (
+      (Object.keys(localizedPages[locale as keyof typeof localizedPages]) as LocalizedPageKey[]).map((pageKey) => {
+        const page = localizedPages[locale as keyof typeof localizedPages][pageKey]
+        return `- ${page.title} (${locale}): https://www.fourtype.com${localizedPath(locale as keyof typeof localizedPages, pageKey)} - ${page.description}`
+      })
+    )),
     '',
     '## Temperament subtype profiles',
     ...subtypes.map((subtype) => `- ${subtype.name}: https://www.fourtype.com/subtype/${subtype.slug} - ${subtype.tagline}`),

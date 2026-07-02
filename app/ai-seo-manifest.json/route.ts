@@ -1,5 +1,6 @@
 import { blogArticles, seoPages, staticContentPages } from '@/lib/seo-content'
 import { getAllSubtypes } from '@/lib/subtypes'
+import { localizedLocales, localizedPages, localizedPath, type LocalizedPageKey } from '@/lib/localized-content'
 
 export const dynamic = 'force-static'
 
@@ -85,6 +86,20 @@ export function GET() {
       primaryTemperament: subtype.primary,
       secondaryTemperament: subtype.secondary,
     })),
+    ...Object.keys(localizedLocales).flatMap((locale) => (
+      (Object.keys(localizedPages[locale as keyof typeof localizedPages]) as LocalizedPageKey[]).map((pageKey) => {
+        const page = localizedPages[locale as keyof typeof localizedPages][pageKey]
+        return {
+          route: localizedPath(locale as keyof typeof localizedPages, pageKey),
+          kind: 'localized-guide',
+          locale,
+          title: page.title,
+          description: page.description,
+          priority: pageKey === 'home' ? 0.88 : 0.84,
+          changeFrequency: 'weekly',
+        }
+      })
+    )),
     {
       route: '/llms.txt',
       kind: 'ai-index',
@@ -113,7 +128,7 @@ export function GET() {
     ],
     routes: uniqueRoutes.map(({ route, ...metadata }) => ({
       html: `${baseUrl}${route}`,
-      markdown: route === '/llms.txt' ? null : markdownUrl(route),
+      markdown: route === '/llms.txt' || route.startsWith('/zh-CN') || route.startsWith('/es') ? null : markdownUrl(route),
       ...metadata,
     })),
   }
