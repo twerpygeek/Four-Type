@@ -66,6 +66,18 @@ export interface QuizCopy {
     copiedButton: string
     retakeButton: string
     footer: string
+    leadCapture: {
+      eyebrow: string
+      title: string
+      body: string
+      placeholder: string
+      button: string
+      submitting: string
+      success: string
+      error: string
+      trust: string
+      consent: string
+    }
     coreNeed: string
     strengths: string
     shadowSide: string
@@ -185,6 +197,18 @@ const enCopy: QuizCopy = {
     copiedButton: 'Link Copied!',
     retakeButton: 'Retake Quest',
     footer: 'FourType • Free forever • Know Thyself.',
+    leadCapture: {
+      eyebrow: 'Full Profile List',
+      title: 'Want the full version of your FourType profile?',
+      body: 'Leave your email and I will send the full report when it is ready: stress pattern, relationship style, work style, blind spot, and one growth move for this week.',
+      placeholder: 'you@example.com',
+      button: 'Save My Full Profile',
+      submitting: 'Saving...',
+      success: 'Saved. Your email was added to the full report list.',
+      error: 'Something went wrong. Please try again in a moment.',
+      trust: 'No spam. Your free result stays free.',
+      consent: 'I agree to receive my FourType full profile and occasional FourType updates.',
+    },
     coreNeed: 'Core Need',
     strengths: 'Strengths',
     shadowSide: 'Shadow Side',
@@ -304,6 +328,18 @@ const zhCopy: QuizCopy = {
     copiedButton: '链接已复制！',
     retakeButton: '重新测试',
     footer: 'FourType • 永久免费 • 认识你自己。',
+    leadCapture: {
+      eyebrow: '完整报告名单',
+      title: '想收到完整 FourType 个人报告吗？',
+      body: '留下你的邮箱。完整报告准备好后，我会发送给你，包括压力模式、关系风格、工作风格、盲点，以及本周一个成长行动。',
+      placeholder: 'you@example.com',
+      button: '保存我的完整报告',
+      submitting: '正在保存...',
+      success: '已保存。你的邮箱已加入完整报告名单。',
+      error: '出了点问题。请稍后再试。',
+      trust: '不发送垃圾邮件。你的免费结果永远免费。',
+      consent: '我同意接收 FourType 完整报告和偶尔的 FourType 更新。',
+    },
     coreNeed: '核心需求',
     strengths: '优势',
     shadowSide: '阴影面',
@@ -423,6 +459,18 @@ const esCopy: QuizCopy = {
     copiedButton: '¡Enlace copiado!',
     retakeButton: 'Repetir misión',
     footer: 'FourType • Gratis para siempre • Conócete a ti mismo.',
+    leadCapture: {
+      eyebrow: 'Lista del perfil completo',
+      title: '¿Quieres la versión completa de tu perfil FourType?',
+      body: 'Deja tu email y te enviaré el informe completo cuando esté listo: patrón de estrés, estilo relacional, estilo laboral, punto ciego y un movimiento de crecimiento para esta semana.',
+      placeholder: 'tu@email.com',
+      button: 'Guardar Mi Perfil Completo',
+      submitting: 'Guardando...',
+      success: 'Guardado. Tu email se añadió a la lista del informe completo.',
+      error: 'Algo salió mal. Inténtalo de nuevo en un momento.',
+      trust: 'Sin spam. Tu resultado gratuito seguirá siendo gratuito.',
+      consent: 'Acepto recibir mi perfil completo FourType y actualizaciones ocasionales de FourType.',
+    },
     coreNeed: 'Necesidad central',
     strengths: 'Fortalezas',
     shadowSide: 'Lado sombra',

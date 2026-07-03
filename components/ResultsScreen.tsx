@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import type { FormEvent } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ScoreMap, TemperamentKey, getDominantAndSecondary, getMaskingWarning, resolveBlend } from '@/lib/scoringKey'
@@ -112,6 +113,9 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
   const [showShareCard, setShowShareCard] = useState(false)
   const [viewingClass, setViewingClass] = useState<TemperamentKey | null>(null)
   const [linkCopied, setLinkCopied] = useState(false)
+  const [leadEmail, setLeadEmail] = useState('')
+  const [leadWebsite, setLeadWebsite] = useState('')
+  const [leadStatus, setLeadStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const viewingTemp = viewingClass ? TEMPERAMENTS[viewingClass] : null
   
   // Generate shareable URL
@@ -150,6 +154,43 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
       }
     } else {
       handleCopyLink()
+    }
+  }
+
+  const handleLeadSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (leadStatus === 'submitting') return
+
+    setLeadStatus('submitting')
+
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: leadEmail,
+          website: leadWebsite,
+          heroName,
+          locale,
+          blendKey: blendResult.blendKey,
+          resultName,
+          resultBlend,
+          scores,
+          shareUrl,
+          source: 'quiz-result',
+          consentText: copy.leadCapture.consent,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Lead capture failed.')
+      }
+
+      setLeadStatus('success')
+      setLeadEmail('')
+    } catch {
+      setLeadStatus('error')
     }
   }
 
@@ -652,6 +693,94 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
             </p>
           )}
         </div>
+
+        {/* EMAIL CAPTURE */}
+        <form
+          onSubmit={handleLeadSubmit}
+          className="rounded-2xl border p-5 flex flex-col gap-4 relative overflow-hidden"
+          style={{ backgroundColor: 'rgba(26, 26, 46, 0.86)', borderColor: `${primaryColor}35` }}
+        >
+          <div
+            className="absolute -top-16 -right-16 w-36 h-36 rounded-full opacity-15 blur-3xl"
+            style={{ backgroundColor: primaryColor }}
+          />
+          <div className="relative flex flex-col gap-2">
+            <p className="font-serif text-xs tracking-widest uppercase" style={{ color: primaryColor }}>
+              {copy.leadCapture.eyebrow}
+            </p>
+            <h2 className="font-serif text-xl font-black text-[#E2E8F0] leading-tight">
+              {copy.leadCapture.title}
+            </h2>
+            <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
+              {copy.leadCapture.body}
+            </p>
+          </div>
+
+          <input
+            type="text"
+            name="website"
+            value={leadWebsite}
+            onChange={(event) => setLeadWebsite(event.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            className="hidden"
+            aria-hidden="true"
+          />
+
+          <div className="relative flex flex-col sm:flex-row gap-2">
+            <input
+              type="email"
+              value={leadEmail}
+              onChange={(event) => {
+                setLeadEmail(event.target.value)
+                if (leadStatus === 'error') setLeadStatus('idle')
+              }}
+              placeholder={copy.leadCapture.placeholder}
+              required
+              disabled={leadStatus === 'submitting' || leadStatus === 'success'}
+              className="min-h-12 flex-1 rounded-xl border px-4 font-sans text-sm text-[#E2E8F0] outline-none transition-all placeholder:text-[#4A5568] disabled:cursor-not-allowed disabled:opacity-60"
+              style={{
+                backgroundColor: 'rgba(13, 13, 15, 0.72)',
+                borderColor: `${primaryColor}30`,
+              }}
+            />
+            <button
+              type="submit"
+              disabled={leadStatus === 'submitting' || leadStatus === 'success'}
+              className="min-h-12 rounded-xl px-5 font-serif text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
+              style={{
+                backgroundColor: primaryColor,
+                color: '#0D0D0F',
+                boxShadow: `0 0 24px ${primaryColor}20`,
+              }}
+            >
+              {leadStatus === 'submitting' ? copy.leadCapture.submitting : copy.leadCapture.button}
+            </button>
+          </div>
+
+          <label className="relative flex items-start gap-2 font-sans text-[11px] leading-relaxed text-[#64748B]">
+            <input type="checkbox" required className="mt-0.5 accent-[#FFD700]" />
+            <span>{copy.leadCapture.consent}</span>
+          </label>
+
+          <div className="relative min-h-5">
+            {leadStatus === 'success' && (
+              <p className="font-sans text-xs leading-relaxed text-[#52B788]">
+                {copy.leadCapture.success}
+              </p>
+            )}
+            {leadStatus === 'error' && (
+              <p className="font-sans text-xs leading-relaxed text-[#E63946]">
+                {copy.leadCapture.error}
+              </p>
+            )}
+            {leadStatus === 'idle' && (
+              <p className="font-sans text-xs leading-relaxed text-[#4A5568]">
+                {copy.leadCapture.trust}
+              </p>
+            )}
+          </div>
+        </form>
 
         {/* CONTINUE YOUR JOURNEY */}
         <div
