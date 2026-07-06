@@ -1,12 +1,13 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowLeft, Flame, Wind, Mountain, Droplets, BookOpen, Target, Heart, Users, Sparkles } from 'lucide-react'
+import { ArrowLeft, Flame, Wind, Mountain, Droplets, Target, Heart, Sparkles, Eye, Briefcase, AlertTriangle, Shield, Zap } from 'lucide-react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import RuneBackground from '@/components/RuneBackground'
-import { Subtype, getSubtypeColor } from '@/lib/subtypes'
+import { Subtype, getKnowThyselfInsight, getSubtypeColor } from '@/lib/subtypes'
 
 interface SubtypePageClientProps {
   subtype: Subtype
@@ -15,6 +16,7 @@ interface SubtypePageClientProps {
 export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
   const color = getSubtypeColor(subtype.primary)
   const secondaryColor = subtype.secondary && subtype.secondary !== 'pure' ? getSubtypeColor(subtype.secondary as 'sanguine' | 'choleric' | 'melancholic' | 'phlegmatic') : null
+  const knowThyself = getKnowThyselfInsight(subtype)
   
   // Determine element icon based on primary temperament
   const elementMap: Record<string, string> = {
@@ -207,6 +209,70 @@ export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
             </div>
           )}
           
+          {/* Know Thyself */}
+          <div className="mb-16 rounded-2xl border p-6 md:p-8 relative overflow-hidden" style={{ backgroundColor: `${color}08`, borderColor: `${color}30` }}>
+            <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full blur-3xl opacity-20" style={{ backgroundColor: secondaryColor || color }} />
+            <div className="relative">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-11 w-11 rounded-xl flex items-center justify-center border" style={{ borderColor: `${color}50`, backgroundColor: `${color}18` }}>
+                  <Eye className="w-5 h-5" style={{ color }} />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold tracking-[0.28em] uppercase text-muted-foreground">Know Thyself</p>
+                  <h2 className="font-serif text-3xl md:text-4xl font-bold" style={{ color }}>The Deeper Pattern</h2>
+                </div>
+              </div>
+              <p className="text-muted-foreground leading-relaxed max-w-3xl mb-8">
+                These are the patterns that often make a result feel uncomfortably accurate: the fear underneath the behavior, the way others misread you, and the small growth move that changes everything.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-4 mb-6">
+                <InsightCard color={color} icon={<Shield className="w-5 h-5" />} title="Core Fear" body={knowThyself.coreFear} />
+                <InsightCard color={color} icon={<Eye className="w-5 h-5" />} title="What People Misunderstand" body={knowThyself.misunderstoodAs} />
+                <InsightCard color={color} icon={<Heart className="w-5 h-5" />} title="Relationship Pattern" body={knowThyself.relationshipPattern} />
+                <InsightCard color={color} icon={<Briefcase className="w-5 h-5" />} title="Work Pattern" body={knowThyself.workPattern} />
+              </div>
+
+              <div className="grid lg:grid-cols-3 gap-4 mb-6">
+                <div className="rounded-xl border p-5" style={{ borderColor: `${color}25`, backgroundColor: 'rgba(13, 13, 15, 0.42)' }}>
+                  <div className="flex items-center gap-2 mb-4">
+                    <AlertTriangle className="w-5 h-5" style={{ color }} />
+                    <h3 className="font-serif text-xl font-bold">Stress Spiral</h3>
+                  </div>
+                  <div className="space-y-2">
+                    {knowThyself.stressSpiral.map((step, index) => (
+                      <div key={`${step}-${index}`} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold" style={{ backgroundColor: `${color}22`, color }}>
+                          {index + 1}
+                        </span>
+                        <span>{step}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <InsightCard color={color} icon={<Target className="w-5 h-5" />} title="Blind Spot" body={knowThyself.blindSpot} compact />
+                <InsightCard color={color} icon={<Zap className="w-5 h-5" />} title="Growth Move" body={knowThyself.growthMove} compact />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4 mb-6">
+                <InsightCard color={color} icon={<Heart className="w-5 h-5" />} title="How To Love This Type" body={knowThyself.howToLove} />
+                <InsightCard color={color} icon={<AlertTriangle className="w-5 h-5" />} title="How They Self-Sabotage" body={knowThyself.selfSabotage} />
+              </div>
+
+              <div className="rounded-xl border p-5" style={{ borderColor: `${color}30`, backgroundColor: 'rgba(13, 13, 15, 0.48)' }}>
+                <p className="font-serif text-xs tracking-[0.28em] uppercase text-muted-foreground mb-4">This is you if...</p>
+                <div className="grid md:grid-cols-3 gap-3">
+                  {knowThyself.thisIsYouIf.map((item) => (
+                    <div key={item} className="rounded-lg border px-4 py-3" style={{ borderColor: `${color}22`, backgroundColor: `${color}0d` }}>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Famous Examples */}
           {subtype.famousExamples && subtype.famousExamples.length > 0 && (
             <div className="rounded-xl border p-8 mb-16" style={{ backgroundColor: `${color}05`, borderColor: `${color}20` }}>
@@ -250,6 +316,30 @@ export default function SubtypePageClient({ subtype }: SubtypePageClientProps) {
       </section>
       
       <Footer />
+    </div>
+  )
+}
+
+function InsightCard({
+  color,
+  icon,
+  title,
+  body,
+  compact = false,
+}: {
+  color: string
+  icon: ReactNode
+  title: string
+  body: string
+  compact?: boolean
+}) {
+  return (
+    <div className="rounded-xl border p-5" style={{ borderColor: `${color}25`, backgroundColor: 'rgba(13, 13, 15, 0.42)' }}>
+      <div className="flex items-center gap-2 mb-3">
+        <span style={{ color }}>{icon}</span>
+        <h3 className={`font-serif font-bold ${compact ? 'text-lg' : 'text-xl'}`}>{title}</h3>
+      </div>
+      <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
     </div>
   )
 }

@@ -60,6 +60,98 @@ export interface Subtype {
   blendKey?: string // Maps to the RPG blend key if applicable
 }
 
+export interface KnowThyselfInsight {
+  coreFear: string
+  misunderstoodAs: string
+  stressSpiral: string[]
+  relationshipPattern: string
+  workPattern: string
+  blindSpot: string
+  growthMove: string
+  howToLove: string
+  selfSabotage: string
+  thisIsYouIf: string[]
+}
+
+type Temperament = Subtype['primary']
+
+type TemperamentInsight = {
+  protection: string
+  fear: string
+  misunderstoodAs: string
+  stressSpiral: string[]
+  relationshipPattern: string
+  workPattern: string
+  blindSpot: string
+  growthMove: string
+  howToLove: string
+  selfSabotage: string
+  thisIsYouIf: string[]
+}
+
+const TEMPERAMENT_INSIGHTS: Record<Temperament, TemperamentInsight> = {
+  choleric: {
+    protection: 'control, progress, and competence',
+    fear: 'being powerless, dependent, slowed down, or trapped under weak leadership',
+    misunderstoodAs: 'wanting control for its own sake when you are often trying to prevent chaos, waste, or failure',
+    stressSpiral: ['pressure rises', 'you speed up', 'you take over', 'people resist', 'you feel alone carrying everything'],
+    relationshipPattern: 'You show care by solving problems, protecting people, and moving things forward, but others may experience that as being managed instead of known.',
+    workPattern: 'You thrive with ownership, urgency, measurable outcomes, and authority to act. You struggle with vague consensus, slow approval loops, and teams that confuse discussion with progress.',
+    blindSpot: 'You can confuse emotional slowness with incompetence.',
+    growthMove: 'Ask one more question before giving the answer.',
+    howToLove: 'Respect them, be direct, keep your word, and do not punish their intensity when they are trying to protect what matters.',
+    selfSabotage: 'You move so fast that you create resistance, then interpret the resistance as proof that nobody else is capable.',
+    thisIsYouIf: ['You relax only after things are handled.', 'You trust competence faster than charm.', 'You say “just decide” more than you realize.'],
+  },
+  sanguine: {
+    protection: 'connection, energy, and possibility',
+    fear: 'being ignored, trapped in boredom, emotionally dismissed, or forced into a life with no spark',
+    misunderstoodAs: 'being shallow when you are often trying to keep hope and movement alive',
+    stressSpiral: ['pressure rises', 'you distract or perform', 'you overpromise', 'details slip', 'you feel ashamed and look for escape'],
+    relationshipPattern: 'You show care through warmth, invitation, humor, and presence, but others may need more consistency than your enthusiasm naturally provides.',
+    workPattern: 'You thrive with people, momentum, storytelling, fast feedback, and visible energy. You struggle with isolated detail work, repetitive maintenance, and environments where no one reacts.',
+    blindSpot: 'You can mistake novelty for progress.',
+    growthMove: 'Finish one small promise before chasing the next exciting option.',
+    howToLove: 'Enjoy them openly, respond to their energy, and help them land without making them feel boring for needing structure.',
+    selfSabotage: 'You chase the emotional high of beginning, then avoid the ordinary discipline that would let the idea become real.',
+    thisIsYouIf: ['You can revive a dead room in minutes.', 'You commit when you are excited and panic when it gets repetitive.', 'You feel most yourself when life has movement.'],
+  },
+  melancholic: {
+    protection: 'meaning, quality, accuracy, and emotional depth',
+    fear: 'being misunderstood, exposed as inadequate, forced into shallow work, or asked to accept something careless',
+    misunderstoodAs: 'being negative when you are often trying to protect what is true, beautiful, or worth doing well',
+    stressSpiral: ['pressure rises', 'you analyze harder', 'you see every flaw', 'you delay or withdraw', 'you feel alone with the weight of it'],
+    relationshipPattern: 'You show care through attention, memory, depth, and loyalty, but others may experience your standards as criticism if reassurance is missing.',
+    workPattern: 'You thrive with meaningful problems, clear standards, time to think, and room for excellence. You struggle with rushed decisions, shallow enthusiasm, and “good enough” work that is not actually good.',
+    blindSpot: 'You can confuse imperfect with unsafe.',
+    growthMove: 'Share the draft before it feels fully ready.',
+    howToLove: 'Take their inner world seriously, be specific with reassurance, and do not mock the things they care about deeply.',
+    selfSabotage: 'You raise the standard so high that starting becomes emotionally dangerous.',
+    thisIsYouIf: ['You notice the detail everyone else missed.', 'You need meaning before momentum.', 'You can look calm while carrying a whole private weather system.'],
+  },
+  phlegmatic: {
+    protection: 'peace, stability, loyalty, and emotional safety',
+    fear: 'being pressured, exposed to conflict, forced into intensity, or losing the steady bonds you depend on',
+    misunderstoodAs: 'not caring when you are often trying to keep the emotional system from breaking',
+    stressSpiral: ['pressure rises', 'you go quiet', 'you agree externally', 'resentment builds', 'you withdraw or become quietly immovable'],
+    relationshipPattern: 'You show care through consistency, patience, service, and calm presence, but others may not know what you want unless you say it earlier.',
+    workPattern: 'You thrive in stable teams with trust, clear expectations, and low-drama collaboration. You struggle with aggressive urgency, chaotic leadership, and public confrontation.',
+    blindSpot: 'You can confuse peacekeeping with honesty.',
+    growthMove: 'State one real preference before anyone asks twice.',
+    howToLove: 'Create safety, give them time, notice their quiet effort, and invite honesty without punishing it.',
+    selfSabotage: 'You avoid the small hard conversation until the relationship or project has to carry the weight of everything unsaid.',
+    thisIsYouIf: ['You say “I’m fine” while quietly updating the whole emotional ledger.', 'You need calm before clarity.', 'People rely on you more than they realize.'],
+  },
+}
+
+const SECONDARY_INFLUENCE: Record<Temperament | 'pure', string> = {
+  pure: 'Because this is a pure pattern, the main temperament is less filtered. The gift is clarity; the risk is overuse.',
+  choleric: 'Your Choleric secondary adds force, decisiveness, and impatience with anything that feels stuck.',
+  sanguine: 'Your Sanguine secondary adds warmth, expressiveness, and a stronger need for visible energy.',
+  melancholic: 'Your Melancholic secondary adds depth, standards, analysis, and sensitivity to what feels off.',
+  phlegmatic: 'Your Phlegmatic secondary adds steadiness, restraint, diplomacy, and a stronger need for peace.',
+}
+
 // Color mapping for temperaments
 export const SUBTYPE_COLORS = {
   sanguine: {
@@ -1209,6 +1301,43 @@ export function getSubtypeByBlendKey(blendKey: string): Subtype | undefined {
   }
 
   return getAllSubtypes().find((subtype) => subtype.blendKey === blendKey)
+}
+
+export function getKnowThyselfInsight(subtype: Subtype): KnowThyselfInsight {
+  const primary = TEMPERAMENT_INSIGHTS[subtype.primary]
+  const secondary = subtype.secondary === 'pure' ? null : TEMPERAMENT_INSIGHTS[subtype.secondary]
+  const influence = SECONDARY_INFLUENCE[subtype.secondary]
+  const subtypeName = subtype.name.replace(/^Pure\s+/, '')
+
+  return {
+    coreFear: `${subtype.name}s often protect ${primary.protection}. Underneath that is a fear of ${primary.fear}. ${influence}`,
+    misunderstoodAs: `People may read you as ${primary.misunderstoodAs}. In reality, your pattern is usually trying to keep ${primary.protection} intact.`,
+    stressSpiral: secondary
+      ? [...primary.stressSpiral.slice(0, 3), `your ${subtype.secondary} side intensifies the pattern`, primary.stressSpiral[primary.stressSpiral.length - 1]]
+      : primary.stressSpiral,
+    relationshipPattern: secondary
+      ? `${primary.relationshipPattern} Your ${subtype.secondary} side changes the flavor: it adds ${secondary.protection}, so people may experience you as more layered than a simple ${subtype.primary} profile.`
+      : primary.relationshipPattern,
+    workPattern: secondary
+      ? `${primary.workPattern} The ${subtype.secondary} influence means your best work needs both ${primary.protection} and ${secondary.protection}.`
+      : primary.workPattern,
+    blindSpot: secondary
+      ? `${primary.blindSpot} You may also underestimate how strongly your ${subtype.secondary} side is shaping what you call “just common sense.”`
+      : primary.blindSpot,
+    growthMove: secondary
+      ? `${primary.growthMove} Then check whether your ${subtype.secondary} side is helping you mature or just giving your default pattern a smarter disguise.`
+      : primary.growthMove,
+    howToLove: primary.howToLove,
+    selfSabotage: secondary
+      ? `${primary.selfSabotage} For ${subtypeName}s, the secondary pattern can make the sabotage look reasonable because it feels like ${secondary.protection}.`
+      : primary.selfSabotage,
+    thisIsYouIf: [
+      ...primary.thisIsYouIf.slice(0, 2),
+      secondary
+        ? `You want ${primary.protection}, but you also quietly need ${secondary.protection}.`
+        : primary.thisIsYouIf[2],
+    ],
+  }
 }
 
 // Get all subtypes as an array
