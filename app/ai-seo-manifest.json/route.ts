@@ -1,4 +1,4 @@
-import { blogArticles, seoPages, staticContentPages } from '@/lib/seo-content'
+import { blogArticles, contentLastReviewed, seoPages, staticContentPages } from '@/lib/seo-content'
 import { getAllSubtypes } from '@/lib/subtypes'
 import { localizedLocales, localizedPages, localizedPath, type LocalizedPageKey } from '@/lib/localized-content'
 
@@ -118,7 +118,7 @@ export function GET() {
   })
 
   const manifest = {
-    generatedAt: '2026-07-02',
+    generatedAt: contentLastReviewed,
     site: baseUrl,
     primaryTopic: 'Free four temperaments test for Choleric, Sanguine, Melancholic, Phlegmatic, and blended subtype patterns',
     primaryTargets: [

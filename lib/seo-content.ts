@@ -18,6 +18,9 @@ import {
   Users,
 } from 'lucide-react'
 
+export const contentLastReviewed = '2026-07-07'
+export const contentLastReviewedLabel = 'July 7, 2026'
+
 export type Accent = 'gold' | 'red' | 'blue' | 'green' | 'purple' | 'pink'
 
 export type ContentBlock =

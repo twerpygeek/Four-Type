@@ -9,7 +9,7 @@ import { EditorialNote } from '@/components/EditorialNote'
 import { FaqSection } from '@/components/FaqSection'
 import { InternalLinkHub } from '@/components/InternalLinkHub'
 import { TrustProof } from '@/components/TrustProof'
-import { accentStyles, breadcrumbJsonLd, faqJsonLd, fourTypeAuthorRef, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, getSeoPage, guideLinksForSeoPage, itemListJsonLd, quizActionJsonLd, seoPages, temperamentTopicJsonLd } from '@/lib/seo-content'
+import { accentStyles, breadcrumbJsonLd, contentLastReviewed, contentLastReviewedLabel, faqJsonLd, fourTypeAuthorRef, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, getSeoPage, guideLinksForSeoPage, itemListJsonLd, quizActionJsonLd, seoPages, temperamentTopicJsonLd } from '@/lib/seo-content'
 import { localizedPath, type LocalizedPageKey } from '@/lib/localized-content'
 
 type Props = {
@@ -70,7 +70,7 @@ export default async function SeoLandingPage({ params }: Props) {
     image: 'https://www.fourtype.com/og-image.jpg',
     url: `https://www.fourtype.com/${page.slug}`,
     datePublished: '2026-07-02',
-    dateModified: '2026-07-02',
+    dateModified: contentLastReviewed,
     inLanguage: 'en-US',
     author: fourTypeAuthorRef,
     publisher: fourTypeOrganizationRef,
@@ -104,6 +104,11 @@ export default async function SeoLandingPage({ params }: Props) {
             </div>
             <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 text-balance">{page.title}</h1>
             <p className="text-xl text-muted-foreground leading-relaxed">{page.description}</p>
+            <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+              <span>Reviewed {contentLastReviewedLabel}</span>
+              <span>Free 40-question quiz</span>
+              <span>Educational self-reflection</span>
+            </div>
             <Link
               href="/quiz"
               className={`mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-colors ${accent.button}`}

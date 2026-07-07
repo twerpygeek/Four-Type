@@ -1,10 +1,11 @@
 import { MetadataRoute } from 'next'
 import { getAllSubtypes } from '@/lib/subtypes'
-import { allContentPages } from '@/lib/seo-content'
+import { allContentPages, contentLastReviewed } from '@/lib/seo-content'
 import { localizedPagePaths, localizedLocales } from '@/lib/localized-content'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.fourtype.com'
+  const lastReviewedDate = new Date(contentLastReviewed)
   const localizedAlternates: Record<string, Record<string, string>> = {
     '/': {
       en: baseUrl,
@@ -36,13 +37,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const subtypeUrls = getAllSubtypes().flatMap(subtype => [
     {
       url: `${baseUrl}/subtype/${subtype.slug}`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
       url: `${baseUrl}/subtype/${subtype.slug}.md`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: 'monthly' as const,
       priority: 0.45,
     },
@@ -51,14 +52,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const seoUrls = allContentPages.flatMap((page) => [
     {
       url: `${baseUrl}${page.href}`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: page.changeFrequency,
       priority: page.priority,
       alternates: alternatesFor(page.href),
     },
     {
       url: `${baseUrl}${page.href}.md`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: 'monthly' as const,
       priority: 0.5,
     },
@@ -68,7 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const englishPath = path || '/'
       return {
       url: `${baseUrl}/${locale}${path}`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: 'weekly' as const,
       priority: path === '' ? 0.88 : 0.84,
       alternates: alternatesFor(englishPath),
@@ -117,31 +118,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/blog.md`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
       url: `${baseUrl}/llms.txt`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: 'weekly',
       priority: 0.5,
     },
     {
       url: `${baseUrl}/index.md`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
       url: `${baseUrl}/quiz.md`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
       url: `${baseUrl}/what-is-temperament-test.md`,
-      lastModified: new Date('2026-07-02'),
+      lastModified: lastReviewedDate,
       changeFrequency: 'monthly',
       priority: 0.5,
     },
