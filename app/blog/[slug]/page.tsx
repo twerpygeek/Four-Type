@@ -81,6 +81,10 @@ export default async function BlogArticlePage({ params }: Props) {
   )).slice(0, 8)
   const trustArticleSlugs = new Set([
     'best-temperament-test',
+    'idrlabs-temperament-test-vs-fourtype',
+    'jobcannon-temperament-test-vs-fourtype',
+    'temperament-test-vs-personality-test',
+    'ospp-four-temperaments-test',
     'best-free-four-temperaments-test',
     'temperament-test-accuracy',
     'temperament-test-questions',
@@ -88,6 +92,12 @@ export default async function BlogArticlePage({ params }: Props) {
     'how-to-read-temperament-test-results',
   ])
   const showTrustSignals = trustArticleSlugs.has(article.slug)
+  const updatedDate = new Intl.DateTimeFormat('en', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${article.published}T00:00:00Z`))
   const relatedGuidesSchema = itemListJsonLd('Related temperament test guides', relatedGuideLinks)
 
   return (
@@ -109,7 +119,7 @@ export default async function BlogArticlePage({ params }: Props) {
             <p className="text-xl text-muted-foreground leading-relaxed">{article.description}</p>
             <div className="flex flex-wrap items-center gap-4 mt-6 text-sm text-muted-foreground">
               <span>{article.readTime} read</span>
-              <span>Updated July 2, 2026</span>
+              <span>Updated {updatedDate}</span>
             </div>
           </div>
 
