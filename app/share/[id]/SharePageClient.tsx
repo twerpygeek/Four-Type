@@ -10,6 +10,7 @@ import { getSubtypeByBlendKey } from '@/lib/subtypes'
 import { getShareText } from '@/lib/share-copy'
 import { trackFourTypeEvent } from '@/lib/analytics'
 import CinematicBackground from '@/components/CinematicBackground'
+import ShareableCard from '@/components/ShareableCard'
 import { YouTubeEmbed } from '@/components/YouTubeEmbed'
 
 interface SharePageClientProps {
@@ -278,6 +279,25 @@ export default function SharePageClient({
           </div>
         </div>
         
+        {/* Story card for resharing */}
+        <div
+          className="w-full rounded-2xl border p-5 flex flex-col gap-4"
+          style={{ backgroundColor: 'rgba(26, 26, 46, 0.82)', borderColor: `${primaryColor}35` }}
+        >
+          <div className="flex flex-col gap-2">
+            <p className="font-serif text-xs tracking-widest uppercase" style={{ color: primaryColor }}>
+              Save the Story Card
+            </p>
+            <h2 className="font-serif text-2xl font-black leading-tight text-[#E2E8F0]">
+              Share the part that makes people say, &ldquo;wait, that is me.&rdquo;
+            </h2>
+            <p className="font-sans text-sm leading-relaxed text-[#94A3B8]">
+              Download a vertical Instagram or TikTok story card with the character, result name, and three painfully accurate lines.
+            </p>
+          </div>
+          <ShareableCard heroName={heroName} temperament={dominantTemp} scores={scores} />
+        </div>
+
         {/* Share actions */}
         <div className="w-full flex flex-col gap-3">
           <button
