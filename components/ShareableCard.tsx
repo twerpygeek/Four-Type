@@ -174,8 +174,8 @@ export default function ShareableCard({ heroName, temperament, scores }: Shareab
                 </div>
 
                 <div className="mt-4 w-full rounded-2xl border p-4 text-left" style={{ borderColor: `${blendColors.primary}38`, backgroundColor: '#FFFFFF0D' }}>
-                  <p className="mb-3 font-serif text-[10px] uppercase tracking-[0.28em] text-[#64748B]">
-                    Painfully Accurate
+                  <p className="mb-3 font-serif text-[10px] uppercase tracking-[0.24em] text-[#64748B]">
+                    3 Painfully Accurate Things
                   </p>
                   <div className="flex flex-col gap-2.5">
                     {storyBullets.map((bullet) => (
@@ -345,13 +345,13 @@ function getStoryBullets(primary: TemperamentKey) {
   const bullets: Record<TemperamentKey, string[]> = {
     Red: [
       'Takes charge before anyone asks.',
-      'Hates slow, vague decisions.',
-      'Looks calm until control is lost.',
+      'Hates vague plans more than hard work.',
+      'Feels calm only when there is a next move.',
     ],
     Yellow: [
       'Turns silence into a stage.',
       'Needs momentum more than permission.',
-      'Feels bored before they admit it.',
+      'Gets bored before admitting they are bored.',
     ],
     Blue: [
       'Spots flaws nobody else sees.',
@@ -360,8 +360,8 @@ function getStoryBullets(primary: TemperamentKey) {
     ],
     Green: [
       'Keeps the peace until they are done.',
-      'Not lazy, just allergic to chaos.',
-      'Says yes while quietly tracking everything.',
+      'Looks relaxed while tracking everything.',
+      'Says yes, then needs three days alone.',
     ],
   }
 

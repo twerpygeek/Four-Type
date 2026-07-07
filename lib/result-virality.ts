@@ -47,17 +47,17 @@ const socialPromptByPrimary: Record<Primary, string[]> = {
 }
 
 const ogHookByPrimary: Record<Primary, string> = {
-  Red: 'I got the one who takes over under pressure',
-  Yellow: 'I got the one who turns life into momentum',
-  Blue: 'I got the one who notices what everyone missed',
-  Green: 'I got the one who keeps the peace until it costs them',
+  Red: 'It knew I take over when nobody decides',
+  Yellow: 'It knew I chase the energy in the room',
+  Blue: 'It knew I notice what everyone missed',
+  Green: 'It knew I keep the peace until I disappear',
 }
 
 const ogLineByPrimary: Record<Primary, string> = {
-  Red: 'It caught my need for control, clarity, and forward motion.',
-  Yellow: 'It caught my need for energy, connection, and a room that feels alive.',
-  Blue: 'It caught my standards, overthinking, and quiet need for meaning.',
-  Green: 'It caught my calm, avoidance, and the things I do not say out loud.',
+  Red: 'Painfully accurate: control, impatience with vague plans, and the need for a next move.',
+  Yellow: 'Painfully accurate: charm, restlessness, and the need for life to feel alive.',
+  Blue: 'Painfully accurate: standards, overthinking, and the need for things to mean something.',
+  Green: 'Painfully accurate: calm, avoidance, and the things I do not say out loud.',
 }
 
 export function getResultOneSentence(blend: Blend) {

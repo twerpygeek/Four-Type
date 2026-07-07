@@ -2,10 +2,10 @@ import type { Blend } from './blends'
 import { getMisunderstoodLine, getOgHook, getOgLine, getResultOneSentence } from './result-virality'
 
 const pressureHooks: Record<Blend['primary'], string> = {
-  Red: 'how I take control under pressure',
-  Yellow: 'why I chase energy and momentum',
-  Blue: 'why I notice what everyone else misses',
-  Green: 'why I keep the peace until I quietly refuse',
+  Red: 'why I take over when things get vague',
+  Yellow: 'why I chase energy before I admit I am bored',
+  Blue: 'why I notice the flaw before the compliment',
+  Green: 'why I keep the peace until I quietly check out',
 }
 
 const resultHooks: Record<Blend['primary'], string> = {
@@ -15,12 +15,19 @@ const resultHooks: Record<Blend['primary'], string> = {
   Green: 'conflict pattern',
 }
 
+const chipHooks: Record<Blend['primary'], string[]> = {
+  Red: ['control', 'pressure', 'directness'],
+  Yellow: ['energy', 'attention', 'momentum'],
+  Blue: ['standards', 'overthinking', 'meaning'],
+  Green: ['calm', 'avoidance', 'hidden limits'],
+}
+
 export function getShareHook(blend: Blend) {
-  return `This test called me ${blend.name} and exposed ${pressureHooks[blend.primary]}.`
+  return `FourType called me ${blend.name} and somehow caught ${pressureHooks[blend.primary]}.`
 }
 
 export function getShareText(blend: Blend, shareUrl?: string) {
-  const text = `${getShareHook(blend)} Annoyingly accurate. What does it say about you?`
+  const text = `${getShareHook(blend)} Annoyingly accurate. What are you?`
   return shareUrl ? `${text}\n\n${shareUrl}` : text
 }
 
@@ -32,14 +39,14 @@ export function getShareMetadata(heroName: string, blend: Blend) {
 
   return {
     title: `${safeName} got ${blend.name} on FourType`,
-    description: `${oneSentence} Take the free test and see what it catches about you.`,
-    ogTitle: `${safeName} is ${blend.name}`,
-    ogDescription: misunderstood,
+    description: `${oneSentence} Take the free temperament test and see what it catches about you.`,
+    ogTitle: `${safeName} got ${blend.name}`,
+    ogDescription: `${misunderstood} Take the free test and see what it says about you.`,
     hook: getOgHook(blend),
     eyebrow: 'Personality Dossier',
     insight,
     line: getOgLine(blend),
-    chips: [insight, 'stress pattern', 'growth move'],
-    cta: 'Take the free FourType test',
+    chips: chipHooks[blend.primary],
+    cta: 'What are you? Take the free test',
   }
 }
