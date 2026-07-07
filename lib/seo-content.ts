@@ -109,9 +109,9 @@ export const seoPages: SeoPage[] = [
   {
     slug: 'temperament-test',
     shortTitle: 'Temperament Test',
-    title: 'Free Temperament Test: Find Your Choleric, Sanguine, Melancholic, or Phlegmatic Type',
-    description: 'Take a free 40-question temperament test to compare Choleric, Sanguine, Melancholic, and Phlegmatic patterns with subtype guidance.',
-    keywords: ['temperament test', 'free temperament test', 'four temperament test', '4 temperament test', 'choleric sanguine melancholic phlegmatic test', 'temperament quiz'],
+    title: 'Free Temperament Test 2026: Find Your Choleric, Sanguine, Melancholic, or Phlegmatic Type',
+    description: 'Take a free 2026 temperament test with 40 questions to compare Choleric, Sanguine, Melancholic, and Phlegmatic patterns with subtype guidance.',
+    keywords: ['temperament test', 'temperament test 2026', 'free temperament test', 'free temperament test 2026', 'four temperament test', '4 temperament test', 'choleric sanguine melancholic phlegmatic test', 'temperament quiz'],
     eyebrow: 'Free Four Temperaments Quiz',
     icon: Target,
     accent: 'gold',
@@ -121,9 +121,9 @@ export const seoPages: SeoPage[] = [
     blocks: [
       {
         type: 'section',
-        title: 'Take a free temperament test with useful results',
+        title: 'Take a free 2026 temperament test with useful results',
         body: [
-          'A temperament test looks for your default behavioral pattern: how you respond to pressure, how you move toward goals, how you process emotion, and how you relate to other people. FourType uses 40 behavior-based questions so the result is grounded in repeated patterns rather than flattering labels.',
+          'A temperament test looks for your default behavioral pattern: how you respond to pressure, how you move toward goals, how you process emotion, and how you relate to other people. FourType is reviewed for 2026 and uses 40 behavior-based questions so the result is grounded in repeated patterns rather than flattering labels.',
           'FourType scores your answers across the four classical temperaments: Choleric, Sanguine, Melancholic, and Phlegmatic. You get a primary pattern, score spread, and subtype direction without a signup or paywall.',
         ],
       },
@@ -211,9 +211,9 @@ export const seoPages: SeoPage[] = [
   {
     slug: 'free-temperament-test',
     shortTitle: 'Free Temperament Test',
-    title: 'Free Temperament Test: Discover Your Four Temperaments Pattern',
-    description: 'Use FourType’s free temperament test to identify your dominant temperament and subtype without signups, paywalls, or clinical claims.',
-    keywords: ['free temperament test', 'free four temperaments test', 'free temperament quiz', 'personality temperament test free'],
+    title: 'Free Temperament Test 2026: Discover Your Four Temperaments Pattern',
+    description: 'Use FourType’s free 2026 temperament test to identify your dominant temperament and subtype without signups, paywalls, or clinical claims.',
+    keywords: ['free temperament test', 'free temperament test 2026', 'free four temperaments test', 'free temperament quiz', 'personality temperament test free'],
     eyebrow: 'Free Forever',
     icon: CheckCircle2,
     accent: 'green',
@@ -593,9 +593,9 @@ export const seoPages: SeoPage[] = [
   {
     slug: 'four-temperaments-test',
     shortTitle: 'Four Temperaments Test',
-    title: 'Four Temperaments Test: Free Choleric, Sanguine, Melancholic, Phlegmatic Quiz',
-    description: 'Take a free Four Temperaments test to compare Choleric, Sanguine, Melancholic, and Phlegmatic patterns with subtype guidance.',
-    keywords: ['four temperaments test', 'four temperament test', 'free four temperaments test', 'four temperaments quiz', 'choleric sanguine melancholic phlegmatic test', 'temperament test four types'],
+    title: 'Four Temperaments Test 2026: Free Choleric, Sanguine, Melancholic, Phlegmatic Quiz',
+    description: 'Take a free 2026 Four Temperaments test to compare Choleric, Sanguine, Melancholic, and Phlegmatic patterns with subtype guidance.',
+    keywords: ['four temperaments test', 'four temperaments test 2026', 'four temperament test', 'free four temperaments test', 'four temperaments quiz', 'choleric sanguine melancholic phlegmatic test', 'temperament test four types'],
     eyebrow: 'Free Four Temperaments Quiz',
     icon: BarChart3,
     accent: 'gold',
@@ -605,9 +605,9 @@ export const seoPages: SeoPage[] = [
     blocks: [
       {
         type: 'section',
-        title: 'Take the free Four Temperaments test',
+        title: 'Take the free 2026 Four Temperaments test',
         body: [
-          'A Four Temperaments test compares the four classic personality patterns: Choleric, Sanguine, Melancholic, and Phlegmatic. The free FourType quiz uses 40 behavior-based questions to show your strongest pattern and possible subtype.',
+          'A Four Temperaments test compares the four classic personality patterns: Choleric, Sanguine, Melancholic, and Phlegmatic. The free 2026 FourType quiz uses 40 behavior-based questions to show your strongest pattern and possible subtype.',
           'Instead of asking which label sounds flattering, FourType looks at repeated behavior: whether you tend to lead, connect, analyze, or stabilize first under ordinary pressure.',
         ],
       },

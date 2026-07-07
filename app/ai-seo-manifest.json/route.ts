@@ -24,11 +24,11 @@ export function GET() {
     {
       route: '/quiz',
       kind: 'quiz',
-      title: 'Free Temperament Test',
-      description: 'Take the free 40-question FourType quiz to discover your Choleric, Sanguine, Melancholic, and Phlegmatic score spread, blended subtype, strengths, blind spots, and shareable result.',
+      title: 'Free Temperament Test 2026',
+      description: 'Take the free 2026 FourType quiz with 40 questions to discover your Choleric, Sanguine, Melancholic, and Phlegmatic score spread, blended subtype, strengths, blind spots, and shareable result.',
       priority: 0.95,
       changeFrequency: 'weekly',
-      keywords: ['free temperament test', 'temperament quiz', 'four temperaments test', 'personality temperament test', 'choleric sanguine melancholic phlegmatic test'],
+      keywords: ['free temperament test', 'temperament test 2026', 'free temperament test 2026', 'temperament quiz', 'four temperaments test', 'personality temperament test', 'choleric sanguine melancholic phlegmatic test'],
     },
     {
       route: '/blog',

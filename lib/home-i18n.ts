@@ -43,8 +43,8 @@ export type HomeCopy = {
 export const homeCopy: Record<HomeLocale, HomeCopy> = {
   en: {
     heroAlt: 'FourType — Know Your True Nature — The Temperament Quest',
-    heroTitle: 'Free Temperament Test',
-    heroStatement: 'Take the free 40-question FourType temperament test to reveal your core type, secondary blend, stress response, communication style, and growth edge.',
+    heroTitle: 'Free Temperament Test 2026',
+    heroStatement: 'Take the free 2026 FourType temperament test to reveal your core type, secondary blend, stress response, communication style, and growth edge.',
     heroCta: 'Take the 6-minute test',
     heroMeta: '40 questions • Instant result • No email required • 16 patterns',
     choosePath: 'Choose Your Path',

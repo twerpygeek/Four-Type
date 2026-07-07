@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { breadcrumbJsonLd, faqJsonLd, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, itemListJsonLd, quizActionJsonLd, temperamentTopicJsonLd } from '@/lib/seo-content'
 
 export const metadata: Metadata = {
-  title: 'Free Temperament Test | 40-Question Personality Quiz',
-  description: 'Take the free 40-question temperament test to discover your Choleric, Sanguine, Melancholic, Phlegmatic, or blended subtype score spread. No email required for the core result.',
+  title: 'Free Temperament Test 2026 | 40-Question Personality Quiz',
+  description: 'Take the free 2026 FourType temperament test to discover your Choleric, Sanguine, Melancholic, Phlegmatic, or blended subtype score spread. No email required for the core result.',
   keywords: [
     'temperament test', 'free personality test', 'temperament quiz', '4 temperament test',
     'choleric sanguine melancholic phlegmatic', 'personality type quiz', 'temperament assessment',
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Free Temperament Test | Discover Your True Nature',
-    description: 'Take the free 40-question temperament test. Discover your score spread across Commander, Bard, Strategist, Guardian, and blended subtypes.',
+    title: 'Free Temperament Test 2026 | Discover Your True Nature',
+    description: 'Take the free 2026 FourType temperament test. Discover your score spread across Commander, Bard, Strategist, Guardian, and blended subtypes.',
     url: 'https://www.fourtype.com/quiz',
     type: 'website',
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free Temperament Test | 40-Question Quiz',
+    title: 'Free Temperament Test 2026 | 40-Question Quiz',
     description: 'Discover your temperament score spread: Choleric, Sanguine, Melancholic, Phlegmatic, and blended subtype direction.',
     images: ['https://www.fourtype.com/og-image.jpg'],
   },

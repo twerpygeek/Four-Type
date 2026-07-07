@@ -19,12 +19,12 @@ function QuizSeoSection() {
     <section className="bg-background border-t border-border px-4 py-16">
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Free Temperament Test</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Free Temperament Test 2026</p>
           <h1 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-            Take the FourType Temperament Test
+            Take the FourType Temperament Test for 2026
           </h1>
           <p className="text-muted-foreground leading-relaxed text-lg">
-            FourType is a free 40-question temperament test for discovering whether your strongest pattern is
+            FourType is a free 2026 temperament test with 40 questions for discovering whether your strongest pattern is
             Choleric, Sanguine, Melancholic, Phlegmatic, or a blended subtype. Answer based on your repeated
             behavior under ordinary pressure, then compare your score spread across all four temperaments.
           </p>
