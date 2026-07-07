@@ -10,7 +10,7 @@ import { EditorialNote } from '@/components/EditorialNote'
 import { FaqSection } from '@/components/FaqSection'
 import { InternalLinkHub } from '@/components/InternalLinkHub'
 import { TrustProof } from '@/components/TrustProof'
-import { accentStyles, blogArticles, breadcrumbJsonLd, faqJsonLd, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, getBlogArticle, itemListJsonLd, popularGuideLinks, quizActionJsonLd, temperamentTopicJsonLd } from '@/lib/seo-content'
+import { accentStyles, blogArticles, breadcrumbJsonLd, faqJsonLd, fourTypeAuthorRef, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, getBlogArticle, itemListJsonLd, popularGuideLinks, quizActionJsonLd, temperamentTopicJsonLd } from '@/lib/seo-content'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -63,7 +63,7 @@ export default async function BlogArticlePage({ params }: Props) {
     datePublished: article.published,
     dateModified: article.published,
     inLanguage: 'en-US',
-    author: fourTypeOrganizationRef,
+    author: fourTypeAuthorRef,
     publisher: fourTypeOrganizationRef,
     isPartOf: fourTypeWebsiteRef,
     about: temperamentTopicJsonLd,

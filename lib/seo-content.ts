@@ -3668,6 +3668,14 @@ export const blogArticles: BlogArticle[] = [
 
 export const staticContentPages: DiscoverablePage[] = [
   {
+    href: '/about',
+    title: 'About FourType',
+    description: 'Learn who created FourType, how the temperament test content is written, and how to use the quiz responsibly.',
+    priority: 0.74,
+    changeFrequency: 'monthly',
+    markdownBody: 'FourType is a free four temperaments quiz and self-reflection project created by Ian Goh. It is designed for practical self-knowledge, not clinical diagnosis, hiring, medical, or high-stakes assessment. The project separates ancient temperament language from modern personality science and explains Choleric, Sanguine, Melancholic, Phlegmatic, and blended subtype patterns in everyday terms.',
+  },
+  {
     href: '/blog/choleric',
     title: 'Choleric Temperament Guide',
     description: 'Discover the Choleric temperament, including leadership traits, strengths, weaknesses, careers, and growth strategies.',
@@ -4044,6 +4052,7 @@ export function itemListJsonLd(name: string, items: LinkCard[]) {
 export const fourTypeOrganizationRef = { '@id': 'https://www.fourtype.com/#organization' }
 export const fourTypeWebsiteRef = { '@id': 'https://www.fourtype.com/#website' }
 export const fourTypeQuizAppRef = { '@id': 'https://www.fourtype.com/quiz#app' }
+export const fourTypeAuthorRef = { '@id': 'https://www.fourtype.com/#ian-goh' }
 
 export const temperamentTopicJsonLd = [
   { '@type': 'DefinedTerm', name: 'Temperament test', url: 'https://www.fourtype.com/temperament-test' },

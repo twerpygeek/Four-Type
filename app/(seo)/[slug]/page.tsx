@@ -9,7 +9,7 @@ import { EditorialNote } from '@/components/EditorialNote'
 import { FaqSection } from '@/components/FaqSection'
 import { InternalLinkHub } from '@/components/InternalLinkHub'
 import { TrustProof } from '@/components/TrustProof'
-import { accentStyles, breadcrumbJsonLd, faqJsonLd, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, getSeoPage, guideLinksForSeoPage, itemListJsonLd, quizActionJsonLd, seoPages, temperamentTopicJsonLd } from '@/lib/seo-content'
+import { accentStyles, breadcrumbJsonLd, faqJsonLd, fourTypeAuthorRef, fourTypeOrganizationRef, fourTypeQuizAppRef, fourTypeWebsiteRef, getSeoPage, guideLinksForSeoPage, itemListJsonLd, quizActionJsonLd, seoPages, temperamentTopicJsonLd } from '@/lib/seo-content'
 import { localizedPath, type LocalizedPageKey } from '@/lib/localized-content'
 
 type Props = {
@@ -72,7 +72,7 @@ export default async function SeoLandingPage({ params }: Props) {
     datePublished: '2026-07-02',
     dateModified: '2026-07-02',
     inLanguage: 'en-US',
-    author: fourTypeOrganizationRef,
+    author: fourTypeAuthorRef,
     publisher: fourTypeOrganizationRef,
     isPartOf: fourTypeWebsiteRef,
     about: temperamentTopicJsonLd,

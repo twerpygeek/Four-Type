@@ -106,6 +106,21 @@ export default function RootLayout({
         sameAs: ['https://www.fourtype.com'],
       },
       {
+        '@type': 'Person',
+        '@id': 'https://www.fourtype.com/#ian-goh',
+        name: 'Ian Goh',
+        url: 'https://iangoh.com',
+        sameAs: ['https://iangoh.com'],
+        worksFor: { '@id': 'https://www.fourtype.com/#organization' },
+        knowsAbout: [
+          'Four temperaments',
+          'Temperament tests',
+          'Personality media',
+          'Self-reflection tools',
+          'Web products',
+        ],
+      },
+      {
         '@type': 'WebSite',
         '@id': 'https://www.fourtype.com/#website',
         name: 'FourType',

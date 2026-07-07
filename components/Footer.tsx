@@ -34,6 +34,7 @@ const footerLinks = {
     { href: '/quiz', label: 'Take the Quiz' },
     { href: '/blog', label: 'Blog' },
     { href: '/faq', label: 'FAQ' },
+    { href: '/about', label: 'About FourType' },
   ],
 }
 
