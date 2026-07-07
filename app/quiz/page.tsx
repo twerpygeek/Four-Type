@@ -1,96 +1,15 @@
-'use client'
-
-import { Suspense, useMemo, useState } from 'react'
-import type { ReactNode } from 'react'
+import { Suspense } from 'react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
-import { AnswerLetter } from '@/lib/questions'
-import { calculateScores, ScoreMap } from '@/lib/scoringKey'
-import { getQuizCopy, getQuizQuestions, type QuizLocale } from '@/lib/quiz-i18n'
-import { decodeShareId } from '@/lib/share-id'
 import { TrustProof } from '@/components/TrustProof'
-import NameInputScreen from '@/components/NameInputScreen'
-import QuestionScreen from '@/components/QuestionScreen'
-import LoadingScreen from '@/components/LoadingScreen'
-import ResultsScreen from '@/components/ResultsScreen'
-
-type Stage = 'name' | 'quiz' | 'loading' | 'results'
+import { QuizExperienceWithSearch } from './QuizClient'
 
 export default function QuizPage() {
   return (
-    <Suspense fallback={null}>
-      <QuizExperienceWithSearch locale="en" />
-    </Suspense>
-  )
-}
-
-function QuizExperienceWithSearch({ locale = 'en', showSeo = true }: { locale?: QuizLocale; showSeo?: boolean }) {
-  const searchParams = useSearchParams()
-
-  return <QuizExperience locale={locale} showSeo={showSeo} comparisonId={searchParams.get('compare') || ''} />
-}
-
-export function QuizExperience({ locale = 'en', showSeo = true, comparisonId = '' }: { locale?: QuizLocale; showSeo?: boolean; comparisonId?: string }) {
-  const comparison = useMemo(() => decodeShareId(comparisonId), [comparisonId])
-  const [stage, setStage] = useState<Stage>('name')
-  const [heroName, setHeroName] = useState('')
-  const [answers, setAnswers] = useState<Record<number, AnswerLetter>>({})
-  const [scores, setScores] = useState<ScoreMap>({ Yellow: 0, Red: 0, Blue: 0, Green: 0 })
-  const copy = getQuizCopy(locale)
-  const questions = getQuizQuestions(locale)
-
-  // Handle name submission
-  function handleNameSubmit(name: string) {
-    setHeroName(name)
-    setStage('quiz')
-  }
-
-  // Handle quiz completion
-  function handleQuizComplete(quizAnswers: Record<number, AnswerLetter>) {
-    setAnswers(quizAnswers)
-    const calculatedScores = calculateScores(quizAnswers)
-    setScores(calculatedScores)
-    setStage('loading')
-  }
-
-  // Handle loading complete
-  function handleLoadingComplete() {
-    setStage('results')
-  }
-
-  // Handle retake
-  function handleRetake() {
-    setAnswers({})
-    setScores({ Yellow: 0, Red: 0, Blue: 0, Green: 0 })
-    setStage('name')
-  }
-
-  let screen: ReactNode
-  switch (stage) {
-    case 'name':
-      screen = <NameInputScreen onStart={handleNameSubmit} copy={copy.name} />
-      break
-
-    case 'quiz':
-      screen = <QuestionScreen heroName={heroName} onComplete={handleQuizComplete} copy={copy.question} questions={questions} />
-      break
-
-    case 'loading':
-      screen = <LoadingScreen heroName={heroName} onComplete={handleLoadingComplete} copy={copy.loading} />
-      break
-
-    case 'results':
-      screen = <ResultsScreen heroName={heroName} scores={scores} onRetake={handleRetake} copy={copy.results} locale={locale} comparison={comparison} />
-      break
-
-    default:
-      screen = null
-  }
-
-  return (
     <>
-      {screen}
-      {showSeo && stage === 'name' && <QuizSeoSection />}
+      <Suspense fallback={null}>
+        <QuizExperienceWithSearch locale="en" />
+      </Suspense>
+      <QuizSeoSection />
     </>
   )
 }
@@ -141,6 +60,27 @@ function QuizSeoSection() {
         </div>
 
         <div className="mb-6">
+          <h2 className="font-serif text-2xl md:text-3xl font-bold mb-3">Why take FourType instead of another temperament test?</h2>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Search results include brief quizzes, psychometric-style tests, broad personality hubs, and report-first funnels. FourType is built for a free-first result that stays practical after the label.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-4 mb-12">
+          {[
+            { title: 'Deeper than a quick label', body: 'Forty behavior-based questions give more room to separate similar-looking patterns and read close scores.' },
+            { title: 'Focused on the four temperaments', body: 'The quiz is built around Choleric, Sanguine, Melancholic, Phlegmatic, and blended subtype patterns.' },
+            { title: 'Useful immediately after the result', body: 'Your result points toward stress response, communication style, relationship patterns, and growth moves.' },
+            { title: 'Clear about responsible limits', body: 'FourType is for self-reflection and education, not diagnosis, hiring, medical advice, or fixed identity claims.' },
+          ].map((item) => (
+            <div key={item.title} className="rounded-xl border border-border bg-card p-5">
+              <h2 className="font-serif text-lg font-bold mb-2">{item.title}</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mb-6">
           <h2 className="font-serif text-2xl md:text-3xl font-bold mb-3">Temperament Test Guides</h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Use these guides before or after the quiz to understand your score spread, question design, and blended subtype result.
@@ -156,6 +96,7 @@ function QuizSeoSection() {
             { title: 'Take a free 4 temperaments test', body: 'Learn how to read your score spread without forcing a flat label.', href: '/blog/4-temperaments-test-free' },
             { title: 'How FourType scores answers', body: 'Understand score spread, primary type, secondary type, and responsible limits.', href: '/methodology' },
             { title: 'What mixed results mean', body: 'Use your top two scores to explore blended temperament subtypes.', href: '/subtypes' },
+            { title: 'Compare temperament tests', body: 'Choose between FourType, OSPP, IDRlabs, Truity, JobCannon, Psych Central, and more.', href: '/blog/temperament-test-comparison' },
           ].map((item) => (
             <Link key={item.href} href={item.href} className="rounded-xl border border-border bg-secondary/20 p-5 transition-colors hover:border-primary/50">
               <h2 className="font-serif text-lg font-bold mb-2">{item.title}</h2>
@@ -187,6 +128,14 @@ function QuizSeoSection() {
               {
                 question: 'How long does the temperament test take?',
                 answer: 'The FourType temperament test has 40 questions and usually takes under 10 minutes.',
+              },
+              {
+                question: 'How is FourType different from other temperament tests?',
+                answer: 'FourType gives the core result free first, shows score spread across all four temperaments, points toward blended subtype direction, and links the result to practical guides for relationships, work, stress, and growth.',
+              },
+              {
+                question: 'Should I take FourType or a shorter temperament quiz?',
+                answer: 'Use a short quiz if you only want a quick first signal. Use FourType if you want more behavioral detail, score spread, subtype guidance, and practical follow-up after the result.',
               },
             ].map((item) => (
               <div key={item.question} className="rounded-xl border border-border bg-secondary/20 p-5">
