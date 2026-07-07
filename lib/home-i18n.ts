@@ -9,6 +9,7 @@ type TemperamentHomeCopy = {
 
 export type HomeCopy = {
   heroAlt: string
+  heroTitle: string
   heroStatement: string
   heroCta: string
   heroMeta: string
@@ -42,7 +43,8 @@ export type HomeCopy = {
 export const homeCopy: Record<HomeLocale, HomeCopy> = {
   en: {
     heroAlt: 'FourType — Know Your True Nature — The Temperament Quest',
-    heroStatement: 'Know your nature under pressure. Take the free 40-question test to reveal your core type, secondary blend, stress response, communication style, and growth edge.',
+    heroTitle: 'Free Temperament Test',
+    heroStatement: 'Take the free 40-question FourType temperament test to reveal your core type, secondary blend, stress response, communication style, and growth edge.',
     heroCta: 'Take the 6-minute test',
     heroMeta: '40 questions • Instant result • No email required • 16 patterns',
     choosePath: 'Choose Your Path',
@@ -105,7 +107,8 @@ export const homeCopy: Record<HomeLocale, HomeCopy> = {
   },
   'zh-CN': {
     heroAlt: 'FourType — 认识你的真实本性 — 气质探索任务',
-    heroStatement: '认识你在压力下的真实本性。通过 40 题免费测试了解你的核心类型、副气质、压力反应、沟通方式和成长边界。',
+    heroTitle: '免费气质测试',
+    heroStatement: '通过 40 题 FourType 免费气质测试了解你的核心类型、副气质、压力反应、沟通方式和成长边界。',
     heroCta: '开始你的任务',
     heroMeta: '40 个问题 • 15 种混合型 • 永久免费',
     choosePath: '选择你的路径',
@@ -168,7 +171,8 @@ export const homeCopy: Record<HomeLocale, HomeCopy> = {
   },
   es: {
     heroAlt: 'FourType — Conoce tu verdadera naturaleza — La búsqueda del temperamento',
-    heroStatement: 'Conoce tu naturaleza bajo presión. Haz el test gratis de 40 preguntas para descubrir tu tipo central, mezcla secundaria, respuesta al estrés, estilo de comunicación y punto de crecimiento.',
+    heroTitle: 'Test de Temperamento Gratis',
+    heroStatement: 'Haz el test de temperamento gratis de FourType con 40 preguntas para descubrir tu tipo central, mezcla secundaria, respuesta al estrés, estilo de comunicación y punto de crecimiento.',
     heroCta: 'Comenzar la misión',
     heroMeta: '40 preguntas • 15 mezclas únicas • Gratis para siempre',
     choosePath: 'Elige tu camino',

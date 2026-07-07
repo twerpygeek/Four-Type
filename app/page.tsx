@@ -44,6 +44,7 @@ export function HomeExperience({ locale = 'en' }: { locale?: HomeLocale }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const copy = homeCopy[locale]
   const quizHref = locale === 'en' ? '/quiz' : `/${locale}/quiz`
+  const pageUrl = locale === 'en' ? 'https://www.fourtype.com' : `https://www.fourtype.com/${locale}`
   const localizedTemperaments = temperaments.map((temp) => ({
     ...temp,
     ...copy.temperaments[temp.key],
@@ -75,9 +76,41 @@ export function HomeExperience({ locale = 'en' }: { locale?: HomeLocale }) {
       url: `https://www.fourtype.com${guide.href}`,
     })),
   }
+  const homepageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#homepage`,
+    url: pageUrl,
+    name: copy.heroTitle,
+    description: copy.heroStatement,
+    isPartOf: { '@id': 'https://www.fourtype.com/#website' },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: 'https://www.fourtype.com/og-image.jpg',
+      width: 1280,
+      height: 960,
+    },
+    mainEntity: {
+      '@id': `https://www.fourtype.com${quizHref}#app`,
+    },
+    about: [
+      { '@type': 'DefinedTerm', name: 'Temperament test', url: 'https://www.fourtype.com/temperament-test' },
+      { '@type': 'DefinedTerm', name: 'Four temperaments test', url: 'https://www.fourtype.com/four-temperaments-test' },
+      { '@type': 'DefinedTerm', name: 'Choleric temperament', url: 'https://www.fourtype.com/choleric-test' },
+      { '@type': 'DefinedTerm', name: 'Sanguine temperament', url: 'https://www.fourtype.com/sanguine-test' },
+      { '@type': 'DefinedTerm', name: 'Melancholic temperament', url: 'https://www.fourtype.com/melancholic-test' },
+      { '@type': 'DefinedTerm', name: 'Phlegmatic temperament', url: 'https://www.fourtype.com/phlegmatic-test' },
+    ],
+    potentialAction: {
+      '@type': 'TakeAction',
+      target: `https://www.fourtype.com${quizHref}`,
+      name: copy.heroCta,
+    },
+  }
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(temperamentTestGuidesSchema) }} />
       <Navigation />
       <main className="min-h-screen bg-background">
@@ -113,6 +146,10 @@ export function HomeExperience({ locale = 'en' }: { locale?: HomeLocale }) {
               </svg>
               <div className="h-px w-12 sm:w-24 bg-[#FFD700]/25" />
             </div>
+
+            <h1 className="mb-4 text-center font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-[0.18em] uppercase text-[#FFD700]">
+              {copy.heroTitle}
+            </h1>
 
             {/* Video frame */}
             <div className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl mx-auto mb-6">
@@ -332,9 +369,9 @@ export function HomeExperience({ locale = 'en' }: { locale?: HomeLocale }) {
         {/* Introductory Text Section — Crawlable SEO Content */}
         <section className="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-background">
           <div className="max-w-3xl mx-auto">
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6 sr-only">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6 sr-only">
               {copy.introSrTitle}
-            </h1>
+            </h2>
             <div className="prose prose-invert max-w-none">
               {copy.introParagraphs.map((paragraph) => (
                 <p key={paragraph} className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
