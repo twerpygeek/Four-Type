@@ -833,6 +833,341 @@ export const seoPages: SeoPage[] = [
 
 export const blogArticles: BlogArticle[] = [
   {
+    slug: 'personality-test-vs-temperament-test',
+    title: 'Personality Test vs Temperament Test: Which One Should You Take First?',
+    shortTitle: 'Personality Test vs Temperament Test',
+    description: 'Compare personality tests and temperament tests, including when to use MBTI, Big Five, and FourType for stress, communication, relationships, and growth.',
+    keywords: ['personality test vs temperament test', 'temperament test vs personality test', 'personality test alternative', 'which personality test should I take', 'temperament personality test'],
+    category: 'Comparison',
+    readTime: '9 min',
+    accent: 'purple',
+    icon: Scale,
+    image: '/images/comparison-mbti.jpg',
+    imageAlt: 'Personality test and temperament test comparison',
+    published: '2026-07-07',
+    blocks: [
+      {
+        type: 'section',
+        title: 'The simple difference',
+        body: [
+          'A personality test usually tries to describe broad patterns in who you are: traits, preferences, identity language, or cognitive style. A temperament test is narrower and more practical: it looks at your default pattern under pressure, in relationships, at work, and in conflict.',
+          'That is why a temperament test can be a better first step for many people. It gives you a fast mirror for how you act when life gets real, not just a label that sounds interesting.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'Which tool is best for what?',
+        items: [
+          { title: 'Use Big Five for traits', body: 'Big Five is useful when you want a research-backed trait framework like openness, conscientiousness, extraversion, agreeableness, and neuroticism.', accent: 'blue' },
+          { title: 'Use MBTI for preferences', body: 'MBTI-style tools can be useful when you want language for information processing, decision style, and energy preferences.', accent: 'purple' },
+          { title: 'Use temperament for behavior', body: 'Temperament is useful when you want to understand stress response, communication, motivation, conflict, and growth habits.', accent: 'gold' },
+          { title: 'Use FourType for next steps', body: 'FourType connects the quiz result to subtype pages, relationship patterns, work style, and practical growth practices.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'Why temperament can feel more immediately useful',
+        body: [
+          'Many personality tests are interesting but broad. You may enjoy the result and still wonder what to do with it tomorrow. Temperament is more direct because it asks what you protect automatically: control, connection, meaning, or peace.',
+          'Choleric protects progress. Sanguine protects connection. Melancholic protects quality. Phlegmatic protects peace. Those four patterns show up quickly in arguments, deadlines, friendships, leadership, and stress.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'A practical rule',
+        body: 'If you want a full personality framework, explore several tools. If you want a fast, useful starting point for how you behave under pressure, start with temperament.',
+        bullets: ['Take a temperament test when you want practical language quickly.', 'Read your top two scores instead of forcing a single label.', 'Use the result to improve one behavior this week.', 'Do not treat any quiz as a diagnosis or permanent identity.'],
+      },
+      {
+        type: 'section',
+        title: 'Why FourType is built this way',
+        body: [
+          'FourType is not trying to replace every personality model. It is built as a practical starting point: a free temperament quiz, clear score spread, subtype direction, and pages that help you understand relationships, work, communication, conflict, and growth.',
+          'The result should not make you feel boxed in. It should make your repeated patterns easier to notice, easier to talk about, and easier to mature.',
+        ],
+      },
+    ],
+    related: [
+      { href: '/personality-temperament-test', title: 'Personality Temperament Test', description: 'Understand temperament as a practical layer of personality.' },
+      { href: '/temperaments-vs-mbti', title: 'Temperaments vs MBTI', description: 'Compare temperament and MBTI directly.' },
+      { href: '/blog/temperaments-vs-mbti-big-five', title: 'Temperaments vs MBTI vs Big Five', description: 'Compare major personality frameworks.' },
+      { href: '/four-temperaments-test', title: 'Four Temperaments Test', description: 'Take the free quiz and compare your scores.' },
+    ],
+    faq: [
+      { question: 'Is a temperament test a personality test?', answer: 'A temperament test is a type of personality self-reflection tool, but it is usually narrower. It focuses on default behavior, stress response, communication, motivation, and relationship patterns.' },
+      { question: 'Should I take a personality test or a temperament test?', answer: 'Take a temperament test first if you want fast, practical insight into behavior under pressure. Use broader personality tests when you want a larger trait or preference framework.' },
+      { question: 'Is FourType better than MBTI or Big Five?', answer: 'FourType is not a replacement for every model. It is designed to be a practical first step for stress, communication, relationships, work, and growth.' },
+    ],
+  },
+  {
+    slug: 'free-personality-test-alternative',
+    title: 'Free Personality Test Alternative: Why a Temperament Test May Be More Useful First',
+    shortTitle: 'Free Personality Test Alternative',
+    description: 'Looking for a free personality test? Learn why a temperament test can be a practical alternative for understanding stress, relationships, work, and growth.',
+    keywords: ['free personality test alternative', 'free personality test', 'personality test free', 'free temperament test', 'personality quiz alternative'],
+    category: 'Personality Tests',
+    readTime: '8 min',
+    accent: 'green',
+    icon: Search,
+    image: '/images/temperament-wheel.jpg',
+    imageAlt: 'Free temperament test as a practical personality test alternative',
+    published: '2026-07-07',
+    blocks: [
+      {
+        type: 'section',
+        title: 'If you searched for a free personality test, start here',
+        body: [
+          'Most people searching for a free personality test want the same thing: a clearer way to understand themselves. The problem is that many quizzes are either too vague, too long, too clinical-sounding, or too focused on a label.',
+          'A temperament test can be a useful alternative because it asks a smaller, sharper question: how do you naturally respond to pressure, people, conflict, and growth?',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'What a useful free test should give you',
+        items: [
+          { title: 'Behavioral clarity', body: 'The result should describe what you actually do, not only what sounds flattering.', accent: 'gold' },
+          { title: 'Stress insight', body: 'The best clues often appear when you are tired, rushed, misunderstood, or under pressure.', accent: 'red' },
+          { title: 'Relationship language', body: 'A useful result helps you explain how you communicate, clash, repair, and connect.', accent: 'green' },
+          { title: 'A next step', body: 'The result should give you one growth move, not just an identity badge.', accent: 'blue' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'Why FourType is free to start',
+        body: [
+          'FourType gives the core quiz result without requiring payment first. You can see your primary temperament, score spread, and subtype direction before deciding whether you want deeper reports later.',
+          'That matters because self-understanding works best when the first step has low friction. People should be able to learn something useful before being asked for money, commitment, or a long account setup.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Temperament is practical personality language',
+        body: 'FourType uses the classic Choleric, Sanguine, Melancholic, and Phlegmatic model as a practical mirror for everyday behavior.',
+        bullets: ['Choleric: action, control, progress.', 'Sanguine: connection, energy, expression.', 'Melancholic: meaning, quality, depth.', 'Phlegmatic: peace, steadiness, loyalty.'],
+      },
+      {
+        type: 'section',
+        title: 'What to do after the result',
+        body: [
+          'After you get your result, read your subtype page. The subtype often explains why a simple label feels incomplete. A Sanguine-Melancholic and Sanguine-Phlegmatic may both be social, but the emotional pattern is not the same.',
+          'Use the result to notice one habit this week: how you respond to pressure, how you speak in conflict, what you need in relationships, or where your type needs to mature.',
+        ],
+      },
+    ],
+    related: [
+      { href: '/free-temperament-test', title: 'Free Temperament Test', description: 'See what the free FourType result includes.' },
+      { href: '/temperament-test', title: 'Temperament Test', description: 'Start with the main quiz guide.' },
+      { href: '/blog/how-to-read-temperament-test-results', title: 'How to Read Your Result', description: 'Understand score spread and subtype direction.' },
+      { href: '/blog/temperament-strengths-and-weaknesses', title: 'Temperament Strengths and Weaknesses', description: 'Compare gifts and blind spots by type.' },
+    ],
+    faq: [
+      { question: 'What is a good free personality test alternative?', answer: 'A temperament test is a good free personality test alternative if you want practical insight into stress, communication, relationships, work style, and growth.' },
+      { question: 'Is FourType free?', answer: 'Yes. FourType offers a free temperament quiz with a primary result, score spread, and subtype direction.' },
+      { question: 'Why take a temperament test instead of a general personality quiz?', answer: 'A temperament test is usually more focused on practical behavior: what you do under pressure, how you communicate, and what growth move helps you mature.' },
+    ],
+  },
+  {
+    slug: 'what-personality-test-should-i-take',
+    title: 'What Personality Test Should I Take? A Practical Guide to Choosing the Right Tool',
+    shortTitle: 'What Personality Test Should I Take?',
+    description: 'Not sure which personality test to take? Compare temperament tests, MBTI, Big Five, and relationship quizzes by what you actually want to learn.',
+    keywords: ['what personality test should I take', 'best personality test to take', 'which personality test is right for me', 'personality test guide'],
+    category: 'Personality Tests',
+    readTime: '9 min',
+    accent: 'blue',
+    icon: HelpCircle,
+    image: '/images/comparison-mbti.jpg',
+    imageAlt: 'Choosing which personality test to take',
+    published: '2026-07-07',
+    blocks: [
+      {
+        type: 'section',
+        title: 'Choose based on the question you want answered',
+        body: [
+          'The best personality test depends on what you are trying to learn. Some tools are better for broad traits. Some are better for cognitive preferences. Some are better for relationships. A temperament test is strongest when you want practical language for behavior under pressure.',
+          'Before choosing a test, ask: do I want a label, a research trait profile, a relationship conversation, or one useful growth move?',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'Which test fits your goal?',
+        items: [
+          { title: 'I want broad traits', body: 'Look into Big Five-style tools if you want a trait map across several dimensions.', accent: 'blue' },
+          { title: 'I want identity language', body: 'MBTI-style tools may help if you want familiar type language and preference patterns.', accent: 'purple' },
+          { title: 'I want practical behavior insight', body: 'Start with a temperament test if you want stress, conflict, communication, and growth language quickly.', accent: 'gold' },
+          { title: 'I want relationship insight', body: 'Use temperament when you want to compare pace, communication, conflict, and repair patterns with another person.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'Why temperament is a good first test',
+        body: [
+          'Temperament is easy to apply because the categories connect directly to behavior. Choleric pushes, Sanguine expresses, Melancholic analyzes, and Phlegmatic steadies. Real people are more nuanced than that, but the starting pattern is easy to observe.',
+          'FourType adds subtype guidance because many people are not pure types. Your top two scores can explain why you relate to more than one pattern.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'The practical path',
+        body: 'If you are not sure where to begin, take a temperament test first, then use other personality models later if you want more layers.',
+        bullets: ['Start with behavior under pressure.', 'Read your primary and secondary scores.', 'Compare your subtype page.', 'Use one growth practice before chasing another quiz.'],
+      },
+      {
+        type: 'section',
+        title: 'What to avoid',
+        body: [
+          'Avoid tests that make clinical promises without clinical context. Avoid quizzes that only flatter you. Avoid using any result to limit your future or excuse harmful behavior.',
+          'A good personality tool should make you more honest, more compassionate, and more responsible for your patterns.',
+        ],
+      },
+    ],
+    related: [
+      { href: '/blog/personality-test-vs-temperament-test', title: 'Personality Test vs Temperament Test', description: 'Compare the tools directly.' },
+      { href: '/blog/free-personality-test-alternative', title: 'Free Personality Test Alternative', description: 'Why temperament can be a useful first step.' },
+      { href: '/temperaments-vs-mbti', title: 'Temperaments vs MBTI', description: 'Compare two popular frameworks.' },
+      { href: '/temperament-test', title: 'Temperament Test', description: 'Take the FourType quiz.' },
+    ],
+    faq: [
+      { question: 'What personality test should I take first?', answer: 'Take a temperament test first if you want practical insight into stress, communication, relationships, work style, and growth. Use broader tools later if you want more detail.' },
+      { question: 'Is MBTI or temperament better?', answer: 'They answer different questions. MBTI-style tools describe preferences, while temperament is often more practical for behavior under pressure and relationship patterns.' },
+      { question: 'What is the easiest personality test to apply?', answer: 'A temperament test is one of the easiest to apply because the four patterns connect directly to everyday behavior, conflict, communication, and stress.' },
+    ],
+  },
+  {
+    slug: 'personality-test-for-self-understanding',
+    title: 'Personality Test for Self-Understanding: Why Temperament Gives You a Practical Mirror',
+    shortTitle: 'Personality Test for Self-Understanding',
+    description: 'Use a temperament test for self-understanding, including stress patterns, blind spots, communication style, work rhythm, and growth practices.',
+    keywords: ['personality test for self understanding', 'self understanding personality test', 'personality test for growth', 'temperament test for self awareness'],
+    category: 'Self-Understanding',
+    readTime: '8 min',
+    accent: 'gold',
+    icon: Brain,
+    image: '/images/manifesto-hero.jpg',
+    imageAlt: 'Temperament test for self-understanding and growth',
+    published: '2026-07-07',
+    blocks: [
+      {
+        type: 'section',
+        title: 'Self-understanding needs more than a label',
+        body: [
+          'A personality label can feel exciting for a day, but self-understanding needs something sturdier. You need to know what you do under pressure, what you protect, how you misread others, and what growth move would make you more mature.',
+          'That is where temperament is useful. It turns self-understanding into observable patterns instead of abstract identity language.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'What temperament helps you notice',
+        items: [
+          { title: 'Stress pattern', body: 'Do you push, perform, perfect, or withdraw when pressure rises?', accent: 'red' },
+          { title: 'Core protection', body: 'Are you protecting control, connection, quality, or peace?', accent: 'gold' },
+          { title: 'Communication style', body: 'Are you direct, expressive, precise, or diplomatic by default?', accent: 'blue' },
+          { title: 'Growth edge', body: 'What small practice helps your strongest pattern mature?', accent: 'green' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'The four self-understanding questions',
+        body: [
+          'Choleric asks: where am I using control when courage would be enough? Sanguine asks: where am I using energy to avoid follow-through? Melancholic asks: where am I using standards to avoid being seen? Phlegmatic asks: where am I using peace to avoid honesty?',
+          'Those questions are not meant to shame you. They are meant to turn a result into awareness you can actually use.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'How to use your result this week',
+        body: 'Pick one situation where your automatic pattern usually takes over, then practice the opposite virtue in a small way.',
+        bullets: ['Choleric: ask before deciding.', 'Sanguine: finish before moving on.', 'Melancholic: share before perfecting.', 'Phlegmatic: speak before resentment forms.'],
+      },
+      {
+        type: 'section',
+        title: 'Why subtype matters for self-understanding',
+        body: [
+          'Your primary temperament explains the main pattern. Your secondary temperament explains the flavor. A Choleric-Phlegmatic and Choleric-Melancholic may both be driven, but one is more diplomatic while the other is more exacting.',
+          'That second layer often makes the result feel more accurate because it explains the parts of you that a single label misses.',
+        ],
+      },
+    ],
+    related: [
+      { href: '/blog/how-to-read-temperament-test-results', title: 'How to Read Your Result', description: 'Use score spread and subtype direction well.' },
+      { href: '/blog/temperament-strengths-and-weaknesses', title: 'Temperament Strengths and Weaknesses', description: 'See gifts, blind spots, and growth edges.' },
+      { href: '/blog/subtypes', title: 'The 16 FourTypes', description: 'Explore the subtype layer.' },
+      { href: '/manifesto', title: 'FourType Manifesto', description: 'Read the philosophy behind the project.' },
+    ],
+    faq: [
+      { question: 'What personality test is good for self-understanding?', answer: 'A temperament test is useful for self-understanding because it focuses on stress response, communication, relationships, work style, and growth habits.' },
+      { question: 'How does temperament help self-awareness?', answer: 'Temperament helps you notice what you protect automatically under pressure and what growth practice would make that pattern more mature.' },
+      { question: 'Can a temperament test help me change?', answer: 'A temperament test cannot change you by itself, but it can give you practical language for noticing patterns and choosing one better response.' },
+    ],
+  },
+  {
+    slug: 'personality-test-for-relationships',
+    title: 'Personality Test for Relationships: Why Temperament Helps Couples Communicate',
+    shortTitle: 'Personality Test for Relationships',
+    description: 'Use a temperament test as a personality test for relationships, communication, conflict, compatibility, and repair between partners.',
+    keywords: ['personality test for relationships', 'relationship personality test', 'personality compatibility test', 'temperament test for couples', 'personality test for couples'],
+    category: 'Relationships',
+    readTime: '9 min',
+    accent: 'pink',
+    icon: Heart,
+    image: '/images/blog/temperament-compatibility-chart.jpg',
+    imageAlt: 'Temperament test for relationship communication and compatibility',
+    published: '2026-07-07',
+    blocks: [
+      {
+        type: 'section',
+        title: 'A relationship test should help you talk better',
+        body: [
+          'Many people search for a personality test for relationships because they want to know if two people are compatible. That can be useful, but the better question is usually more practical: how do we communicate, fight, repair, and care for each other?',
+          'Temperament helps because it names the everyday patterns that create attraction and friction. It does not promise a perfect match. It gives couples language for the differences they already feel.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'What each temperament needs in relationships',
+        items: [
+          { title: 'Choleric needs respect', body: 'They respond well to honesty, competence, directness, and not being controlled through passivity.', accent: 'red' },
+          { title: 'Sanguine needs warmth', body: 'They respond well to responsiveness, shared energy, affection, and emotional presence.', accent: 'gold' },
+          { title: 'Melancholic needs depth', body: 'They respond well to sincerity, specificity, loyalty, and care for what matters.', accent: 'blue' },
+          { title: 'Phlegmatic needs safety', body: 'They respond well to patience, steadiness, low-pressure honesty, and trust.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'Why temperament is useful for couples',
+        body: [
+          'Temperament shows up in conflict quickly. Choleric may push for resolution. Sanguine may use humor or emotion. Melancholic may withdraw into analysis. Phlegmatic may go quiet to keep peace.',
+          'When couples know this, they can stop treating every stress response as a character flaw. The pattern still needs responsibility, but now both people have language for repair.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Use the result as a conversation starter',
+        body: 'Take the quiz separately, then compare these four answers instead of arguing over labels.',
+        bullets: ['What do I do under pressure?', 'What do I need during conflict?', 'What makes me feel loved?', 'What is one growth move I can practice this week?'],
+      },
+      {
+        type: 'section',
+        title: 'Compatibility is not sameness',
+        body: [
+          'Some couples feel easy because their temperaments are similar. Others grow because their temperaments are complementary. Choleric and Phlegmatic can balance pace and steadiness. Sanguine and Melancholic can balance lightness and depth.',
+          'The question is not whether two types are allowed to work. The question is whether both people can respect the difference and mature their own pattern.',
+        ],
+      },
+    ],
+    related: [
+      { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Take the couple-focused guide.' },
+      { href: '/blog/four-temperaments-compatibility', title: 'Four Temperaments Compatibility', description: 'Understand relationship pairings.' },
+      { href: '/blog/temperament-conflict-style', title: 'Temperament Conflict Style', description: 'Learn how each type fights and repairs.' },
+      { href: '/blog/temperament-communication-style', title: 'Temperament Communication Style', description: 'Understand how each type talks and listens.' },
+    ],
+    faq: [
+      { question: 'What personality test is good for relationships?', answer: 'A temperament test is useful for relationships because it explains communication, conflict, stress response, compatibility, and repair patterns.' },
+      { question: 'Can temperament predict relationship compatibility?', answer: 'Temperament can highlight likely strengths and friction points, but it should not be used as a fixed prediction. Maturity and communication matter more than matching labels.' },
+      { question: 'Should couples take the same temperament test?', answer: 'Yes, couples can take the same temperament test and compare how each person handles pressure, conflict, affection, and repair.' },
+    ],
+  },
+  {
     slug: 'ospp-four-temperaments-test',
     title: 'OSPP Four Temperaments Test vs FourType: Which Temperament Quiz Should You Take?',
     shortTitle: 'OSPP Four Temperaments Test vs FourType',
@@ -2545,6 +2880,10 @@ export const coreGuideLinks: LinkCard[] = [
   { href: '/temperament-quiz', title: 'Temperament Quiz', description: 'Use the quiz-focused path to identify your four temperaments pattern.' },
   { href: '/what-is-my-temperament', title: 'What Is My Temperament?', description: 'Compare the signs of each temperament before taking the quiz.' },
   { href: '/personality-temperament-test', title: 'Personality Temperament Test', description: 'Understand temperament as a practical layer of personality.' },
+  { href: '/blog/personality-test-vs-temperament-test', title: 'Personality Test vs Temperament Test', description: 'See why temperament can be the more practical first step.' },
+  { href: '/blog/free-personality-test-alternative', title: 'Free Personality Test Alternative', description: 'Use FourType when you want a free, practical personality quiz alternative.' },
+  { href: '/blog/what-personality-test-should-i-take', title: 'What Personality Test Should I Take?', description: 'Choose between temperament, MBTI, Big Five, and relationship tests.' },
+  { href: '/blog/personality-test-for-self-understanding', title: 'Personality Test for Self-Understanding', description: 'Use temperament to understand stress, communication, and growth.' },
   { href: '/free-temperament-test', title: 'Free Temperament Test', description: 'See what the free FourType result includes.' },
   { href: '/4-temperament-test', title: '4 Temperament Test', description: 'Compare Choleric, Sanguine, Melancholic, and Phlegmatic.' },
   { href: '/blog/4-temperaments-test-free', title: '4 Temperaments Test Free', description: 'Take the free quiz and learn how to read your score spread.' },
@@ -2567,6 +2906,7 @@ export const relationshipGuideLinks: LinkCard[] = [
   { href: '/blog/sanguine-melancholic-compatibility', title: 'Sanguine and Melancholic Compatibility', description: 'Lightness meets depth in this high-contrast pairing.' },
   { href: '/blog/temperament-conflict-style', title: 'Temperament Conflict Style', description: 'Learn how each type fights, avoids, apologizes, and repairs.' },
   { href: '/blog/temperament-communication-style', title: 'Temperament Communication Style', description: 'Understand how each type talks, listens, and gives feedback.' },
+  { href: '/blog/personality-test-for-relationships', title: 'Personality Test for Relationships', description: 'Use temperament to improve couple communication and repair.' },
   { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'How to Tell the Four Temperaments Apart', description: 'Spot the real-life differences between the four patterns.' },
   { href: '/subtypes', title: 'Temperament Subtypes', description: 'Go beyond the primary label with blended subtype patterns.' },
 ]
@@ -2584,6 +2924,7 @@ export const methodologyGuideLinks: LinkCard[] = [
   { href: '/blog/how-to-read-temperament-test-results', title: 'How to Read Temperament Test Results', description: 'Understand score spread, subtypes, pure results, and growth.' },
   { href: '/blog/temperament-test-accuracy', title: 'Temperament Test Accuracy', description: 'How to judge quiz reliability without overclaiming.' },
   { href: '/blog/temperament-test-questions', title: 'Temperament Test Questions', description: 'What a useful four temperaments quiz should ask.' },
+  { href: '/blog/personality-test-vs-temperament-test', title: 'Personality Test vs Temperament Test', description: 'Compare broad personality tools with practical temperament testing.' },
   { href: '/temperaments-vs-mbti', title: 'Temperaments vs MBTI', description: 'Compare temperament with other personality frameworks.' },
   { href: '/four-temperaments', title: 'The Four Temperaments', description: 'A clear guide to the classical four-type model.' },
 ]
