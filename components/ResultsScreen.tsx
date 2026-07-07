@@ -115,6 +115,7 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
   const [showShareCard, setShowShareCard] = useState(false)
   const [viewingClass, setViewingClass] = useState<TemperamentKey | null>(null)
   const [linkCopied, setLinkCopied] = useState(false)
+  const [compareCopied, setCompareCopied] = useState(false)
   const [leadEmail, setLeadEmail] = useState('')
   const [leadWebsite, setLeadWebsite] = useState('')
   const [leadStatus, setLeadStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -175,6 +176,25 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
       }
     } else {
       handleCopyLink()
+    }
+  }
+
+  const handleCopyCompareLink = async () => {
+    try {
+      await navigator.clipboard.writeText(compareUrl)
+      trackShareEvent('copy-link', 'result-compare-link')
+      setCompareCopied(true)
+      setTimeout(() => setCompareCopied(false), 2000)
+    } catch {
+      const textarea = document.createElement('textarea')
+      textarea.value = compareUrl
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      trackShareEvent('copy-link', 'result-compare-link-fallback')
+      setCompareCopied(true)
+      setTimeout(() => setCompareCopied(false), 2000)
     }
   }
 
@@ -437,6 +457,47 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
             >
               Enneagram: {blend.enneagram[0]}
             </span>
+          </div>
+        </div>
+
+        {/* FAST SHARE PROMPT */}
+        <div
+          className="rounded-2xl border p-5 flex flex-col gap-4 relative overflow-hidden"
+          style={{ backgroundColor: `${primaryColor}10`, borderColor: `${primaryColor}40` }}
+        >
+          <div
+            className="absolute -right-12 -top-12 h-28 w-28 rounded-full opacity-20 blur-3xl"
+            style={{ backgroundColor: primaryColor }}
+          />
+          <div className="relative flex flex-col gap-1">
+            <p className="font-serif text-sm font-bold text-[#E2E8F0]">
+              {copy.friendPrompt.title}
+            </p>
+            <p className="font-sans text-xs leading-relaxed text-[#94A3B8]">
+              {copy.friendPrompt.body}
+            </p>
+          </div>
+          <div className="relative grid gap-2 sm:grid-cols-2">
+            <button
+              type="button"
+              onClick={handleNativeShare}
+              className="rounded-xl px-4 py-3 font-serif text-xs font-bold uppercase tracking-widest transition-all cursor-pointer"
+              style={{ backgroundColor: primaryColor, color: '#0D0D0F' }}
+            >
+              {copy.shareButton}
+            </button>
+            <button
+              type="button"
+              onClick={handleCopyCompareLink}
+              className="rounded-xl border px-4 py-3 font-sans text-xs font-semibold transition-all cursor-pointer"
+              style={{
+                borderColor: compareCopied ? '#52B788' : `${primaryColor}45`,
+                color: compareCopied ? '#52B788' : '#E2E8F0',
+                backgroundColor: compareCopied ? '#52B78810' : 'rgba(13, 13, 15, 0.42)',
+              }}
+            >
+              {compareCopied ? copy.copiedCompareButton : copy.compareButton}
+            </button>
           </div>
         </div>
 
@@ -852,20 +913,11 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
             )}
             <button
               type="button"
-              onClick={async () => {
-                try {
-                  await navigator.clipboard.writeText(compareUrl)
-                  trackShareEvent('copy-link', 'result-compare-link')
-                  setLinkCopied(true)
-                  setTimeout(() => setLinkCopied(false), 2000)
-                } catch {
-                  handleCopyLink()
-                }
-              }}
+              onClick={handleCopyCompareLink}
               className="mt-3 w-full rounded-lg border px-3 py-2 font-sans text-xs text-left text-[#94A3B8] transition-all hover:text-[#E2E8F0] cursor-pointer"
               style={{ borderColor: `${primaryColor}22`, backgroundColor: `${primaryColor}06` }}
             >
-              Copy compare-with-me quiz link
+              {compareCopied ? copy.copiedCompareButton : copy.compareButton}
             </button>
           </div>
         </div>
