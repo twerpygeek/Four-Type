@@ -10,6 +10,7 @@ import { BLENDS, getBlendColors } from '@/lib/blends'
 import { getSubtypeByBlendKey } from '@/lib/subtypes'
 import { getLocalizedBlendSummary, type QuizCopy, type QuizLocale } from '@/lib/quiz-i18n'
 import { getShareText } from '@/lib/share-copy'
+import { getMisunderstoodLine, getResultOneSentence, getSharePrompts, getWeeklyChallenge } from '@/lib/result-virality'
 import ScoreChart from './ScoreChart'
 import CinematicBackground from './CinematicBackground'
 import ShareableCard from './ShareableCard'
@@ -94,6 +95,10 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
   const resultSpeakTo = localizedBlend?.speakTo ?? blend.speakTo
   const resultNeverDo = localizedBlend?.neverDo ?? blend.neverDo
   const blendColors = getBlendColors(blend)
+  const resultOneSentence = getResultOneSentence(blend)
+  const misunderstoodLine = getMisunderstoodLine(blend)
+  const weeklyChallenge = getWeeklyChallenge(blend)
+  const sharePrompts = getSharePrompts(blend)
   
   // Legacy temperament data for character images and some content
   const [dominant, secondary] = getDominantAndSecondary(scores)
@@ -154,6 +159,31 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
         // User cancelled
       }
     } else {
+      handleCopyLink()
+    }
+  }
+
+  const handlePromptShare = async (prompt: string) => {
+    const promptText = `${prompt}\n\n${getShareText(blend)}`
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `I got ${resultName} on FourType`,
+          text: promptText,
+          url: shareUrl,
+        })
+        return
+      } catch {
+        // User cancelled
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(`${promptText}\n\n${shareUrl}`)
+      setLinkCopied(true)
+      setTimeout(() => setLinkCopied(false), 2000)
+    } catch {
       handleCopyLink()
     }
   }
@@ -400,6 +430,30 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
           <p className="font-sans text-xs text-[#64748B] relative">
             <span style={{ color: primaryColor }}>{copy.tagline}:</span> {resultTagline}
           </p>
+        </div>
+
+        {/* QUICK MIRROR */}
+        <div
+          className="rounded-2xl border p-5 flex flex-col gap-4"
+          style={{ backgroundColor: 'rgba(26, 26, 46, 0.84)', borderColor: `${primaryColor}35` }}
+        >
+          <p className="font-serif text-xs tracking-widest uppercase" style={{ color: primaryColor }}>
+            The Part That Usually Lands
+          </p>
+          <div className="grid gap-3">
+            <div className="rounded-xl border p-4" style={{ borderColor: `${primaryColor}25`, backgroundColor: `${primaryColor}08` }}>
+              <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B] mb-1">Your pattern in one sentence</p>
+              <p className="font-sans text-sm text-[#E2E8F0] leading-relaxed">{resultOneSentence}</p>
+            </div>
+            <div className="rounded-xl border p-4" style={{ borderColor: `${primaryColor}25`, backgroundColor: 'rgba(13, 13, 15, 0.52)' }}>
+              <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B] mb-1">What people misread</p>
+              <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">{misunderstoodLine}</p>
+            </div>
+            <div className="rounded-xl border p-4" style={{ borderColor: `${primaryColor}40`, backgroundColor: `${primaryColor}12` }}>
+              <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B] mb-1">Your challenge this week</p>
+              <p className="font-serif text-lg font-bold leading-snug" style={{ color: primaryColor }}>{weeklyChallenge}</p>
+            </div>
+          </div>
         </div>
 
         {/* SCORE CHART */}
@@ -693,6 +747,30 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
               {copy.shareCardPrompt}
             </p>
           )}
+
+          <div className="border-t pt-4" style={{ borderColor: `${primaryColor}20` }}>
+            <p className="font-serif text-xs tracking-widest uppercase mb-3" style={{ color: primaryColor }}>
+              Send this to someone who...
+            </p>
+            <div className="flex flex-col gap-2">
+              {sharePrompts.map((prompt) => (
+                <button
+                  key={prompt}
+                  type="button"
+                  onClick={() => handlePromptShare(prompt)}
+                  className="text-left rounded-lg border px-3 py-2 font-sans text-xs leading-relaxed text-[#94A3B8] transition-all hover:text-[#E2E8F0] cursor-pointer"
+                  style={{ borderColor: `${primaryColor}22`, backgroundColor: `${primaryColor}06` }}
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+            {linkCopied && (
+              <p className="font-sans text-xs mt-2" style={{ color: primaryColor }}>
+                Share text copied.
+              </p>
+            )}
+          </div>
         </div>
 
         {/* EMAIL CAPTURE */}

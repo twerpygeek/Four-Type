@@ -210,10 +210,11 @@ export async function GET(request: NextRequest) {
             style={{
               display: 'flex',
               color: '#F8FAFC',
-              fontSize: 42,
+              fontSize: 36,
               fontWeight: 900,
-              lineHeight: 1.05,
-              marginBottom: 18,
+              lineHeight: 1.12,
+              minHeight: 92,
+              marginBottom: 16,
             }}
           >
             {shareMetadata.hook}
@@ -224,6 +225,7 @@ export async function GET(request: NextRequest) {
               display: 'flex',
               color: '#94A3B8',
               fontSize: 24,
+              height: 32,
               marginBottom: 7,
             }}
           >
@@ -234,39 +236,14 @@ export async function GET(request: NextRequest) {
             style={{
               display: 'flex',
               color: primaryColor,
-              fontSize: displayName.length > 12 ? 58 : 70,
+              fontSize: displayName.length > 12 ? 50 : 58,
               fontWeight: 900,
               lineHeight: 1,
-              marginBottom: 14,
+              height: 66,
+              marginBottom: 8,
             }}
           >
             {displayName}
-          </div>
-
-          <div style={{ display: 'flex', color: '#E2E8F0', fontSize: 25, marginBottom: 24 }}>
-            {blend.blend}
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 28 }}>
-            <div
-              style={{
-                width: 72,
-                height: 8,
-                borderRadius: 999,
-                backgroundColor: primaryColor,
-                marginRight: hasSecondary ? 8 : 0,
-              }}
-            />
-            {hasSecondary && (
-              <div
-                style={{
-                  width: 48,
-                  height: 8,
-                  borderRadius: 999,
-                  backgroundColor: secondaryColor,
-                }}
-              />
-            )}
           </div>
 
           <div style={{ display: 'flex', gap: 12, marginBottom: 28 }}>
@@ -298,7 +275,7 @@ export async function GET(request: NextRequest) {
               marginBottom: 34,
             }}
           >
-            It caught the pattern behind how I decide, stress, and show up around people.
+            {shareMetadata.line}
           </div>
 
           <div

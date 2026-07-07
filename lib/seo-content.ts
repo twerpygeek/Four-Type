@@ -833,6 +833,183 @@ export const seoPages: SeoPage[] = [
 
 export const blogArticles: BlogArticle[] = [
   {
+    slug: 'most-common-fourtype-results',
+    title: 'Most Common FourType Results: How Temperament Patterns Show Up in Real Quiz Data',
+    shortTitle: 'Most Common FourType Results',
+    description: 'Learn how FourType will analyze the most common temperament results, why score spread matters, and what aggregate quiz data can and cannot tell you.',
+    keywords: ['most common FourType results', 'most common temperament type', 'most common four temperaments result', 'temperament test data', 'FourType data'],
+    category: 'Data',
+    readTime: '8 min',
+    accent: 'blue',
+    icon: BarChart3,
+    image: '/images/temperament-wheel.jpg',
+    imageAlt: 'FourType temperament result data and score spread',
+    published: '2026-07-07',
+    blocks: [
+      {
+        type: 'section',
+        title: 'Why people ask about common results',
+        body: [
+          'After taking a personality or temperament test, people naturally want context. Is my result common? Is it rare? Do other people score like this? Those questions are useful, but only if the data is handled carefully.',
+          'FourType results are more than one label. A result includes primary temperament, secondary influence, score spread, and subtype direction. That means the most common result is not always the most useful question.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'What aggregate FourType data can show',
+        items: [
+          { title: 'Primary patterns', body: 'How often Choleric, Sanguine, Melancholic, or Phlegmatic appears as the strongest score.', accent: 'gold' },
+          { title: 'Subtype blends', body: 'Which primary-secondary combinations appear often, such as Choleric-Melancholic or Phlegmatic-Sanguine.', accent: 'blue' },
+          { title: 'Score spread', body: 'Whether people tend to have one dominant temperament or several close scores.', accent: 'green' },
+          { title: 'Search intent', body: 'Which result pages people read after the quiz, showing what users want to understand next.', accent: 'purple' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'Why FourType will not fake the numbers',
+        body: [
+          'It would be easy to claim that one type is the most common, but that would be misleading without a clean sample. Quiz audiences are self-selected. Traffic sources, countries, languages, and search intent all shape the result pool.',
+          'FourType will treat aggregate patterns as directional content, not population science. The goal is to help users understand themselves better, not to turn quiz traffic into false certainty.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'How to use common-result content well',
+        body: 'Common does not mean boring, and rare does not mean better. The useful question is whether the result explains your actual pattern.',
+        bullets: ['Read your subtype page.', 'Compare your top two scores.', 'Notice whether the stress pattern fits.', 'Use aggregate data as context, not status.'],
+      },
+    ],
+    related: [
+      { href: '/blog/which-temperament-is-rarest', title: 'Which Temperament Is Rarest?', description: 'Understand rarity claims carefully.' },
+      { href: '/blog/how-to-read-temperament-test-results', title: 'How to Read Temperament Results', description: 'Use score spread and subtype direction.' },
+      { href: '/methodology', title: 'FourType Methodology', description: 'How FourType scores and interprets results.' },
+      { href: '/blog/subtypes', title: 'The 16 FourTypes', description: 'Explore blended subtype patterns.' },
+    ],
+    faq: [
+      { question: 'What is the most common FourType result?', answer: 'FourType does not publish a universal most-common claim yet because quiz audiences are self-selected. The more useful reading is primary type, subtype, and score spread.' },
+      { question: 'Can quiz data show the most common temperament?', answer: 'Quiz data can show patterns among FourType users, but it should not be treated as population-wide personality research.' },
+      { question: 'Does a common result matter?', answer: 'A common result can provide context, but it does not make the result less meaningful. Use it to understand patterns, not status.' },
+    ],
+  },
+  {
+    slug: 'rarest-fourtype-subtype',
+    title: 'Rarest FourType Subtype: Why Rare Temperament Results Need Careful Interpretation',
+    shortTitle: 'Rarest FourType Subtype',
+    description: 'Explore rare FourType subtypes, pure temperament results, and why rarity depends on sample, scoring, culture, and self-selection.',
+    keywords: ['rarest FourType subtype', 'rarest temperament subtype', 'rare temperament result', 'pure choleric rare', 'pure phlegmatic rare'],
+    category: 'Data',
+    readTime: '8 min',
+    accent: 'purple',
+    icon: Search,
+    image: '/images/subtypes-temperaments.jpg',
+    imageAlt: 'Rare FourType subtype patterns',
+    published: '2026-07-07',
+    blocks: [
+      {
+        type: 'section',
+        title: 'Rare does not always mean what people think',
+        body: [
+          'Rarity is one of the most tempting parts of personality content. A rare subtype feels special. But with temperament tests, rarity depends heavily on the sample, the scoring method, and whether pure types are counted separately from blended types.',
+          'A pure Choleric result may be rare in one audience. A pure Phlegmatic result may be rare in another. A blended subtype may appear uncommon because people with that pattern are less likely to search for temperament content in the first place.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'What can make a subtype look rare',
+        items: [
+          { title: 'Pure pattern', body: 'A strong one-type result with little secondary influence may be less common than blended results.', accent: 'red' },
+          { title: 'Opposite traits', body: 'Some blends combine patterns that pull in different directions, making them harder to recognize.', accent: 'blue' },
+          { title: 'Search behavior', body: 'Some temperaments are more likely to take quizzes, read articles, or share results.', accent: 'gold' },
+          { title: 'Culture and context', body: 'Work, family, country, and language can all shape how people answer behavior questions.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'The better way to read a rare result',
+        body: [
+          'If your result feels rare, slow down before turning it into identity status. Ask whether the stress pattern fits, whether the relationship pattern fits, and whether the growth move feels uncomfortably useful.',
+          'A rare subtype is not better than a common one. It may simply mean your strongest pattern and secondary pattern combine in a way fewer users show clearly.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'What to check first',
+        body: 'Rarity is less important than recognition.',
+        bullets: ['Does the subtype page describe your real behavior?', 'Do your top two scores make sense together?', 'Does the blind spot fit?', 'Can you practice the growth move this week?'],
+      },
+    ],
+    related: [
+      { href: '/blog/which-temperament-is-rarest', title: 'Which Temperament Is Rarest?', description: 'Read the broader rarity guide.' },
+      { href: '/blog/subtypes', title: 'The 16 FourTypes', description: 'Compare all subtype patterns.' },
+      { href: '/subtype/pure-choleric', title: 'Pure Choleric', description: 'Read one intense pure subtype profile.' },
+      { href: '/subtype/pure-phlegmatic', title: 'Pure Phlegmatic', description: 'Read one calm pure subtype profile.' },
+    ],
+    faq: [
+      { question: 'What is the rarest FourType subtype?', answer: 'FourType does not claim a universal rarest subtype yet. Rarity depends on the quiz sample, scoring thresholds, and whether pure and blended types are counted separately.' },
+      { question: 'Are pure temperament results rare?', answer: 'Pure temperament results may be less common than blended results because many people show a strong secondary pattern.' },
+      { question: 'Is a rare subtype better?', answer: 'No. A rare subtype is not better. It is simply less common in a given sample or harder to recognize clearly.' },
+    ],
+  },
+  {
+    slug: 'temperament-by-country',
+    title: 'Temperament by Country: What Visitor Data Can Teach Without Overclaiming',
+    shortTitle: 'Temperament by Country',
+    description: 'Explore how FourType can eventually compare temperament patterns by country while avoiding stereotypes, false certainty, and bad data claims.',
+    keywords: ['temperament by country', 'personality type by country', 'temperament test data by country', 'FourType countries', 'temperament around the world'],
+    category: 'Data',
+    readTime: '8 min',
+    accent: 'green',
+    icon: Users,
+    image: '/images/temperament-wheel.jpg',
+    imageAlt: 'FourType visitor data by country and temperament pattern',
+    published: '2026-07-07',
+    blocks: [
+      {
+        type: 'section',
+        title: 'Country data is interesting, but easy to misuse',
+        body: [
+          'FourType already receives visitors from different countries, which makes a natural question possible: do temperament patterns differ by country? The honest answer is that visitor data can be interesting, but it must be interpreted carefully.',
+          'A country’s FourType traffic is not the same as that country’s population. Search behavior, language availability, social sharing, and internet access all affect who takes the quiz.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'What country-level data can safely show',
+        items: [
+          { title: 'Visitor interest', body: 'Which countries are finding and taking the quiz most often.', accent: 'green' },
+          { title: 'Language demand', body: 'Where translations may help more people understand their result.', accent: 'gold' },
+          { title: 'Result patterns', body: 'Directional patterns among FourType users in a country, not claims about the whole country.', accent: 'blue' },
+          { title: 'Content opportunities', body: 'Which countries may benefit from localized guides, examples, and share copy.', accent: 'purple' },
+        ],
+      },
+      {
+        type: 'section',
+        title: 'How FourType should use this data',
+        body: [
+          'The responsible move is to publish country-level insights only when the sample is large enough, the language context is clear, and the framing avoids stereotypes.',
+          'For example, it is safer to say “among FourType users from this country, these results appeared often” than to say “this country is Choleric.” The first is data context. The second is lazy personality astrology in a lab coat.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'The useful product takeaway',
+        body: 'Country data should guide localization and learning, not ranking people.',
+        bullets: ['Add languages where visitors already show interest.', 'Localize examples, not only interface labels.', 'Compare result patterns only when sample size is credible.', 'Use the data to make FourType more helpful across cultures.'],
+      },
+    ],
+    related: [
+      { href: '/blog/most-common-fourtype-results', title: 'Most Common FourType Results', description: 'Learn how aggregate result data should be read.' },
+      { href: '/methodology', title: 'FourType Methodology', description: 'Understand responsible scoring and interpretation.' },
+      { href: '/zh-CN', title: 'FourType Chinese', description: 'Use the Chinese-language FourType homepage.' },
+      { href: '/es', title: 'FourType Spanish', description: 'Use the Spanish-language FourType homepage.' },
+    ],
+    faq: [
+      { question: 'Can temperament differ by country?', answer: 'FourType visitor data may show different patterns by country, but it should not be treated as proof about entire populations.' },
+      { question: 'Why is country-level temperament data tricky?', answer: 'It is tricky because quiz users are self-selected and affected by language, search behavior, social sharing, and traffic source.' },
+      { question: 'How should FourType use country data?', answer: 'FourType should use country data to improve localization, examples, and content strategy rather than stereotype countries by temperament.' },
+    ],
+  },
+  {
     slug: 'personality-test-vs-temperament-test',
     title: 'Personality Test vs Temperament Test: Which One Should You Take First?',
     shortTitle: 'Personality Test vs Temperament Test',
@@ -2924,6 +3101,8 @@ export const methodologyGuideLinks: LinkCard[] = [
   { href: '/blog/how-to-read-temperament-test-results', title: 'How to Read Temperament Test Results', description: 'Understand score spread, subtypes, pure results, and growth.' },
   { href: '/blog/temperament-test-accuracy', title: 'Temperament Test Accuracy', description: 'How to judge quiz reliability without overclaiming.' },
   { href: '/blog/temperament-test-questions', title: 'Temperament Test Questions', description: 'What a useful four temperaments quiz should ask.' },
+  { href: '/blog/most-common-fourtype-results', title: 'Most Common FourType Results', description: 'How to read aggregate temperament data without overclaiming.' },
+  { href: '/blog/rarest-fourtype-subtype', title: 'Rarest FourType Subtype', description: 'Why rare results depend on sample and scoring context.' },
   { href: '/blog/personality-test-vs-temperament-test', title: 'Personality Test vs Temperament Test', description: 'Compare broad personality tools with practical temperament testing.' },
   { href: '/temperaments-vs-mbti', title: 'Temperaments vs MBTI', description: 'Compare temperament with other personality frameworks.' },
   { href: '/four-temperaments', title: 'The Four Temperaments', description: 'A clear guide to the classical four-type model.' },

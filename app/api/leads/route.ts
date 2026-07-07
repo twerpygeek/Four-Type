@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { appendLeadToGoogleSheet, isLeadCaptureConfigured, type LeadCapturePayload } from '@/lib/google-sheets-leads'
+import { sendProfileEmail } from '@/lib/email-delivery'
 
 export const runtime = 'nodejs'
 
@@ -62,7 +63,16 @@ export async function POST(request: Request) {
 
   try {
     await appendLeadToGoogleSheet(payload)
-    return NextResponse.json({ ok: true })
+    let emailSent = false
+
+    try {
+      const emailResult = await sendProfileEmail(payload)
+      emailSent = emailResult.sent
+    } catch (emailError) {
+      console.error(emailError)
+    }
+
+    return NextResponse.json({ ok: true, emailSent })
   } catch (error) {
     console.error(error)
     return NextResponse.json({ ok: false, error: 'Could not save lead.' }, { status: 500 })

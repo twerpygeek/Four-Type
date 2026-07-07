@@ -1,4 +1,5 @@
 import type { Blend } from './blends'
+import { getMisunderstoodLine, getOgHook, getOgLine, getResultOneSentence } from './result-virality'
 
 const pressureHooks: Record<Blend['primary'], string> = {
   Red: 'how I take control under pressure',
@@ -26,16 +27,19 @@ export function getShareText(blend: Blend, shareUrl?: string) {
 export function getShareMetadata(heroName: string, blend: Blend) {
   const safeName = heroName.trim() || 'Someone'
   const insight = resultHooks[blend.primary]
+  const oneSentence = getResultOneSentence(blend)
+  const misunderstood = getMisunderstoodLine(blend)
 
   return {
     title: `${safeName} got ${blend.name} on FourType`,
-    description: `${getShareHook(blend)} Take the free test and see what it catches about you.`,
+    description: `${oneSentence} Take the free test and see what it catches about you.`,
     ogTitle: `${safeName} is ${blend.name}`,
-    ogDescription: `A free temperament test that reads your ${insight}, stress pattern, and blind spot.`,
-    hook: 'This test read me too well',
+    ogDescription: misunderstood,
+    hook: getOgHook(blend),
     eyebrow: 'Personality Dossier',
     insight,
-    chips: [insight, 'stress pattern', 'blind spot'],
+    line: getOgLine(blend),
+    chips: [insight, 'stress pattern', 'growth move'],
     cta: 'Take the free FourType test',
   }
 }
