@@ -144,13 +144,15 @@ export default function LandingScreen({ onBegin }: LandingScreenProps) {
             }}
           >
             <video
-              src="/videos/landing-bg.mp4"
               autoPlay
               loop
               muted
               playsInline
               className="w-full h-auto"
-            />
+            >
+              <source src="/videos/landing-bg.webm" type="video/webm" />
+              <source src="/videos/landing-bg.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
 

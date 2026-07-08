@@ -40,13 +40,15 @@ export default function NameInputScreen({ onStart, copy }: NameInputScreenProps)
           style={{ borderColor: '#FFD70040' }}
         >
           <video
-            src="/videos/hero-intro.mp4"
             autoPlay
             loop
             muted
             playsInline
             className="w-full h-auto"
-          />
+          >
+            <source src="/videos/hero-intro.webm" type="video/webm" />
+            <source src="/videos/hero-intro.mp4" type="video/mp4" />
+          </video>
           <div
             className="absolute inset-0 pointer-events-none"
             style={{ boxShadow: 'inset 0 0 30px rgba(255,215,0,0.1)' }}

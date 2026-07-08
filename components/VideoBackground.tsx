@@ -32,13 +32,15 @@ export default function VideoBackground({ questionNumber = 20, overlayOpacity = 
       {/* Video element — object-cover fills all screen sizes, anchored to center on mobile */}
       <video
         ref={videoRef}
-        src="/videos/test-journey.mp4"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ objectPosition: 'center center' }}
         playsInline
         muted
         loop
-      />
+      >
+        <source src="/videos/test-journey.webm" type="video/webm" />
+        <source src="/videos/test-journey.mp4" type="video/mp4" />
+      </video>
 
       {/* Color temperature gradient overlay - shifts from warm (early) to cool (late) */}
       <div

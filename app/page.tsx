@@ -180,7 +180,8 @@ export function HomeExperience({ locale = 'en' }: { locale?: HomeLocale }) {
                   className="w-full h-full object-cover"
                   style={{ WebkitTransform: 'translateZ(0)' }}
                 >
-                  <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grok-video-a2da9931-dd77-40ca-b351-adddc5cc3a08-PYDgy4CNaLVdiZe0hjEl7V7Jxejpnr.mp4" type="video/mp4" />
+                  <source src="/videos/home-hero.webm" type="video/webm" />
+                  <source src="/videos/home-hero.mp4" type="video/mp4" />
                 </video>
               </div>
             </div>
