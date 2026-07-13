@@ -9,6 +9,7 @@ import { TemperamentKey } from '@/lib/scoringKey'
 import { getSubtypeByBlendKey } from '@/lib/subtypes'
 import { getShareText } from '@/lib/share-copy'
 import { trackFourTypeEvent } from '@/lib/analytics'
+import type { FourTypeEventName } from '@/lib/analytics'
 import CinematicBackground from '@/components/CinematicBackground'
 import ShareableCard from '@/components/ShareableCard'
 import { YouTubeEmbed } from '@/components/YouTubeEmbed'
@@ -34,9 +35,9 @@ export default function SharePageClient({
   const [copied, setCopied] = useState(false)
   const subtype = getSubtypeByBlendKey(blend.key)
   
-  const shareUrl = `https://www.fourtype.com/share/${shareId}`
+  const compareUrl = `https://www.fourtype.com/quiz?compare=${shareId}`
 
-  const trackSharePageEvent = (event: 'share-click' | 'copy-link', source: string) => {
+  const trackSharePageEvent = (event: FourTypeEventName, source: string) => {
     trackFourTypeEvent({
       event,
       locale: 'share',
@@ -49,19 +50,19 @@ export default function SharePageClient({
   
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(shareUrl)
-      trackSharePageEvent('copy-link', 'share-page-copy-link')
+      await navigator.clipboard.writeText(compareUrl)
+      trackSharePageEvent('invite-copy', 'share-page-challenge-copy')
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
       // Fallback
       const textarea = document.createElement('textarea')
-      textarea.value = shareUrl
+      textarea.value = compareUrl
       document.body.appendChild(textarea)
       textarea.select()
       document.execCommand('copy')
       document.body.removeChild(textarea)
-      trackSharePageEvent('copy-link', 'share-page-copy-link-fallback')
+      trackSharePageEvent('invite-copy', 'share-page-challenge-copy-fallback')
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     }
@@ -69,15 +70,15 @@ export default function SharePageClient({
   
   const handleShare = async () => {
     const shareData = {
-      title: `I am ${blend.name}!`,
-      text: getShareText(blend),
-      url: shareUrl,
+      title: `Compare your FourType with ${heroName}`,
+      text: `${getShareText(blend)} Take the test so we can compare our shared strengths, likely friction, and communication style.`,
+      url: compareUrl,
     }
     
     if (navigator.share) {
       try {
         await navigator.share(shareData)
-        trackSharePageEvent('share-click', 'share-page-native-share')
+        trackSharePageEvent('invite-share', 'share-page-challenge-share')
       } catch {
         // User cancelled or error
       }
@@ -255,7 +256,7 @@ export default function SharePageClient({
               What&apos;s your temperament?
             </p>
             <Link
-              href="/quiz"
+              href={`/quiz?compare=${shareId}`}
               className="block w-full font-serif text-sm font-bold tracking-widest uppercase py-4 rounded-xl border-2 text-center transition-all duration-200"
               style={{
                 borderColor: primaryColor,
@@ -263,10 +264,10 @@ export default function SharePageClient({
                 backgroundColor: primaryColor,
               }}
             >
-              Take the Free Quiz
+              Take the Test and Compare
             </Link>
             <Link
-              href={`/quiz?compare=${shareId}`}
+              href="/quiz"
               className="mt-3 block w-full font-serif text-sm font-bold tracking-widest uppercase py-4 rounded-xl border-2 text-center transition-all duration-200"
               style={{
                 borderColor: `${primaryColor}66`,
@@ -274,7 +275,7 @@ export default function SharePageClient({
                 backgroundColor: `${primaryColor}10`,
               }}
             >
-              Compare Your Type With Mine
+              Take the Test Without Comparing
             </Link>
           </div>
         </div>
@@ -312,7 +313,7 @@ export default function SharePageClient({
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
             </svg>
-            Share Result
+            Challenge a Friend
           </button>
           
           <button
@@ -336,7 +337,7 @@ export default function SharePageClient({
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
-                Copy Link
+                Copy Challenge Link
               </>
             )}
           </button>

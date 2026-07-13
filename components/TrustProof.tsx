@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BarChart3, CheckCircle2, Mail, ShieldCheck, Sparkles, Users } from 'lucide-react'
+import { BarChart3, CheckCircle2, ShieldCheck, Sparkles, UserRoundCheck, Users } from 'lucide-react'
 
 type TrustProofProps = {
   variant?: 'compact' | 'full'
@@ -8,7 +8,7 @@ type TrustProofProps = {
 
 const proofItems = [
   { label: 'Free core result', body: 'Take the quiz and see your result without paying first.', icon: CheckCircle2 },
-  { label: 'No signup required', body: 'Email is optional and appears only after the free result.', icon: Mail },
+  { label: 'No account required', body: 'See, compare, and share your complete core result without signing up.', icon: UserRoundCheck },
   { label: '40 behavior questions', body: 'Questions focus on repeated behavior, pressure, motivation, and communication.', icon: Sparkles },
   { label: 'Score spread', body: 'See all four temperament scores instead of only a flat label.', icon: BarChart3 },
   { label: '15 FourType blends', body: 'Use primary and secondary patterns to understand subtype direction.', icon: Users },

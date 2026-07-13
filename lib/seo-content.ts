@@ -636,7 +636,7 @@ export const seoPages: SeoPage[] = [
           { title: 'Versus brief quizzes', body: 'FourType takes longer than the shortest tests, but gives more signal for score spread and subtype direction.', accent: 'gold' },
           { title: 'Versus psychometric-style tests', body: 'FourType is less academic in tone, but more practical for day-to-day self-understanding and sharing.', accent: 'purple' },
           { title: 'Versus broad personality sites', body: 'FourType focuses entirely on the four temperament model instead of sending you into many unrelated test frameworks.', accent: 'blue' },
-          { title: 'Versus report-first funnels', body: 'FourType gives the core result free before any optional email capture or future full-profile report.', accent: 'green' },
+          { title: 'Versus report-first funnels', body: 'FourType gives the core result free, then helps you learn and compare your result with a friend without creating an account.', accent: 'green' },
         ],
       },
       {
@@ -812,7 +812,7 @@ export const seoPages: SeoPage[] = [
         type: 'section',
         title: 'Data, privacy, and responsible use',
         body: [
-          'The core quiz does not require an email address. Optional email capture appears only after the free result, so users can receive a fuller profile without blocking the basic experience.',
+          'The core quiz does not require an email address or account. After the result, users can explore deeper profile guides and compare patterns with a friend without blocking the basic experience.',
           'Aggregate result and share analytics should be used to improve content, localization, and product quality. They should not be used to claim that an entire country, industry, or group has one fixed temperament.',
         ],
       },
@@ -1070,7 +1070,7 @@ export const blogArticles: BlogArticle[] = [
         type: 'section',
         title: 'Why FourType is built to compete across the whole category',
         body: [
-          'FourType is not trying to be only one more temperament quiz. It is built as a temperament media and self-knowledge platform: quiz, subtype profiles, compatibility guides, comparison pages, methodology, multilingual pages, shareable cards, and optional email capture after the free result.',
+          'FourType is not trying to be only one more temperament quiz. It is built as a temperament media and self-knowledge platform: quiz, subtype profiles, compatibility guides, comparison pages, methodology, multilingual pages, shareable cards, and friend-to-friend result comparisons.',
           'That matters for users and for search. A site that only answers “what type am I?” once has fewer reasons for people to return or share. A site that helps people compare, discuss, apply, and revisit their result has more staying power.',
         ],
       },
@@ -1460,7 +1460,7 @@ export const blogArticles: BlogArticle[] = [
         type: 'section',
         title: 'Why FourType gives the result before asking for anything',
         body: [
-          'FourType is designed around a simple trust principle: your core result stays free. You can take the quiz and see your result before deciding whether to leave an email for a fuller profile later.',
+          'FourType is designed around a simple trust principle: your core result stays free. You can take the quiz, explore your result, and compare it with a friend without creating an account.',
           'That keeps the quiz shareable and low-friction. If someone sends FourType to a friend, the friend can actually get value before committing to anything.',
         ],
       },
@@ -1539,7 +1539,7 @@ export const blogArticles: BlogArticle[] = [
     faq: [
       { question: 'Is FourType a FourTemperaments.com alternative?', answer: 'Yes. FourType is a modern free-first alternative for users who want score spread, subtype guidance, shareable results, and responsible educational content.' },
       { question: 'Does FourType claim the four humors are medically true?', answer: 'No. FourType treats the ancient humors as historical roots, not modern medical science.' },
-      { question: 'Which test is better if I want a free result?', answer: 'FourType is designed around a free core result first, with email capture only as an optional later step for people who want a fuller profile.' },
+      { question: 'Which test is better if I want a free result?', answer: 'FourType gives the core result free, includes score-spread and subtype guidance, and lets people compare results with friends without creating an account.' },
     ],
   },
   {
@@ -2075,8 +2075,8 @@ export const blogArticles: BlogArticle[] = [
         type: 'section',
         title: 'Localization is not only interface translation',
         body: [
-          'A useful localized temperament test needs translated quiz questions, result names, subtype summaries, share copy, email report copy, and SEO pages. The biggest mistake is translating the buttons while leaving the result explanation in English.',
-          'FourType should localize the parts people actually share: the result card, the painfully accurate bullets, the compatibility pages, and the email mini-report. Those are the places where a user decides whether to send it to a friend.',
+          'A useful localized temperament test needs translated quiz questions, result names, subtype summaries, share copy, pair insights, and SEO pages. The biggest mistake is translating the buttons while leaving the result explanation in English.',
+          'FourType should localize the parts people actually share: the result card, the painfully accurate bullets, the compatibility pages, and the friend comparison. Those are the places where a user decides whether to send it to a friend.',
         ],
       },
       {
@@ -2085,7 +2085,7 @@ export const blogArticles: BlogArticle[] = [
         body: 'The best language roadmap is small enough to ship and broad enough to learn from traffic.',
         bullets: [
           'Keep improving English because it still drives search authority.',
-          'Deepen Chinese and Spanish across quiz, result, email, and share pages.',
+          'Deepen Chinese and Spanish across quiz, result, comparison, and share pages.',
           'Add Bahasa Indonesia or Malay next for Southeast Asian growth.',
           'Use analytics to decide whether Vietnamese, Hindi, or Portuguese should follow.',
         ],
