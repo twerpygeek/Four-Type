@@ -1,22 +1,22 @@
 'use client'
 
 import { useState, useEffect, useMemo, useRef } from 'react'
-import type { FormEvent } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ScoreMap, TemperamentKey, getDominantAndSecondary, getMaskingWarning, resolveBlend } from '@/lib/scoringKey'
 import { TEMPERAMENTS } from '@/lib/temperaments'
-import { BLENDS, type BlendKey, getBlendColors } from '@/lib/blends'
+import { BLENDS, getBlendColors } from '@/lib/blends'
 import { getSubtypeByBlendKey } from '@/lib/subtypes'
 import { getLocalizedBlendSummary, type QuizCopy, type QuizLocale } from '@/lib/quiz-i18n'
 import { getShareText } from '@/lib/share-copy'
 import { getMisunderstoodLine, getResultOneSentence, getSharePrompts, getWeeklyChallenge } from '@/lib/result-virality'
 import { generateShareId, type DecodedShareResult } from '@/lib/share-id'
 import { getComparisonInsight } from '@/lib/comparison'
-import { trackFourTypeEvent } from '@/lib/analytics'
+import { trackFourTypeEvent, type FourTypeEventName } from '@/lib/analytics'
 import ScoreChart from './ScoreChart'
 import CinematicBackground from './CinematicBackground'
 import ShareableCard from './ShareableCard'
+import PairComparison from './PairComparison'
 
 // Get reading resources based on temperament
 function getReadingResources(primaryKey: TemperamentKey, blendKey: string) {
@@ -116,9 +116,6 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
   const [viewingClass, setViewingClass] = useState<TemperamentKey | null>(null)
   const [linkCopied, setLinkCopied] = useState(false)
   const [compareCopied, setCompareCopied] = useState(false)
-  const [leadEmail, setLeadEmail] = useState('')
-  const [leadWebsite, setLeadWebsite] = useState('')
-  const [leadStatus, setLeadStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const resultTrackedKey = useRef('')
   const viewingTemp = viewingClass ? TEMPERAMENTS[viewingClass] : null
   
@@ -127,10 +124,10 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
   const shareUrl = `https://www.fourtype.com/share/${shareId}`
   const compareUrl = `https://www.fourtype.com/quiz?compare=${shareId}`
   const readingResources = useMemo(() => getReadingResources(dominant, blendResult.blendKey), [dominant, blendResult.blendKey])
-  const friendBlend = comparison ? BLENDS[comparison.blendKey as BlendKey] : null
+  const friendBlend = comparison ? BLENDS[comparison.blendKey] : null
   const comparisonInsight = friendBlend ? getComparisonInsight(blend, friendBlend) : null
 
-  const trackShareEvent = (event: 'share-click' | 'copy-link', source: string) => {
+  const trackShareEvent = (event: FourTypeEventName, source: string) => {
     trackFourTypeEvent({
       event,
       locale,
@@ -179,10 +176,28 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
     }
   }
 
+  const handleInviteShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Compare your FourType with ${resultName}`,
+          text: `I got ${resultName}. Take the FourType test so we can reveal our shared strengths, likely friction, and communication style.`,
+          url: compareUrl,
+        })
+        trackShareEvent('invite-share', 'result-invite-native-share')
+        return
+      } catch {
+        return
+      }
+    }
+
+    await handleCopyCompareLink()
+  }
+
   const handleCopyCompareLink = async () => {
     try {
       await navigator.clipboard.writeText(compareUrl)
-      trackShareEvent('copy-link', 'result-compare-link')
+      trackShareEvent('invite-copy', 'result-compare-link')
       setCompareCopied(true)
       setTimeout(() => setCompareCopied(false), 2000)
     } catch {
@@ -192,7 +207,47 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
       textarea.select()
       document.execCommand('copy')
       document.body.removeChild(textarea)
-      trackShareEvent('copy-link', 'result-compare-link-fallback')
+      trackShareEvent('invite-copy', 'result-compare-link-fallback')
+      setCompareCopied(true)
+      setTimeout(() => setCompareCopied(false), 2000)
+    }
+  }
+
+  const handlePairShare = async () => {
+    if (!friendBlend || !comparisonInsight || !comparison) return
+    const text = `${heroName} is ${resultName}. ${comparison.heroName} is ${friendBlend.name}. ${comparisonInsight.sharedQuality}`
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${heroName} + ${comparison.heroName}: our FourType pair`,
+          text,
+          url: compareUrl,
+        })
+        trackShareEvent('pair-share', 'pair-native-share')
+        return
+      } catch {
+        return
+      }
+    }
+
+    await handlePairCopy()
+  }
+
+  const handlePairCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(compareUrl)
+      trackShareEvent('pair-copy', 'pair-challenge-copy')
+      setCompareCopied(true)
+      setTimeout(() => setCompareCopied(false), 2000)
+    } catch {
+      const textarea = document.createElement('textarea')
+      textarea.value = compareUrl
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      trackShareEvent('pair-copy', 'pair-challenge-copy-fallback')
       setCompareCopied(true)
       setTimeout(() => setCompareCopied(false), 2000)
     }
@@ -222,43 +277,6 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
       setTimeout(() => setLinkCopied(false), 2000)
     } catch {
       handleCopyLink()
-    }
-  }
-
-  const handleLeadSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    if (leadStatus === 'submitting') return
-
-    setLeadStatus('submitting')
-
-    try {
-      const response = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: leadEmail,
-          website: leadWebsite,
-          heroName,
-          locale,
-          blendKey: blendResult.blendKey,
-          resultName,
-          resultBlend,
-          scores,
-          shareUrl,
-          source: 'quiz-result',
-          consentText: copy.leadCapture.consent,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Lead capture failed.')
-      }
-
-      setLeadStatus('success')
-      setLeadEmail('')
-    } catch {
-      setLeadStatus('error')
     }
   }
 
@@ -460,7 +478,7 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
           </div>
         </div>
 
-        {/* FAST SHARE PROMPT */}
+        {/* PRIMARY FRIEND CHALLENGE */}
         <div
           className="rounded-2xl border p-5 flex flex-col gap-4 relative overflow-hidden"
           style={{ backgroundColor: `${primaryColor}10`, borderColor: `${primaryColor}40` }}
@@ -471,20 +489,20 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
           />
           <div className="relative flex flex-col gap-1">
             <p className="font-serif text-sm font-bold text-[#E2E8F0]">
-              {copy.friendPrompt.title}
+              Challenge a friend who knows you well
             </p>
             <p className="font-sans text-xs leading-relaxed text-[#94A3B8]">
-              {copy.friendPrompt.body}
+              When they finish, FourType will reveal your shared strengths, likely friction, and how to communicate better.
             </p>
           </div>
           <div className="relative grid gap-2 sm:grid-cols-2">
             <button
               type="button"
-              onClick={handleNativeShare}
+              onClick={handleInviteShare}
               className="rounded-xl px-4 py-3 font-serif text-xs font-bold uppercase tracking-widest transition-all cursor-pointer"
               style={{ backgroundColor: primaryColor, color: '#0D0D0F' }}
             >
-              {copy.shareButton}
+              Challenge a Friend
             </button>
             <button
               type="button"
@@ -596,39 +614,18 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
           )}
         </div>
 
-        {friendBlend && comparisonInsight && (
-          <div
-            className="rounded-2xl border p-5 flex flex-col gap-4 relative overflow-hidden"
-            style={{ backgroundColor: 'rgba(26, 26, 46, 0.86)', borderColor: `${primaryColor}35` }}
-          >
-            <div
-              className="absolute -top-16 -right-16 w-40 h-40 rounded-full blur-3xl opacity-15"
-              style={{ backgroundColor: primaryColor }}
-            />
-            <div className="relative flex flex-col gap-2">
-              <p className="font-serif text-xs tracking-widest uppercase" style={{ color: primaryColor }}>
-                Compare With {comparison?.heroName}
-              </p>
-              <h2 className="font-serif text-xl font-black text-[#E2E8F0] leading-tight">
-                {resultName} + {friendBlend.name}
-              </h2>
-              <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
-                {comparisonInsight.headline}
-              </p>
-            </div>
-            <div className="relative grid gap-3">
-              {[
-                { label: 'Chemistry', body: comparisonInsight.chemistry },
-                { label: 'Friction', body: comparisonInsight.friction },
-                { label: 'Repair Move', body: comparisonInsight.repair },
-              ].map((item) => (
-                <div key={item.label} className="rounded-xl border p-4" style={{ borderColor: `${primaryColor}22`, backgroundColor: 'rgba(13, 13, 15, 0.46)' }}>
-                  <p className="font-sans text-[10px] uppercase tracking-wider text-[#64748B] mb-1">{item.label}</p>
-                  <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+        {friendBlend && comparisonInsight && comparison && (
+          <PairComparison
+            selfName={heroName}
+            friendName={comparison.heroName}
+            selfBlend={blend}
+            friendBlend={friendBlend}
+            insight={comparisonInsight}
+            copied={compareCopied}
+            onShare={handlePairShare}
+            onCopy={handlePairCopy}
+            onCardDownload={() => trackShareEvent('pair-share', 'pair-card-download')}
+          />
         )}
 
         {/* TABS */}
@@ -921,94 +918,6 @@ export default function ResultsScreen({ heroName, scores, onRetake, copy, locale
             </button>
           </div>
         </div>
-
-        {/* EMAIL CAPTURE */}
-        <form
-          onSubmit={handleLeadSubmit}
-          className="rounded-2xl border p-5 flex flex-col gap-4 relative overflow-hidden"
-          style={{ backgroundColor: 'rgba(26, 26, 46, 0.86)', borderColor: `${primaryColor}35` }}
-        >
-          <div
-            className="absolute -top-16 -right-16 w-36 h-36 rounded-full opacity-15 blur-3xl"
-            style={{ backgroundColor: primaryColor }}
-          />
-          <div className="relative flex flex-col gap-2">
-            <p className="font-serif text-xs tracking-widest uppercase" style={{ color: primaryColor }}>
-              {copy.leadCapture.eyebrow}
-            </p>
-            <h2 className="font-serif text-xl font-black text-[#E2E8F0] leading-tight">
-              {copy.leadCapture.title}
-            </h2>
-            <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
-              {copy.leadCapture.body}
-            </p>
-          </div>
-
-          <input
-            type="text"
-            name="website"
-            value={leadWebsite}
-            onChange={(event) => setLeadWebsite(event.target.value)}
-            tabIndex={-1}
-            autoComplete="off"
-            className="hidden"
-            aria-hidden="true"
-          />
-
-          <div className="relative flex flex-col sm:flex-row gap-2">
-            <input
-              type="email"
-              value={leadEmail}
-              onChange={(event) => {
-                setLeadEmail(event.target.value)
-                if (leadStatus === 'error') setLeadStatus('idle')
-              }}
-              placeholder={copy.leadCapture.placeholder}
-              required
-              disabled={leadStatus === 'submitting' || leadStatus === 'success'}
-              className="min-h-12 flex-1 rounded-xl border px-4 font-sans text-sm text-[#E2E8F0] outline-none transition-all placeholder:text-[#4A5568] disabled:cursor-not-allowed disabled:opacity-60"
-              style={{
-                backgroundColor: 'rgba(13, 13, 15, 0.72)',
-                borderColor: `${primaryColor}30`,
-              }}
-            />
-            <button
-              type="submit"
-              disabled={leadStatus === 'submitting' || leadStatus === 'success'}
-              className="min-h-12 rounded-xl px-5 font-serif text-xs font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
-              style={{
-                backgroundColor: primaryColor,
-                color: '#0D0D0F',
-                boxShadow: `0 0 24px ${primaryColor}20`,
-              }}
-            >
-              {leadStatus === 'submitting' ? copy.leadCapture.submitting : copy.leadCapture.button}
-            </button>
-          </div>
-
-          <label className="relative flex items-start gap-2 font-sans text-[11px] leading-relaxed text-[#64748B]">
-            <input type="checkbox" required className="mt-0.5 accent-[#FFD700]" />
-            <span>{copy.leadCapture.consent}</span>
-          </label>
-
-          <div className="relative min-h-5">
-            {leadStatus === 'success' && (
-              <p className="font-sans text-xs leading-relaxed text-[#52B788]">
-                {copy.leadCapture.success}
-              </p>
-            )}
-            {leadStatus === 'error' && (
-              <p className="font-sans text-xs leading-relaxed text-[#E63946]">
-                {copy.leadCapture.error}
-              </p>
-            )}
-            {leadStatus === 'idle' && (
-              <p className="font-sans text-xs leading-relaxed text-[#4A5568]">
-                {copy.leadCapture.trust}
-              </p>
-            )}
-          </div>
-        </form>
 
         {/* CONTINUE YOUR JOURNEY */}
         <div
