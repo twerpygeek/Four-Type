@@ -1,8 +1,9 @@
+import { Suspense } from 'react'
 import { localizedMetadata } from '@/components/LocalizedPage'
-import { QuizExperience } from '@/app/quiz/QuizClient'
+import { QuizExperienceWithSearch } from '@/app/quiz/QuizClient'
 
 export const metadata = localizedMetadata('zh-CN', 'quiz')
 
 export default function ZhCnQuizPage() {
-  return <QuizExperience locale="zh-CN" />
+  return <Suspense fallback={null}><QuizExperienceWithSearch locale="zh-CN" /></Suspense>
 }

@@ -1,15 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import type { ReactNode } from 'react'
 import type { QuizCopy } from '@/lib/quiz-i18n'
 import RuneBackground from './RuneBackground'
 
 interface NameInputScreenProps {
   onStart: (name: string) => void
   copy: QuizCopy['name']
+  banner?: ReactNode
 }
 
-export default function NameInputScreen({ onStart, copy }: NameInputScreenProps) {
+export default function NameInputScreen({ onStart, copy, banner }: NameInputScreenProps) {
   const [name, setName] = useState('')
   const [error, setError] = useState('')
 
@@ -34,6 +36,8 @@ export default function NameInputScreen({ onStart, copy }: NameInputScreenProps)
         onSubmit={handleSubmit}
         className="relative z-10 flex flex-col items-center gap-8 w-full max-w-md text-center"
       >
+        {banner}
+
         {/* Hero video */}
         <div
           className="relative w-full max-w-xs rounded-xl overflow-hidden border-2"

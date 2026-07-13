@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import type { AnswerLetter, Question } from '@/lib/questions'
 import type { QuizCopy } from '@/lib/quiz-i18n'
+import { getCompletedChapter, type CompletedChapter } from '@/lib/quiz-progress'
 import XPProgressBar from './XPProgressBar'
 import VideoBackground from './VideoBackground'
 
@@ -11,9 +12,10 @@ interface QuestionScreenProps {
   onComplete: (answers: Record<number, AnswerLetter>) => void
   copy: QuizCopy['question']
   questions: Question[]
+  onProgress?: (answeredCount: number, completedChapter?: CompletedChapter) => void
 }
 
-export default function QuestionScreen({ heroName, onComplete, copy, questions }: QuestionScreenProps) {
+export default function QuestionScreen({ heroName, onComplete, copy, questions, onProgress }: QuestionScreenProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<number, AnswerLetter>>({})
   const [selected, setSelected] = useState<AnswerLetter | null>(null)
@@ -98,6 +100,7 @@ export default function QuestionScreen({ heroName, onComplete, copy, questions }
     setTimeout(() => {
       const newAnswers = { ...answers, [questionNumber]: letter }
       setAnswers(newAnswers)
+      onProgress?.(questionNumber, getCompletedChapter(questionNumber))
 
       // Check level gate
       const msg = copy.levelGateMessages[questionNumber]
