@@ -1,0 +1,19 @@
+import assert from 'node:assert/strict'
+import test from 'node:test'
+import { localizedLocales, localizedPages, localizedPath } from '../lib/localized-content'
+import { getHomeCopy } from '../lib/home-i18n'
+import { getQuizCopy, getQuizQuestions, getLocalizedBlendSummary } from '../lib/quiz-i18n'
+import { BLENDS } from '../lib/blends'
+
+test('Bahasa Indonesia covers every core locale surface', () => {
+  assert.equal(localizedLocales.id.nativeLabel, 'Bahasa Indonesia')
+  assert.equal(localizedPath('id', 'quiz'), '/id/quiz')
+  assert.equal(localizedPages.id['temperament-test'].faq.length >= 4, true)
+  assert.equal(getHomeCopy('id').heroCta.length > 0, true)
+  assert.equal(getQuizQuestions('id').length, 40)
+  assert.equal(
+    Object.keys(BLENDS).every((key) => getLocalizedBlendSummary('id', key as keyof typeof BLENDS)),
+    true
+  )
+  assert.equal(getQuizCopy('id').results.compareButton.length > 0, true)
+})

@@ -16,6 +16,21 @@ const pageAlternates: Record<LocalizedPageKey, string> = {
   quiz: '/quiz',
 }
 
+const localizedLabels: Record<LocaleCode, { faq: string; phaseNote: string }> = {
+  'zh-CN': {
+    faq: '常见问题',
+    phaseNote: 'FourType 中文版包含入口、完整测试、核心结果和好友对比体验。',
+  },
+  es: {
+    faq: 'Preguntas frecuentes',
+    phaseNote: 'FourType en español incluye la entrada, el test completo, el resultado principal y la comparación con amigos.',
+  },
+  id: {
+    faq: 'Pertanyaan umum',
+    phaseNote: 'FourType Bahasa Indonesia mencakup halaman masuk, tes lengkap, hasil inti, dan perbandingan dengan teman.',
+  },
+}
+
 export function localizedMetadata(locale: LocaleCode, pageKey: LocalizedPageKey) {
   const page = localizedPages[locale][pageKey]
   const canonical = `https://www.fourtype.com${localizedPath(locale, pageKey)}`
@@ -32,6 +47,7 @@ export function localizedMetadata(locale: LocaleCode, pageKey: LocalizedPageKey)
         en: `https://www.fourtype.com${pageAlternates[pageKey]}`,
         'zh-CN': `https://www.fourtype.com${localizedPath('zh-CN', pageKey)}`,
         es: `https://www.fourtype.com${localizedPath('es', pageKey)}`,
+        id: `https://www.fourtype.com${localizedPath('id', pageKey)}`,
       },
     },
     openGraph: {
@@ -39,7 +55,7 @@ export function localizedMetadata(locale: LocaleCode, pageKey: LocalizedPageKey)
       description: page.description,
       url: canonical,
       type: 'website',
-      locale: locale === 'zh-CN' ? 'zh_CN' : 'es_ES',
+      locale: locale === 'zh-CN' ? 'zh_CN' : locale === 'es' ? 'es_ES' : 'id_ID',
       images: [{ url: 'https://www.fourtype.com/og-image.png', width: 1672, height: 941, alt: page.title }],
     },
   }
@@ -130,7 +146,7 @@ export function LocalizedPage({ locale, pageKey }: Props) {
 
             <section className="rounded-xl border border-border bg-secondary/30 p-6">
               <h2 className="mb-4 font-serif text-2xl font-bold text-foreground">
-                {locale === 'zh-CN' ? '常见问题' : 'Preguntas frecuentes'}
+                {localizedLabels[locale].faq}
               </h2>
               <div className="space-y-5">
                 {page.faq.map((item) => (
@@ -147,9 +163,7 @@ export function LocalizedPage({ locale, pageKey }: Props) {
                 {localeInfo.nativeLabel}
               </p>
               <p className="mt-2 text-muted-foreground">
-                {locale === 'zh-CN'
-                  ? '这是 FourType 多语言体验的第一阶段：中文入口、说明页面和搜索发现信号已经上线。'
-                  : 'Esta es la primera fase de la experiencia multilingue de FourType: entrada, paginas explicativas y senales de descubrimiento en espanol.'}
+                {localizedLabels[locale].phaseNote}
               </p>
             </div>
           </div>

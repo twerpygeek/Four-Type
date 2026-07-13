@@ -1,4 +1,4 @@
-export type HomeLocale = 'en' | 'zh-CN' | 'es'
+export type HomeLocale = 'en' | 'zh-CN' | 'es' | 'id'
 
 type TemperamentHomeCopy = {
   title: string
@@ -233,4 +233,72 @@ export const homeCopy: Record<HomeLocale, HomeCopy> = {
       { href: '/blog/4-temperaments-test-free', title: 'Test gratuito de 4 temperamentos', description: 'Aprende a leer tu distribución sin reducirte a una sola etiqueta.' },
     ],
   },
+  id: {
+    heroAlt: 'FourType — Kenali sifat sejati Anda — Perjalanan temperamen',
+    heroTitle: 'Tes Temperamen Gratis',
+    heroStatement: 'Jawab 40 pertanyaan untuk menemukan temperamen utama, perpaduan kedua, pola saat tertekan, gaya komunikasi, dan arah pertumbuhan Anda.',
+    heroCta: 'Mulai tes',
+    heroMeta: '40 pertanyaan • Hasil langsung • Tanpa email • 16 pola',
+    choosePath: 'Pilih jalan Anda',
+    introSrTitle: 'Tes empat temperamen gratis: temukan pola kepribadian Anda',
+    introParagraphs: [
+      'Empat temperamen adalah kerangka historis untuk memahami pola kepribadian. Kerangka ini mengenali empat kecenderungan utama: Sanguinis, Koleris, Melankolis, dan Plegmatis.',
+      'FourType berfokus pada motivasi, respons terhadap tekanan, kekuatan alami, dan gaya komunikasi. Hasilnya tidak hanya memberi satu label, tetapi menunjukkan sebaran keempat skor serta kemungkinan perpaduan temperamen.',
+      'Jawab 40 pertanyaan untuk mengenali pola Anda, memahami reaksi yang sering muncul, dan menemukan langkah praktis untuk pertumbuhan, hubungan, dan pekerjaan. FourType adalah alat refleksi diri dan pendidikan, bukan diagnosis klinis.',
+    ],
+    guideEyebrow: 'Panduan tes temperamen',
+    guideTitle: 'Mulai dengan tes gratis, lalu pahami polanya',
+    guideDescription: 'Gunakan panduan inti FourType untuk memahami tes, membandingkan empat temperamen, menilai pertanyaan, dan membaca hasil dengan bijak.',
+    readGuide: 'Baca panduan',
+    stats: {
+      peopleTested: 'Pertanyaan',
+      blends: 'Perpaduan temperamen',
+      wisdom: 'Tahun sejarah',
+    },
+    whyTitle: 'Mengapa mempelajari temperamen?',
+    whyDescription: 'FourType membantu Anda memahami pola bawaan saat tertekan, berhubungan, bekerja, memimpin, dan bertumbuh.',
+    videoTitle: 'Mengapa mempelajari temperamen - FourType',
+    temperaments: {
+      sanguine: {
+        title: 'The Bard',
+        name: 'Sanguinis',
+        description: 'Penghubung yang antusias, membawa energi, optimisme, dan ekspresi ke dalam setiap ruang.',
+        traits: ['Karismatik', 'Kreatif', 'Spontan'],
+      },
+      choleric: {
+        title: 'The Commander',
+        name: 'Koleris',
+        description: 'Pemimpin alami yang mengambil kendali, mendorong hasil, dan mengubah visi menjadi tindakan.',
+        traits: ['Tegas', 'Ambisius', 'Strategis'],
+      },
+      melancholic: {
+        title: 'The Strategist',
+        name: 'Melankolis',
+        description: 'Pemikir mendalam yang melihat pola tersembunyi serta menghargai makna, detail, dan kualitas.',
+        traits: ['Analitis', 'Teliti', 'Setia'],
+      },
+      phlegmatic: {
+        title: 'The Guardian',
+        name: 'Plegmatis',
+        description: 'Pendamai yang tenang, mendengarkan dengan saksama, membangun kepercayaan, dan menjaga kestabilan.',
+        traits: ['Sabar', 'Diplomatis', 'Dapat diandalkan'],
+      },
+    },
+    features: [
+      { title: '2.500 tahun sejarah', description: 'Dari dunia kuno hingga psikologi modern, temperamen bertahan sebagai bahasa refleksi yang mudah dipahami.' },
+      { title: 'Pahami diri dan orang lain', description: 'Kenali alasan di balik reaksi Anda dan cara terhubung lebih baik dengan pola yang berbeda.' },
+      { title: 'Wawasan yang dapat diterapkan', description: 'Gunakan langkah praktis untuk pertumbuhan, hubungan, kepemimpinan, dan kehidupan sehari-hari.' },
+      { title: '16 pola kepribadian', description: 'Pelajari perpaduan utama dan sekunder untuk pemahaman diri yang lebih mendalam.' },
+    ],
+    guides: [
+      { href: '/id/temperament-test', title: 'Tes temperamen', description: 'Mulai dari panduan utama dan pelajari cara FourType membaca sebaran skor Anda.' },
+      { href: '/id/four-temperaments-test', title: 'Tes empat temperamen', description: 'Bandingkan Koleris, Sanguinis, Melankolis, dan Plegmatis sebelum mengikuti tes.' },
+      { href: '/blog/temperament-test-questions', title: 'Pertanyaan tes temperamen', description: 'Pelajari apa yang seharusnya diukur oleh pertanyaan berbasis perilaku.' },
+      { href: '/blog/temperament-test-accuracy', title: 'Akurasi tes temperamen', description: 'Pelajari cara menilai hasil secara bertanggung jawab tanpa klaim berlebihan.' },
+    ],
+  },
+}
+
+export function getHomeCopy(locale: HomeLocale) {
+  return homeCopy[locale]
 }

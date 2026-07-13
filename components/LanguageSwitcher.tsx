@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { Languages } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const localizedBases = ['zh-CN', 'es'] as const
+const localizedBases = ['zh-CN', 'es', 'id'] as const
 
 function stripLocale(pathname: string) {
   for (const locale of localizedBases) {
@@ -15,7 +15,7 @@ function stripLocale(pathname: string) {
   return pathname
 }
 
-function localizedHref(locale: 'en' | 'zh-CN' | 'es', pathname: string) {
+function localizedHref(locale: 'en' | 'zh-CN' | 'es' | 'id', pathname: string) {
   const cleanPath = stripLocale(pathname)
   const supportedPath = ['/', '/temperament-test', '/four-temperaments-test', '/quiz'].includes(cleanPath)
     ? cleanPath
@@ -27,11 +27,18 @@ function localizedHref(locale: 'en' | 'zh-CN' | 'es', pathname: string) {
 
 export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
   const pathname = usePathname()
-  const current = pathname.startsWith('/zh-CN') ? 'zh-CN' : pathname.startsWith('/es') ? 'es' : 'en'
+  const current = pathname.startsWith('/zh-CN')
+    ? 'zh-CN'
+    : pathname.startsWith('/es')
+      ? 'es'
+      : pathname.startsWith('/id')
+        ? 'id'
+        : 'en'
   const languages = [
     { code: 'en' as const, label: 'EN' },
     { code: 'zh-CN' as const, label: '中文' },
     { code: 'es' as const, label: 'ES' },
+    { code: 'id' as const, label: 'ID' },
   ]
 
   return (

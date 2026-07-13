@@ -11,21 +11,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       en: baseUrl,
       'zh-CN': `${baseUrl}/zh-CN`,
       es: `${baseUrl}/es`,
+      id: `${baseUrl}/id`,
     },
     '/quiz': {
       en: `${baseUrl}/quiz`,
       'zh-CN': `${baseUrl}/zh-CN/quiz`,
       es: `${baseUrl}/es/quiz`,
+      id: `${baseUrl}/id/quiz`,
     },
     '/temperament-test': {
       en: `${baseUrl}/temperament-test`,
       'zh-CN': `${baseUrl}/zh-CN/temperament-test`,
       es: `${baseUrl}/es/temperament-test`,
+      id: `${baseUrl}/id/temperament-test`,
     },
     '/four-temperaments-test': {
       en: `${baseUrl}/four-temperaments-test`,
       'zh-CN': `${baseUrl}/zh-CN/four-temperaments-test`,
       es: `${baseUrl}/es/four-temperaments-test`,
+      id: `${baseUrl}/id/four-temperaments-test`,
     },
   }
 

@@ -20,6 +20,11 @@ const copy = {
     title: (name: string) => `${name} quiere comparar sus FourTypes`,
     body: 'Completa el test para descubrir fortalezas compartidas, posibles fricciones y cómo comunicarse mejor.',
   },
+  id: {
+    eyebrow: 'Seorang teman menantang Anda',
+    title: (name: string) => `${name} ingin membandingkan FourType`,
+    body: 'Selesaikan tes untuk melihat kekuatan bersama, kemungkinan gesekan, dan cara berkomunikasi yang lebih baik.',
+  },
 } satisfies Record<QuizLocale, { eyebrow: string; title: (name: string) => string; body: string }>
 
 export default function ReferralInviteBanner({ inviter, locale }: { inviter: DecodedShareResult; locale: QuizLocale }) {

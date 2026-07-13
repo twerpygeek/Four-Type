@@ -1,9 +1,10 @@
-export type LocaleCode = 'zh-CN' | 'es'
+export type LocaleCode = 'zh-CN' | 'es' | 'id'
 export type LocalizedPageKey = 'home' | 'temperament-test' | 'four-temperaments-test' | 'quiz'
 
 export const localizedLocales: Record<LocaleCode, { label: string; nativeLabel: string; pathPrefix: string }> = {
   'zh-CN': { label: 'Chinese', nativeLabel: '中文', pathPrefix: '/zh-CN' },
   es: { label: 'Spanish', nativeLabel: 'Español', pathPrefix: '/es' },
+  id: { label: 'Indonesian', nativeLabel: 'Bahasa Indonesia', pathPrefix: '/id' },
 }
 
 export const localizedPagePaths: Record<LocalizedPageKey, string> = {
@@ -248,6 +249,170 @@ export const localizedPages: Record<LocaleCode, Record<LocalizedPageKey, {
       ],
       faq: [
         { question: '¿Las preguntas ya están en español?', answer: 'Sí. La versión en español incluye las 40 preguntas y el resumen principal del resultado.' },
+      ],
+    },
+  },
+  id: {
+    home: {
+      title: 'Tes Temperamen Gratis FourType',
+      description: 'Temukan apakah pola utama Anda Koleris, Sanguinis, Melankolis, Plegmatis, atau perpaduan temperamen melalui FourType.',
+      eyebrow: 'Tes empat temperamen gratis',
+      cta: 'Mulai tes gratis',
+      ctaHref: '/quiz',
+      sections: [
+        {
+          title: 'Kenali pola temperamen Anda',
+          body: [
+            'FourType membandingkan empat temperamen klasik: Koleris, Sanguinis, Melankolis, dan Plegmatis. Pertanyaannya berfokus pada perilaku berulang, respons terhadap tekanan, komunikasi, dan hubungan.',
+            'Hasilnya menunjukkan pola utama, sebaran keempat skor, dan perpaduan kedua yang dapat menjelaskan mengapa satu label saja sering terasa kurang lengkap.',
+          ],
+        },
+        {
+          title: 'Gunakan hasil sebagai cermin, bukan kotak',
+          body: [
+            'Baca hasil Anda bersama contoh kehidupan sehari-hari: cara mengambil keputusan, menghadapi konflik, memulihkan energi, dan bekerja dengan orang lain.',
+            'FourType adalah alat refleksi diri dan pendidikan. Hasilnya bukan diagnosis klinis dan tidak boleh digunakan untuk keputusan perekrutan.',
+          ],
+        },
+        {
+          title: 'Belajar bersama teman',
+          body: [
+            'Bagikan tantangan FourType kepada seseorang yang mengenal Anda. Setelah mereka selesai, Anda dapat melihat kekuatan bersama, kemungkinan gesekan, dan cara berkomunikasi yang lebih baik.',
+          ],
+        },
+      ],
+      cards: [
+        { title: 'Koleris', body: 'Tegas, berorientasi tujuan, cepat bertindak, dan terdorong oleh tantangan.' },
+        { title: 'Sanguinis', body: 'Ekspresif, sosial, optimistis, dan berenergi melalui hubungan.' },
+        { title: 'Melankolis', body: 'Analitis, mendalam, teliti, dan berorientasi pada kualitas.' },
+        { title: 'Plegmatis', body: 'Tenang, setia, stabil, dan mengutamakan kedamaian serta kepercayaan.' },
+      ],
+      faq: [
+        { question: 'Apakah FourType tersedia dalam Bahasa Indonesia?', answer: 'Ya. Halaman utama, 40 pertanyaan, hasil inti, dan alur perbandingan teman tersedia dalam Bahasa Indonesia.' },
+        { question: 'Apakah tes ini gratis?', answer: 'Ya. Anda dapat menyelesaikan tes dan melihat hasil inti tanpa pembayaran atau akun.' },
+        { question: 'Berapa lama tesnya?', answer: 'FourType memiliki 40 pertanyaan dan biasanya selesai dalam waktu kurang dari 10 menit.' },
+        { question: 'Apakah hasil ini diagnosis?', answer: 'Bukan. FourType adalah alat refleksi diri dan pendidikan, bukan diagnosis klinis atau alat seleksi kerja.' },
+      ],
+    },
+    'temperament-test': {
+      title: 'Apa Itu Tes Temperamen?',
+      description: 'Pelajari cara tes temperamen membandingkan pola Koleris, Sanguinis, Melankolis, dan Plegmatis serta cara membaca hasilnya dengan bijak.',
+      eyebrow: 'Panduan tes temperamen',
+      cta: 'Mulai tes gratis',
+      ctaHref: '/quiz',
+      sections: [
+        {
+          title: 'Apa yang diukur oleh tes temperamen?',
+          body: [
+            'Tes temperamen membantu Anda mengamati kecenderungan berulang dalam tekanan, tujuan, emosi, komunikasi, dan hubungan. Tes ini tidak mengukur nilai diri atau kemampuan seseorang.',
+            'FourType membandingkan jawaban Anda di keempat temperamen lalu menunjukkan pola utama, sebaran skor, dan kemungkinan perpaduan sekunder.',
+          ],
+        },
+        {
+          title: 'Cara menjawab dengan lebih akurat',
+          body: [
+            'Jawablah berdasarkan perilaku Anda yang paling sering muncul, terutama di bawah tekanan biasa. Hindari memilih jawaban yang terdengar paling ideal.',
+            'Jika dua skor tertinggi berdekatan, bacalah hasil sebagai perpaduan. Perhatikan konteks, bukan hanya nama tipenya.',
+          ],
+        },
+        {
+          title: 'Batas penggunaan yang bertanggung jawab',
+          body: [
+            'FourType ditujukan untuk refleksi diri, pendidikan, dan percakapan yang lebih baik. Ini bukan diagnosis klinis, nasihat medis, atau alat untuk perekrutan.',
+          ],
+        },
+      ],
+      cards: [
+        { title: '40 pertanyaan', body: 'Mencakup perilaku, tekanan, komunikasi, motivasi, dan cara memulihkan energi.' },
+        { title: 'Empat skor', body: 'Bandingkan kecenderungan Koleris, Sanguinis, Melankolis, dan Plegmatis.' },
+        { title: 'Arah perpaduan', body: 'Gunakan dua skor teratas untuk memahami pola yang lebih khusus.' },
+        { title: 'Tanpa akun', body: 'Lihat hasil inti dan bandingkan dengan teman tanpa mendaftar.' },
+      ],
+      faq: [
+        { question: 'Apakah tes temperamen sama dengan tes kepribadian?', answer: 'Tes temperamen lebih berfokus pada reaksi awal, ritme emosi, energi sosial, dan pola saat tertekan.' },
+        { question: 'Apakah tes temperamen akurat?', answer: 'Hasilnya paling berguna sebagai hipotesis refleksi yang dibandingkan dengan perilaku nyata, bukan sebagai kepastian ilmiah.' },
+        { question: 'Bisakah saya memiliki dua temperamen?', answer: 'Ya. Banyak orang menunjukkan pola utama dan sekunder yang sama-sama kuat.' },
+        { question: 'Bolehkah hasil digunakan untuk merekrut karyawan?', answer: 'Tidak. FourType tidak dirancang atau divalidasi untuk keputusan perekrutan maupun diagnosis.' },
+      ],
+    },
+    'four-temperaments-test': {
+      title: 'Tes Empat Temperamen: Koleris, Sanguinis, Melankolis, dan Plegmatis',
+      description: 'Bandingkan empat temperamen klasik dan temukan pola utama serta perpaduan Anda melalui tes FourType gratis.',
+      eyebrow: 'Tes empat temperamen',
+      cta: 'Ikuti tes empat temperamen',
+      ctaHref: '/quiz',
+      sections: [
+        {
+          title: 'Apa arti empat temperamen?',
+          body: [
+            'Koleris condong pada tindakan dan kendali, Sanguinis pada ekspresi dan hubungan, Melankolis pada makna dan kualitas, sedangkan Plegmatis pada kedamaian dan kestabilan.',
+            'Kebanyakan orang bukan satu tipe murni. Karena itu, FourType juga membaca pengaruh skor kedua yang paling kuat.',
+          ],
+        },
+        {
+          title: 'Mengapa perpaduan penting?',
+          body: [
+            'Dua orang dengan temperamen utama yang sama dapat terlihat berbeda karena pola sekunder mereka. Perpaduan membantu menjelaskan gaya memimpin, bersosialisasi, bekerja, dan merespons konflik.',
+          ],
+        },
+        {
+          title: 'Gunakan model ini dengan rendah hati',
+          body: [
+            'Empat temperamen berasal dari kerangka historis. FourType menggunakannya sebagai bahasa refleksi dan pendidikan, bukan sebagai ilmu medis, diagnosis, atau alat perekrutan.',
+          ],
+        },
+      ],
+      cards: [
+        { title: 'Koleris', body: 'Tindakan, tujuan, keputusan, dan tantangan.' },
+        { title: 'Sanguinis', body: 'Ekspresi, energi sosial, optimisme, dan antusiasme.' },
+        { title: 'Melankolis', body: 'Kedalaman, analisis, makna, dan standar.' },
+        { title: 'Plegmatis', body: 'Kedamaian, kestabilan, kesetiaan, dan kepercayaan.' },
+      ],
+      faq: [
+        { question: 'Apakah tes empat temperamen gratis?', answer: 'Ya. Tes inti FourType gratis dan menampilkan sebaran keempat skor.' },
+        { question: 'Temperamen mana yang paling baik?', answer: 'Tidak ada yang paling baik. Setiap pola memiliki kekuatan, titik buta, dan kebutuhan pertumbuhan.' },
+        { question: 'Bisakah temperamen berubah?', answer: 'Perilaku dan kebiasaan dapat berkembang. Gunakan hasil untuk mengamati pola, bukan menetapkan identitas permanen.' },
+        { question: 'Apakah empat temperamen merupakan diagnosis medis?', answer: 'Bukan. Kerangka ini digunakan untuk refleksi dan pendidikan, bukan diagnosis atau keputusan kerja.' },
+      ],
+    },
+    quiz: {
+      title: 'Tes Temperamen FourType Gratis',
+      description: 'Jawab 40 pertanyaan untuk melihat sebaran Koleris, Sanguinis, Melankolis, Plegmatis, dan arah perpaduan temperamen Anda.',
+      eyebrow: 'Mulai tes',
+      cta: 'Mulai dalam Bahasa Indonesia',
+      ctaHref: '/quiz',
+      sections: [
+        {
+          title: 'Sebelum memulai',
+          body: [
+            'Jawablah sesuai perilaku normal Anda, terutama saat menghadapi tekanan biasa. Pilih jawaban yang paling alami, bukan yang paling mengesankan.',
+            'Semua 40 pertanyaan, hasil inti, dan alur perbandingan teman tersedia dalam Bahasa Indonesia.',
+          ],
+        },
+        {
+          title: 'Apa yang akan Anda dapatkan?',
+          body: [
+            'Anda akan melihat pola utama, sebaran empat skor, perpaduan sekunder, wawasan praktis, dan cara membandingkan hasil dengan seorang teman.',
+          ],
+        },
+        {
+          title: 'Ingat batasnya',
+          body: [
+            'FourType adalah alat refleksi diri dan pendidikan. Hasilnya bukan diagnosis klinis dan tidak boleh dipakai untuk keputusan perekrutan.',
+          ],
+        },
+      ],
+      cards: [
+        { title: 'Gratis', body: 'Hasil inti tersedia tanpa pembayaran.' },
+        { title: '40 pertanyaan', body: 'Bandingkan empat pola melalui perilaku sehari-hari.' },
+        { title: 'Sebaran skor', body: 'Lihat keempat kecenderungan, bukan hanya satu label.' },
+        { title: 'Bandingkan teman', body: 'Temukan kekuatan bersama, gesekan, dan cara berkomunikasi.' },
+      ],
+      faq: [
+        { question: 'Apakah semua pertanyaan tersedia dalam Bahasa Indonesia?', answer: 'Ya. Versi Indonesia mencakup seluruh 40 pertanyaan dan hasil inti.' },
+        { question: 'Apakah saya harus membuat akun?', answer: 'Tidak. Anda dapat menyelesaikan tes, melihat hasil, dan membandingkannya tanpa akun.' },
+        { question: 'Berapa lama tes ini?', answer: 'Biasanya kurang dari 10 menit.' },
+        { question: 'Apakah hasil ini diagnosis?', answer: 'Bukan. Gunakan FourType sebagai alat refleksi diri, bukan diagnosis klinis atau alat perekrutan.' },
       ],
     },
   },

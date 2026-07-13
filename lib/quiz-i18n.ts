@@ -2,7 +2,7 @@ import { QUESTIONS, type Question } from './questions'
 import type { BlendKey } from './blends'
 import type { TemperamentKey } from './scoringKey'
 
-export type QuizLocale = 'en' | 'zh-CN' | 'es'
+export type QuizLocale = 'en' | 'zh-CN' | 'es' | 'id'
 
 export interface QuizCopy {
   name: {
@@ -529,10 +529,148 @@ const esCopy: QuizCopy = {
   },
 }
 
+const idCopy: QuizCopy = {
+  name: {
+    eyebrow: 'Awal perjalanan',
+    title: 'Masukkan nama pahlawan Anda',
+    description: 'Perjalanan ini akan mengungkap pola temperamen Anda. Jawablah dengan jujur sebagai diri Anda yang sebenarnya.',
+    placeholder: 'Nama atau nama panggilan...',
+    error: 'Pahlawan Anda membutuhkan nama.',
+    rulesTitle: 'Aturan perjalanan',
+    rules: [
+      'Pilih SATU jawaban yang paling alami bagi Anda',
+      'Jawab sebagai diri Anda, bukan diri ideal Anda',
+      'Ikuti naluri pertama dan jangan terlalu dipikirkan',
+      'Tidak ada temperamen yang lebih baik dari yang lain',
+    ],
+    startButton: 'Mulai tes',
+  },
+  question: {
+    questLabel: 'Pertanyaan',
+    entering: 'Memasuki',
+    keyboardHint: 'Tekan A, B, C, atau D untuk menjawab cepat',
+    sectionNames: { 1: 'BAB I', 2: 'BAB II', 3: 'BAB III', 4: 'BAB IV' },
+    levelGateMessages: {
+      12: 'Bab selesai! Sekarang kita melihat pilihan Anda.',
+      19: 'Bab selesai! Pola Anda mulai terlihat.',
+      24: 'Bab selesai! Sifat alami Anda semakin jelas.',
+    },
+  },
+  loading: {
+    eyebrow: 'Hasil sedang dibaca',
+    messages: [
+      'Membandingkan jawaban Anda...',
+      'Menimbang keempat pola temperamen...',
+      'Mencari pola yang paling konsisten...',
+      'Menyusun perpaduan temperamen Anda...',
+      'Menyiapkan hasil Anda...',
+    ],
+    progressLabel: 'Menghitung pola Anda...',
+  },
+  results: {
+    ...enCopy.results,
+    characterClass: 'Kelas karakter Anda',
+    youAre: (name) => `${name}, Anda adalah`,
+    identityLore: 'Kisah pola Anda',
+    coreDrive: 'Dorongan utama',
+    tagline: 'Kalimat inti',
+    scoreBreakdown: 'Sebaran skor',
+    secondary: 'Sekunder',
+    dominant: 'Dominan',
+    tabs: {
+      strengths: 'Kekuatan',
+      shadow: 'Sisi bayangan',
+      communication: 'Gaya',
+      partners: 'Kecocokan',
+      deeper: 'Analisis',
+      growth: 'Pertumbuhan',
+    },
+    underStress: 'Saat tertekan:',
+    speakTo: (name) => `Cara berbicara dengan ${name}`,
+    neverDo: 'Hindari ini',
+    bestPartners: 'Pasangan yang cocok',
+    frictionWith: 'Potensi gesekan',
+    famous: (name) => `${name} terkenal`,
+    identityStack: 'Susunan identitas',
+    primaryDrive: 'Dorongan utama',
+    likelyMbti: 'Kemungkinan MBTI',
+    enneagramPattern: 'Pola Enneagram',
+    rpgClass: 'Kelas RPG',
+    inferredNote: 'Disimpulkan dari pola jawaban, bukan penetapan mutlak',
+    inRelationships: 'Dalam hubungan',
+    atWork: 'Di tempat kerja',
+    growthIntro: 'Area yang dapat dikembangkan agar hidup lebih seimbang:',
+    allClasses: 'Semua kelas karakter',
+    tapClass: 'Ketuk kelas mana pun untuk mempelajarinya',
+    you: 'ANDA',
+    shareResults: 'Bagikan hasil Anda',
+    showCard: 'Tampilkan',
+    hideCard: 'Sembunyikan',
+    shareCardPrompt: 'Buat kartu karakter yang dapat dibagikan ke media sosial',
+    continueJourney: 'Lanjutkan perjalanan Anda',
+    journeyIntro: 'Pelajari temperamen Anda lebih dalam:',
+    shareButton: 'Bagikan kelas saya',
+    copyButton: 'Salin tautan',
+    copiedButton: 'Tautan disalin!',
+    compareButton: 'Ajak teman membandingkan',
+    copiedCompareButton: 'Tautan perbandingan disalin!',
+    friendPrompt: {
+      title: 'Tanyakan kepada seorang teman: "Apakah ini saya?"',
+      body: 'Bagian paling menarik adalah mengirim hasil ini kepada orang yang mengenal Anda dan melihat seberapa cepat mereka berkata, "Ini benar-benar mirip kamu."',
+    },
+    retakeButton: 'Ulangi tes',
+    footer: 'FourType • Gratis • Kenali diri Anda.',
+    leadCapture: {
+      eyebrow: 'Lanjutkan belajar',
+      title: 'Pelajari pola Anda lebih dalam',
+      body: 'Gunakan panduan gratis untuk memahami pola stres, gaya hubungan, pekerjaan, titik buta, dan langkah pertumbuhan Anda.',
+      placeholder: 'Tidak diperlukan email',
+      button: 'Buka panduan',
+      submitting: 'Membuka...',
+      success: 'Panduan siap dibaca.',
+      error: 'Terjadi masalah. Silakan coba lagi.',
+      trust: 'Hasil inti Anda tetap gratis.',
+      consent: 'Saya ingin melanjutkan ke panduan FourType.',
+    },
+    coreNeed: 'Kebutuhan inti',
+    strengths: 'Kekuatan',
+    shadowSide: 'Sisi bayangan',
+    thisIsDominant: 'Ini pola dominan Anda!',
+    temperamentNames: {
+      Yellow: 'Sanguinis',
+      Red: 'Koleris',
+      Blue: 'Melankolis',
+      Green: 'Plegmatis',
+    },
+    classTitles: {
+      Yellow: 'The Bard',
+      Red: 'The Commander',
+      Blue: 'The Strategist',
+      Green: 'The Guardian',
+    },
+    temperamentLanguages: {
+      Yellow: 'Orang dan kegembiraan',
+      Red: 'Kekuatan dan kendali',
+      Blue: 'Keteraturan dan kualitas',
+      Green: 'Kedamaian dan kestabilan',
+    },
+    masking: {
+      diagonal: 'Perpaduan diagonal yang jarang ini dapat menunjukkan perilaku adaptif yang berbeda dari kecenderungan alami. Perhatikan konteksnya.',
+      general: 'Skor Anda dapat menunjukkan perilaku adaptif terhadap harapan luar. Untuk sekarang, fokuslah pada temperamen dominan Anda.',
+    },
+    interpretation: {
+      pure: (name) => `${name} murni, pola yang kuat dan khas`,
+      bilingual: (primary, secondary) => `Fasih dalam dua temperamen: ${primary} dan ${secondary}`,
+      diagonal: 'Perpaduan diagonal ini dapat menunjukkan perilaku yang dipelajari berbeda dari kecenderungan alami',
+    },
+  },
+}
+
 export const quizCopy: Record<QuizLocale, QuizCopy> = {
   en: enCopy,
   'zh-CN': zhCopy,
   es: esCopy,
+  id: idCopy,
 }
 
 const zhQuestions: Record<number, LocalizedQuestionText> = {
@@ -621,10 +759,53 @@ const esQuestions: Record<number, LocalizedQuestionText> = {
   40: { sectionLabel: 'Palabras', instruction: 'Elige la palabra o frase que mejor te describe.', answers: [{ letter: 'A', text: 'Líder paciente' }, { letter: 'B', text: 'Curioso' }, { letter: 'C', text: 'Delega bien' }, { letter: 'D', text: 'Profundo y reflexivo' }] },
 }
 
+const idQuestions: Record<number, LocalizedQuestionText> = {
+  1: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Siap memulai tugas baru dan bersemangat menghadapi tantangan' }, { letter: 'B', text: 'Mudah setuju dan mudah diajak bergaul' }, { letter: 'C', text: 'Peka terhadap emosi orang lain' }, { letter: 'D', text: 'Mudah bersemangat, bergairah, dan cepat berkata ya' }] },
+  2: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Termotivasi mencapai tujuan dan ingin memimpin' }, { letter: 'B', text: 'Energik, hidup, dan terbuka menunjukkan kasih sayang' }, { letter: 'C', text: 'Logis, mengumpulkan fakta dan data, serta menyukai daftar' }, { letter: 'D', text: 'Fleksibel, mudah menyesuaikan diri, dan tenang di tengah kekacauan' }] },
+  3: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Menghindari konflik dan drama serta tetap berkepala dingin' }, { letter: 'B', text: 'Menyenangkan, pandai bercerita, dan punya selera humor' }, { letter: 'C', text: 'Mampu memotivasi diri dan biasanya yakin dirinya benar' }, { letter: 'D', text: 'Berhati-hati, penuh pertimbangan, dan tidak terburu-buru' }] },
+  4: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Optimistis dan melihat sisi terbaik orang maupun keadaan' }, { letter: 'B', text: 'Teliti, teratur, dan rapi' }, { letter: 'C', text: 'Percaya diri dan tegas dengan pendapat sendiri' }, { letter: 'D', text: 'Kooperatif dan terbuka terhadap kebutuhan serta ide orang lain' }] },
+  5: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Gigih memecahkan masalah dan selalu mencari cara menyelesaikannya' }, { letter: 'B', text: 'Suka bermain, spontan, dan menikmati saat ini' }, { letter: 'C', text: 'Penuh perhatian, baik, dan sopan' }, { letter: 'D', text: 'Serius serta menghindari tindakan impulsif atau mencolok' }] },
+  6: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Ramah, terbuka, dan banyak bicara' }, { letter: 'B', text: 'Efisien menggunakan waktu dan tenaga' }, { letter: 'C', text: 'Santai dan tidak mudah terpancing atau terganggu' }, { letter: 'D', text: 'Tepat, menyeluruh, dan memiliki standar sangat tinggi' }] },
+  7: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Kurang percaya diri dalam situasi sosial' }, { letter: 'B', text: 'Dapat cepat marah' }, { letter: 'C', text: 'Sulit mengambil keputusan dengan cepat' }, { letter: 'D', text: 'Dapat mendominasi percakapan' }] },
+  8: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Tidak takut berbeda pendapat dan kadang suka memerintah' }, { letter: 'B', text: 'Tidak nyaman sendirian dan takut ketinggalan sesuatu' }, { letter: 'C', text: 'Jarang menetapkan tujuan dan kurang jelas arah hidupnya' }, { letter: 'D', text: 'Kadang merasa terasing dan terlalu banyak melihat ke dalam diri' }] },
+  9: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Dapat terasa menekan dan lebih suka memegang kendali' }, { letter: 'B', text: 'Ragu pada diri sendiri dan enggan masuk ke percakapan atau kegiatan' }, { letter: 'C', text: 'Mudah teralihkan dari tugas, membuang waktu, atau melamun' }, { letter: 'D', text: 'Mudah merasa sedih dan terpaku pada kabar buruk' }] },
+  10: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Membujuk orang mengikuti caranya dan merasa hasil membenarkan cara' }, { letter: 'B', text: 'Sering melebih-lebihkan cerita dan sulit berhenti bicara' }, { letter: 'C', text: 'Menggunakan sindiran atau diam saat kesal' }, { letter: 'D', text: 'Sulit menunjukkan antusiasme' }] },
+  11: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Tidak merasa terburu-buru dan tidak suka didesak' }, { letter: 'B', text: 'Skeptis, melihat hambatan, dan memikirkan kemungkinan terburuk' }, { letter: 'C', text: 'Berubah-ubah, pelupa, membuat alasan, dan mengulang cerita' }, { letter: 'D', text: 'Enggan mengakui kesalahan atau meminta maaf dan jarang memuji' }] },
+  12: { sectionLabel: 'Sifat', instruction: 'Pilih SATU gambaran yang paling alami bagi Anda.', text: 'Tanyakan kepada diri sendiri: Apakah saya orang yang...', answers: [{ letter: 'A', text: 'Sulit menuntaskan sesuatu ketika sudah tidak menyenangkan' }, { letter: 'B', text: 'Lambat memulai dan suka menunda' }, { letter: 'C', text: 'Tidak nyaman dengan tangisan atau emosi orang dan dapat kurang empatik' }, { letter: 'D', text: 'Sulit dipuaskan dan dapat sangat kritis' }] },
+  13: { sectionLabel: 'Pernyataan', instruction: 'Pilih SATU pernyataan yang paling mewakili Anda.', answers: [{ letter: 'A', text: 'Saya suka membicarakan keputusan saya dengan orang lain.' }, { letter: 'B', text: 'Saya tegas dan keputusan saya biasanya benar.' }, { letter: 'C', text: 'Saya ingin semua informasi sebelum mengambil keputusan.' }, { letter: 'D', text: 'Kadang saya ingin orang lain mengambil keputusan untuk saya.' }] },
+  14: { sectionLabel: 'Pernyataan', instruction: 'Pilih SATU pernyataan yang paling mewakili Anda.', answers: [{ letter: 'A', text: 'Saya suka tahu sedikit tentang banyak hal dan mendalami yang benar-benar menarik.' }, { letter: 'B', text: 'Saya suka mengikuti jadwal saya.' }, { letter: 'C', text: 'Saya suka menyelesaikan sesuatu dan merasa produktif.' }, { letter: 'D', text: 'Saya suka menciptakan ide yang akan dinikmati orang.' }] },
+  15: { sectionLabel: 'Pernyataan', instruction: 'Pilih SATU pernyataan yang paling mewakili Anda.', answers: [{ letter: 'A', text: 'Saya cenderung melihat ketidaksempurnaan dan kesalahan.' }, { letter: 'B', text: 'Saya cenderung melupakan atau mengabaikan hal yang tidak menarik.' }, { letter: 'C', text: 'Saya cenderung tidak memikirkan hal buruk atau menyedihkan.' }, { letter: 'D', text: 'Saya cenderung tidak menunjukkan emosi.' }] },
+  16: { sectionLabel: 'Pernyataan', instruction: 'Pilih SATU pernyataan yang paling mewakili Anda.', answers: [{ letter: 'A', text: 'Saya sering bercerita tentang pengalaman pribadi.' }, { letter: 'B', text: 'Saya mempertimbangkan setiap ide dan detail sebelum berbicara.' }, { letter: 'C', text: 'Saya langsung ke inti percakapan dan tidak membutuhkan semua detail.' }, { letter: 'D', text: 'Saya ragu membela diri ketika tidak setuju dengan kelompok.' }] },
+  17: { sectionLabel: 'Pernyataan', instruction: 'Pilih SATU pernyataan yang paling mewakili Anda.', answers: [{ letter: 'A', text: 'Saya ingin bebas mengerjakan proyek sesuai waktu saya.' }, { letter: 'B', text: 'Saya membutuhkan waktu untuk memproses pikiran agar jawaban saya benar.' }, { letter: 'C', text: 'Saya ingin tahu alasan di balik proyek agar yakin itu layak.' }, { letter: 'D', text: 'Saya menginginkan variasi dan spontanitas dalam proyek.' }] },
+  18: { sectionLabel: 'Pernyataan', instruction: 'Pilih SATU pernyataan yang paling mewakili Anda.', answers: [{ letter: 'A', text: 'Saya pandai mendelegasikan kepada orang lain.' }, { letter: 'B', text: 'Saya pandai mengajar orang lain.' }, { letter: 'C', text: 'Saya pandai menginspirasi orang lain.' }, { letter: 'D', text: 'Saya pandai merawat orang lain.' }] },
+  19: { sectionLabel: 'Pernyataan', instruction: 'Pilih SATU pernyataan yang paling mewakili Anda.', answers: [{ letter: 'A', text: 'Saya tertekan ketika merasa tidak disukai.' }, { letter: 'B', text: 'Saya tertekan ketika merasa tidak dipahami.' }, { letter: 'C', text: 'Saya tertekan ketika merasa kehilangan kendali.' }, { letter: 'D', text: 'Saya tertekan ketika terseret ke dalam konflik.' }] },
+  20: { sectionLabel: 'Ungkapan', instruction: 'Pilih SATU ungkapan yang paling mungkin Anda ucapkan atau pikirkan.', answers: [{ letter: 'A', text: 'Siapa lagi yang akan datang?' }, { letter: 'B', text: 'Kita akan melakukan apa?' }, { letter: 'C', text: 'Apakah saya harus pergi?' }, { letter: 'D', text: 'Kamu saja yang pergi. Saya punya hal lebih penting.' }] },
+  21: { sectionLabel: 'Ungkapan', instruction: 'Pilih SATU ungkapan yang paling mungkin Anda ucapkan atau pikirkan.', answers: [{ letter: 'A', text: 'Apakah kamu yakin itu aman?' }, { letter: 'B', text: 'Cepat! Kita terlambat.' }, { letter: 'C', text: 'Kedengarannya menyenangkan!' }, { letter: 'D', text: 'Apa pun tidak masalah bagi saya.' }] },
+  22: { sectionLabel: 'Ungkapan', instruction: 'Pilih SATU ungkapan yang paling mungkin Anda ucapkan atau pikirkan.', answers: [{ letter: 'A', text: 'Sudah selesai. Saya yang mengurusnya.' }, { letter: 'B', text: 'Saya akan melakukannya kalau ada yang menemani.' }, { letter: 'C', text: 'Saya sudah memikirkannya cukup lama.' }, { letter: 'D', text: 'Tenang saja, semuanya akan baik-baik saja.' }] },
+  23: { sectionLabel: 'Ungkapan', instruction: 'Pilih SATU ungkapan yang paling mungkin Anda ucapkan atau pikirkan.', answers: [{ letter: 'A', text: 'Tidak, terima kasih. Saya menonton saja.' }, { letter: 'B', text: 'Saya tidak bermaksud seperti itu.' }, { letter: 'C', text: 'Saya senang membantu!' }, { letter: 'D', text: 'Saya tidak yakin dapat mempercayai mereka.' }] },
+  24: { sectionLabel: 'Ungkapan', instruction: 'Pilih SATU ungkapan yang paling mungkin Anda ucapkan atau pikirkan.', answers: [{ letter: 'A', text: 'Saya benar-benar lupa. Maaf.' }, { letter: 'B', text: 'Saya tidak terlalu peduli. Kamu saja yang putuskan.' }, { letter: 'C', text: 'Itu tidak akan berhasil. Saya sudah merencanakan...' }, { letter: 'D', text: 'Langsung beri saya intinya.' }] },
+  25: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Santai' }, { letter: 'B', text: 'Ambisius' }, { letter: 'C', text: 'Energik' }, { letter: 'D', text: 'Analitis' }] },
+  26: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Antusias' }, { letter: 'B', text: 'Berani' }, { letter: 'C', text: 'Mudah diajak bekerja sama' }, { letter: 'D', text: 'Empatik' }] },
+  27: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Berhati-hati' }, { letter: 'B', text: 'Cakap' }, { letter: 'C', text: 'Tenang' }, { letter: 'D', text: 'Menawan' }] },
+  28: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Positif' }, { letter: 'B', text: 'Terorganisasi' }, { letter: 'C', text: 'Tegas' }, { letter: 'D', text: 'Mudah puas' }] },
+  29: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Pandai mencari jalan' }, { letter: 'B', text: 'Penuh perhatian' }, { letter: 'C', text: 'Riang dan santai' }, { letter: 'D', text: 'Pendiam' }] },
+  30: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Produktif' }, { letter: 'B', text: 'Sabar' }, { letter: 'C', text: 'Teliti' }, { letter: 'D', text: 'Berorientasi pada orang' }] },
+  31: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Pesimistis' }, { letter: 'B', text: 'Suka memerintah' }, { letter: 'C', text: 'Acuh' }, { letter: 'D', text: 'Mudah teralihkan' }] },
+  32: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Banyak menuntut' }, { letter: 'B', text: 'Menjauh' }, { letter: 'C', text: 'Naif' }, { letter: 'D', text: 'Mudah berubah suasana hati' }] },
+  33: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Berpusat pada diri sendiri' }, { letter: 'B', text: 'Lamban' }, { letter: 'C', text: 'Ceroboh' }, { letter: 'D', text: 'Curiga' }] },
+  34: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Kurang disiplin' }, { letter: 'B', text: 'Kurang termotivasi' }, { letter: 'C', text: 'Kurang simpatik' }, { letter: 'D', text: 'Sulit memaafkan' }] },
+  35: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Ragu-ragu' }, { letter: 'B', text: 'Dramatis' }, { letter: 'C', text: 'Tidak sabar' }, { letter: 'D', text: 'Tidak aman' }] },
+  36: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Terus terang' }, { letter: 'B', text: 'Suka menghakimi' }, { letter: 'C', text: 'Apatis' }, { letter: 'D', text: 'Gelisah' }] },
+  37: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Penuh dorongan' }, { letter: 'B', text: 'Imajinatif' }, { letter: 'C', text: 'Penuh belas kasih' }, { letter: 'D', text: 'Emosinya stabil' }] },
+  38: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Seimbang' }, { letter: 'B', text: 'Menikmati kerja keras' }, { letter: 'C', text: 'Musikal atau artistik' }, { letter: 'D', text: 'Mengubah krisis menjadi humor' }] },
+  39: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Metodis' }, { letter: 'B', text: 'Tertawa keras' }, { letter: 'C', text: 'Pendiam tetapi jenaka' }, { letter: 'D', text: 'Berani' }] },
+  40: { sectionLabel: 'Skenario', instruction: 'Pilih SATU kata atau frasa yang paling menggambarkan Anda.', answers: [{ letter: 'A', text: 'Pemimpin yang sabar' }, { letter: 'B', text: 'Penasaran' }, { letter: 'C', text: 'Pandai mendelegasikan' }, { letter: 'D', text: 'Mendalam dan penuh pertimbangan' }] },
+}
+
 export function getQuizQuestions(locale: QuizLocale): Question[] {
   if (locale === 'en') return QUESTIONS
 
-  const translations = locale === 'zh-CN' ? zhQuestions : esQuestions
+  const translations = locale === 'zh-CN' ? zhQuestions : locale === 'es' ? esQuestions : idQuestions
   return QUESTIONS.map((question) => ({
     ...question,
     ...translations[question.id],
@@ -673,8 +854,28 @@ const esBlendSummaries: Record<BlendKey, LocalizedBlendSummary> = {
   Guardian: { name: 'El Guardián Puro', blend: 'Flemático puro', rpgClass: 'Agua Serena', tagline: 'Paz preservada. Presión absorbida. Nada apresurado.', drive: 'Mantener estabilidad y paz', lore: 'Tu flemático es muy fuerte. Eres tranquilo, paciente y aceptante; das seguridad a otros, aunque puedes esconder demasiado tu propia dirección.', strengths: ['Estabilidad emocional', 'Paciencia profunda', 'Escucha excelente', 'Crea seguridad'], shadows: ['Evita iniciativa', 'Se calla en conflicto', 'La comodidad puede frenar crecimiento'], underStress: 'Se vuelve pasivo, calla y espera que la presión pase en vez de nombrar lo que necesita.', speakTo: 'Sé calmado, amable y concreto. Da seguridad y un siguiente paso claro.', neverDo: 'No lo presiones, avergüences ni encierres en confrontación repentina.' },
 }
 
+const idBlendSummaries: Record<BlendKey, LocalizedBlendSummary> = {
+  Motivator: { name: 'The Motivator', blend: 'Koleris-Sanguinis', rpgClass: 'Penyair Panglima', tagline: 'Menang cepat dan membuat orang ikut bergerak.', drive: 'Mencapai hasil + diterima', lore: 'Anda memadukan dorongan kuat dengan karisma. Anda bukan hanya membuat sesuatu terjadi, tetapi membuat orang bersemangat untuk ikut.', strengths: ['Persuasif dan penuh energi', 'Mudah menggerakkan kelompok', 'Cepat bertindak di bawah tekanan', 'Berani tampil memimpin'], shadows: ['Ketidaksabaran dapat melukai orang', 'Mudah melihat hubungan sebagai menang atau kalah', 'Dapat kehilangan minat saat tahap akhir'], underStress: 'Menjadi meledak, dominan, lalu mencoba mencairkan suasana dengan pesona.', speakTo: 'Berikan tantangan, jelaskan hasil yang dapat diraih, dan langsung ke inti.', neverDo: 'Jangan pasif, kabur, atau membawa emosi tanpa arah yang jelas.' },
+  Executive: { name: 'The Executive', blend: 'Koleris-Plegmatis', rpgClass: 'Ahli Taktik', tagline: 'Hasil melalui sistem, kendali melalui ketenangan.', drive: 'Mencapai hasil + menjaga kestabilan', lore: 'Anda tegas sekaligus stabil. Anda tidak perlu bersuara keras agar orang mempercayai penilaian Anda.', strengths: ['Tegas tanpa ceroboh', 'Tenang dalam krisis', 'Standar tinggi dengan sedikit drama', 'Membangun rasa hormat jangka panjang'], shadows: ['Dapat terlihat dingin', 'Jarang memberi pujian', 'Perlu melatih kedekatan emosional'], underStress: 'Menjauh secara emosional lalu menjadi sangat langsung.', speakTo: 'Mulai dari hasil, tunjukkan kompetensi, dan bawa rencana yang jelas.', neverDo: 'Jangan dramatis, kabur, atau terlalu menuntut peneguhan emosi.' },
+  Director: { name: 'The Director', blend: 'Koleris-Melankolis', rpgClass: 'Jenderal Besi', tagline: 'Hasil yang tepat, dikerjakan dengan tepat.', drive: 'Mencapai hasil + menjaga kualitas', lore: 'Anda mengejar hasil dan standar tinggi sekaligus. Anda intens, presisi, dan sulit mengabaikan masalah.', strengths: ['Tindakan dan ketelitian kuat', 'Standar sangat tinggi', 'Cepat menganalisis dan memutuskan', 'Perencana strategis'], shadows: ['Kritis terhadap diri dan orang lain', 'Tidak sabar pada kinerja lemah', 'Rentan kelelahan'], underStress: 'Mengatur terlalu rinci, meledak, lalu membuat rencana perbaikan besar.', speakTo: 'Datang dengan persiapan, bukti, dan tanggung jawab yang jelas.', neverDo: 'Jangan membuat alasan, ceroboh, atau membuang waktu.' },
+  Marketer: { name: 'The Marketer', blend: 'Sanguinis-Koleris', rpgClass: 'Pedagang Juara', tagline: 'Disukai dan tetap menghasilkan.', drive: 'Diterima + mencapai hasil', lore: 'Anda hangat, berani, dan mampu menjual ide kepada dunia. Energi sosial Anda memiliki arah yang kuat.', strengths: ['Promotor dan penjual alami', 'Menghidupkan suasana', 'Tidak takut ditolak', 'Mendorong tindakan melalui antusiasme'], shadows: ['Mudah berjanji terlalu banyak', 'Sulit berhenti dan menata ulang', 'Membutuhkan perhatian untuk memulihkan energi'], underStress: 'Menjadi lebih keras, terpencar, dan mencari pengakuan.', speakTo: 'Akui kontribusinya, beri audiens, dan biarkan mereka menyampaikan gagasan.', neverDo: 'Jangan memberi tugas kering tanpa tujuan manusia yang jelas.' },
+  Relater: { name: 'The Relater', blend: 'Sanguinis-Plegmatis', rpgClass: 'Penyembuh Desa', tagline: 'Bersama orang dan membuat mereka nyaman.', drive: 'Diterima + menjaga keharmonisan', lore: 'Anda menyenangkan sekaligus aman. Orang mendekat karena Anda membuat hubungan terasa ringan dan hangat.', strengths: ['Sangat mudah disukai', 'Membangun hubungan secara alami', 'Ceria dan empatik', 'Mudah bekerja sama'], shadows: ['Dorongan diri dapat melemah', 'Menghindari konflik sampai mengabaikan diri', 'Sulit berkata tidak'], underStress: 'Mengubah masalah menjadi lelucon lalu menanggungnya diam-diam.', speakTo: 'Bersikap hangat, pribadi, dan hubungkan tugas dengan manfaat bagi orang.', neverDo: 'Jangan menempatkan mereka dalam konflik tinggi atau isolasi panjang.' },
+  Performer: { name: 'The Performer', blend: 'Sanguinis-Melankolis', rpgClass: 'Penyair Istana', tagline: 'Ekspresif, indah, dan ingin dipahami.', drive: 'Diterima + menciptakan makna', lore: 'Anda memadukan ekspresi emosi dengan standar estetika. Anda membutuhkan ruang untuk tampil dan kedalaman dalam karya.', strengths: ['Ekspresif dan artistik', 'Mengubah perasaan menjadi cerita', 'Peka pada suasana dan detail', 'Kreatif serta menyentuh'], shadows: ['Emosi mudah naik turun', 'Takut disalahpahami', 'Terjepit antara sempurna dan terlihat'], underStress: 'Menjadi dramatis, sensitif, dan terlalu membaca reaksi orang.', speakTo: 'Hargai ekspresinya dan berikan umpan balik yang jelas tetapi lembut.', neverDo: 'Jangan menertawakan perasaan atau meremehkan karyanya.' },
+  Inspector: { name: 'The Inspector', blend: 'Plegmatis-Koleris', rpgClass: 'Penjaga Tenang', tagline: 'Menyelesaikan hal yang benar dengan tenang.', drive: 'Menjaga kestabilan + mencapai hasil', lore: 'Anda tenang dan praktis, tetapi tahu kapan harus bertindak. Anda mungkin tidak mencolok, namun dapat diandalkan.', strengths: ['Stabil dan mampu mengeksekusi', 'Tidak mudah terbawa emosi', 'Menjaga keteraturan', 'Dapat dipercaya saat tertekan'], shadows: ['Dapat keras kepala', 'Tidak suka didesak', 'Kenyamanan dapat memperlambat tindakan'], underStress: 'Melawan secara pasif atau tiba-tiba merebut kendali dengan keras.', speakTo: 'Jelaskan dampak nyata, beri waktu, dan tetapkan batas yang jelas.', neverDo: 'Jangan mendorong dengan kekacauan, desakan, atau tekanan emosi.' },
+  Harmonizer: { name: 'The Harmonizer', blend: 'Plegmatis-Sanguinis', rpgClass: 'Pembawa Damai', tagline: 'Mudah diajak bersama dan memperbaiki suasana.', drive: 'Menjaga keharmonisan + diterima', lore: 'Anda menjadi penyangga dan kehangatan dalam hubungan. Anda tidak menyukai konflik dan pandai membuat orang rileks.', strengths: ['Membuat orang merasa aman', 'Humor yang lembut', 'Meredakan ketegangan', 'Sangat kooperatif'], shadows: ['Menghindari percakapan sulit', 'Mudah mengikuti arus', 'Membutuhkan dukungan untuk mengejar tujuan'], underStress: 'Menutupi tekanan dengan keceriaan dan menunda konflik yang sebenarnya.', speakTo: 'Gunakan nada hangat, rasa aman, dan ajak mereka berpartisipasi.', neverDo: 'Jangan memaksa mereka berkonfrontasi di depan umum.' },
+  Helper: { name: 'The Helper', blend: 'Plegmatis-Melankolis', rpgClass: 'Penjaga Sunyi', tagline: 'Merawat dengan teliti dan menjaga kestabilan.', drive: 'Menjaga keharmonisan + melakukan dengan baik', lore: 'Anda lembut, teliti, dan setia. Anda tidak mengejar sorotan, tetapi sering menjadi orang yang benar-benar diandalkan.', strengths: ['Sabar dan dapat diandalkan', 'Memperhatikan detail', 'Setia serta penuh perhatian', 'Menopang hubungan jangka panjang'], shadows: ['Menyembunyikan kebutuhan sendiri', 'Takut melakukan kesalahan', 'Menyimpan kekecewaan terlalu lama'], underStress: 'Menarik diri, khawatir berlebihan, dan menyampaikan ketidakpuasan melalui diam.', speakTo: 'Bersikap lembut, spesifik, dan beri waktu untuk memproses.', neverDo: 'Jangan menekan tiba-tiba atau meremehkan kekhawatirannya.' },
+  Achiever: { name: 'The Achiever', blend: 'Melankolis-Koleris', rpgClass: 'Arsitek Presisi', tagline: 'Standar tinggi dan tindakan nyata.', drive: 'Menjaga kualitas + mencapai hasil', lore: 'Anda memadukan pemikiran mendalam dengan ketegasan. Kualitas penting, tetapi penyelesaian juga penting.', strengths: ['Serius dan mampu mengeksekusi', 'Menemukan serta memperbaiki masalah', 'Memiliki standar tinggi', 'Kuat menghadapi tujuan kompleks'], shadows: ['Mudah terlalu tegang', 'Keras terhadap diri dan orang lain', 'Sulit melepaskan kendali'], underStress: 'Mengkritik, mempercepat, dan mencoba memperbaiki semuanya sendiri.', speakTo: 'Berikan bukti, standar jelas, dan langkah yang dapat dijalankan.', neverDo: 'Jangan berjanji sembarangan atau membiarkan tanggung jawab kabur.' },
+  Diplomat: { name: 'The Diplomat', blend: 'Melankolis-Sanguinis', rpgClass: 'Utusan Peka', tagline: 'Mendalam dan ingin dipahami.', drive: 'Menciptakan makna + diterima', lore: 'Anda memiliki kedalaman berpikir dan warna emosi. Anda ingin ekspresi Anda terlihat sekaligus bermakna.', strengths: ['Empatik dan berwawasan', 'Ekspresi bernuansa', 'Memahami emosi kompleks', 'Kuat dalam kreasi dan komunikasi'], shadows: ['Mudah menafsirkan berlebihan', 'Kritik terasa sangat dalam', 'Berganti antara tampil dan menarik diri'], underStress: 'Menjadi sensitif, mundur, lalu mencari kepastian.', speakTo: 'Berikan umpan balik lembut dan spesifik; pahami sebelum menasihati.', neverDo: 'Jangan cepat menghakimi perasaan atau motifnya.' },
+  Analyst: { name: 'The Analyst', blend: 'Melankolis-Plegmatis', rpgClass: 'Cendekia Sunyi', tagline: 'Penuh pertimbangan, stabil, dan presisi.', drive: 'Menjaga kualitas + kestabilan', lore: 'Anda tenang, berhati-hati, dan dapat diandalkan. Anda mengejar kejelasan, ketepatan, dan kestabilan, bukan sorotan.', strengths: ['Analisis mendalam', 'Kesabaran stabil', 'Detail yang dapat dipercaya', 'Fokus jangka panjang'], shadows: ['Menunda keputusan', 'Melihat terlalu banyak risiko', 'Sulit menyatakan kebutuhan'], underStress: 'Menutup diri, menganalisis berlebihan, dan bergerak semakin lambat.', speakTo: 'Berikan fakta, waktu, dan struktur yang jelas.', neverDo: 'Jangan mendesak komitmen sebelum informasi cukup.' },
+  Strategist: { name: 'The Strategist', blend: 'Melankolis murni', rpgClass: 'Cendekia Mendalam', tagline: 'Kedalaman dahulu, standar selalu.', drive: 'Mengejar makna dan kualitas', lore: 'Pola Melankolis Anda sangat kuat. Anda melihat pola, risiko, dan masalah kualitas yang sering terlewat oleh orang lain.', strengths: ['Analisis mendalam', 'Standar jelas', 'Mendeteksi risiko sejak awal', 'Setia pada makna dan kualitas'], shadows: ['Perfeksionisme', 'Kritik batin yang kuat', 'Terlalu lama berpikir sebelum bertindak'], underStress: 'Mengulang pikiran, semakin kritis, dan menunggu kepastian sebelum bergerak.', speakTo: 'Bersikap spesifik, tulus, dan siap. Hormati kebutuhan akan kualitas.', neverDo: 'Jangan mendesak, meremehkan, atau menyebut kekhawatirannya sekadar negatif.' },
+  Commander: { name: 'The Commander', blend: 'Koleris murni', rpgClass: 'Sang Panglima', tagline: 'Tujuan jelas, tindakan langsung.', drive: 'Memegang kendali dan mencapai hasil', lore: 'Pola Koleris Anda sangat kuat. Anda secara alami condong pada kepemimpinan, efisiensi, dan hasil.', strengths: ['Tegas', 'Berorientasi tujuan', 'Cepat dalam krisis', 'Mampu menggerakkan tim'], shadows: ['Dapat mendominasi', 'Kurang sabar', 'Mengabaikan perasaan orang'], underStress: 'Ingin mengendalikan semuanya dan mempercepat ritme.', speakTo: 'Singkat, konkret, dan bawalah solusi.', neverDo: 'Jangan berputar-putar atau mengeluh tanpa tindakan.' },
+  Spark: { name: 'The Spark', blend: 'Sanguinis murni', rpgClass: 'Percikan Penyair', tagline: 'Antusiasme, ekspresi, dan hubungan.', drive: 'Disukai dan menciptakan kegembiraan', lore: 'Pola Sanguinis Anda sangat kuat. Anda menyatukan orang dan membuat suasana terasa lebih hidup.', strengths: ['Terbuka dan menular energinya', 'Optimistis', 'Pencerita alami', 'Mudah membangun hubungan'], shadows: ['Mudah teralihkan', 'Sulit menuntaskan', 'Takut kebosanan'], underStress: 'Mencari keramaian sosial dan pengalihan.', speakTo: 'Hangat, menyemangati, dan tambahkan unsur menyenangkan.', neverDo: 'Jangan menekan dengan sikap dingin atau detail berlebihan.' },
+  Guardian: { name: 'The Guardian', blend: 'Plegmatis murni', rpgClass: 'Penjaga Air Tenang', tagline: 'Menjaga damai, menyerap tekanan, tidak tergesa.', drive: 'Menjaga kestabilan dan kedamaian', lore: 'Pola Plegmatis Anda sangat kuat. Anda tenang, sabar, menerima, dan membuat orang lain merasa aman.', strengths: ['Emosi stabil', 'Sangat sabar', 'Pendengar yang baik', 'Menciptakan rasa aman'], shadows: ['Menghindari inisiatif', 'Diam saat konflik', 'Kenyamanan menghambat pertumbuhan'], underStress: 'Menjadi pasif dan diam sambil menunggu tekanan berlalu daripada menyatakan kebutuhan.', speakTo: 'Tenang, ramah, dan konkret. Berikan rasa aman serta satu langkah berikutnya.', neverDo: 'Jangan menekan, mempermalukan, atau memaksa konfrontasi mendadak.' },
+}
+
 export function getLocalizedBlendSummary(locale: QuizLocale, blendKey: BlendKey): LocalizedBlendSummary | null {
   if (locale === 'zh-CN') return zhBlendSummaries[blendKey]
   if (locale === 'es') return esBlendSummaries[blendKey]
+  if (locale === 'id') return idBlendSummaries[blendKey]
   return null
 }

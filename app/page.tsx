@@ -39,6 +39,7 @@ const youtubeChannelCta: Record<HomeLocale, string> = {
   en: 'Watch more FourType lessons on YouTube',
   'zh-CN': '在 YouTube 观看更多 FourType 课程',
   es: 'Ver más lecciones de FourType en YouTube',
+  id: 'Tonton pelajaran FourType lainnya di YouTube',
 }
 
 export default function HomePage() {
