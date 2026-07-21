@@ -13,6 +13,33 @@ test('uses supporter framing and responsible-use language', () => {
   assert.doesNotMatch(campaign, /donat(e|ion)|tax-deductible contribution/i)
 })
 
+test('uses exact honest digital reward and access wording', () => {
+  assert.match(campaign, /digital rewards\. Nothing is shipped\./)
+  assert.match(campaign, /PDF preserves the designed 7 x 10 page experience/i)
+  assert.match(campaign, /EPUB reflows for adjustable text and compatible reading apps/i)
+  assert.match(campaign, /personal use does not permit reposting or redistributing the files/i)
+  assert.match(campaign, /not charitable or tax-deductible support/i)
+  assert.match(campaign, /revisions released within Edition 1/i)
+  assert.match(campaign, /does not include every future publication/i)
+  assert.match(campaign, /secure access links can expire/i)
+  assert.match(campaign, /request fresh access/i)
+})
+
+test('renders configured policy links without inventing unavailable routes', () => {
+  assert.match(campaign, /getFieldGuidePolicies/)
+  assert.match(campaign, /FieldGuidePolicyLinks/)
+})
+
+test('exposes policy and contact routes on supporter status pages', () => {
+  for (const page of [
+    readFileSync('app/field-guide/success/page.tsx', 'utf8'),
+    readFileSync('app/field-guide/access/page.tsx', 'utf8'),
+  ]) {
+    assert.match(page, /getFieldGuidePolicies/)
+    assert.match(page, /FieldGuidePolicyLinks/)
+  }
+})
+
 test('publishes truthful metadata without ratings', () => {
   assert.match(page, /https:\/\/www\.fourtype\.com\/field-guide/)
   assert.match(page, /Product/)

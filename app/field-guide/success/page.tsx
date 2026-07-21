@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import Footer from '@/components/Footer'
 import Navigation from '@/components/Navigation'
+import FieldGuidePolicyLinks from '@/components/field-guide/PolicyLinks'
 import SupporterDownloads from '@/components/field-guide/SupporterDownloads'
 import { resolveVerifiedSuccessAccess } from '@/lib/field-guide/access'
 import { createProductionSupporterDownloads, getProductionFieldGuideEntitlement } from '@/lib/field-guide/access-server'
 import { fulfillProductionFieldGuideCheckout } from '@/lib/field-guide/fulfillment-server'
+import { getFieldGuidePolicies } from '@/lib/field-guide/policies'
 import '../field-guide.css'
 
 function boundedSessionId(value: unknown): value is string {
@@ -29,6 +31,7 @@ export default async function FieldGuideSuccessPage({
   }
 
   const downloads = entitlement ? createProductionSupporterDownloads(entitlement) : []
+  const policy = getFieldGuidePolicies()
 
   return (
     <div className="field-guide-page">
@@ -50,6 +53,7 @@ export default async function FieldGuideSuccessPage({
               <Link className="field-guide-button field-guide-button-primary" href="/field-guide#supporter-levels">View supporter levels</Link>
             </>
           )}
+          <FieldGuidePolicyLinks policies={policy} />
         </div>
       </main>
       <Footer />

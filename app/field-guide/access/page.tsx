@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import Footer from '@/components/Footer'
 import Navigation from '@/components/Navigation'
+import FieldGuidePolicyLinks from '@/components/field-guide/PolicyLinks'
 import SupporterAccessRequest from '@/components/field-guide/SupporterAccessRequest'
 import SupporterDownloads from '@/components/field-guide/SupporterDownloads'
 import { createProductionSupporterDownloads, resolveProductionSupporterAccess } from '@/lib/field-guide/access-server'
+import { getFieldGuidePolicies } from '@/lib/field-guide/policies'
 import '../field-guide.css'
 
 export const dynamic = 'force-dynamic'
@@ -25,6 +27,7 @@ export default async function FieldGuideAccessPage({
   }
 
   const downloads = entitlement ? createProductionSupporterDownloads(entitlement) : []
+  const policy = getFieldGuidePolicies()
 
   return (
     <div className="field-guide-page">
@@ -47,6 +50,7 @@ export default async function FieldGuideAccessPage({
               <Link className="field-guide-text-link" href="/field-guide#inside-the-guide">Return to the Field Guide preview</Link>
             </>
           )}
+          <FieldGuidePolicyLinks policies={policy} />
         </div>
       </main>
       <Footer />

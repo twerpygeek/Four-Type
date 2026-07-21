@@ -6,7 +6,9 @@ import BookPreview, { BookPreviewProvider } from '@/components/field-guide/BookP
 import { CampaignCtaLink } from '@/components/field-guide/CampaignAnalytics'
 import FourTypeCompass from '@/components/field-guide/FourTypeCompass'
 import InteractiveBook from '@/components/field-guide/InteractiveBook'
+import FieldGuidePolicyLinks from '@/components/field-guide/PolicyLinks'
 import SupporterTiers from '@/components/field-guide/SupporterTiers'
+import { getFieldGuidePolicies } from '@/lib/field-guide/policies'
 
 const faqItems = [
   {
@@ -15,31 +17,31 @@ const faqItems = [
   },
   {
     question: 'Is this a physical book?',
-    answer: 'No. Both supporter levels are digital rewards. Nothing is shipped.',
+    answer: 'No. Digital only; no physical shipment. Both supporter levels are digital rewards. Nothing is shipped.',
   },
   {
     question: 'What is the difference between PDF and EPUB?',
-    answer: 'The PDF preserves the illustrated page layout. The EPUB is reflowable, so its text can adapt on compatible reading apps and devices.',
+    answer: 'The PDF preserves the designed 7 x 10 page experience. The EPUB reflows for adjustable text and compatible reading apps.',
   },
   {
     question: 'How do secure downloads and re-access work?',
-    answer: 'After payment is verified, supporters open a private access page for the files included with their level. A secure access link can be requested again when email delivery is configured.',
+    answer: 'After payment is verified, supporters open a private access page for the files included with their level. Secure access links can expire; supporters can request fresh access.',
   },
   {
     question: 'Can I share the files?',
-    answer: 'The rewards are for personal use. Please do not share, resell or distribute the files.',
+    answer: 'Personal use does not permit reposting or redistributing the files.',
   },
   {
     question: 'What do future revisions of Edition 1 mean?',
-    answer: 'Founding Supporters receive revised files that are released within Edition 1. It does not include every future book, a future Edition 2, lifetime support or a publication schedule.',
+    answer: 'Founding Supporters receive revisions released within Edition 1. This does not include every future publication, a future Edition 2, lifetime support or a publication schedule.',
   },
   {
     question: 'Is support tax-deductible?',
-    answer: 'No. This is an independent-publishing supporter reward, not charitable support.',
+    answer: 'No. This is not charitable or tax-deductible support; it is an independent-publishing supporter reward.',
   },
   {
     question: 'Where can I find refund details or get in touch?',
-    answer: 'Refund and contact routes are being configured before checkout opens. This campaign page does not point to unfinished policy or contact links.',
+    answer: 'Refund, privacy, terms and contact routes appear below when configured. Missing routes remain plain text while those policy decisions are being finalized.',
   },
 ]
 
@@ -48,6 +50,8 @@ function SectionEyebrow({ children }: { children: React.ReactNode }) {
 }
 
 export default function FieldGuideCampaign() {
+  const policy = getFieldGuidePolicies()
+
   return (
     <div className="field-guide-page">
       <Navigation />
@@ -239,6 +243,9 @@ export default function FieldGuideCampaign() {
                 </details>
               ))}
             </div>
+          </div>
+          <div className="field-guide-shell">
+            <FieldGuidePolicyLinks policies={policy} />
           </div>
         </section>
 
