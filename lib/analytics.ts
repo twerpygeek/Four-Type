@@ -14,6 +14,16 @@ export const FOURTYPE_EVENT_NAMES = [
   'invalid-share-id',
   'share-click',
   'copy-link',
+  'field-guide-hero-cta',
+  'field-guide-preview-open',
+  'field-guide-preview-navigate',
+  'field-guide-tier-select',
+  'field-guide-currency-select',
+  'field-guide-checkout-start',
+  'field-guide-checkout-cancel',
+  'field-guide-purchase-complete',
+  'field-guide-download',
+  'field-guide-access-request',
 ] as const
 
 export type FourTypeEventName = (typeof FOURTYPE_EVENT_NAMES)[number]
@@ -29,6 +39,10 @@ export type FourTypeEventPayload = {
   source?: string
   chapter?: number
   question?: number
+  tier?: 'field-guide' | 'founding'
+  currency?: 'usd' | 'myr'
+  asset?: 'pdf' | 'epub' | 'worksheets'
+  previewPage?: number
 }
 
 export function isFourTypeEventName(value: string): value is FourTypeEventName {

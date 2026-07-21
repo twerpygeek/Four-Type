@@ -1,59 +1,12 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowDown, ArrowRight, BookOpen, ChevronRight, CircleHelp, Compass, KeyRound, Sparkles } from 'lucide-react'
+import { ArrowDown, ArrowRight, ChevronRight, KeyRound, Sparkles } from 'lucide-react'
 import Footer from '@/components/Footer'
 import Navigation from '@/components/Navigation'
+import BookPreview, { BookPreviewProvider } from '@/components/field-guide/BookPreview'
+import { CampaignCtaLink } from '@/components/field-guide/CampaignAnalytics'
+import FourTypeCompass from '@/components/field-guide/FourTypeCompass'
+import InteractiveBook from '@/components/field-guide/InteractiveBook'
 import { getSupporterOffer } from '@/lib/field-guide/catalog'
-
-const previewPages = [
-  { src: '/images/field-guide/preview-01.webp', alt: 'The FourType Field Guide cover', label: 'The Field Guide cover' },
-  { src: '/images/field-guide/preview-09.webp', alt: 'The FourType map and attention patterns', label: 'The FourType map' },
-  { src: '/images/field-guide/preview-10.webp', alt: 'A two-axis FourType diagram', label: 'The two-axis view' },
-  { src: '/images/field-guide/preview-25.webp', alt: 'An opening page for a FourType attention pattern', label: 'The attention patterns' },
-  { src: '/images/field-guide/preview-77.webp', alt: 'A FourType directional blend spread', label: 'Directional blends' },
-  { src: '/images/field-guide/preview-109.webp', alt: 'A FourType real-life scenario', label: 'FourType in real life' },
-  { src: '/images/field-guide/preview-131.webp', alt: 'A practical FourType repair method', label: 'Stress and repair' },
-  { src: '/images/field-guide/preview-142.webp', alt: 'A printable Field Guide worksheet', label: 'Field practice worksheet' },
-]
-
-const attentions = [
-  {
-    name: 'Commander',
-    type: 'Choleric',
-    focus: 'Direction and ownership',
-    gift: 'Moves a situation toward a decision.',
-    cost: 'Can leave less room for pace, detail or invitation.',
-    question: 'What needs direction, and what needs a little more time?',
-    tone: 'commander',
-  },
-  {
-    name: 'Bard',
-    type: 'Sanguine',
-    focus: 'Energy and invitation',
-    gift: 'Brings people into the conversation.',
-    cost: 'Can make it harder to stay with the quiet signal.',
-    question: 'Who has not had a useful way into this yet?',
-    tone: 'bard',
-  },
-  {
-    name: 'Strategist',
-    type: 'Melancholic',
-    focus: 'Evidence and clarity',
-    gift: 'Names what needs to be understood before acting.',
-    cost: 'Can make movement feel farther away.',
-    question: 'What evidence would make the next step clearer?',
-    tone: 'strategist',
-  },
-  {
-    name: 'Guardian',
-    type: 'Phlegmatic',
-    focus: 'Steadiness and care',
-    gift: 'Protects pace, continuity and the people in the room.',
-    cost: 'Can keep an overdue decision from arriving.',
-    question: 'What would make this feel safer to name plainly?',
-    tone: 'guardian',
-  },
-]
 
 const faqItems = [
   {
@@ -103,6 +56,7 @@ export default function FieldGuideCampaign() {
   return (
     <div className="field-guide-page">
       <Navigation />
+      <BookPreviewProvider>
       <main id="main-content" className="field-guide-campaign">
         <section className="field-guide-hero" aria-labelledby="field-guide-title">
           <div className="field-guide-shell field-guide-hero-grid">
@@ -116,31 +70,17 @@ export default function FieldGuideCampaign() {
                 Support the project and receive the complete illustrated Field Guide as your digital reward.
               </p>
               <div className="field-guide-actions">
-                <a className="field-guide-button field-guide-button-primary" href="#supporter-levels">
+                <CampaignCtaLink className="field-guide-button field-guide-button-primary" href="#supporter-levels" analyticsEvent={{ event: 'field-guide-hero-cta' }}>
                   Become a supporter <ArrowDown aria-hidden="true" size={17} />
-                </a>
-                <a className="field-guide-button field-guide-button-secondary" href="#inside-the-guide">
+                </CampaignCtaLink>
+                <CampaignCtaLink className="field-guide-button field-guide-button-secondary" href="#inside-the-guide" analyticsEvent={{ event: 'field-guide-hero-cta' }}>
                   Preview the Field Guide <ArrowRight aria-hidden="true" size={17} />
-                </a>
+                </CampaignCtaLink>
               </div>
               <p className="field-guide-reward-note">From US$12 / RM39 · 144-page PDF + reflowable EPUB · Secure digital access</p>
             </div>
 
-            <div className="field-guide-book-stage" aria-label="The FourType Field Guide">
-              <div className="field-guide-book-shadow" aria-hidden="true" />
-              <div className="field-guide-book" aria-hidden="true">
-                <div className="field-guide-book-pages" />
-                <Image
-                  src="/images/field-guide/cover.webp"
-                  alt=""
-                  width={980}
-                  height={1400}
-                  priority
-                  sizes="(max-width: 760px) 230px, 340px"
-                />
-              </div>
-              <p className="field-guide-book-caption"><BookOpen aria-hidden="true" size={16} /> Your supporter reward</p>
-            </div>
+            <InteractiveBook />
           </div>
         </section>
 
@@ -174,20 +114,8 @@ export default function FieldGuideCampaign() {
               <h2 id="model-title">Four useful attentions. No fixed identity required.</h2>
               <p>Each pattern names a useful contribution, what it may crowd out and a question that can widen the response.</p>
             </div>
-            <ol className="field-guide-compass" aria-label="The four FourType attentions">
-              {attentions.map((attention) => (
-                <li key={attention.name} className={`field-guide-compass-card ${attention.tone}`}>
-                  <p className="field-guide-compass-label">{attention.name} <span>/ {attention.type}</span></p>
-                  <h3>{attention.focus}</h3>
-                  <dl>
-                    <div><dt>Useful contribution</dt><dd>{attention.gift}</dd></div>
-                    <div><dt>May crowd out</dt><dd>{attention.cost}</dd></div>
-                    <div><dt>Widening question</dt><dd>{attention.question}</dd></div>
-                  </dl>
-                </li>
-              ))}
-            </ol>
-            <p className="field-guide-model-note"><Compass aria-hidden="true" size={18} /> FourType is a lens for reflection and conversation, not a scorecard for people.</p>
+            <FourTypeCompass />
+            <p className="field-guide-model-note">FourType is a lens for reflection and conversation, not a scorecard for people.</p>
           </div>
         </section>
 
@@ -230,15 +158,7 @@ export default function FieldGuideCampaign() {
               </div>
               <p>Eight approved preview pages at web resolution. Full reward files remain private.</p>
             </div>
-            <div className="field-guide-preview-rail" aria-label="Field Guide page previews">
-              {previewPages.map((page, index) => (
-                <figure key={page.src} className={`field-guide-preview-card ${index === 0 ? 'is-featured' : ''}`}>
-                  <Image src={page.src} alt={page.alt} width={980} height={1400} sizes="(max-width: 760px) 46vw, 220px" />
-                  <figcaption><span>{String(index + 1).padStart(2, '0')}</span>{page.label}</figcaption>
-                </figure>
-              ))}
-            </div>
-            <p className="field-guide-preview-placeholder" role="note"><CircleHelp aria-hidden="true" size={17} /> Interactive page controls and enlarged previews arrive in the next campaign update.</p>
+            <BookPreview />
           </div>
         </section>
 
@@ -373,6 +293,7 @@ export default function FieldGuideCampaign() {
           </div>
         </section>
       </main>
+      </BookPreviewProvider>
       <Footer />
     </div>
   )
