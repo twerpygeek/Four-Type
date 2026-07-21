@@ -29,6 +29,7 @@ export type FieldGuideFulfillmentDependencies = {
     | { status: 'in-progress' }
     | { status: 'sent' }
   >
+  recordEmailDeliveryProviderAttempt: (sessionId: string, claimId: string) => Promise<void>
   releaseEmailDeliveryClaim: (sessionId: string, claimId: string) => Promise<void>
   completeEmailDelivery: (sessionId: string, claimId: string, providerMessageId: string) => Promise<void>
   signAccessToken: (input: { sessionId: string; expiresAt: number }) => string
@@ -170,6 +171,7 @@ export async function fulfillFieldGuideCheckout(
       expiresAt: deliveryClaim.accessTokenExpiresAt,
     })
     const accessUrl = dependencies.createAccessUrl(accessToken)
+    await dependencies.recordEmailDeliveryProviderAttempt(sessionId, deliveryClaim.claimId)
     const delivery = await dependencies.sendSupporterAccessEmail(
       entitlement,
       accessUrl,

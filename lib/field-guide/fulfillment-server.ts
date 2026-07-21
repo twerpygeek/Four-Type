@@ -1,7 +1,12 @@
 import 'server-only'
 
 import { readEntitlement, writeEntitlement } from './entitlements'
-import { claimEmailDelivery, completeEmailDelivery, releaseEmailDeliveryClaim } from './delivery'
+import {
+  claimEmailDelivery,
+  completeEmailDelivery,
+  recordEmailDeliveryProviderAttempt,
+  releaseEmailDeliveryClaim,
+} from './delivery'
 import { sendSupporterAccessEmail } from './email-server'
 import {
   fulfillFieldGuideCheckout,
@@ -53,6 +58,9 @@ export function createFieldGuideFulfillmentDependencies(
     readEntitlement: (sessionId) => readEntitlement(sessionId, vercelPrivateBlobStore),
     writeEntitlement: (entitlement) => writeEntitlement(entitlement, vercelPrivateBlobStore, emailIndexSecret),
     claimEmailDelivery: (sessionId) => claimEmailDelivery(sessionId, vercelPrivateBlobStore),
+    recordEmailDeliveryProviderAttempt: (sessionId, claimId) => (
+      recordEmailDeliveryProviderAttempt(sessionId, claimId, vercelPrivateBlobStore)
+    ),
     releaseEmailDeliveryClaim: (sessionId, claimId) => releaseEmailDeliveryClaim(sessionId, claimId, vercelPrivateBlobStore),
     completeEmailDelivery: (sessionId, claimId, providerMessageId) => (
       completeEmailDelivery(sessionId, claimId, providerMessageId, vercelPrivateBlobStore)

@@ -4,6 +4,7 @@ import {
   claimEmailDelivery,
   completeEmailDelivery,
   EMAIL_DELIVERY_REUSE_MIN_REMAINING_MS,
+  recordEmailDeliveryProviderAttempt,
   releaseEmailDeliveryClaim,
 } from '../lib/field-guide/delivery'
 import type { PrivateBlobStore } from '../lib/field-guide/blob'
@@ -65,7 +66,7 @@ test('reclaims a stale in-progress delivery without changing its idempotency key
   assert.equal(retry.accessTokenExpiresAt, first.accessTokenExpiresAt)
 })
 
-test('reuses an unsent attempt exactly 24 hours after its claim and rotates one millisecond later', async () => {
+test('rotates an old pending attempt when no provider request was recorded', async () => {
   const store = new MemoryBlobStore()
   const first = await claimEmailDelivery('cs_test_paid', store, 1_000)
   if (first.status !== 'claimed') throw new Error('Expected an email delivery claim')
@@ -88,6 +89,58 @@ test('reuses an unsent attempt exactly 24 hours after its claim and rotates one 
   if (belowMinimum.status !== 'claimed') throw new Error('Expected a fresh email delivery claim')
   assert.notEqual(belowMinimum.idempotencyKey, first.idempotencyKey)
   assert.equal(belowMinimum.accessTokenExpiresAt, belowMinimumNow + FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS)
+})
+
+test('retains an ambiguous provider attempt for 24 hours from its first provider call', async () => {
+  const store = new MemoryBlobStore()
+  const createdAt = 1_000
+  const first = await claimEmailDelivery('cs_test_paid', store, createdAt)
+  if (first.status !== 'claimed') throw new Error('Expected an email delivery claim')
+
+  const firstProviderAttemptAt = createdAt + 23 * 60 * 60 * 1_000
+  const providerAttempt = await claimEmailDelivery('cs_test_paid', store, firstProviderAttemptAt)
+  if (providerAttempt.status !== 'claimed') throw new Error('Expected a provider email delivery claim')
+  await recordEmailDeliveryProviderAttempt(
+    'cs_test_paid',
+    providerAttempt.claimId,
+    store,
+    firstProviderAttemptAt,
+  )
+  await releaseEmailDeliveryClaim('cs_test_paid', providerAttempt.claimId, store)
+
+  const ambiguousRetryAt = createdAt + 25 * 60 * 60 * 1_000
+  const ambiguousRetry = await claimEmailDelivery('cs_test_paid', store, ambiguousRetryAt)
+  assert.equal(ambiguousRetry.status, 'claimed')
+  if (ambiguousRetry.status !== 'claimed') throw new Error('Expected a retained email delivery claim')
+  assert.equal(ambiguousRetry.idempotencyKey, first.idempotencyKey)
+  assert.equal(ambiguousRetry.accessTokenExpiresAt, first.accessTokenExpiresAt)
+
+  await releaseEmailDeliveryClaim('cs_test_paid', ambiguousRetry.claimId, store)
+  const windowEnd = await claimEmailDelivery('cs_test_paid', store, firstProviderAttemptAt + 24 * 60 * 60 * 1_000)
+  assert.equal(windowEnd.status, 'claimed')
+  if (windowEnd.status !== 'claimed') throw new Error('Expected a retained email delivery claim')
+  assert.equal(windowEnd.idempotencyKey, first.idempotencyKey)
+
+  await releaseEmailDeliveryClaim('cs_test_paid', windowEnd.claimId, store)
+  const afterWindow = await claimEmailDelivery('cs_test_paid', store, firstProviderAttemptAt + 24 * 60 * 60 * 1_000 + 1)
+  assert.equal(afterWindow.status, 'claimed')
+  if (afterWindow.status !== 'claimed') throw new Error('Expected a fresh email delivery claim')
+  assert.notEqual(afterWindow.idempotencyKey, first.idempotencyKey)
+  assert.equal(
+    afterWindow.accessTokenExpiresAt,
+    firstProviderAttemptAt + 24 * 60 * 60 * 1_000 + 1 + FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS,
+  )
+})
+
+test('does not record a provider attempt for a near-expired access token', async () => {
+  const store = new MemoryBlobStore()
+  const first = await claimEmailDelivery('cs_test_paid', store, 1_000)
+  if (first.status !== 'claimed') throw new Error('Expected an email delivery claim')
+
+  await assert.rejects(
+    () => recordEmailDeliveryProviderAttempt('cs_test_paid', first.claimId, store, first.accessTokenExpiresAt - 1),
+    /useful lifetime/,
+  )
 })
 
 test('rotates an unsent attempt with one millisecond of token lifetime remaining', async () => {

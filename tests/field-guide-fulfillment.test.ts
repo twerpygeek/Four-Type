@@ -87,6 +87,7 @@ function fakeDependencies(overrides: SessionOverrides = {}) {
         accessTokenExpiresAt: now + FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS,
       }
     },
+    recordEmailDeliveryProviderAttempt: async () => {},
     releaseEmailDeliveryClaim: async () => {
       deliveryState = 'pending'
     },
@@ -170,6 +171,21 @@ test('retries a failed access email with the same provider idempotency key', asy
   assert.equal(attempts, 2)
   assert.equal(idempotencyKeys[0], idempotencyKeys[1])
   assert.equal(accessUrls[0], accessUrls[1])
+})
+
+test('records a provider attempt before sending the access email', async () => {
+  const fake = fakeDependencies()
+  const calls: string[] = []
+  fake.dependencies.recordEmailDeliveryProviderAttempt = async () => {
+    calls.push('record')
+  }
+  fake.dependencies.sendSupporterAccessEmail = async () => {
+    calls.push('send')
+    return { sent: true, skipped: false, providerMessageId: 'email_test_123' }
+  }
+
+  await fulfillFieldGuideCheckout('cs_test_paid', fake.dependencies)
+  assert.deepEqual(calls, ['record', 'send'])
 })
 
 test('sends an entitlement older than 30 days a fresh valid access token', async () => {
