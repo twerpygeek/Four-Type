@@ -1,9 +1,10 @@
 import { createHash, randomUUID } from 'node:crypto'
 import type { PrivateBlobStore } from './blob'
+import { FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS } from './tokens'
 
 const CLAIM_TTL_MS = 5 * 60 * 1_000
-const ACCESS_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1_000
 const MAX_WRITE_ATTEMPTS = 3
+export const EMAIL_DELIVERY_REUSE_MIN_REMAINING_MS = 29 * 24 * 60 * 60 * 1_000
 
 type DeliveryRecord = {
   version: 1
@@ -92,7 +93,7 @@ export async function claimEmailDelivery(
   now = Date.now(),
 ): Promise<EmailDeliveryClaim> {
   if (!Number.isSafeInteger(now)) throw new Error('Email delivery time is invalid')
-  if (!Number.isSafeInteger(now + ACCESS_TOKEN_TTL_MS)) throw new Error('Email delivery time is invalid')
+  if (!Number.isSafeInteger(now + FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS)) throw new Error('Email delivery time is invalid')
 
   for (let attempt = 0; attempt < MAX_WRITE_ATTEMPTS; attempt += 1) {
     const current = await readRecord(sessionId, store)
@@ -107,11 +108,13 @@ export async function claimEmailDelivery(
 
     const existingAttempt = current?.value.attempt
     const existingExpiry = current?.value.accessTokenExpiresAt
+    const remainingLifetime = typeof existingExpiry === 'number' ? existingExpiry - now : undefined
     const reuseAttempt = typeof existingAttempt === 'number'
-      && typeof existingExpiry === 'number'
-      && existingExpiry > now
+      && typeof remainingLifetime === 'number'
+      && remainingLifetime >= EMAIL_DELIVERY_REUSE_MIN_REMAINING_MS
+      && remainingLifetime <= FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS
     const deliveryAttempt = reuseAttempt ? existingAttempt : (existingAttempt ?? 0) + 1
-    const accessTokenExpiresAt = reuseAttempt ? existingExpiry : now + ACCESS_TOKEN_TTL_MS
+    const accessTokenExpiresAt = reuseAttempt ? existingExpiry! : now + FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS
     const claimId = randomUUID()
     const idempotencyKey = reuseAttempt
       ? current!.value.idempotencyKey

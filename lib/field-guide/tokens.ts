@@ -5,7 +5,7 @@ const ACCESS_TOKEN_KIND = 'field-guide-access'
 const DOWNLOAD_TOKEN_KIND = 'field-guide-download'
 const TOKEN_VERSION = 1
 const MAX_SESSION_ID_LENGTH = 256
-const MAX_ACCESS_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1_000
+export const FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1_000
 const MAX_DOWNLOAD_TOKEN_TTL_MS = 15 * 60 * 1_000
 const BASE64URL = /^[A-Za-z0-9_-]+$/
 
@@ -122,7 +122,7 @@ function hasValidCommonClaims(
 
 export function signAccessToken(input: AccessTokenInput, secret: string, now = Date.now()) {
   if (!isBoundedSessionId(input.sessionId)) throw new Error('Token session ID is invalid')
-  assertExpiry(input.expiresAt, now, MAX_ACCESS_TOKEN_TTL_MS)
+  assertExpiry(input.expiresAt, now, FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS)
 
   return createToken({
     version: TOKEN_VERSION,
@@ -135,7 +135,7 @@ export function signAccessToken(input: AccessTokenInput, secret: string, now = D
 export function verifyAccessToken(token: string, secret: string, now = Date.now()): AccessTokenInput | null {
   if (!Number.isSafeInteger(now)) return null
   const payload = parseVerifiedPayload(token, secret)
-  if (!isTokenRecord(payload) || !hasValidCommonClaims(payload, ACCESS_TOKEN_KIND, now, MAX_ACCESS_TOKEN_TTL_MS)) return null
+  if (!isTokenRecord(payload) || !hasValidCommonClaims(payload, ACCESS_TOKEN_KIND, now, FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS)) return null
 
   return { sessionId: payload.sessionId, expiresAt: payload.expiresAt }
 }

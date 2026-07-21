@@ -3,6 +3,8 @@ import test from 'node:test'
 import { fulfillFieldGuideCheckout, type FieldGuideFulfillmentDependencies } from '../lib/field-guide/fulfillment'
 import { createSupporterAccessEmail } from '../lib/field-guide/email'
 import { FIELD_GUIDE_RELEASE } from '../lib/field-guide/release'
+import { FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS } from '../lib/field-guide/tokens'
+import { EMAIL_DELIVERY_REUSE_MIN_REMAINING_MS } from '../lib/field-guide/delivery'
 import {
   findEntitlementsByEmail,
   readEntitlement,
@@ -17,8 +19,6 @@ const configuredPriceIds = {
   'founding:usd': 'price_test_founding_usd',
   'founding:myr': 'price_test_founding_myr',
 } as const
-
-const ACCESS_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1_000
 
 type SessionOverrides = Partial<{
   id: string
@@ -66,7 +66,13 @@ function fakeDependencies(overrides: SessionOverrides = {}) {
       return 'fulfilled'
     },
     signAccessToken: ({ sessionId, expiresAt }) => {
-      if (expiresAt <= now || expiresAt - now > ACCESS_TOKEN_TTL_MS) throw new Error('Token expiry is invalid')
+      const remainingLifetime = expiresAt - now
+      if (
+        remainingLifetime < EMAIL_DELIVERY_REUSE_MIN_REMAINING_MS
+        || remainingLifetime > FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS
+      ) {
+        throw new Error('Token expiry is invalid')
+      }
       return `access-${sessionId}-${expiresAt}`
     },
     createAccessUrl: (token) => `https://www.fourtype.com/field-guide/access?token=${encodeURIComponent(token)}`,
@@ -78,7 +84,7 @@ function fakeDependencies(overrides: SessionOverrides = {}) {
         status: 'claimed' as const,
         claimId: 'claim-1',
         idempotencyKey: 'field-guide/cs-hash',
-        accessTokenExpiresAt: now + ACCESS_TOKEN_TTL_MS,
+        accessTokenExpiresAt: now + FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS,
       }
     },
     releaseEmailDeliveryClaim: async () => {
@@ -181,7 +187,10 @@ test('sends an entitlement older than 30 days a fresh valid access token', async
   })
 
   assert.deepEqual(await fulfillFieldGuideCheckout('cs_test_paid', fake.dependencies), { status: 'already-fulfilled' })
-  assert.match(fake.emailCalls[0].accessUrl, new RegExp(`access-cs_test_paid-${fake.now + ACCESS_TOKEN_TTL_MS}`))
+  assert.match(
+    fake.emailCalls[0].accessUrl,
+    new RegExp(`access-cs_test_paid-${fake.now + FIELD_GUIDE_ACCESS_TOKEN_MAX_AGE_MS}`),
+  )
 })
 
 test('releases the delivery claim when token signing or access URL construction fails', async () => {
