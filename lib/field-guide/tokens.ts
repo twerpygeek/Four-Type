@@ -69,6 +69,15 @@ function createToken(payload: AccessTokenPayload | DownloadTokenPayload, secret:
   return `${payloadPart}.${signPayload(payloadPart, secret).toString('base64url')}`
 }
 
+function decodeCanonicalBase64url(segment: string): Buffer | null {
+  try {
+    const decoded = Buffer.from(segment, 'base64url')
+    return decoded.toString('base64url') === segment ? decoded : null
+  } catch {
+    return null
+  }
+}
+
 function parseVerifiedPayload(token: string, secret: string): unknown | null {
   if (typeof secret !== 'string' || secret.length === 0) return null
   if (typeof token !== 'string' || token.length === 0 || token.length > 4_096) return null
@@ -78,20 +87,16 @@ function parseVerifiedPayload(token: string, secret: string): unknown | null {
   const [payloadPart, signaturePart] = parts
   if (!BASE64URL.test(payloadPart) || !BASE64URL.test(signaturePart)) return null
 
-  let signature: Buffer
-  try {
-    signature = Buffer.from(signaturePart, 'base64url')
-  } catch {
-    return null
-  }
+  const payloadBytes = decodeCanonicalBase64url(payloadPart)
+  const signature = decodeCanonicalBase64url(signaturePart)
+  if (!payloadBytes || !signature) return null
 
   const expectedSignature = signPayload(payloadPart, secret)
   if (signature.length !== expectedSignature.length) return null
   if (!timingSafeEqual(signature, expectedSignature)) return null
 
   try {
-    const decoded = Buffer.from(payloadPart, 'base64url').toString('utf8')
-    return JSON.parse(decoded)
+    return JSON.parse(payloadBytes.toString('utf8'))
   } catch {
     return null
   }
@@ -105,12 +110,14 @@ function hasValidCommonClaims(
   payload: Record<string, unknown>,
   expectedKind: typeof ACCESS_TOKEN_KIND | typeof DOWNLOAD_TOKEN_KIND,
   now: number,
+  maximumTtlMs: number,
 ): payload is Record<string, unknown> & { sessionId: string; expiresAt: number } {
   return payload.version === TOKEN_VERSION
     && payload.kind === expectedKind
     && isBoundedSessionId(payload.sessionId)
     && isSafeInteger(payload.expiresAt)
     && payload.expiresAt > now
+    && payload.expiresAt - now <= maximumTtlMs
 }
 
 export function signAccessToken(input: AccessTokenInput, secret: string, now = Date.now()) {
@@ -128,7 +135,7 @@ export function signAccessToken(input: AccessTokenInput, secret: string, now = D
 export function verifyAccessToken(token: string, secret: string, now = Date.now()): AccessTokenInput | null {
   if (!Number.isSafeInteger(now)) return null
   const payload = parseVerifiedPayload(token, secret)
-  if (!isTokenRecord(payload) || !hasValidCommonClaims(payload, ACCESS_TOKEN_KIND, now)) return null
+  if (!isTokenRecord(payload) || !hasValidCommonClaims(payload, ACCESS_TOKEN_KIND, now, MAX_ACCESS_TOKEN_TTL_MS)) return null
 
   return { sessionId: payload.sessionId, expiresAt: payload.expiresAt }
 }
@@ -152,7 +159,7 @@ export function verifyDownloadToken(token: string, secret: string, now = Date.no
   const payload = parseVerifiedPayload(token, secret)
   if (
     !isTokenRecord(payload)
-    || !hasValidCommonClaims(payload, DOWNLOAD_TOKEN_KIND, now)
+    || !hasValidCommonClaims(payload, DOWNLOAD_TOKEN_KIND, now, MAX_DOWNLOAD_TOKEN_TTL_MS)
     || !isSupportedAsset(payload.asset)
   ) {
     return null

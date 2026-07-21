@@ -29,6 +29,7 @@ class MemoryBlobStore implements PrivateBlobStore {
   private readonly records = new Map<string, { body: string; etag: string }>()
   private etag = 0
   preconditionFailures = 0
+  emailIndexFailures = 0
 
   keys() {
     return [...this.records.keys()]
@@ -41,6 +42,11 @@ class MemoryBlobStore implements PrivateBlobStore {
 
   async put(pathname: string, body: string, options: PutCall['options']) {
     this.putCalls.push({ pathname, body, options })
+
+    if (pathname.includes('/by-email/') && this.emailIndexFailures > 0) {
+      this.emailIndexFailures -= 1
+      throw new Error('Email index unavailable')
+    }
 
     if (!options.allowOverwrite && this.records.has(pathname)) {
       throw Object.assign(new Error('Blob already exists'), { code: 'already-exists' })
@@ -153,6 +159,31 @@ test('stops after three email-index precondition conflicts', async () => {
 
   const indexWrites = store.putCalls.filter((call) => call.pathname.includes('/by-email/'))
   assert.equal(indexWrites.length, 4)
+})
+
+test('repairs the winning email index after an earlier post-session failure', async () => {
+  const store = new MemoryBlobStore()
+  const winningEntitlement = paidEntitlement({ customerEmail: 'winner@example.com' })
+  store.emailIndexFailures = 1
+
+  await assert.rejects(
+    () => writeEntitlement(winningEntitlement, store, 'email-index-secret'),
+    /unavailable/i,
+  )
+
+  assert.equal(
+    await writeEntitlement(
+      paidEntitlement({ sessionId: winningEntitlement.sessionId, customerEmail: 'replacement@example.com' }),
+      store,
+      'email-index-secret',
+    ),
+    'already-fulfilled',
+  )
+  assert.deepEqual(
+    (await findEntitlementsByEmail('winner@example.com', store, 'email-index-secret')).map((entry) => entry.sessionId),
+    [winningEntitlement.sessionId],
+  )
+  assert.deepEqual(await findEntitlementsByEmail('replacement@example.com', store, 'email-index-secret'), [])
 })
 
 test('creates a private signed URL for one pathname with a maximum 15-minute lifetime', async () => {

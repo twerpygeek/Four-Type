@@ -169,7 +169,12 @@ export async function writeEntitlement(
       contentType: 'application/json',
     })
   } catch (error) {
-    if (isAlreadyExists(error)) return 'already-fulfilled'
+    if (isAlreadyExists(error)) {
+      const winningEntitlement = await readEntitlement(entitlement.sessionId, store)
+      if (!winningEntitlement) throw new Error('Existing entitlement is invalid')
+      await updateEmailIndex(winningEntitlement, store, emailIndexSecret)
+      return 'already-fulfilled'
+    }
     throw error
   }
 
