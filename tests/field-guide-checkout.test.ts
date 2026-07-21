@@ -121,6 +121,16 @@ function createTestHandler(siteUrl: string | undefined, origins: string[] = []) 
   })
 }
 
+test('returns 429 when checkout request-rate limit denies', async () => {
+  const response = await createCheckoutPostHandler({
+    siteUrl: 'https://www.fourtype.com',
+    createCheckout: () => Promise.resolve({ url: 'https://checkout.stripe.test/session' }),
+    rateLimit: async () => 'rate-limited',
+  })(createRequest(JSON.stringify({ tier: 'field-guide', currency: 'usd' })))
+
+  assert.equal(response.status, 429)
+})
+
 test('returns a bodyless 400 for malformed JSON', async () => {
   const response = await createTestHandler('https://www.fourtype.com')(createRequest('{'))
 

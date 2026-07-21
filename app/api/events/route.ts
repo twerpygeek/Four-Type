@@ -42,48 +42,67 @@ function cleanNumber(value: unknown, min: number, max: number) {
   return value
 }
 
+function cleanCampaignTier(value: unknown): AnalyticsEventPayload['tier'] {
+  const text = cleanAnalyticsText(value, 20)
+  return text === 'field-guide' || text === 'founding' ? text : ''
+}
+
+function cleanCampaignCurrency(value: unknown): AnalyticsEventPayload['currency'] {
+  const text = cleanAnalyticsText(value, 10)
+  return text === 'usd' || text === 'myr' ? text : ''
+}
+
+function cleanCampaignAsset(value: unknown): AnalyticsEventPayload['asset'] {
+  const text = cleanAnalyticsText(value, 20)
+  return text === 'pdf' || text === 'epub' || text === 'worksheets' ? text : ''
+}
+
 export function createEventsPostHandler({ isConfigured, append }: EventHandlerDependencies) {
   return async function POST(request: Request) {
-  let body: Record<string, unknown>
+    let body: Record<string, unknown>
 
-  try {
-    body = (await request.json()) as Record<string, unknown>
-  } catch {
-    return NextResponse.json({ ok: false, error: 'Invalid JSON body.' }, { status: 400 })
+    try {
+      body = (await request.json()) as Record<string, unknown>
+    } catch {
+      return NextResponse.json({ ok: false, error: 'Invalid JSON body.' }, { status: 400 })
+    }
+
+    const event = cleanText(body.event, 80)
+
+    if (!isFourTypeEventName(event)) {
+      return NextResponse.json({ ok: false, error: 'Unsupported event.' }, { status: 400 })
+    }
+
+    if (!isConfigured()) {
+      return NextResponse.json({ ok: true, skipped: true })
+    }
+
+    const payload: AnalyticsEventPayload = {
+      event,
+      locale: cleanAnalyticsText(body.locale, 24),
+      blendKey: cleanAnalyticsText(body.blendKey, 80),
+      inviterBlendKey: cleanAnalyticsText(body.inviterBlendKey, 80),
+      resultName: cleanAnalyticsText(body.resultName, 120),
+      shareId: cleanAnalyticsText(body.shareId, 500),
+      compareWith: cleanAnalyticsText(body.compareWith, 500),
+      source: cleanAnalyticsText(body.source, 120),
+      chapter: cleanNumber(body.chapter, 1, 4),
+      question: cleanNumber(body.question, 1, 40),
+      tier: cleanCampaignTier(body.tier),
+      currency: cleanCampaignCurrency(body.currency),
+      asset: cleanCampaignAsset(body.asset),
+      previewPage: cleanNumber(body.previewPage, 1, 10_000) ?? '',
+      path: cleanPath(body.path),
+      userAgent: cleanAnalyticsText(request.headers.get('user-agent'), 500),
+    }
+
+    try {
+      await append(payload)
+      return NextResponse.json({ ok: true })
+    } catch {
+      return NextResponse.json({ ok: true, skipped: true })
+    }
   }
-
-  const event = cleanText(body.event, 80)
-
-  if (!isFourTypeEventName(event)) {
-    return NextResponse.json({ ok: false, error: 'Unsupported event.' }, { status: 400 })
-  }
-
-  if (!isConfigured()) {
-    return NextResponse.json({ ok: true, skipped: true })
-  }
-
-  const payload: AnalyticsEventPayload = {
-    event,
-    locale: cleanAnalyticsText(body.locale, 24),
-    blendKey: cleanAnalyticsText(body.blendKey, 80),
-    inviterBlendKey: cleanAnalyticsText(body.inviterBlendKey, 80),
-    resultName: cleanAnalyticsText(body.resultName, 120),
-    shareId: cleanAnalyticsText(body.shareId, 500),
-    compareWith: cleanAnalyticsText(body.compareWith, 500),
-    source: cleanAnalyticsText(body.source, 120),
-    chapter: cleanNumber(body.chapter, 1, 4),
-    question: cleanNumber(body.question, 1, 40),
-    path: cleanPath(body.path),
-    userAgent: cleanAnalyticsText(request.headers.get('user-agent'), 500),
-  }
-
-  try {
-    await append(payload)
-    return NextResponse.json({ ok: true })
-  } catch {
-    return NextResponse.json({ ok: true, skipped: true })
-  }
-}
 }
 
 export const POST = createEventsPostHandler({

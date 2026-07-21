@@ -6,15 +6,15 @@ import { getSupporterOffer } from '@/lib/field-guide/catalog'
 const canonicalUrl = 'https://www.fourtype.com/field-guide'
 
 export const metadata: Metadata = {
-  title: 'Support FourType · Receive The FourType Field Guide',
+  title: 'Support FourType Field Guide Edition 1',
   description:
-    'Support FourType and receive the complete 144-page illustrated Field Guide in PDF and EPUB, with practical tools for work, relationships, tension and repair.',
+    'Back the FourType campaign and get early access to the complete 144-page illustrated Field Guide in PDF and EPUB, with practical tools for work, relationships, tension and repair.',
   alternates: { canonical: canonicalUrl },
   openGraph: {
     type: 'website',
     url: canonicalUrl,
     title: 'Help more people read the room · FourType',
-    description: 'Support the next chapter of FourType and receive the complete illustrated Field Guide.',
+    description: 'Back the next chapter of FourType and receive the complete illustrated Field Guide.',
     images: [
       {
         url: '/images/field-guide/field-guide-social.jpg',

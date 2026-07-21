@@ -10,15 +10,17 @@ type CheckoutButtonProps = {
   currency: CurrencyKey
   className: string
   children: React.ReactNode
+  onBeforeCheckoutStart?: () => void
 }
 
-export default function CheckoutButton({ tier, currency, className, children }: CheckoutButtonProps) {
+export default function CheckoutButton({ tier, currency, className, children, onBeforeCheckoutStart }: CheckoutButtonProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState(false)
 
   async function startCheckout() {
     setIsSubmitting(true)
     setError(false)
+    onBeforeCheckoutStart?.()
     trackFieldGuideEvent({ event: 'field-guide-checkout-start', tier, currency })
 
     try {

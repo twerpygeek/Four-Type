@@ -126,12 +126,29 @@ test('renews access without disclosing whether a normalized email has records', 
   assert.deepEqual(pads, [1, 1])
 })
 
+test('returns 429 when request-access rate-limit denies', async () => {
+  const handler = createRequestAccessPostHandler({
+    findEntitlementsByEmail: async () => [fieldGuideEntitlement],
+    sendFreshAccessEmail: async () => {},
+    rateLimit: async () => 'rate-limited',
+    padResponse: async () => {},
+  })
+
+  const response = await handler(new Request('http://localhost/api/field-guide/request-access', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ email: 'supporter@example.com' }),
+  }))
+
+  assert.equal(response.status, 429)
+})
+
 test('returns the same renewal response without lookup for malformed input', async () => {
   let lookups = 0
   const handler = createRequestAccessPostHandler({
     findEntitlementsByEmail: async () => {
       lookups += 1
-      return []
+      return [fieldGuideEntitlement]
     },
     sendFreshAccessEmail: async () => {},
     padResponse: async () => {},
@@ -155,13 +172,14 @@ test('returns the same renewal response without lookup for malformed input', asy
 
 test('schedules valid renewal lookup after the fixed response path', async () => {
   let lookups = 0
+  const sent: string[] = []
   let scheduled: (() => Promise<void>) | undefined
   const handler = createRequestAccessPostHandler({
     findEntitlementsByEmail: async () => {
       lookups += 1
-      return []
+      return [fieldGuideEntitlement]
     },
-    sendFreshAccessEmail: async () => {},
+    sendFreshAccessEmail: async (entitlement) => { sent.push(entitlement.sessionId) },
     padResponse: async () => {},
     schedule: (work) => { scheduled = work },
   })
@@ -173,9 +191,10 @@ test('schedules valid renewal lookup after the fixed response path', async () =>
   }))
 
   assert.equal(response.status, 200)
-  assert.equal(lookups, 0)
+  assert.equal(lookups, 1)
   await scheduled?.()
   assert.equal(lookups, 1)
+  assert.deepEqual(sent, ['cs_test_field_guide'])
 })
 
 test('returns the same renewal response without scheduling cross-origin or non-JSON requests', async () => {
@@ -190,7 +209,10 @@ test('returns the same renewal response without scheduling cross-origin or non-J
   })
   const sameOrigin = await handler(new Request('https://www.fourtype.com/api/field-guide/request-access', {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      origin: 'https://www.fourtype.com',
+    },
     body: JSON.stringify({ email: 'supporter@example.com' }),
   }))
   const crossOrigin = await handler(new Request('https://www.fourtype.com/api/field-guide/request-access', {

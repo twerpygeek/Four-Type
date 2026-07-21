@@ -3,6 +3,7 @@ import Footer from '@/components/Footer'
 import Navigation from '@/components/Navigation'
 import FieldGuidePolicyLinks from '@/components/field-guide/PolicyLinks'
 import SupporterDownloads from '@/components/field-guide/SupporterDownloads'
+import FieldGuidePurchaseCompleteTracker from '@/components/field-guide/FieldGuidePurchaseCompleteTracker'
 import { resolveVerifiedSuccessAccess } from '@/lib/field-guide/access'
 import { createProductionSupporterDownloads, getProductionFieldGuideEntitlement } from '@/lib/field-guide/access-server'
 import { fulfillProductionFieldGuideCheckout } from '@/lib/field-guide/fulfillment-server'
@@ -42,14 +43,20 @@ export default async function FieldGuideSuccessPage({
             <>
               <p className="field-guide-eyebrow">Support confirmed</p>
               <h1>Thank you for supporting FourType.</h1>
-              <p className="field-guide-lede">Your payment was verified and your private rewards are ready.</p>
+              <p className="field-guide-lede">Your payment is verified and your private rewards are now ready to use.</p>
+              <FieldGuidePurchaseCompleteTracker tier={entitlement.tier} currency={entitlement.currency} />
               <SupporterDownloads tier={entitlement.tier} currency={entitlement.currency} downloads={downloads} />
+              <div className="field-guide-actions field-guide-access-actions">
+                <Link className="field-guide-button field-guide-button-secondary" href="/field-guide#inside-the-guide">
+                  View campaign preview pages
+                </Link>
+              </div>
             </>
           ) : (
             <>
               <p className="field-guide-eyebrow">Supporter access</p>
               <h1>We could not confirm that payment yet.</h1>
-              <p className="field-guide-lede">You can return to the supporter levels or try your secure checkout link again in a moment.</p>
+              <p className="field-guide-lede">The payment status is still confirming. You can return to supporter levels or try your secure checkout link again.</p>
               <Link className="field-guide-button field-guide-button-primary" href="/field-guide#supporter-levels">View supporter levels</Link>
             </>
           )}

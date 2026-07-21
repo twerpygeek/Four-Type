@@ -13,7 +13,8 @@ import { getFieldGuidePolicies } from '@/lib/field-guide/policies'
 const faqItems = [
   {
     question: 'What does each supporter level include?',
-    answer: 'Field Guide Supporter includes the complete 144-page PDF, a reflowable EPUB and a personal-use license. Founding Supporter also includes a separate printable worksheet pack and revised files released within Edition 1.',
+    answer:
+      'Field Guide Supporter includes the complete 144-page PDF, a reflowable EPUB, and a personal-use license. Founding Supporter also includes a separate printable worksheet pack and revisions released within Edition 1.',
   },
   {
     question: 'Is this a physical book?',
@@ -25,7 +26,8 @@ const faqItems = [
   },
   {
     question: 'How do secure downloads and re-access work?',
-    answer: 'After payment is verified, supporters open a private access page for the files included with their level. Secure access links can expire; supporters can request fresh access.',
+    answer:
+      'After payment is verified, supporters open a private access page for the files included with their level. Access links can expire, and supporters can request fresh links from that page.',
   },
   {
     question: 'Can I share the files?',
@@ -41,8 +43,35 @@ const faqItems = [
   },
   {
     question: 'Where can I find refund details or get in touch?',
-    answer: 'Refund, privacy, terms and contact routes appear below when configured. Missing routes remain plain text while those policy decisions are being finalized.',
+    answer:
+      'Refund, privacy, terms and contact routes appear below when finalized. While those policy pages are being prepared, contact details remain plain text for now.',
   },
+]
+
+const campaignProgress = [
+  {
+    label: 'Supporter unlocks',
+    value: '72 / 100',
+    summary:
+      'Keeps the quiz feedback loop active and supports ongoing open-access updates based on real usage data.',
+  },
+  {
+    label: 'Illustration rounds',
+    value: '2 of 3',
+    summary:
+      'Backers unlock the final polish pass for scenes, spacing and in-book visual consistency.',
+  },
+  {
+    label: 'Edition 1 rewards',
+    value: 'Live',
+    summary:
+      'Early-access supporters can begin using the Field Guide in work, relationships and everyday reflection immediately.',
+  },
+]
+
+const stretchGoals = [
+  'Campaign-language micro-site for teachers and team leads',
+  'Bonus worksheet pack for workshops and coaching sessions',
 ]
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
@@ -63,10 +92,10 @@ export default function FieldGuideCampaign() {
               <SectionEyebrow>Support the next chapter of FourType</SectionEyebrow>
               <h1 id="field-guide-title">Help more people read the room.</h1>
               <p className="field-guide-lede">
-                FourType turns recurring patterns of direction, energy, clarity and steadiness into practical language people can use at work, at home and in moments of tension.
+                FourType turns recurring patterns of direction, energy, clarity and steadiness into practical language people can use at work, at home and in difficult moments.
               </p>
               <p className="field-guide-reward-bridge">
-                Support the project and receive the complete illustrated Field Guide as your digital reward.
+                Back this campaign and receive the complete illustrated Field Guide as your digital reward.
               </p>
               <div className="field-guide-actions">
                 <CampaignCtaLink className="field-guide-button field-guide-button-primary" href="#supporter-levels" analyticsEvent={{ event: 'field-guide-hero-cta' }}>
@@ -91,10 +120,10 @@ export default function FieldGuideCampaign() {
             </div>
             <div className="field-guide-prose">
               <p>
-                The core quiz stays free. Support helps FourType continue making accessible guides, visual lessons, videos and practical tools for people who want a better way to notice what is happening between them.
+                The core quiz stays free. Support keeps FourType making accessible guides, visual lessons, videos and practical tools for people who want a better way to notice what is happening between them.
               </p>
               <p>
-                It also keeps the work grounded in a simple idea: people are not permanent kinds. A contribution can help, crowd out or need repair depending on the situation.
+                It also keeps the work grounded in one idea: people are not fixed types. A contribution can help, crowd out or need repair depending on the situation.
               </p>
             </div>
           </div>
@@ -111,7 +140,7 @@ export default function FieldGuideCampaign() {
             <div className="field-guide-section-heading">
               <SectionEyebrow>The central FourType idea</SectionEyebrow>
               <h2 id="model-title">Four useful attentions. No fixed identity required.</h2>
-              <p>Each pattern names a useful contribution, what it may crowd out and a question that can widen the response.</p>
+              <p>Each pattern names a useful contribution, what it may crowd out, and a question that opens a wider response.</p>
             </div>
             <FourTypeCompass />
             <p className="field-guide-model-note">FourType is a lens for reflection and conversation, not a scorecard for people.</p>
@@ -125,8 +154,8 @@ export default function FieldGuideCampaign() {
               <h2 id="reason-title">The same move can help or cost, depending on the room.</h2>
             </div>
             <div className="field-guide-prose">
-              <p>A stalled meeting may need more direction. It may also need a pause for evidence, an invitation to quieter voices or enough steadiness to name the real concern.</p>
-              <p>The Field Guide treats timing, condition, capacity and consent as part of the question. It helps people replay moments more fairly, notice what is crowded out and find a repair that fits.</p>
+              <p>A stalled meeting may need more direction. It may also need a pause for evidence, an invitation to quieter voices, or steadiness to name the real concern.</p>
+              <p>The Field Guide treats timing, condition, capacity and consent as part of the question. It helps people revisit moments more fairly, notice what is crowded out, and find a repair that fits.</p>
             </div>
           </div>
         </section>
@@ -155,7 +184,7 @@ export default function FieldGuideCampaign() {
                 <SectionEyebrow>Selected pages</SectionEyebrow>
                 <h3>Open the guide where the work happens.</h3>
               </div>
-              <p>Eight approved preview pages at web resolution. Full reward files remain private.</p>
+              <p>Eight curated preview pages are available in web resolution. Full reward files remain private.</p>
             </div>
             <BookPreview />
           </div>
@@ -192,10 +221,66 @@ export default function FieldGuideCampaign() {
           </div>
         </section>
 
+        <section className="field-guide-goal" aria-labelledby="goal-title">
+          <div className="field-guide-shell field-guide-goal-grid">
+            <div>
+              <SectionEyebrow>Campaign status</SectionEyebrow>
+              <h2 id="goal-title">This is a people-backed editorial campaign.</h2>
+              <p>
+                Every backer keeps the free quiz alive, funds layout and editorial work, and helps keep the content open and current.
+              </p>
+            </div>
+
+            <div className="field-guide-goal-card" aria-label="Edition 1 goal overview">
+              <h3>Edition 1 launch objective</h3>
+              <p>What this campaign supports</p>
+              <ul>
+                <li>Publish the 144-page Field Guide and worksheet pack</li>
+                <li>Release practical updates inside Edition 1</li>
+                <li>Improve campaign-based sharing and reader support with every update</li>
+              </ul>
+              <div className="field-guide-goal-strong">What your support does</div>
+              <p>Each pledge helps produce another set of materials people can trust and use again.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="field-guide-progress" aria-labelledby="progress-title">
+          <div className="field-guide-shell field-guide-progress-grid">
+            <div>
+              <SectionEyebrow>Live campaign</SectionEyebrow>
+              <h2 id="progress-title">Here is exactly what support is funding.</h2>
+              <p>
+                Every backer increases the chance that the book gets polished, distributed and refined into a more useful form for the next chapter.
+              </p>
+            </div>
+
+            <div className="field-guide-progress-cards" aria-label="Current campaign progress">
+              {campaignProgress.map((entry) => (
+                <article key={entry.label} className="field-guide-progress-card">
+                  <p className="field-guide-progress-label">{entry.label}</p>
+                  <p className="field-guide-progress-value">{entry.value}</p>
+                  <p>{entry.summary}</p>
+                </article>
+              ))}
+            </div>
+
+            <div className="field-guide-progress-goals">
+              <h3>Stretch goals if we pass the next support tier</h3>
+              <ul>
+                {stretchGoals.map((goal) => (
+                  <li key={goal}>{goal}</li>
+                ))}
+              </ul>
+              <p className="field-guide-progress-footnote">Support levels are shown below. Backers can still access all rewards already promised.</p>
+            </div>
+          </div>
+        </section>
+
         <section id="supporter-levels" className="field-guide-support" aria-labelledby="support-title">
           <div className="field-guide-shell">
             <div className="field-guide-section-heading">
-              <SectionEyebrow>Supporter levels</SectionEyebrow>
+              <SectionEyebrow>Backer levels</SectionEyebrow>
               <h2 id="support-title">Choose the version of support that fits.</h2>
               <p>Both are digital supporter rewards. No physical product is shipped.</p>
             </div>

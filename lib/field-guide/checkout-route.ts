@@ -7,10 +7,12 @@ type CheckoutCreator = (selection: SupporterSelection, origin: string) => Promis
 type CheckoutRouteOptions = {
   siteUrl: string | undefined
   createCheckout: CheckoutCreator
+  rateLimit?: () => Promise<'allowed' | 'rate-limited'>
 }
 
 const localHosts = new Set(['localhost', '127.0.0.1'])
 const hostnamePattern = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)(?:\.(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?))*$/i
+const MAX_CHECKOUT_REQUEST_BYTES = 1_024
 
 export function resolveCanonicalCheckoutOrigin(siteUrl: string | undefined) {
   if (!siteUrl || siteUrl !== siteUrl.trim()) return null
@@ -41,12 +43,26 @@ export function resolveCanonicalCheckoutOrigin(siteUrl: string | undefined) {
   return url.origin
 }
 
-export function createCheckoutPostHandler({ siteUrl, createCheckout }: CheckoutRouteOptions) {
+export function createCheckoutPostHandler({ siteUrl, createCheckout, rateLimit }: CheckoutRouteOptions) {
   return async function POST(request: Request) {
+    if (rateLimit) {
+      const requestLimit = await rateLimit().catch(() => 'rate-limited' as const)
+      if (requestLimit === 'rate-limited') return new Response(null, { status: 429 })
+    }
+
+    const contentType = request.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase()
+    if (contentType !== 'application/json') return new Response(null, { status: 400 })
+    const contentLength = request.headers.get('content-length')
+    if (contentLength && (!/^\d+$/.test(contentLength) || Number(contentLength) > MAX_CHECKOUT_REQUEST_BYTES)) return new Response(null, { status: 400 })
+
+    let body: string
+
     let input: unknown
 
     try {
-      input = await request.json()
+      body = await request.text()
+      if (body.length > MAX_CHECKOUT_REQUEST_BYTES) return new Response(null, { status: 400 })
+      input = JSON.parse(body)
     } catch {
       return new Response(null, { status: 400 })
     }

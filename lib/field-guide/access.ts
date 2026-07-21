@@ -36,6 +36,7 @@ export type SuccessAccessDependencies = {
 export type RequestAccessDependencies = {
   findEntitlementsByEmail: (email: string) => Promise<FieldGuideEntitlement[]>
   sendFreshAccessEmail: (entitlement: FieldGuideEntitlement) => Promise<void>
+  rateLimit?: (now?: number) => Promise<'allowed' | 'rate-limited'>
   claimCooldown?: (email: string) => Promise<'claimed' | 'cooldown'>
   canonicalOrigin?: string
   padResponse?: () => Promise<void>
@@ -176,7 +177,8 @@ async function requestEmail(request: Request): Promise<string | null> {
 
 function isTrustedRequestOrigin(request: Request, canonicalOrigin: string | undefined) {
   const origin = request.headers.get('origin')
-  if (!origin) return true
+  if (!canonicalOrigin) return true
+  if (!origin) return false
   return Boolean(canonicalOrigin && origin === canonicalOrigin)
 }
 
@@ -187,13 +189,18 @@ function accessRequestResponse() {
 export function createRequestAccessPostHandler(dependencies: RequestAccessDependencies) {
   return async function POST(request: Request) {
     const startedAt = Date.now()
-    const email = isTrustedRequestOrigin(request, dependencies.canonicalOrigin) ? await requestEmail(request) : null
+    if (dependencies.rateLimit) {
+      const requestLimit = await dependencies.rateLimit(startedAt).catch(() => 'rate-limited' as const)
+      if (requestLimit === 'rate-limited') return new Response(null, { status: 429 })
+    }
 
-    if (email) {
-      const cooldown = await dependencies.claimCooldown?.(email).catch(() => 'cooldown') ?? 'claimed'
+    const email = isTrustedRequestOrigin(request, dependencies.canonicalOrigin) ? await requestEmail(request) : null
+    const entitlements = email ? await dependencies.findEntitlementsByEmail(email).catch(() => []) : []
+
+    if (entitlements.length > 0) {
+      const cooldown = await dependencies.claimCooldown?.(email ?? '').catch(() => 'cooldown') ?? 'claimed'
       if (cooldown === 'claimed') {
         const work = async () => {
-          const entitlements = await dependencies.findEntitlementsByEmail(email).catch(() => [])
           await Promise.all(entitlements.map(async (entitlement) => {
             try {
               await dependencies.sendFreshAccessEmail(entitlement)

@@ -25,6 +25,7 @@ import {
   verifyAccessToken,
   verifyDownloadToken,
 } from './tokens'
+import { createRateLimiter } from './rate-limit'
 
 const DOWNLOAD_TOKEN_TTL_MS = 15 * 60 * 1_000
 
@@ -116,6 +117,12 @@ export function createProductionRequestAccessPostHandler(
     sendFreshAccessEmail: sendFreshProductionAccessEmail,
     claimCooldown: (email) => claimReaccessCooldown(email, vercelPrivateBlobStore, getAccessTokenSecret()),
     canonicalOrigin: resolveCanonicalCheckoutOrigin(process.env.NEXT_PUBLIC_SITE_URL) ?? undefined,
+    rateLimit: createRateLimiter({
+      store: vercelPrivateBlobStore,
+      action: 'request-access',
+      capacity: 120,
+      windowMs: 60_000,
+    }),
     schedule,
   })
 }

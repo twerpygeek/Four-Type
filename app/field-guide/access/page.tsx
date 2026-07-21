@@ -37,17 +37,17 @@ export default async function FieldGuideAccessPage({
           {entitlement && downloads.length > 0 ? (
             <>
               <p className="field-guide-eyebrow">Private supporter access</p>
-              <h1>Your Field Guide rewards are ready.</h1>
-              <p className="field-guide-lede">This access page shows the files included with your supporter level.</p>
+              <h1>Your FourType Field Guide rewards are ready.</h1>
+              <p className="field-guide-lede">This secure page is ready with the files for your supporter level.</p>
               <SupporterDownloads tier={entitlement.tier} currency={entitlement.currency} downloads={downloads} />
             </>
           ) : (
             <>
               <p className="field-guide-eyebrow">Supporter access</p>
               <h1>This access link is no longer available.</h1>
-              <p className="field-guide-lede">Request a fresh link with the email used for your supporter purchase.</p>
+              <p className="field-guide-lede">Request a fresh access link with the email used at checkout.</p>
               <SupporterAccessRequest />
-              <Link className="field-guide-text-link" href="/field-guide#inside-the-guide">Return to the Field Guide preview</Link>
+              <Link className="field-guide-text-link" href="/field-guide">Return to the campaign page</Link>
             </>
           )}
           <FieldGuidePolicyLinks policies={policy} />

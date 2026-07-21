@@ -25,6 +25,10 @@ export default function SupporterTiers() {
     trackFieldGuideEvent({ event: 'field-guide-currency-select', currency: nextCurrency })
   }
 
+  function trackTierSelection(tier: 'field-guide' | 'founding') {
+    trackFieldGuideEvent({ event: 'field-guide-tier-select', tier, currency })
+  }
+
   const fieldGuidePrice = getSupporterOffer('field-guide', currency).label
   const foundingPrice = getSupporterOffer('founding', currency).label
 
@@ -47,7 +51,12 @@ export default function SupporterTiers() {
             <li>Immediate secure access after verified payment</li>
             <li>Personal-use license</li>
           </ul>
-          <CheckoutButton tier="field-guide" currency={currency} className="field-guide-button field-guide-button-primary">
+          <CheckoutButton
+            tier="field-guide"
+            currency={currency}
+            className="field-guide-button field-guide-button-primary"
+            onBeforeCheckoutStart={() => trackTierSelection('field-guide')}
+          >
             Support and receive the guide
           </CheckoutButton>
         </article>
@@ -62,7 +71,12 @@ export default function SupporterTiers() {
             <li>Future revisions of Edition 1</li>
             <li>Personal-use license</li>
           </ul>
-          <CheckoutButton tier="founding" currency={currency} className="field-guide-button field-guide-button-secondary">
+          <CheckoutButton
+            tier="founding"
+            currency={currency}
+            className="field-guide-button field-guide-button-secondary"
+            onBeforeCheckoutStart={() => trackTierSelection('founding')}
+          >
             Become a Founding Supporter
           </CheckoutButton>
           <p className="field-guide-tier-fine">Edition 1 revisions are revised files within this edition, not every future book or a future edition.</p>

@@ -33,8 +33,8 @@ export default function SupporterDownloads({ tier, currency, downloads }: Suppor
           </li>
         ))}
       </ul>
-      <p>Download links expire shortly for your privacy. Return to this page or request a fresh access link whenever you need one.</p>
-      <p>These files are for your personal use. Please do not share, resell, or distribute them.</p>
+      <p>For privacy and security, links expire after a short period. Return here anytime for fresh links.</p>
+      <p>Your files are for personal use only. Please do not share, resell, or redistribute them.</p>
     </section>
   )
 }
