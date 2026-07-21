@@ -510,7 +510,7 @@
   .field-guide-prose,
   .field-guide-section-heading > p { font-size: 1rem; }
   .field-guide-book-stage { min-height: 335px; }
-  .field-guide-book { width: min(220px, 66vw); }
+  .interactive-book { width: min(220px, 66vw); }
   .field-guide-book-shadow { width: 215px; }
   .field-guide-book-caption { right: 0; bottom: 5px; font-size: 0.62rem; }
   .field-guide-mission,

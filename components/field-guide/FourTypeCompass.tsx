@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, type KeyboardEvent } from 'react'
+import { getCompassFocusIndex } from './interaction-logic'
 
 const ATTENTIONS = [
   {
@@ -43,10 +44,13 @@ export default function FourTypeCompass() {
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([])
   const selected = ATTENTIONS[selectedIndex]
 
-  function moveFocus(nextIndex: number) {
-    const normalizedIndex = (nextIndex + ATTENTIONS.length) % ATTENTIONS.length
-    setFocusedIndex(normalizedIndex)
-    buttonRefs.current[normalizedIndex]?.focus()
+  function moveFocus(index: number, key: string) {
+    const nextIndex = getCompassFocusIndex(index, key, ATTENTIONS.length)
+
+    if (nextIndex === null) return
+
+    setFocusedIndex(nextIndex)
+    buttonRefs.current[nextIndex]?.focus()
   }
 
   function selectAttention(index: number) {
@@ -55,27 +59,9 @@ export default function FourTypeCompass() {
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
-    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+    if (getCompassFocusIndex(index, event.key, ATTENTIONS.length) !== null) {
       event.preventDefault()
-      moveFocus(index + 1)
-      return
-    }
-
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      event.preventDefault()
-      moveFocus(index - 1)
-      return
-    }
-
-    if (event.key === 'Home') {
-      event.preventDefault()
-      moveFocus(0)
-      return
-    }
-
-    if (event.key === 'End') {
-      event.preventDefault()
-      moveFocus(ATTENTIONS.length - 1)
+      moveFocus(index, event.key)
       return
     }
 

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode, type TouchEvent } from 'react'
 import { trackFieldGuideEvent } from './CampaignAnalytics'
+import { consumePreviewClickGuard, getPreviewSwipeDirection, getWrappedPreviewIndex, type InteractionPoint } from './interaction-logic'
 
 export const PREVIEW_PAGES = [
   { page: 1, src: '/images/field-guide/preview-01.webp', title: 'The Field Guide cover', alt: 'The FourType Field Guide cover' },
@@ -27,13 +28,10 @@ type BookPreviewContextValue = {
 
 const BookPreviewContext = createContext<BookPreviewContextValue | null>(null)
 
-function normalizeIndex(index: number) {
-  return (index + PREVIEW_PAGES.length) % PREVIEW_PAGES.length
-}
-
 export function BookPreviewProvider({ children }: { children: ReactNode }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
+  const activeIndexRef = useRef(0)
   const returnFocusRef = useRef<HTMLElement | null>(null)
 
   const trackNavigation = useCallback((index: number) => {
@@ -41,27 +39,27 @@ export function BookPreviewProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const selectPreview = useCallback((index: number) => {
-    const normalizedIndex = normalizeIndex(index)
-    setActiveIndex((currentIndex) => {
-      if (currentIndex !== normalizedIndex) {
-        trackNavigation(normalizedIndex)
-      }
+    const normalizedIndex = ((index % PREVIEW_PAGES.length) + PREVIEW_PAGES.length) % PREVIEW_PAGES.length
 
-      return normalizedIndex
-    })
+    if (activeIndexRef.current === normalizedIndex) return
+
+    activeIndexRef.current = normalizedIndex
+    setActiveIndex(normalizedIndex)
+    trackNavigation(normalizedIndex)
   }, [trackNavigation])
 
   const navigatePreview = useCallback((direction: -1 | 1) => {
-    setActiveIndex((currentIndex) => {
-      const nextIndex = normalizeIndex(currentIndex + direction)
-      trackNavigation(nextIndex)
-      return nextIndex
-    })
+    const nextIndex = getWrappedPreviewIndex(activeIndexRef.current, direction, PREVIEW_PAGES.length)
+
+    activeIndexRef.current = nextIndex
+    setActiveIndex(nextIndex)
+    trackNavigation(nextIndex)
   }, [trackNavigation])
 
   const openPreview = useCallback((index: number) => {
-    const normalizedIndex = normalizeIndex(index)
+    const normalizedIndex = ((index % PREVIEW_PAGES.length) + PREVIEW_PAGES.length) % PREVIEW_PAGES.length
     returnFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    activeIndexRef.current = normalizedIndex
     setActiveIndex(normalizedIndex)
     setIsOpen(true)
     trackFieldGuideEvent({ event: 'field-guide-preview-open', previewPage: PREVIEW_PAGES[normalizedIndex].page })
@@ -106,9 +104,10 @@ function useInlinePreview() {
 
 export default function BookPreview() {
   const { activeIndex, closePreview, isOpen, navigatePreview, openPreview, selectPreview } = useBookPreview()
-  const [touchStart, setTouchStart] = useState<{ x: number, y: number } | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
+  const didSwipeRef = useRef(false)
   const dialogRef = useRef<HTMLDivElement | null>(null)
+  const touchStartRef = useRef<InteractionPoint | null>(null)
   const isInlinePreview = useInlinePreview()
   const activePage = PREVIEW_PAGES[activeIndex]
 
@@ -173,21 +172,41 @@ export default function BookPreview() {
 
   function handleTouchStart(event: TouchEvent<HTMLDivElement>) {
     const touch = event.changedTouches[0]
-    setTouchStart({ x: touch.clientX, y: touch.clientY })
+    didSwipeRef.current = false
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY }
   }
 
   function handleTouchEnd(event: TouchEvent<HTMLDivElement>) {
     const touch = event.changedTouches[0]
+    const touchStart = touchStartRef.current
 
     if (!touchStart) return
 
-    const horizontalDistance = touch.clientX - touchStart.x
-    const verticalDistance = touch.clientY - touchStart.y
-    setTouchStart(null)
+    touchStartRef.current = null
+    const swipeDirection = getPreviewSwipeDirection(touchStart, { x: touch.clientX, y: touch.clientY })
 
-    if (Math.abs(horizontalDistance) < 50 || Math.abs(horizontalDistance) <= Math.abs(verticalDistance)) return
+    if (swipeDirection === null) return
 
-    navigatePreview(horizontalDistance < 0 ? 1 : -1)
+    didSwipeRef.current = true
+    navigatePreview(swipeDirection)
+  }
+
+  function shouldSuppressPreviewPageClick() {
+    const clickGuard = consumePreviewClickGuard(didSwipeRef.current)
+    didSwipeRef.current = clickGuard.didSwipe
+    return clickGuard.shouldSuppressClick
+  }
+
+  function handleOpenPreviewClick() {
+    if (shouldSuppressPreviewPageClick()) return
+
+    openPreview(activeIndex)
+  }
+
+  function handleDialogPreviewClick() {
+    if (shouldSuppressPreviewPageClick()) return
+
+    navigatePreview(1)
   }
 
   return (
@@ -196,7 +215,7 @@ export default function BookPreview() {
         <button
           type="button"
           className="field-guide-preview-page"
-          onClick={() => openPreview(activeIndex)}
+          onClick={handleOpenPreviewClick}
           aria-label={`Open page ${activePage.page}, ${activePage.title}, in an enlarged preview`}
         >
           <Image src={activePage.src} alt={activePage.alt} width={980} height={1400} sizes="(max-width: 680px) 100vw, 460px" />
@@ -242,7 +261,7 @@ export default function BookPreview() {
             <button ref={closeButtonRef} type="button" className="field-guide-preview-close" onClick={closePreview} aria-label="Close enlarged preview">
               <X aria-hidden="true" size={20} />
             </button>
-            <button type="button" className="field-guide-preview-dialog-page" onClick={() => navigatePreview(1)} aria-label="Show next preview page">
+            <button type="button" className="field-guide-preview-dialog-page" onClick={handleDialogPreviewClick} aria-label="Show next preview page">
               <Image src={activePage.src} alt={activePage.alt} width={980} height={1400} sizes="(max-width: 680px) 100vw, 70vw" />
             </button>
             <div className="field-guide-preview-controls">
