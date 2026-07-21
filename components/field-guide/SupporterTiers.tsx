@@ -14,7 +14,8 @@ export default function SupporterTiers() {
     const savedCurrency = window.sessionStorage.getItem(currencyStorageKey)
 
     if (savedCurrency === 'usd' || savedCurrency === 'myr') {
-      setCurrency(savedCurrency)
+      const restoreCurrency = window.setTimeout(() => setCurrency(savedCurrency), 0)
+      return () => window.clearTimeout(restoreCurrency)
     }
   }, [])
 
