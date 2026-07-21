@@ -136,6 +136,16 @@
   transform: translateY(-2px);
 }
 
+.field-guide-button:disabled,
+.field-guide-currency-placeholder button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.field-guide-button:disabled:hover {
+  transform: none;
+}
+
 .field-guide-button:focus-visible,
 .field-guide-text-link:focus-visible,
 .field-guide-currency-placeholder button:focus-visible,

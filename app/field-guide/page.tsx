@@ -45,7 +45,6 @@ const productSchema = {
       name: 'Field Guide Supporter (USD)',
       price: getSupporterOffer('field-guide', 'usd').amount / 100,
       priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
       url: canonicalUrl,
     },
     {
@@ -53,7 +52,6 @@ const productSchema = {
       name: 'Field Guide Supporter (MYR)',
       price: getSupporterOffer('field-guide', 'myr').amount / 100,
       priceCurrency: 'MYR',
-      availability: 'https://schema.org/InStock',
       url: canonicalUrl,
     },
     {
@@ -61,7 +59,6 @@ const productSchema = {
       name: 'Founding Supporter (USD)',
       price: getSupporterOffer('founding', 'usd').amount / 100,
       priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
       url: canonicalUrl,
     },
     {
@@ -69,7 +66,6 @@ const productSchema = {
       name: 'Founding Supporter (MYR)',
       price: getSupporterOffer('founding', 'myr').amount / 100,
       priceCurrency: 'MYR',
-      availability: 'https://schema.org/InStock',
       url: canonicalUrl,
     },
   ],

@@ -16,4 +16,13 @@ test('publishes truthful metadata without ratings', () => {
   assert.match(page, /https:\/\/www\.fourtype\.com\/field-guide/)
   assert.match(page, /Product/)
   assert.doesNotMatch(page, /aggregateRating|reviewRating/)
+  assert.doesNotMatch(page, /InStock/)
+})
+
+test('keeps unavailable supporter controls disabled until checkout exists', () => {
+  assert.match(campaign, /<button type="button" disabled aria-disabled="true">USD<\/button>/)
+  assert.match(campaign, /<button type="button" disabled aria-disabled="true">MYR<\/button>/)
+  assert.match(campaign, /<button(?=[^>]*disabled)(?=[^>]*aria-disabled="true")(?=[^>]*field-guide-button-primary)[^>]*>Support and receive the guide/)
+  assert.match(campaign, /<button(?=[^>]*disabled)(?=[^>]*aria-disabled="true")(?=[^>]*field-guide-button-secondary)[^>]*>Become a Founding Supporter/)
+  assert.match(campaign, /Checkout is being prepared\./)
 })

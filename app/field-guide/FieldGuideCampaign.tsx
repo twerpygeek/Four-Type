@@ -283,9 +283,9 @@ export default function FieldGuideCampaign() {
 
             <div className="field-guide-currency-placeholder" aria-label="Currency selection placeholder">
               <span>Currency</span>
-              <button type="button" aria-pressed="true">USD</button>
-              <button type="button" aria-pressed="false">MYR</button>
-              <small>Currency selection and checkout are connected in the next campaign update.</small>
+              <button type="button" disabled aria-disabled="true">USD</button>
+              <button type="button" disabled aria-disabled="true">MYR</button>
+              <small id="supporter-controls-status">Checkout is being prepared. Currency selection will be available when it opens.</small>
             </div>
 
             <div className="field-guide-tier-grid">
@@ -299,7 +299,7 @@ export default function FieldGuideCampaign() {
                   <li>Immediate secure access after verified payment</li>
                   <li>Personal-use license</li>
                 </ul>
-                <button type="button" className="field-guide-button field-guide-button-primary">Support and receive the guide <ArrowRight aria-hidden="true" size={17} /></button>
+                <button type="button" disabled aria-disabled="true" aria-describedby="supporter-controls-status" className="field-guide-button field-guide-button-primary">Support and receive the guide <ArrowRight aria-hidden="true" size={17} /></button>
               </article>
               <article className="field-guide-tier">
                 <p className="field-guide-tier-kicker">Founding Supporter</p>
@@ -312,7 +312,7 @@ export default function FieldGuideCampaign() {
                   <li>Future revisions of Edition 1</li>
                   <li>Personal-use license</li>
                 </ul>
-                <button type="button" className="field-guide-button field-guide-button-secondary">Become a Founding Supporter <ArrowRight aria-hidden="true" size={17} /></button>
+                <button type="button" disabled aria-disabled="true" aria-describedby="supporter-controls-status" className="field-guide-button field-guide-button-secondary">Become a Founding Supporter <ArrowRight aria-hidden="true" size={17} /></button>
                 <p className="field-guide-tier-fine">Edition 1 revisions are revised files within this edition, not every future book or a future edition.</p>
               </article>
             </div>
