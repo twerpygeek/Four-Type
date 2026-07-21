@@ -27,51 +27,13 @@ const policyFallbackCopy: Record<FieldGuidePolicyKey, string> = {
 }
 
 const CONTROL_OR_BACKSLASH = /[\\\u0000-\u001F\u007F]/
-const SAFE_FRAGMENT = /^[A-Za-z0-9._~-]+$/
-const UNSAFE_ENCODED_PATH_CHARACTER = /%(?:5c|[01][0-9a-f]|7f)/i
-
-function hasUnsafePathCharacters(pathname: string) {
-  for (const component of pathname.split('/')) {
-    let candidate = component
-
-    for (let pass = 0; pass < 3; pass += 1) {
-      if (CONTROL_OR_BACKSLASH.test(candidate) || UNSAFE_ENCODED_PATH_CHARACTER.test(candidate)) return true
-
-      let decoded: string
-      try {
-        decoded = decodeURIComponent(candidate)
-      } catch {
-        return true
-      }
-
-      if (decoded === candidate) break
-      candidate = decoded
-    }
-
-    if (CONTROL_OR_BACKSLASH.test(candidate) || UNSAFE_ENCODED_PATH_CHARACTER.test(candidate)) return true
-  }
-
-  return false
-}
-
-function hasSafeFragment(value: string, url: URL) {
-  const fragmentStart = value.indexOf('#')
-  if (fragmentStart === -1) return true
-
-  const rawFragment = value.slice(fragmentStart + 1)
-  if (rawFragment.length === 0) return true
-
-  try {
-    return SAFE_FRAGMENT.test(decodeURIComponent(url.hash.slice(1)))
-  } catch {
-    return false
-  }
-}
+const SAFE_POLICY_PATH = /^\/[A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*\/?$/
 
 function normalizePolicyUrl(value: unknown) {
   if (typeof value !== 'string' || value.length === 0 || value !== value.trim()) return null
   if (CONTROL_OR_BACKSLASH.test(value)) return null
   if (value.startsWith('//')) return null
+  if (value.includes('%') || value.includes('?') || value.includes('#')) return null
 
   const isRootRelative = value.startsWith('/')
   if (!isRootRelative && !/^https:\/\//i.test(value)) return null
@@ -97,7 +59,7 @@ function normalizePolicyUrl(value: unknown) {
     if (authorityMatch[2] && authorityMatch[2] !== '443') return null
   }
 
-  if (url.port || hasUnsafePathCharacters(url.pathname) || !hasSafeFragment(value, url)) return null
+  if (url.port || url.search || url.hash || !SAFE_POLICY_PATH.test(url.pathname)) return null
   return value
 }
 

@@ -22,8 +22,9 @@ The refund fallback explicitly makes no refund promise. Configure only approved 
 
 ## Review Follow-up
 
-- Path validation now parses the URL and safely checks pathname components across decode passes, rejecting mixed-case percent encodings and double-encoded backslash, C0-control and DEL forms without throwing on malformed encodings.
-- Absolute-host validation now excludes the apex domain and non-default ports while retaining root-relative paths.
+- Policy links now reject every query, fragment and percent encoding, so encoded controls, backslashes and arbitrarily nested encodings cannot bypass validation.
+- Both root-relative and approved absolute URLs use the same conservative ASCII pathname allowlist: letter/digit/hyphen/underscore segments with an optional trailing slash.
+- Absolute-host validation excludes the apex domain and non-default ports while retaining the exact `www.fourtype.com` origin.
 
 ## Verification
 

@@ -15,14 +15,14 @@ test('accepts root-relative and first-party HTTPS policy URLs', () => {
   const policy = getFieldGuidePolicies({
     FOURTYPE_REFUND_POLICY_URL: '/refunds',
     FOURTYPE_PRIVACY_URL: 'https://www.fourtype.com/privacy',
-    FOURTYPE_TERMS_URL: 'https://www.fourtype.com/terms#section',
-    FOURTYPE_CONTACT_URL: 'https://www.fourtype.com/contact?topic=field-guide',
+    FOURTYPE_TERMS_URL: '/legal/privacy-policy',
+    FOURTYPE_CONTACT_URL: 'https://www.fourtype.com/legal/privacy_policy/',
   })
 
   assert.equal(policy.refund.href, '/refunds')
   assert.equal(policy.privacy.href, 'https://www.fourtype.com/privacy')
-  assert.equal(policy.terms.href, 'https://www.fourtype.com/terms#section')
-  assert.equal(policy.contact.href, 'https://www.fourtype.com/contact?topic=field-guide')
+  assert.equal(policy.terms.href, '/legal/privacy-policy')
+  assert.equal(policy.contact.href, 'https://www.fourtype.com/legal/privacy_policy/')
   assert.deepEqual(policy.missing, [])
 })
 
@@ -48,19 +48,17 @@ test('rejects unsafe or non-first-party policy URL values', () => {
     'https://www.fourtype.com:8443/refunds',
     '/refunds\\next',
     '/refunds\u0000',
+    '/refunds?next=%5c',
+    '/refunds?next=%0A',
+    '/refunds#section',
     '/refunds%5cnext',
-    '/refunds%5Cnext',
-    '/refunds%0A',
-    '/refunds%0a',
-    '/refunds%00',
-    '/refunds%7F',
     '/refunds%255cnext',
-    '/refunds%255Cnext',
-    '/refunds%250A',
-    '/refunds%2500',
-    '/refunds%257F',
-    'https://www.fourtype.com/refunds#javascript:alert(1)',
-    'https://www.fourtype.com/refunds#section%0A',
+    '/refunds%2525250A',
+    '/legal/privacy.policy',
+    '/legal/privacy policy',
+    '/legal//privacy-policy',
+    'https://www.fourtype.com/refunds?next=%255c',
+    'https://www.fourtype.com/refunds#section',
   ]
 
   for (const value of invalidUrls) {
