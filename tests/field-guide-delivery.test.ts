@@ -43,6 +43,7 @@ test('durably claims, retries, and records one supporter email receipt', async (
   assert.equal(retry.status, 'claimed')
   if (retry.status !== 'claimed') throw new Error('Expected a retry claim')
   assert.equal(retry.idempotencyKey, first.idempotencyKey)
+  assert.equal(retry.accessTokenExpiresAt, first.accessTokenExpiresAt)
 
   await completeEmailDelivery('cs_test_paid', retry.claimId, 'email_test_123', store, 1_003)
   assert.deepEqual(await claimEmailDelivery('cs_test_paid', store, 1_004), { status: 'sent' })
@@ -57,4 +58,18 @@ test('reclaims a stale in-progress delivery without changing its idempotency key
   assert.equal(retry.status, 'claimed')
   if (retry.status !== 'claimed') throw new Error('Expected a stale-claim retry')
   assert.equal(retry.idempotencyKey, first.idempotencyKey)
+  assert.equal(retry.accessTokenExpiresAt, first.accessTokenExpiresAt)
+})
+
+test('starts a fresh delivery attempt after an earlier access token expires', async () => {
+  const store = new MemoryBlobStore()
+  const first = await claimEmailDelivery('cs_test_paid', store, 1_000)
+  if (first.status !== 'claimed') throw new Error('Expected an email delivery claim')
+
+  await releaseEmailDeliveryClaim('cs_test_paid', first.claimId, store)
+  const retry = await claimEmailDelivery('cs_test_paid', store, first.accessTokenExpiresAt + 1)
+  assert.equal(retry.status, 'claimed')
+  if (retry.status !== 'claimed') throw new Error('Expected a fresh delivery attempt')
+  assert.notEqual(retry.idempotencyKey, first.idempotencyKey)
+  assert.equal(retry.accessTokenExpiresAt, first.accessTokenExpiresAt + 1 + 30 * 24 * 60 * 60 * 1_000)
 })

@@ -2,12 +2,15 @@ import { createHash, randomUUID } from 'node:crypto'
 import type { PrivateBlobStore } from './blob'
 
 const CLAIM_TTL_MS = 5 * 60 * 1_000
+const ACCESS_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1_000
 const MAX_WRITE_ATTEMPTS = 3
 
 type DeliveryRecord = {
   version: 1
   state: 'pending' | 'sending' | 'sent'
   idempotencyKey: string
+  attempt?: number
+  accessTokenExpiresAt?: number
   claimId?: string
   claimedAt?: number
   sentAt?: number
@@ -15,16 +18,20 @@ type DeliveryRecord = {
 }
 
 export type EmailDeliveryClaim =
-  | { status: 'claimed'; claimId: string; idempotencyKey: string }
+  | { status: 'claimed'; claimId: string; idempotencyKey: string; accessTokenExpiresAt: number }
   | { status: 'in-progress' }
   | { status: 'sent' }
 
-function deliveryPath(sessionId: string) {
-  return `field-guide/entitlements/email-delivery/${createHash('sha256').update(sessionId).digest('hex')}.json`
+function deliveryDigest(sessionId: string) {
+  return createHash('sha256').update(sessionId).digest('hex')
 }
 
-function deliveryIdempotencyKey(sessionId: string) {
-  return `field-guide-access/${createHash('sha256').update(sessionId).digest('hex')}`
+function deliveryPath(sessionId: string) {
+  return `field-guide/entitlements/email-delivery/${deliveryDigest(sessionId)}.json`
+}
+
+function deliveryIdempotencyKey(sessionId: string, attempt: number) {
+  return `field-guide-access/${deliveryDigest(sessionId)}/${attempt}`
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -38,6 +45,9 @@ function isDeliveryRecord(value: unknown): value is DeliveryRecord {
     && typeof value.idempotencyKey === 'string'
     && value.idempotencyKey.length > 0
     && value.idempotencyKey.length <= 256
+    && (value.attempt === undefined || (typeof value.attempt === 'number' && Number.isSafeInteger(value.attempt) && value.attempt > 0))
+    && (value.accessTokenExpiresAt === undefined
+      || (typeof value.accessTokenExpiresAt === 'number' && Number.isSafeInteger(value.accessTokenExpiresAt)))
     && (value.claimId === undefined || typeof value.claimId === 'string')
     && (value.claimedAt === undefined || Number.isSafeInteger(value.claimedAt))
     && (value.sentAt === undefined || Number.isSafeInteger(value.sentAt))
@@ -82,6 +92,7 @@ export async function claimEmailDelivery(
   now = Date.now(),
 ): Promise<EmailDeliveryClaim> {
   if (!Number.isSafeInteger(now)) throw new Error('Email delivery time is invalid')
+  if (!Number.isSafeInteger(now + ACCESS_TOKEN_TTL_MS)) throw new Error('Email delivery time is invalid')
 
   for (let attempt = 0; attempt < MAX_WRITE_ATTEMPTS; attempt += 1) {
     const current = await readRecord(sessionId, store)
@@ -94,17 +105,28 @@ export async function claimEmailDelivery(
       return { status: 'in-progress' }
     }
 
+    const existingAttempt = current?.value.attempt
+    const existingExpiry = current?.value.accessTokenExpiresAt
+    const reuseAttempt = typeof existingAttempt === 'number'
+      && typeof existingExpiry === 'number'
+      && existingExpiry > now
+    const deliveryAttempt = reuseAttempt ? existingAttempt : (existingAttempt ?? 0) + 1
+    const accessTokenExpiresAt = reuseAttempt ? existingExpiry : now + ACCESS_TOKEN_TTL_MS
     const claimId = randomUUID()
-    const idempotencyKey = current?.value.idempotencyKey ?? deliveryIdempotencyKey(sessionId)
+    const idempotencyKey = reuseAttempt
+      ? current!.value.idempotencyKey
+      : deliveryIdempotencyKey(sessionId, deliveryAttempt)
     try {
       await writeRecord(sessionId, store, {
         version: 1,
         state: 'sending',
         idempotencyKey,
+        attempt: deliveryAttempt,
+        accessTokenExpiresAt,
         claimId,
         claimedAt: now,
       }, current?.etag)
-      return { status: 'claimed', claimId, idempotencyKey }
+      return { status: 'claimed', claimId, idempotencyKey, accessTokenExpiresAt }
     } catch (error) {
       if (!isConcurrentWrite(error)) throw error
     }
@@ -124,6 +146,10 @@ export async function releaseEmailDeliveryClaim(
     version: 1,
     state: 'pending',
     idempotencyKey: current.value.idempotencyKey,
+    ...(current.value.attempt === undefined ? {} : { attempt: current.value.attempt }),
+    ...(current.value.accessTokenExpiresAt === undefined
+      ? {}
+      : { accessTokenExpiresAt: current.value.accessTokenExpiresAt }),
   }, current.etag)
 }
 
@@ -145,6 +171,10 @@ export async function completeEmailDelivery(
     version: 1,
     state: 'sent',
     idempotencyKey: current.value.idempotencyKey,
+    ...(current.value.attempt === undefined ? {} : { attempt: current.value.attempt }),
+    ...(current.value.accessTokenExpiresAt === undefined
+      ? {}
+      : { accessTokenExpiresAt: current.value.accessTokenExpiresAt }),
     sentAt: now,
     providerMessageId,
   }, current.etag)

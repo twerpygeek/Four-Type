@@ -3,7 +3,6 @@ import { parseSupporterSelection, type CurrencyKey, type SupporterTierKey } from
 import type { FieldGuideEntitlement } from './entitlements'
 import { FIELD_GUIDE_RELEASE } from './release'
 
-const ACCESS_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1_000
 const MAX_SESSION_ID_LENGTH = 256
 
 export type FieldGuideCheckoutSession = {
@@ -26,7 +25,7 @@ export type FieldGuideFulfillmentDependencies = {
   readEntitlement: (sessionId: string) => Promise<FieldGuideEntitlement | null>
   writeEntitlement: (entitlement: FieldGuideEntitlement) => Promise<'fulfilled' | 'already-fulfilled'>
   claimEmailDelivery: (sessionId: string) => Promise<
-    | { status: 'claimed'; claimId: string; idempotencyKey: string }
+    | { status: 'claimed'; claimId: string; idempotencyKey: string; accessTokenExpiresAt: number }
     | { status: 'in-progress' }
     | { status: 'sent' }
   >
@@ -131,12 +130,6 @@ function createEntitlement(
   }
 }
 
-function accessTokenExpiry(entitlement: FieldGuideEntitlement) {
-  const fulfilledAt = Date.parse(entitlement.fulfilledAt)
-  if (!Number.isSafeInteger(fulfilledAt)) throw new Error('Entitlement fulfillment time is invalid')
-  return fulfilledAt + ACCESS_TOKEN_TTL_MS
-}
-
 export async function fulfillFieldGuideCheckout(
   sessionId: string,
   dependencies: FieldGuideFulfillmentDependencies,
@@ -170,14 +163,16 @@ export async function fulfillFieldGuideCheckout(
     throw new Error('Field Guide access email delivery is in progress')
   }
 
-  const accessToken = dependencies.signAccessToken({
-    sessionId,
-    expiresAt: accessTokenExpiry(entitlement),
-  })
   try {
+    // A claimed delivery attempt persists its expiry, keeping retried provider payloads identical.
+    const accessToken = dependencies.signAccessToken({
+      sessionId,
+      expiresAt: deliveryClaim.accessTokenExpiresAt,
+    })
+    const accessUrl = dependencies.createAccessUrl(accessToken)
     const delivery = await dependencies.sendSupporterAccessEmail(
       entitlement,
-      dependencies.createAccessUrl(accessToken),
+      accessUrl,
       deliveryClaim.idempotencyKey,
     )
     if (!delivery.sent || delivery.skipped || !delivery.providerMessageId) {

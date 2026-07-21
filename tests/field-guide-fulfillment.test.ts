@@ -18,6 +18,8 @@ const configuredPriceIds = {
   'founding:myr': 'price_test_founding_myr',
 } as const
 
+const ACCESS_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1_000
+
 type SessionOverrides = Partial<{
   id: string
   payment_status: 'paid' | 'unpaid'
@@ -30,6 +32,7 @@ type SessionOverrides = Partial<{
 }>
 
 function fakeDependencies(overrides: SessionOverrides = {}) {
+  const now = 1_784_673_600_000
   const entitlements = new Map<string, FieldGuideEntitlement>()
   const emailCalls: Array<{ entitlement: FieldGuideEntitlement; accessUrl: string }> = []
   const writeCalls: FieldGuideEntitlement[] = []
@@ -62,13 +65,21 @@ function fakeDependencies(overrides: SessionOverrides = {}) {
       entitlements.set(entitlement.sessionId, entitlement)
       return 'fulfilled'
     },
-    signAccessToken: ({ sessionId, expiresAt }) => `access-${sessionId}-${expiresAt}`,
+    signAccessToken: ({ sessionId, expiresAt }) => {
+      if (expiresAt <= now || expiresAt - now > ACCESS_TOKEN_TTL_MS) throw new Error('Token expiry is invalid')
+      return `access-${sessionId}-${expiresAt}`
+    },
     createAccessUrl: (token) => `https://www.fourtype.com/field-guide/access?token=${encodeURIComponent(token)}`,
     claimEmailDelivery: async () => {
       if (deliveryState === 'sent') return { status: 'sent' as const }
       if (deliveryState === 'sending') return { status: 'in-progress' as const }
       deliveryState = 'sending'
-      return { status: 'claimed' as const, claimId: 'claim-1', idempotencyKey: 'field-guide/cs-hash' }
+      return {
+        status: 'claimed' as const,
+        claimId: 'claim-1',
+        idempotencyKey: 'field-guide/cs-hash',
+        accessTokenExpiresAt: now + ACCESS_TOKEN_TTL_MS,
+      }
     },
     releaseEmailDeliveryClaim: async () => {
       deliveryState = 'pending'
@@ -80,10 +91,10 @@ function fakeDependencies(overrides: SessionOverrides = {}) {
       emailCalls.push({ entitlement, accessUrl })
       return { sent: true, skipped: false, providerMessageId: 'email_test_123' }
     },
-    now: () => 1_784_673_600_000,
+    now: () => now,
   }
 
-  return { dependencies, emailCalls, writeCalls, session }
+  return { dependencies, emailCalls, writeCalls, session, entitlements, now }
 }
 
 class FailOnceEmailIndexStore implements PrivateBlobStore {
@@ -138,9 +149,11 @@ test('never fulfills an unpaid Session', async () => {
 test('retries a failed access email with the same provider idempotency key', async () => {
   const fake = fakeDependencies()
   const idempotencyKeys: string[] = []
+  const accessUrls: string[] = []
   let attempts = 0
-  fake.dependencies.sendSupporterAccessEmail = async (_entitlement, _accessUrl, idempotencyKey) => {
+  fake.dependencies.sendSupporterAccessEmail = async (_entitlement, accessUrl, idempotencyKey) => {
     idempotencyKeys.push(idempotencyKey)
+    accessUrls.push(accessUrl)
     attempts += 1
     if (attempts === 1) throw new Error('Email transport unavailable')
     return { sent: true, skipped: false, providerMessageId: 'email_test_123' }
@@ -150,6 +163,46 @@ test('retries a failed access email with the same provider idempotency key', asy
   assert.deepEqual(await fulfillFieldGuideCheckout('cs_test_paid', fake.dependencies), { status: 'already-fulfilled' })
   assert.equal(attempts, 2)
   assert.equal(idempotencyKeys[0], idempotencyKeys[1])
+  assert.equal(accessUrls[0], accessUrls[1])
+})
+
+test('sends an entitlement older than 30 days a fresh valid access token', async () => {
+  const fake = fakeDependencies()
+  const oldDate = new Date(fake.now - 31 * 24 * 60 * 60 * 1_000).toISOString()
+  fake.entitlements.set('cs_test_paid', {
+    version: 1,
+    sessionId: 'cs_test_paid',
+    tier: 'founding',
+    currency: 'usd',
+    releaseId: FIELD_GUIDE_RELEASE.id,
+    customerEmail: 'supporter@example.com',
+    paidAt: oldDate,
+    fulfilledAt: oldDate,
+  })
+
+  assert.deepEqual(await fulfillFieldGuideCheckout('cs_test_paid', fake.dependencies), { status: 'already-fulfilled' })
+  assert.match(fake.emailCalls[0].accessUrl, new RegExp(`access-cs_test_paid-${fake.now + ACCESS_TOKEN_TTL_MS}`))
+})
+
+test('releases the delivery claim when token signing or access URL construction fails', async () => {
+  for (const failure of ['sign', 'url'] as const) {
+    const fake = fakeDependencies()
+    if (failure === 'sign') {
+      fake.dependencies.signAccessToken = () => {
+        throw new Error('Token signing failed')
+      }
+    } else {
+      fake.dependencies.createAccessUrl = () => {
+        throw new Error('Access URL failed')
+      }
+    }
+
+    await assert.rejects(() => fulfillFieldGuideCheckout('cs_test_paid', fake.dependencies), /failed/)
+    fake.dependencies.signAccessToken = ({ sessionId, expiresAt }) => `access-${sessionId}-${expiresAt}`
+    fake.dependencies.createAccessUrl = (token) => `https://www.fourtype.com/field-guide/access?token=${token}`
+    assert.deepEqual(await fulfillFieldGuideCheckout('cs_test_paid', fake.dependencies), { status: 'already-fulfilled' })
+    assert.equal(fake.emailCalls.length, 1)
+  }
 })
 
 test('does not silently fulfill when email delivery is skipped', async () => {
