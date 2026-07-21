@@ -1,36 +1,42 @@
-# Task 10 Report: Field Guide Browser, Responsive, and Asset Verification
+# Task 10 Report: Field Guide Verification
 
 ## Scope
 
-Added repeatable Chromium checks, a public/client-source/bundle asset audit, and a compatible ESLint 9 flat configuration for the Field Guide campaign and its QA surface. The lint script checks the maintained Field Guide, analytics, audit, runner, and test files with Next/React rules enabled; no lint rules were disabled.
+This pass strengthens the Field Guide campaign's browser coverage, production asset audit, and project-wide ESLint command. It does not deploy or make Stripe, Blob, or Resend calls.
 
-## RED / GREEN Evidence
+## Test-First Evidence
 
-- RED: `tests/field-guide-audit.test.ts` failed while `scripts/field-guide/audit_public_assets.mjs` did not exist.
-- GREEN: the audit test passes for both a rejected complete reward/token-shaped fixture and an allowed server source map that names `BLOB_READ_WRITE_TOKEN` without assigning a value.
-- RED: the first Playwright run could not launch because Chromium revision 1228 was not installed.
-- GREEN: installed Playwright Chromium revision 1228 and the final browser suite passed 5/5 checks.
+- Added adversarial audit fixtures before implementation: missing/empty final build, renamed approved artifact identified by release-manifest SHA-256, encoded content, array-join/concatenated/template reconstructed strings, and flexible Blob assignment syntax.
+- The new audit tests initially failed until final-mode root checks, hash matching, text decoding/reconstruction, and redacted findings were implemented.
+- Added direct 1440 hash/programmatic-scroll clearance checks for the reported fixed-nav overlap and applied campaign scroll margins. Browser checks also caught an unrelated external Vercel analytics request in the test server; a Playwright-only analytics mount guard resolved that failure.
+
+## Asset Audit
+
+- Final mode requires both `public/` and a nonempty `.next/` containing `BUILD_ID`; missing or empty build output fails.
+- Scans all files below `public/`, `.next/static`, and `.next/server`, plus every production source file from the repository root; only generated, vendor, private, test, public/build, manifest, and self-scanner paths are excluded.
+- Uses only `data/field-guide-release.json` hashes and sizes to identify complete approved artifacts under arbitrary names. It does not read `private/`.
+- Detects complete reward filenames/content, generic Stripe/webhook patterns, flexible Blob assignments, plausible Base64-decoded strings, and actual array-join, concatenation, or literal-template reconstruction.
+- Excludes only generated/vendor/private/test artifacts and the scanner itself. Findings report a redacted relative location plus rule name, never a match value or artifact filename.
 
 ## Browser Verification
 
-- Viewports: responsive containment at 320, 768, 1280, and 1536 pixels wide.
-- Screenshots: full-page outputs at 320, 768, and 1440 pixels in `test-results/field-guide-responsive-Fie-79db3-mobile-campaign-screenshots-chromium/`.
-- Keyboard and focus: book preview opens with Enter, dialog arrows navigate, Tab/Shift+Tab remain trapped, Escape closes, and focus returns to the book.
-- Controls: compass roving focus and selection, session-persisted MYR tier selection, preview controls, and the Task 4 swipe-then-arrow regression are covered.
-- Accessibility: one H1, logical heading progression, named controls, meaningful primary preview image alt text, decorative thumbnail button labels, visible focus, and reduced-motion transform removal are checked.
-- Privacy and network: browser tests reject console errors, hydration warnings, failed requests, HTTP failures, and analytics request bodies containing query credentials.
-- Visual inspection: the 320, 768, and 1440 screenshots show the book fully framed, readable hero/tier copy, sharp preview images, and no overlap or horizontal overflow. No campaign CSS change was needed.
+- Chromium uses port `3107`, `reuseExistingServer: false`, and `NEXT_DIST_DIR=.next-playwright`; the final production `.next` is not reused. The server was confirmed stopped after the suite.
+- Responsive checks passed at 320, 768, 1280, and 1536 widths. The interactive book is scrolled into view and asserted fully within the viewport.
+- Full-page screenshots were captured and visually inspected at 320, 768, and 1440 in `test-results/field-guide-responsive-Fie-79db3-mobile-campaign-screenshots-chromium/`. No campaign clipping, overlap, or horizontal overflow was found.
+- Both supporter tiers are required to exist, be visible, have nonzero bounds, contain their copy/actions, and not overlap.
+- Desktop and mobile checks cover keyboard preview opening, Arrow navigation, focus trapping/return, Escape, compass roving focus, currency selection, reduced motion, visible high-contrast focus, direct hash/programmatic preview scroll clearance below the fixed nav, and the Task 4 swipe-then-arrow regression.
+- Tests assert one H1, heading progression, image alt text, named controls, no console errors/hydration warnings, no failed/HTTP-error requests, and analytics bodies that omit query credentials.
 
-## Verification Results
+## Final Results
 
-- `pnpm lint`: passed with zero diagnostics for the Task 10 campaign and QA scope.
+- `pnpm lint` (`eslint .`): passed with 0 errors and 77 warnings. Warnings remain visible rather than excluding application code: `react/no-unescaped-entities` 58, `react-hooks/set-state-in-effect` 9, `react-hooks/preserve-manual-memoization` 4, `@next/next/no-img-element` 3, `jsx-a11y/alt-text` 2, and `react-hooks/purity` 1. These legacy rules are deliberately warnings in the flat config; no project-wide zero-warning claim is made.
 - `pnpm exec tsc --noEmit`: passed.
-- `pnpm test`: passed, 119 tests.
-- `pnpm build`: passed after moving aside stale `.next` output from the browser dev server; no application build defect was found.
-- `pnpm exec playwright test tests/field-guide-accessibility.spec.ts tests/field-guide-responsive.spec.ts`: passed, 5 tests.
-- `node scripts/field-guide/audit_public_assets.mjs`: passed against fresh production output and the final browser output.
-- `git diff --check`: passed.
+- `pnpm test`: passed, 122 tests.
+- `pnpm build`: passed from a clean `.next`. Next reported one existing non-failing notice that Edge runtime disables static generation for that route.
+- `pnpm exec playwright test tests/field-guide-accessibility.spec.ts tests/field-guide-responsive.spec.ts`: passed, 6 tests.
+- `pnpm audit:field-guide-assets`: passed against the clean production `.next` output.
+- `git diff --check`: passed before commit.
 
 ## Safety
 
-No Stripe, Blob, Resend, deployment, or publishing operation was invoked. The audit reports only filenames and rule labels, never matched token values.
+No external Stripe, Blob, Resend, deployment, or publishing operation was invoked.

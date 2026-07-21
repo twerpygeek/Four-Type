@@ -10,12 +10,23 @@ async function expectCampaignFitsViewport(page: Page) {
   await expect(page.getByRole('button', { name: /show previous preview page/i }).first()).toBeVisible()
   await expect(page.getByRole('button', { name: /show next preview page/i }).first()).toBeVisible()
 
-  const bookBox = await page.locator('.interactive-book').boundingBox()
+  const book = page.locator('.interactive-book')
+  await book.evaluate((element) => element.scrollIntoView({ block: 'center', inline: 'center' }))
+  const bookBox = await book.boundingBox()
   expect(bookBox?.width).toBeGreaterThan(0)
   expect(bookBox?.height).toBeGreaterThan(0)
+  expect(bookBox?.x).toBeGreaterThanOrEqual(0)
+  expect((bookBox?.x ?? 0) + (bookBox?.width ?? 0)).toBeLessThanOrEqual(await page.evaluate(() => window.innerWidth))
+  expect(bookBox?.y).toBeGreaterThanOrEqual(0)
+  expect((bookBox?.y ?? 0) + (bookBox?.height ?? 0)).toBeLessThanOrEqual(await page.evaluate(() => window.innerHeight))
 
-  expect(await page.locator('.field-guide-tier').evaluateAll((tiers) => tiers.every((tier) => {
+  const tiers = page.locator('.field-guide-tier')
+  await expect(tiers).toHaveCount(2)
+  for (const tier of await tiers.all()) await expect(tier).toBeVisible()
+
+  expect(await tiers.evaluateAll((tierElements) => tierElements.every((tier) => {
     const tierBox = tier.getBoundingClientRect()
+    if (tierBox.width <= 0 || tierBox.height <= 0) return false
     return Array.from(tier.querySelectorAll<HTMLElement>('p, li, button')).every((element) => {
       const box = element.getBoundingClientRect()
       return box.left >= tierBox.left - 1
@@ -25,8 +36,8 @@ async function expectCampaignFitsViewport(page: Page) {
     })
   }))).toBe(true)
 
-  const tiersOverlap = await page.locator('.field-guide-tier').evaluateAll((tiers) => {
-    const boxes = tiers.map((tier) => tier.getBoundingClientRect())
+  const tiersOverlap = await tiers.evaluateAll((tierElements) => {
+    const boxes = tierElements.map((tier) => tier.getBoundingClientRect())
     return boxes.some((box, index) => boxes.slice(index + 1).some((other) =>
       box.left < other.right && box.right > other.left && box.top < other.bottom && box.bottom > other.top,
     ))
@@ -72,14 +83,29 @@ test('Field Guide mobile preview supports keyboard navigation and arrows after a
   await expect(page.getByText(/2 of 8/i).last()).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(page.locator('.field-guide-preview-dialog')).toBeHidden()
+  await expect(book).toBeFocused()
 
   await swipePreviewThenUseArrow(page)
+})
+
+test('Field Guide preview navigation and direct hashes clear the fixed navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/field-guide#inside-the-guide')
+
+  const navBottom = await page.locator('nav.fixed').evaluate((nav) => nav.getBoundingClientRect().bottom)
+  await expect(page.getByRole('heading', { name: /a working reference for real rooms/i })).toBeInViewport()
+  expect(await page.getByRole('heading', { name: /a working reference for real rooms/i }).evaluate((heading) => heading.getBoundingClientRect().top)).toBeGreaterThanOrEqual(navBottom)
+
+  await page.locator('.field-guide-preview-wrap').scrollIntoViewIfNeeded()
+  expect(await page.locator('.field-guide-preview-wrap').evaluate((preview) => preview.getBoundingClientRect().top)).toBeGreaterThanOrEqual(navBottom)
 })
 
 test('Field Guide captures desktop, tablet, and mobile campaign screenshots', async ({ page }, testInfo: TestInfo) => {
   for (const width of screenshotWidths) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/field-guide')
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
     await page.locator('.field-guide-preview-wrap').scrollIntoViewIfNeeded()
     await expect(page.locator('.field-guide-preview-thumbnails img[loading="lazy"]')).toHaveCount(8)
     expect(await page.locator('.field-guide-preview-thumbnails img').evaluateAll((images) =>

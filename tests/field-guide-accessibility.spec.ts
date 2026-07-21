@@ -31,6 +31,39 @@ async function expectNoBrowserIssues(issues: BrowserIssue[]) {
   expect(issues).toEqual([])
 }
 
+async function expectVisibleFocus(locator: ReturnType<Page['locator']>) {
+  const focus = await locator.evaluate((element) => {
+    const parseColor = (value: string) => value.match(/\d+(?:\.\d+)?/g)?.slice(0, 3).map(Number) ?? []
+    const luminance = (channels: number[]) => {
+      const normalized = channels.map((channel) => {
+        const value = channel / 255
+        return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
+      })
+      return 0.2126 * normalized[0] + 0.7152 * normalized[1] + 0.0722 * normalized[2]
+    }
+    const contrast = (first: number[], second: number[]) => {
+      const lighter = Math.max(luminance(first), luminance(second))
+      const darker = Math.min(luminance(first), luminance(second))
+      return (lighter + 0.05) / (darker + 0.05)
+    }
+    const style = getComputedStyle(element)
+    const background = getComputedStyle(document.querySelector('.field-guide-page') ?? document.body).backgroundColor
+    const outlineColor = parseColor(style.outlineColor)
+    const backgroundColor = parseColor(background)
+    const hasContrastingOutline = style.outlineStyle !== 'none'
+      && Number.parseFloat(style.outlineWidth) > 0
+      && outlineColor.length === 3
+      && backgroundColor.length === 3
+      && contrast(outlineColor, backgroundColor) >= 3
+    const hasVisibleBorder = Number.parseFloat(style.borderTopWidth) > 0 && style.borderTopColor !== 'rgba(0, 0, 0, 0)'
+    const hasVisibleShadow = style.boxShadow !== 'none' && !/rgba\(0, 0, 0, 0\)/.test(style.boxShadow)
+
+    return { hasContrastingOutline, hasVisibleBorder, hasVisibleShadow }
+  })
+
+  expect(focus.hasContrastingOutline || focus.hasVisibleBorder || focus.hasVisibleShadow).toBe(true)
+}
+
 test('Field Guide keyboard controls preserve focus and analytics omit query credentials', async ({ page }) => {
   const issues = collectBrowserIssues(page)
   const analyticsBodies: string[] = []
@@ -61,9 +94,10 @@ test('Field Guide keyboard controls preserve focus and analytics omit query cred
   }))).toBe(true)
 
   const book = page.getByRole('button', { name: /open the field guide page preview/i })
+  await expect(book).toBeVisible()
   await book.focus()
   await expect(book).toBeFocused()
-  expect(await book.evaluate((element) => getComputedStyle(element).outlineStyle)).toBe('solid')
+  await expectVisibleFocus(book)
   await page.keyboard.press('Enter')
 
   const dialog = page.getByRole('dialog', { name: /enlarged preview/i })
@@ -104,9 +138,19 @@ test('Field Guide respects reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/field-guide')
   const book = page.getByRole('button', { name: /open the field guide page preview/i })
+  await expect(book).toBeVisible()
   await book.hover()
 
   await expect(book).toHaveCSS('transform', 'none')
   expect(await book.evaluate((element) => Number.parseFloat(getComputedStyle(element).transitionDuration))).toBeLessThanOrEqual(0.01)
+  await book.focus()
+  await expectVisibleFocus(book)
+
+  await page.setViewportSize({ width: 320, height: 900 })
+  await page.goto('/field-guide')
+  const mobileBook = page.getByRole('button', { name: /open the field guide page preview/i })
+  await expect(mobileBook).toBeVisible()
+  await mobileBook.focus()
+  await expectVisibleFocus(mobileBook)
   await expectNoBrowserIssues(issues)
 })

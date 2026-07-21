@@ -8,14 +8,14 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: 'list',
   use: {
-    baseURL: 'http://127.0.0.1:3100',
+    baseURL: 'http://127.0.0.1:3107',
     trace: 'on-first-retry',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: 'runtime_root="$(dirname "$(dirname "$(dirname "$(command -v pnpm)")")")"; PATH="$runtime_root/node/bin:$PATH" pnpm dev --port 3100',
-    url: 'http://127.0.0.1:3100/field-guide',
-    reuseExistingServer: !process.env.CI,
+    command: 'runtime_root="$(dirname "$(dirname "$(dirname "$(command -v pnpm)")")")"; PATH="$runtime_root/node/bin:$PATH" FIELD_GUIDE_E2E=1 NEXT_DIST_DIR=.next-playwright pnpm dev --port 3107',
+    url: 'http://127.0.0.1:3107/field-guide',
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 })

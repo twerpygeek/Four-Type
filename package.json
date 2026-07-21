@@ -8,7 +8,7 @@
     "start": "next start",
     "test": "tsx --test tests/**/*.test.ts",
     "test:browser": "playwright test",
-    "lint": "eslint app/field-guide components/field-guide lib/field-guide lib/analytics.ts app/api/events/route.ts tests scripts/field-guide playwright.config.ts eslint.config.mjs",
+    "lint": "eslint .",
     "audit:field-guide-assets": "node scripts/field-guide/audit_public_assets.mjs",
     "generate:ai-seo": "node scripts/generate-ai-seo.mjs"
   },

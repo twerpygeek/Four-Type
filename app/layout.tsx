@@ -179,7 +179,7 @@ export default function RootLayout({
       </head>
       <body className={`${cinzel.variable} ${dmSans.variable} font-sans antialiased`} suppressHydrationWarning>
         {children}
-        <Analytics />
+        {process.env.FIELD_GUIDE_E2E !== '1' && <Analytics />}
       </body>
     </html>
   )
