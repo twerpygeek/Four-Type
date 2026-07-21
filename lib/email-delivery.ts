@@ -13,6 +13,13 @@ function getEmailConfig() {
   return { apiKey, from, replyTo }
 }
 
+export type EmailMessage = {
+  to: string
+  subject: string
+  text: string
+  html: string
+}
+
 export function isProfileEmailConfigured() {
   return getEmailConfig() !== null
 }
@@ -112,14 +119,13 @@ function getProfileEmail(payload: LeadCapturePayload) {
   return { subject, text, html }
 }
 
-export async function sendProfileEmail(payload: LeadCapturePayload) {
+export async function sendEmail(message: EmailMessage, failureLabel = 'Email delivery failed') {
   const config = getEmailConfig()
 
   if (!config) {
     return { sent: false, skipped: true }
   }
 
-  const email = getProfileEmail(payload)
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -128,18 +134,22 @@ export async function sendProfileEmail(payload: LeadCapturePayload) {
     },
     body: JSON.stringify({
       from: config.from,
-      to: payload.email,
+      to: message.to,
       reply_to: config.replyTo,
-      subject: email.subject,
-      text: email.text,
-      html: email.html,
+      subject: message.subject,
+      text: message.text,
+      html: message.html,
     }),
   })
 
   if (!response.ok) {
-    const message = await response.text()
-    throw new Error(`Profile email failed: ${message}`)
+    const responseMessage = await response.text()
+    throw new Error(`${failureLabel}: ${responseMessage}`)
   }
 
   return { sent: true, skipped: false }
+}
+
+export async function sendProfileEmail(payload: LeadCapturePayload) {
+  return sendEmail({ to: payload.email, ...getProfileEmail(payload) }, 'Profile email failed')
 }
