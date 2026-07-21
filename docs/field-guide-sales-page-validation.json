@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "campaign": {
+    "route": "/field-guide",
+    "releaseId": "field-guide-edition-1-20260721",
+    "deployment": "not-deployed"
+  },
+  "releaseAssets": [
+    {
+      "key": "pdf",
+      "sha256": "18aa32b98edd6c2e53d510d3aa660811177f0a63b62a0d7c370340649e974617",
+      "tiers": ["field-guide", "founding"]
+    },
+    {
+      "key": "epub",
+      "sha256": "f1b3ecdf1ba442f02c6ba37018de4748205584ec3d3659cc60dcf534d924b850",
+      "tiers": ["field-guide", "founding"]
+    },
+    {
+      "key": "worksheets",
+      "sha256": "153a9683e15687ba53c97ba59e2c5446d5e7a18dfe2666f94c382db64e1b3d6f",
+      "tiers": ["founding"]
+    }
+  ],
+  "catalog": {
+    "products": [
+      "FourType Field Guide Supporter",
+      "FourType Founding Supporter"
+    ],
+    "priceConfigurationNames": [
+      "STRIPE_FIELD_GUIDE_USD_PRICE_ID",
+      "STRIPE_FIELD_GUIDE_MYR_PRICE_ID",
+      "STRIPE_FOUNDING_SUPPORTER_USD_PRICE_ID",
+      "STRIPE_FOUNDING_SUPPORTER_MYR_PRICE_ID"
+    ],
+    "priceIdsRecorded": false
+  },
+  "environment": {
+    "required": [
+      "NEXT_PUBLIC_SITE_URL",
+      "STRIPE_SECRET_KEY",
+      "STRIPE_WEBHOOK_SECRET",
+      "BLOB_READ_WRITE_TOKEN",
+      "FOURTYPE_ACCESS_TOKEN_SECRET",
+      "RESEND_API_KEY",
+      "FOURTYPE_EMAIL_FROM"
+    ],
+    "optional": ["FOURTYPE_EMAIL_REPLY_TO"],
+    "policyDecisionNames": [
+      "FOURTYPE_REFUND_POLICY_URL",
+      "FOURTYPE_PRIVACY_URL",
+      "FOURTYPE_TERMS_URL",
+      "FOURTYPE_CONTACT_URL"
+    ]
+  },
+  "commands": [
+    {
+      "command": "node scripts/field-guide/upload_release.mjs --dry-run",
+      "execution": "with BLOB_READ_WRITE_TOKEN explicitly unset and bundled Node runtime on PATH",
+      "exitCode": 0,
+      "result": "verified exactly pdf, epub, and worksheets against release hashes; no network write"
+    },
+    {
+      "command": "node scripts/field-guide/create_stripe_test_catalog.mjs",
+      "execution": "with STRIPE_SECRET_KEY explicitly unset and bundled Node runtime on PATH",
+      "exitCode": 1,
+      "result": "expected fail-closed missing test-mode credential guard before network activity"
+    },
+    {
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "result": "0 errors; 77 existing warnings"
+    },
+    {
+      "command": "pnpm exec tsc --noEmit",
+      "exitCode": 0,
+      "result": "passed"
+    },
+    {
+      "command": "pnpm test",
+      "exitCode": 0,
+      "result": "125 passed, 0 failed"
+    },
+    {
+      "command": "pnpm build",
+      "exitCode": 1,
+      "result": "initial attempt stopped during cleanup of ignored stale .next/server containing .DS_Store"
+    },
+    {
+      "command": "pnpm build",
+      "execution": "after moving only ignored stale .next output to a temporary backup",
+      "exitCode": 0,
+      "result": "clean production build passed; existing workspace-root and Edge runtime warnings emitted"
+    },
+    {
+      "command": "pnpm exec playwright test",
+      "exitCode": 0,
+      "result": "7 Chromium tests passed"
+    },
+    {
+      "command": "node scripts/field-guide/audit_public_assets.mjs",
+      "exitCode": 1,
+      "result": "first documentation-inclusive audit rejected complete reward filenames in this validation file; filenames were removed"
+    },
+    {
+      "command": "node scripts/field-guide/audit_public_assets.mjs",
+      "execution": "after removing complete reward filenames from handoff documentation",
+      "exitCode": 0,
+      "result": "passed against production output and documentation"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "no whitespace errors"
+    }
+  ],
+  "browserEvidence": [
+    {
+      "viewport": 320,
+      "path": "docs/field-guide-evidence/field-guide-320.png",
+      "sha256": "dde227a93a36a66b0e196ae096ad38722d2c711fe8ff91fa004be522a53180dc"
+    },
+    {
+      "viewport": 768,
+      "path": "docs/field-guide-evidence/field-guide-768.png",
+      "sha256": "867a2e6f33b596bbb47239256a6d32e4bada985a3460ed41338f267945502144"
+    },
+    {
+      "viewport": 1440,
+      "path": "docs/field-guide-evidence/field-guide-1440.png",
+      "sha256": "04c1c90d3a336dd699a9228b08f65d201d0e3cd8cedf3d7c7cb51cf1793cd12b"
+    }
+  ],
+  "externalChecks": [
+    {
+      "name": "Stripe test catalog creation",
+      "status": "BLOCKED",
+      "reason": "no approved test-mode Stripe credential"
+    },
+    {
+      "name": "Private Blob upload and unauthenticated access denial",
+      "status": "BLOCKED",
+      "reason": "no approved Blob credential; real upload intentionally not run"
+    },
+    {
+      "name": "Stripe test purchases for both tiers and currencies",
+      "status": "BLOCKED",
+      "reason": "test catalog and test checkout require approved Stripe credentials"
+    },
+    {
+      "name": "Cancellation, invalid or unpaid session, duplicate completion, and asynchronous success",
+      "status": "BLOCKED",
+      "reason": "requires Stripe test-mode checkout and webhook forwarding"
+    },
+    {
+      "name": "Temporary Blob failure followed by webhook retry",
+      "status": "BLOCKED",
+      "reason": "requires an approved Blob integration environment"
+    },
+    {
+      "name": "Private tier download scope and tampered or expired access against production adapters",
+      "status": "BLOCKED",
+      "reason": "requires approved Blob credentials and test-mode entitlements"
+    },
+    {
+      "name": "Real re-access email delivery",
+      "status": "BLOCKED",
+      "reason": "requires approved non-production email delivery credentials"
+    }
+  ],
+  "localContractCoverage": {
+    "status": "PASS",
+    "evidence": "unit suite includes paid/unpaid fulfillment, duplicate delivery, asynchronous webhook, tier scope, tampered and expired token, and non-disclosing re-access cases"
+  },
+  "policyDecisions": {
+    "status": "MISSING",
+    "items": ["refund", "privacy", "terms", "contact"],
+    "behavior": "plain-text fallbacks; no dead links or refund promise"
+  },
+  "secretSafety": {
+    "liveSecretUsed": false,
+    "liveSecretStored": false,
+    "requiredAction": "revoke and rotate any exposed live Stripe secret before integration or production use"
+  },
+  "prohibitedActions": [
+    "no deployment",
+    "no publication",
+    "no live charge",
+    "no live provider call"
+  ]
+}
