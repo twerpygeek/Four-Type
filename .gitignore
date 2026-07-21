@@ -18,3 +18,4 @@ node_modules/
 .vercel
 .worktrees/
 .superpowers/
+private/field-guide/
