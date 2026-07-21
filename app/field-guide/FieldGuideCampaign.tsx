@@ -72,7 +72,7 @@ export default function FieldGuideCampaign() {
                 <CampaignCtaLink className="field-guide-button field-guide-button-primary" href="#supporter-levels" analyticsEvent={{ event: 'field-guide-hero-cta' }}>
                   Become a supporter <ArrowDown aria-hidden="true" size={17} />
                 </CampaignCtaLink>
-                <CampaignCtaLink className="field-guide-button field-guide-button-secondary" href="#inside-the-guide" analyticsEvent={{ event: 'field-guide-hero-cta' }}>
+                <CampaignCtaLink className="field-guide-button field-guide-button-secondary" href="#field-guide-preview" analyticsEvent={{ event: 'field-guide-hero-cta' }}>
                   Preview the Field Guide <ArrowRight aria-hidden="true" size={17} />
                 </CampaignCtaLink>
               </div>
@@ -149,7 +149,7 @@ export default function FieldGuideCampaign() {
             </ol>
           </div>
 
-          <div className="field-guide-shell field-guide-preview-wrap">
+          <div id="field-guide-preview" className="field-guide-shell field-guide-preview-wrap">
             <div className="field-guide-preview-heading">
               <div>
                 <SectionEyebrow>Selected pages</SectionEyebrow>

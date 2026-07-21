@@ -88,16 +88,26 @@ test('Field Guide mobile preview supports keyboard navigation and arrows after a
   await swipePreviewThenUseArrow(page)
 })
 
-test('Field Guide preview navigation and direct hashes clear the fixed navigation', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/field-guide#inside-the-guide')
+test('Field Guide Selected pages target clears the fixed navigation after fresh-page scroll and direct hash navigation', async ({ page }) => {
+  for (const width of [320, 1440]) {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto('/field-guide')
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
 
-  const navBottom = await page.locator('nav.fixed').evaluate((nav) => nav.getBoundingClientRect().bottom)
-  await expect(page.getByRole('heading', { name: /a working reference for real rooms/i })).toBeInViewport()
-  expect(await page.getByRole('heading', { name: /a working reference for real rooms/i }).evaluate((heading) => heading.getBoundingClientRect().top)).toBeGreaterThanOrEqual(navBottom)
+    const previewLink = page.getByRole('link', { name: /preview the field guide/i })
+    const previewTarget = page.locator('#field-guide-preview')
+    const previewHeading = page.getByRole('heading', { name: /open the guide where the work happens/i })
+    await expect(previewLink).toHaveAttribute('href', '#field-guide-preview')
+    await previewLink.click()
+    const navBottom = await page.locator('nav.fixed').evaluate((nav) => nav.getBoundingClientRect().bottom)
+    expect(await previewHeading.evaluate((heading) => heading.getBoundingClientRect().top)).toBeGreaterThanOrEqual(navBottom)
 
-  await page.locator('.field-guide-preview-wrap').scrollIntoViewIfNeeded()
-  expect(await page.locator('.field-guide-preview-wrap').evaluate((preview) => preview.getBoundingClientRect().top)).toBeGreaterThanOrEqual(navBottom)
+    await page.goto('/field-guide#field-guide-preview')
+    await expect(previewTarget).toBeVisible()
+    const hashNavBottom = await page.locator('nav.fixed').evaluate((nav) => nav.getBoundingClientRect().bottom)
+    expect(await previewHeading.evaluate((heading) => heading.getBoundingClientRect().top)).toBeGreaterThanOrEqual(hashNavBottom)
+  }
 })
 
 test('Field Guide captures desktop, tablet, and mobile campaign screenshots', async ({ page }, testInfo: TestInfo) => {
@@ -106,11 +116,17 @@ test('Field Guide captures desktop, tablet, and mobile campaign screenshots', as
     await page.goto('/field-guide')
     await page.evaluate(() => window.scrollTo(0, 0))
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
-    await page.locator('.field-guide-preview-wrap').scrollIntoViewIfNeeded()
+    const previewLink = page.getByRole('link', { name: /preview the field guide/i })
+    const previewTarget = page.locator('#field-guide-preview')
+    const previewHeading = page.getByRole('heading', { name: /open the guide where the work happens/i })
+    await expect(previewLink).toHaveAttribute('href', '#field-guide-preview')
+    await previewLink.click()
+    const navBottom = await page.locator('nav.fixed').evaluate((nav) => nav.getBoundingClientRect().bottom)
+    expect(await previewHeading.evaluate((heading) => heading.getBoundingClientRect().top)).toBeGreaterThanOrEqual(navBottom)
     await expect(page.locator('.field-guide-preview-thumbnails img[loading="lazy"]')).toHaveCount(8)
     expect(await page.locator('.field-guide-preview-thumbnails img').evaluateAll((images) =>
       images.every((image) => image.hasAttribute('width') && image.hasAttribute('height')),
     )).toBe(true)
-    await page.screenshot({ path: testInfo.outputPath(`field-guide-${width}.png`), fullPage: true })
+    await page.screenshot({ path: testInfo.outputPath(`field-guide-${width}.png`) })
   }
 })

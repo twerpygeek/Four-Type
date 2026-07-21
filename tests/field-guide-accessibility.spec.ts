@@ -145,7 +145,13 @@ test('Field Guide respects reduced motion', async ({ page }) => {
   expect(await book.evaluate((element) => Number.parseFloat(getComputedStyle(element).transitionDuration))).toBeLessThanOrEqual(0.01)
   await book.focus()
   await expectVisibleFocus(book)
+  await expectNoBrowserIssues(issues)
+})
 
+test('Field Guide respects reduced motion on mobile', async ({ page }) => {
+  const issues = collectBrowserIssues(page)
+
+  await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.setViewportSize({ width: 320, height: 900 })
   await page.goto('/field-guide')
   const mobileBook = page.getByRole('button', { name: /open the field guide page preview/i })

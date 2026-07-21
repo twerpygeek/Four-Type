@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
@@ -26,6 +26,31 @@ function runAudit(root: string, final = false) {
       output: `${result.stdout?.toString() ?? ''}${result.stderr?.toString() ?? ''}`,
     }
   }
+}
+
+type ReleaseAsset = {
+  bytes: number
+  pathname: string
+  sha256: string
+}
+
+function readApprovedReleaseAsset(key: 'pdf' | 'worksheets') {
+  const release = JSON.parse(readFileSync(join(process.cwd(), 'data', 'field-guide-release.json'), 'utf8')) as {
+    assets: Record<string, ReleaseAsset>
+  }
+  const asset = release.assets[key]
+  const pathname = join(process.cwd(), 'private', asset.pathname)
+
+  assert.equal(existsSync(pathname), true, `missing approved ${key} fixture`)
+  const bytes = readFileSync(pathname)
+  assert.equal(bytes.length, asset.bytes)
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), asset.sha256)
+  return { asset, bytes }
+}
+
+function writeReleaseManifest(root: string, assets: Record<string, Pick<ReleaseAsset, 'bytes' | 'sha256'>>) {
+  mkdirSync(join(root, 'data'), { recursive: true })
+  writeFileSync(join(root, 'data', 'field-guide-release.json'), JSON.stringify({ assets }))
 }
 
 test('public asset audit rejects complete rewards and token-shaped bundle content', () => {
@@ -152,6 +177,71 @@ test('public asset audit detects encoded, split, and flexible secret assignments
     assert.match(result.output, /reconstructed credential-shaped content/i)
     assert.match(result.output, /Blob token assignment/i)
     assert.doesNotMatch(result.output, /auditvalue|BLOB_READ_WRITE_TOKEN\s*:/)
+  } finally {
+    rmSync(root, { force: true, recursive: true })
+  }
+})
+
+test('public asset audit detects credential fragments reconstructed across public and client build files', () => {
+  const root = mkdtempSync(join(tmpdir(), 'field-guide-audit-'))
+
+  try {
+    mkdirSync(join(root, 'public'), { recursive: true })
+    mkdirSync(join(root, '.next', 'static'), { recursive: true })
+    writeFileSync(join(root, 'public', 'first.js'), "const prefix = 'sk_'")
+    writeFileSync(join(root, '.next', 'static', 'second.js'), "const suffix = 'live_auditvalue'")
+
+    const result = runAudit(root)
+
+    assert.equal(result.status, 1)
+    assert.match(result.output, /aggregate credential-shaped content/i)
+    assert.doesNotMatch(result.output, /auditvalue|first\.js|second\.js/)
+  } finally {
+    rmSync(root, { force: true, recursive: true })
+  }
+})
+
+test('public asset audit hashes approved release bytes decoded from Base64 and data URIs', () => {
+  const root = mkdtempSync(join(tmpdir(), 'field-guide-audit-'))
+  const pdf = readApprovedReleaseAsset('pdf')
+  const worksheets = readApprovedReleaseAsset('worksheets')
+
+  try {
+    mkdirSync(join(root, '.next', 'static'), { recursive: true })
+    writeReleaseManifest(root, {
+      pdf: pdf.asset,
+      worksheets: worksheets.asset,
+    })
+    writeFileSync(
+      join(root, '.next', 'static', 'embedded-release.js'),
+      `const pdf = 'data:application/pdf;base64,${pdf.bytes.toString('base64')}'`,
+    )
+    writeFileSync(join(root, '.next', 'static', 'embedded-worksheets.js'), worksheets.bytes.toString('base64'))
+
+    const result = runAudit(root)
+
+    assert.equal(result.status, 1)
+    assert.match(result.output, /encoded approved release asset hash/i)
+    assert.doesNotMatch(result.output, /embedded-release|embedded-worksheets|data:application\/pdf/i)
+  } finally {
+    rmSync(root, { force: true, recursive: true })
+  }
+})
+
+test('public asset audit redacts filenames that contain credential-shaped text', () => {
+  const root = mkdtempSync(join(tmpdir(), 'field-guide-audit-'))
+
+  try {
+    mkdirSync(join(root, 'public'), { recursive: true })
+    writeFileSync(join(root, 'public', 'sk_live_auditvalue.js'), 'safe')
+    writeFileSync(join(root, 'public', 'BLOB_READ_WRITE_TOKEN_auditvalue.js'), 'safe')
+
+    const result = runAudit(root)
+
+    assert.equal(result.status, 1)
+    assert.match(result.output, /public\/\[redacted-filename\]: Stripe secret-shaped filename/i)
+    assert.match(result.output, /public\/\[redacted-filename\]: Blob token-shaped filename/i)
+    assert.doesNotMatch(result.output, /sk_live_auditvalue|BLOB_READ_WRITE_TOKEN_auditvalue/)
   } finally {
     rmSync(root, { force: true, recursive: true })
   }
