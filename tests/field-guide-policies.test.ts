@@ -14,16 +14,28 @@ test('never invents a refund promise when policy is missing', () => {
 test('accepts root-relative and first-party HTTPS policy URLs', () => {
   const policy = getFieldGuidePolicies({
     FOURTYPE_REFUND_POLICY_URL: '/refunds',
-    FOURTYPE_PRIVACY_URL: 'https://fourtype.com/privacy',
+    FOURTYPE_PRIVACY_URL: 'https://www.fourtype.com/privacy',
     FOURTYPE_TERMS_URL: 'https://www.fourtype.com/terms#section',
     FOURTYPE_CONTACT_URL: 'https://www.fourtype.com/contact?topic=field-guide',
   })
 
   assert.equal(policy.refund.href, '/refunds')
-  assert.equal(policy.privacy.href, 'https://fourtype.com/privacy')
+  assert.equal(policy.privacy.href, 'https://www.fourtype.com/privacy')
   assert.equal(policy.terms.href, 'https://www.fourtype.com/terms#section')
   assert.equal(policy.contact.href, 'https://www.fourtype.com/contact?topic=field-guide')
   assert.deepEqual(policy.missing, [])
+})
+
+test('accepts only the approved absolute host and HTTPS default port', () => {
+  const policy = getFieldGuidePolicies({
+    FOURTYPE_REFUND_POLICY_URL: 'https://www.fourtype.com:443/refunds',
+    FOURTYPE_PRIVACY_URL: 'https://fourtype.com/privacy',
+    FOURTYPE_TERMS_URL: 'https://www.fourtype.com:8443/terms',
+  })
+
+  assert.equal(policy.refund.href, 'https://www.fourtype.com:443/refunds')
+  assert.equal(policy.privacy.href, null)
+  assert.equal(policy.terms.href, null)
 })
 
 test('rejects unsafe or non-first-party policy URL values', () => {
@@ -33,9 +45,20 @@ test('rejects unsafe or non-first-party policy URL values', () => {
     'https://evil.example/refunds',
     'https://www.fourtype.com.evil.example/refunds',
     'https://www.fourtype.com@evil.example/refunds',
-    'https://www.fourtype.com:443/refunds',
+    'https://www.fourtype.com:8443/refunds',
     '/refunds\\next',
     '/refunds\u0000',
+    '/refunds%5cnext',
+    '/refunds%5Cnext',
+    '/refunds%0A',
+    '/refunds%0a',
+    '/refunds%00',
+    '/refunds%7F',
+    '/refunds%255cnext',
+    '/refunds%255Cnext',
+    '/refunds%250A',
+    '/refunds%2500',
+    '/refunds%257F',
     'https://www.fourtype.com/refunds#javascript:alert(1)',
     'https://www.fourtype.com/refunds#section%0A',
   ]

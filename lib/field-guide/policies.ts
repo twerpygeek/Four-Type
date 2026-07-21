@@ -28,6 +28,31 @@ const policyFallbackCopy: Record<FieldGuidePolicyKey, string> = {
 
 const CONTROL_OR_BACKSLASH = /[\\\u0000-\u001F\u007F]/
 const SAFE_FRAGMENT = /^[A-Za-z0-9._~-]+$/
+const UNSAFE_ENCODED_PATH_CHARACTER = /%(?:5c|[01][0-9a-f]|7f)/i
+
+function hasUnsafePathCharacters(pathname: string) {
+  for (const component of pathname.split('/')) {
+    let candidate = component
+
+    for (let pass = 0; pass < 3; pass += 1) {
+      if (CONTROL_OR_BACKSLASH.test(candidate) || UNSAFE_ENCODED_PATH_CHARACTER.test(candidate)) return true
+
+      let decoded: string
+      try {
+        decoded = decodeURIComponent(candidate)
+      } catch {
+        return true
+      }
+
+      if (decoded === candidate) break
+      candidate = decoded
+    }
+
+    if (CONTROL_OR_BACKSLASH.test(candidate) || UNSAFE_ENCODED_PATH_CHARACTER.test(candidate)) return true
+  }
+
+  return false
+}
 
 function hasSafeFragment(value: string, url: URL) {
   const fragmentStart = value.indexOf('#')
@@ -66,11 +91,13 @@ function normalizePolicyUrl(value: unknown) {
     const authorityRemainder = value.slice(authorityStart)
     const authorityEnd = authorityRemainder.search(/[/?#]/)
     const authority = authorityRemainder.slice(0, authorityEnd === -1 ? authorityRemainder.length : authorityEnd)
-    if (authority.includes('@') || authority.includes(':')) return null
-    if (url.hostname.toLowerCase() !== 'fourtype.com' && url.hostname.toLowerCase() !== 'www.fourtype.com') return null
+    const authorityMatch = authority.match(/^([^:]+)(?::(\d+))?$/)
+    if (!authorityMatch || authority.includes('@')) return null
+    if (authorityMatch[1].toLowerCase() !== 'www.fourtype.com') return null
+    if (authorityMatch[2] && authorityMatch[2] !== '443') return null
   }
 
-  if (url.port || !hasSafeFragment(value, url)) return null
+  if (url.port || hasUnsafePathCharacters(url.pathname) || !hasSafeFragment(value, url)) return null
   return value
 }
 
