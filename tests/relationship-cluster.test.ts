@@ -50,6 +50,18 @@ test('new relationship guides use practical and responsible framing', () => {
   assert.match(parentingCopy, /Commander \(Choleric\)|Choleric.*Commander/i)
 })
 
+test('new practical guides point to the right next relationship actions', () => {
+  const couples = getBlogArticle('couples-discussion-guide-by-temperament')!
+  const parenting = getBlogArticle('parenting-by-temperament')!
+
+  assert.ok(couples.related.some((link) => link.href === '/temperament-test-for-couples'))
+  assert.ok(couples.related.some((link) => link.href === '/blog/temperament-conflict-style'))
+  assert.ok(couples.related.some((link) => link.href === '/blog/temperament-communication-style'))
+  assert.ok(parenting.related.some((link) => link.href === '/temperament/choleric'))
+  assert.ok(parenting.related.some((link) => link.href === '/temperament/phlegmatic'))
+  assert.ok(parenting.related.some((link) => link.href === '/blog/couples-discussion-guide-by-temperament'))
+})
+
 test('relationship articles have distinct titles and do not make match-score claims', () => {
   const articles = requiredArticleSlugs.map((slug) => getBlogArticle(slug)!)
   assert.equal(new Set(articles.map((article) => article.title)).size, articles.length)
