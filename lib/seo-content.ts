@@ -4789,7 +4789,7 @@ export function guideLinksForSeoPage(slug: string): LinkCard[] {
     return [
       { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'How to Tell the Four Temperaments Apart', description: 'Compare the four types through stress response and real behavior.' },
       ...typeTestLinks,
-      ...relationshipGuideLinks.slice(1, 3),
+      ...relationshipGuideLinks.filter((link) => link.href === '/blog/four-temperaments-compatibility' || link.href === '/blog/temperament-compatibility-chart'),
       ...methodologyGuideLinks.slice(0, 1),
     ]
   }

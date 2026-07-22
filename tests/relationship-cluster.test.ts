@@ -44,7 +44,7 @@ test('new relationship guides use practical and responsible framing', () => {
   const parentingCopy = JSON.stringify(parenting)
 
   assert.match(couplesCopy, /30-minute|30 minute/i)
-  assert.match(couplesCopy, /Choleric.*Sanguine.*Melancholic.*Phlegmatic/s)
+  assert.match(couplesCopy, /Choleric[\s\S]*Sanguine[\s\S]*Melancholic[\s\S]*Phlegmatic/)
   assert.match(parentingCopy, /not a diagnosis/i)
   assert.match(parentingCopy, /do not.*label|never.*label/i)
   assert.match(parentingCopy, /Commander \(Choleric\)|Choleric.*Commander/i)
