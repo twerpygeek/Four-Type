@@ -14,7 +14,7 @@ import {
   type FieldGuideFulfillmentDependencies,
 } from './fulfillment'
 import { vercelPrivateBlobStore } from './blob-server'
-import { getConfiguredPriceId } from './checkout'
+import { getConfiguredPriceIds } from './checkout'
 import { resolveCanonicalCheckoutOrigin } from './checkout-route'
 import { getStripe } from './stripe'
 import { signAccessToken } from './tokens'
@@ -54,7 +54,7 @@ export function createFieldGuideFulfillmentDependencies(
 
   return {
     retrieveSession: (sessionId) => stripe.checkout.sessions.retrieve(sessionId, { expand: ['line_items'] }),
-    getConfiguredPriceId: (tier, currency) => getConfiguredPriceId(tier, currency, environment),
+    getConfiguredPriceIds: (tier, currency) => getConfiguredPriceIds(tier, currency, environment),
     readEntitlement: (sessionId) => readEntitlement(sessionId, vercelPrivateBlobStore),
     writeEntitlement: (entitlement) => writeEntitlement(entitlement, vercelPrivateBlobStore, emailIndexSecret),
     claimEmailDelivery: (sessionId) => claimEmailDelivery(sessionId, vercelPrivateBlobStore, 'fulfillment'),

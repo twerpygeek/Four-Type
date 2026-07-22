@@ -85,7 +85,7 @@ function fakeDependencies(overrides: SessionOverrides = {}) {
 
   const dependencies: FieldGuideFulfillmentDependencies = {
     retrieveSession: async () => session,
-    getConfiguredPriceId: (tier, currency) => configuredPriceIds[`${tier}:${currency}`],
+    getConfiguredPriceIds: (tier, currency) => [configuredPriceIds[`${tier}:${currency}`]],
     readEntitlement: async (sessionId) => entitlements.get(sessionId) ?? null,
     writeEntitlement: async (entitlement) => {
       writeCalls.push(entitlement)

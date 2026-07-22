@@ -9,19 +9,14 @@ if (!secretKey || !secretKey.startsWith('sk_test_')) {
 const stripe = new Stripe(secretKey)
 
 const products = {
-  'field-guide': {
-    name: 'FourType Field Guide Supporter',
-    metadata: { product: 'fourtype-field-guide', tier: 'field-guide' },
-  },
   founding: {
-    name: 'FourType Founding Supporter',
-    metadata: { product: 'fourtype-founding-supporter', tier: 'founding' },
+    name: 'FourType Field Guide: Founding Digital Supporter',
+    metadata: { product: 'fourtype-field-guide', tier: 'founding' },
   },
 }
 
 const prices = [
-  ['STRIPE_FIELD_GUIDE_USD_PRICE_ID', 'fourtype_field_guide_usd', 'usd', 1200, 'field-guide'],
-  ['STRIPE_FOUNDING_SUPPORTER_USD_PRICE_ID', 'fourtype_founding_usd', 'usd', 2500, 'founding'],
+  ['STRIPE_FOUNDING_DIGITAL_USD_PRICE_ID', 'fourtype_founding_digital_usd', 'usd', 1200, 'founding'],
 ]
 
 async function getOrCreateProduct(tier) {

@@ -20,8 +20,6 @@ test('uses exact honest digital product and access wording', () => {
   assert.match(campaign, /PDF preserves the designed 7 x 10 page experience/i)
   assert.match(campaign, /EPUB reflows for adjustable text and compatible reading apps/i)
   assert.match(campaign, /personal use does not permit reposting or redistributing the files/i)
-  assert.match(campaign, /revisions released within Edition 1/i)
-  assert.match(campaign, /does not include every future publication/i)
   assert.match(campaign, /secure access links can expire/i)
   assert.match(campaign, /request fresh access/i)
 })
@@ -49,17 +47,24 @@ test('publishes truthful metadata without ratings', () => {
   assert.doesNotMatch(page, /InStock/)
 })
 
-test('renders USD-only finished-product purchase controls', () => {
+test('renders one USD-only founding digital supporter purchase control', () => {
   assert.match(campaign, /<SupporterTiers \/>/)
 
   const component = readFileSync(supporterTiers, 'utf8')
-  assert.match(component, /Digital Edition/)
-  assert.match(component, /getSupporterOffer\('field-guide', 'usd'\)/)
   assert.match(component, /getSupporterOffer\('founding', 'usd'\)/)
+  assert.match(component, /Founding Digital Supporter/)
+  assert.doesNotMatch(component, /Digital Edition|US\$25/)
   assert.doesNotMatch(component, /MYR|RM39|RM79|sessionStorage|Choose checkout currency/)
   assert.match(component, /Get the Field Guide/)
-  assert.match(component, /Become a Founding Supporter/)
   assert.doesNotMatch(component, /disabled aria-disabled="true"/)
+})
+
+test('uses the character art to give sparse sales sections a visual anchor', () => {
+  assert.match(campaign, /\/images\/characters\/commander\.png/)
+  assert.match(campaign, /\/images\/characters\/bard\.png/)
+  assert.match(campaign, /\/images\/characters\/strategist\.png/)
+  assert.match(campaign, /\/images\/characters\/guardian\.png/)
+  assert.match(campaign, /field-guide-section-character/)
 })
 
 test('places pricing after the preview and links to complete policy pages', () => {

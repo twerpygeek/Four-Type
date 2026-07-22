@@ -9,7 +9,7 @@ import {
   type StripeCheckoutClient,
 } from './checkout'
 
-export { assertServerStripeKey, assertTestStripeKey, getConfiguredPriceId, type StripeCheckoutClient } from './checkout'
+export { assertServerStripeKey, assertTestStripeKey, getConfiguredPriceId, getConfiguredPriceIds, type StripeCheckoutClient } from './checkout'
 
 export function getStripe(): StripeCheckoutClient {
   const key = env.STRIPE_SECRET_KEY

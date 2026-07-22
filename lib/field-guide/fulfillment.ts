@@ -1,5 +1,5 @@
-import { getConfiguredPriceId } from './checkout'
-import { parseSupporterSelection, type CurrencyKey, type SupporterTierKey } from './catalog'
+import { getConfiguredPriceIds } from './checkout'
+import { parseHistoricSupporterSelection, type CurrencyKey, type SupporterTierKey } from './catalog'
 import type { FieldGuideEntitlement } from './entitlements'
 import { FIELD_GUIDE_RELEASE } from './release'
 
@@ -21,7 +21,7 @@ export type FieldGuideCheckoutSession = {
 
 export type FieldGuideFulfillmentDependencies = {
   retrieveSession: (sessionId: string) => Promise<FieldGuideCheckoutSession>
-  getConfiguredPriceId: (tier: SupporterTierKey, currency: CurrencyKey) => string
+  getConfiguredPriceIds: (tier: SupporterTierKey, currency: CurrencyKey) => string[]
   readEntitlement: (sessionId: string) => Promise<FieldGuideEntitlement | null>
   writeEntitlement: (entitlement: FieldGuideEntitlement) => Promise<'fulfilled' | 'already-fulfilled'>
   claimEmailDelivery: (sessionId: string) => Promise<
@@ -81,7 +81,7 @@ function getCustomerEmail(session: FieldGuideCheckoutSession) {
 
 function getApprovedSelection(session: FieldGuideCheckoutSession, dependencies: FieldGuideFulfillmentDependencies) {
   const metadata = session.metadata
-  const selection = parseSupporterSelection(metadata)
+  const selection = parseHistoricSupporterSelection(metadata)
 
   if (
     !metadata
@@ -93,13 +93,13 @@ function getApprovedSelection(session: FieldGuideCheckoutSession, dependencies: 
     throw new Error('Checkout Session does not match the configured offer')
   }
 
-  const expectedPriceId = dependencies.getConfiguredPriceId(selection.tier, selection.currency)
+  const expectedPriceIds = dependencies.getConfiguredPriceIds(selection.tier, selection.currency)
   const lineItems = session.line_items.data
 
   if (
     lineItems.length !== 1
     || lineItems[0]?.quantity !== 1
-    || lineItems[0]?.price?.id !== expectedPriceId
+    || !expectedPriceIds.includes(lineItems[0]?.price?.id ?? '')
   ) {
     throw new Error('Checkout Session does not match the configured offer')
   }
@@ -206,4 +206,4 @@ export async function fulfillFieldGuideCheckout(
   return { status: writeResult === 'fulfilled' ? 'fulfilled' : 'already-fulfilled' }
 }
 
-export { getConfiguredPriceId }
+export { getConfiguredPriceIds }

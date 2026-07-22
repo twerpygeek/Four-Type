@@ -60,8 +60,11 @@ export default function InteractiveBook() {
         onPointerMove={updateTilt}
         onPointerLeave={() => setRotation(RESTING_ROTATION)}
       >
+        <span className="field-guide-book-back" aria-hidden="true" />
+        <span className="field-guide-book-spine" aria-hidden="true" />
         <span className="field-guide-book-pages" aria-hidden="true" />
         <Image
+          className="field-guide-book-cover"
           src="/images/field-guide/cover.webp"
           alt="FourType Field Guide cover"
           width={980}

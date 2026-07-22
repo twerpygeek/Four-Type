@@ -39,22 +39,13 @@ const productSchema = {
     name: 'FourType',
   },
   category: 'Digital book',
-  offers: [
-    {
-      '@type': 'Offer',
-      name: 'Digital Edition',
-      price: getSupporterOffer('field-guide', 'usd').amount / 100,
-      priceCurrency: 'USD',
-      url: canonicalUrl,
-    },
-    {
-      '@type': 'Offer',
-      name: 'Founding Supporter',
-      price: getSupporterOffer('founding', 'usd').amount / 100,
-      priceCurrency: 'USD',
-      url: canonicalUrl,
-    },
-  ],
+  offers: {
+    '@type': 'Offer',
+    name: 'Founding Digital Supporter',
+    price: getSupporterOffer('founding', 'usd').amount / 100,
+    priceCurrency: 'USD',
+    url: canonicalUrl,
+  },
 }
 
 export default function FieldGuidePage() {

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowDown, ArrowRight, BookOpen, Check, ChevronRight, KeyRound, Sparkles } from 'lucide-react'
 import Footer from '@/components/Footer'
 import Navigation from '@/components/Navigation'
@@ -13,7 +14,7 @@ const faqItems = [
   {
     question: 'What does each edition include?',
     answer:
-      'Digital Edition includes the complete 144-page PDF, a reflowable EPUB and a personal-use licence. Founding Supporter also includes a separate printable worksheet pack and revisions released within Edition 1.',
+      'Founding Digital Supporter includes the complete 144-page PDF, a reflowable EPUB, a separate printable worksheet pack and a personal-use licence.',
   },
   {
     question: 'Is this a physical book?',
@@ -36,10 +37,6 @@ const faqItems = [
   {
     question: 'Can I share the files?',
     answer: 'The licence is for one reader. Personal use does not permit reposting or redistributing the files.',
-  },
-  {
-    question: 'What do Edition 1 revisions mean?',
-    answer: 'Founding Supporters receive revisions released within Edition 1. This does not include every future publication, a future Edition 2 or lifetime access to unrelated books.',
   },
   {
     question: 'What if I have a payment or download problem?',
@@ -137,6 +134,13 @@ export default function FieldGuideCampaign() {
               <div className="field-guide-reason-statement">
                 <SectionEyebrow>Why this guide exists</SectionEyebrow>
                 <h2 id="reason-title">A useful pattern can still crowd out the room.</h2>
+                <Image
+                  className="field-guide-section-character field-guide-section-character-commander"
+                  src="/images/characters/commander.png"
+                  alt="Mara, the Commander character, considering the next move"
+                  width={580}
+                  height={580}
+                />
               </div>
               <div className="field-guide-prose">
                 <p>A stalled meeting may need Choleric direction. It may also need Sanguine possibility, Melancholic evidence or Phlegmatic steadiness.</p>
@@ -146,16 +150,25 @@ export default function FieldGuideCampaign() {
           </section>
 
           <section className="field-guide-use" aria-labelledby="use-title">
-            <div className="field-guide-shell">
-              <SectionEyebrow>Keep it close when</SectionEyebrow>
-              <h2 id="use-title">The room needs more than a quick label.</h2>
-              <ol className="field-guide-moments">
-                <li><span>01</span>A meeting has stalled.</li>
-                <li><span>02</span>One useful contribution is crowding out the others.</li>
-                <li><span>03</span>A conflict keeps repeating.</li>
-                <li><span>04</span>A relationship needs a repair that both people can use.</li>
-                <li><span>05</span>You want to replay an interaction more fairly.</li>
-              </ol>
+            <div className="field-guide-shell field-guide-use-grid">
+              <div>
+                <SectionEyebrow>Keep it close when</SectionEyebrow>
+                <h2 id="use-title">The room needs more than a quick label.</h2>
+                <ol className="field-guide-moments">
+                  <li><span>01</span>A meeting has stalled.</li>
+                  <li><span>02</span>One useful contribution is crowding out the others.</li>
+                  <li><span>03</span>A conflict keeps repeating.</li>
+                  <li><span>04</span>A relationship needs a repair that both people can use.</li>
+                  <li><span>05</span>You want to replay an interaction more fairly.</li>
+                </ol>
+              </div>
+              <Image
+                className="field-guide-section-character field-guide-section-character-bard"
+                src="/images/characters/bard.png"
+                alt="Noor, the Bard character, inviting possibility into a conversation"
+                width={580}
+                height={580}
+              />
             </div>
           </section>
 
@@ -173,6 +186,13 @@ export default function FieldGuideCampaign() {
                 <article><h3>Stress sequences</h3><p>Recognise what becomes louder under pressure and what helps another attention enter.</p></article>
                 <article><h3>Five-minute replay</h3><p>Revisit one exchange, track what helped and what disappeared, then prepare a better next move.</p></article>
               </div>
+              <Image
+                className="field-guide-section-character field-guide-section-character-strategist"
+                src="/images/characters/strategist.png"
+                alt="Tomas, the Strategist character, examining what the situation needs"
+                width={580}
+                height={580}
+              />
             </div>
           </section>
 
@@ -181,10 +201,17 @@ export default function FieldGuideCampaign() {
               <SectionEyebrow>Simple delivery</SectionEyebrow>
               <h2 id="fulfillment-title">From checkout to reading in three steps.</h2>
               <ol className="field-guide-steps field-guide-steps-three">
-                <li><span>01</span><strong>Choose your edition.</strong><p>Digital Edition includes the PDF and EPUB. Founding Supporter adds the worksheet pack and Edition 1 revisions.</p></li>
+                <li><span>01</span><strong>Choose your edition.</strong><p>Founding Digital Supporter includes the PDF, EPUB and printable worksheet pack.</p></li>
                 <li><span>02</span><strong>Pay securely through Stripe.</strong><p>Your payment details are handled by Stripe, not stored by FourType.</p></li>
                 <li><span>03</span><strong>Download immediately.</strong><p>Open your private access page for the PDF, EPUB and any included worksheets.</p></li>
               </ol>
+              <Image
+                className="field-guide-section-character field-guide-section-character-guardian"
+                src="/images/characters/guardian.png"
+                alt="Eli, the Guardian character, holding space for a steady next step"
+                width={580}
+                height={580}
+              />
             </div>
           </section>
 

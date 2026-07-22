@@ -4,6 +4,7 @@ import { FIELD_GUIDE_RELEASE } from './release'
 type CheckoutSessionInput = {
   mode: 'payment'
   customer_creation: 'always'
+  allow_promotion_codes: true
   line_items: Array<{ price: string; quantity: 1 }>
   metadata: {
     product: 'fourtype-field-guide'
@@ -51,6 +52,23 @@ export function getConfiguredPriceId(
   return priceId
 }
 
+export function getConfiguredPriceIds(
+  tier: SupporterTierKey,
+  currency: CurrencyKey,
+  environment: PriceEnvironment = process.env,
+) {
+  const priceIds = [getConfiguredPriceId(tier, currency, environment)]
+
+  // Keep a formerly sold Founding Supporter checkout verifiable after the
+  // public offer moves to the single Founding Digital Supporter edition.
+  if (tier === 'founding' && currency === 'usd') {
+    const legacyPriceId = environment.STRIPE_FOUNDING_SUPPORTER_USD_PRICE_ID
+    if (legacyPriceId && !priceIds.includes(legacyPriceId)) priceIds.push(legacyPriceId)
+  }
+
+  return priceIds
+}
+
 export async function createFieldGuideCheckout(
   selection: { tier: SupporterTierKey; currency: CurrencyKey },
   origin: string,
@@ -67,6 +85,7 @@ export async function createFieldGuideCheckout(
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
     customer_creation: 'always',
+    allow_promotion_codes: true,
     line_items: [{
       price: getConfiguredPriceId(approvedSelection.tier, approvedSelection.currency, environment),
       quantity: 1,

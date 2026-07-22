@@ -115,7 +115,7 @@ test('Field Guide keyboard controls preserve focus and analytics omit query cred
   await expect(book).toBeFocused()
 
   await expect(page.getByText('US$12', { exact: true })).toBeVisible()
-  await expect(page.getByText('US$25', { exact: true })).toBeVisible()
+  await expect(page.getByText('US$25', { exact: true })).toHaveCount(0)
   await expect(page.getByRole('link', { name: 'Refund policy' })).toHaveAttribute('href', '/field-guide/refunds')
   await page.waitForTimeout(100)
   expect(analyticsBodies.length).toBeGreaterThan(0)

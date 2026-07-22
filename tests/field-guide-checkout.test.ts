@@ -6,12 +6,14 @@ import {
   assertTestStripeKey,
   createFieldGuideCheckout,
   getConfiguredPriceId,
+  getConfiguredPriceIds,
 } from '../lib/field-guide/checkout'
 import { createCheckoutPostHandler } from '../lib/field-guide/checkout-route'
 
 const configuredPriceIds = {
   STRIPE_FIELD_GUIDE_USD_PRICE_ID: 'price_test_field_guide_usd',
   STRIPE_FOUNDING_SUPPORTER_USD_PRICE_ID: 'price_test_founding_usd',
+  STRIPE_FOUNDING_DIGITAL_USD_PRICE_ID: 'price_test_founding_digital_usd',
 }
 
 async function withConfiguredPrices<T>(run: () => T | Promise<T>): Promise<T> {
@@ -31,10 +33,14 @@ async function withConfiguredPrices<T>(run: () => T | Promise<T>): Promise<T> {
   }
 }
 
-test('maps every approved USD selection to its configured Price ID', async () => {
+test('maps the active USD selection to its configured Price ID while retaining legacy resolution', async () => {
   await withConfiguredPrices(() => {
     assert.equal(getConfiguredPriceId('field-guide', 'usd'), 'price_test_field_guide_usd')
-    assert.equal(getConfiguredPriceId('founding', 'usd'), 'price_test_founding_usd')
+    assert.equal(getConfiguredPriceId('founding', 'usd'), 'price_test_founding_digital_usd')
+    assert.deepEqual(getConfiguredPriceIds('founding', 'usd'), [
+      'price_test_founding_digital_usd',
+      'price_test_founding_usd',
+    ])
   })
 })
 
@@ -62,7 +68,8 @@ test('creates an exact server-owned Checkout Session for an approved selection',
     assert.deepEqual(created, [{
       mode: 'payment',
       customer_creation: 'always',
-      line_items: [{ price: 'price_test_founding_usd', quantity: 1 }],
+      line_items: [{ price: 'price_test_founding_digital_usd', quantity: 1 }],
+      allow_promotion_codes: true,
       metadata: {
         product: 'fourtype-field-guide',
         tier: 'founding',
@@ -136,7 +143,7 @@ test('returns 429 when checkout request-rate limit denies', async () => {
   })(new Request('https://www.fourtype.com/api/field-guide/checkout', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-forwarded-for': '203.0.113.8' },
-    body: JSON.stringify({ tier: 'field-guide', currency: 'usd' }),
+    body: JSON.stringify({ tier: 'founding', currency: 'usd' }),
   }))
 
   assert.equal(response.status, 429)
@@ -158,10 +165,19 @@ test('returns a bodyless 400 for unsupported selections', async () => {
   assert.equal(await response.text(), '')
 })
 
+test('returns a bodyless 400 for the retired digital-edition checkout selection', async () => {
+  const response = await createTestHandler('https://www.fourtype.com')(
+    createRequest(JSON.stringify({ tier: 'field-guide', currency: 'usd' })),
+  )
+
+  assert.equal(response.status, 400)
+  assert.equal(await response.text(), '')
+})
+
 test('returns a bodyless 503 when the canonical site URL is missing or invalid', async () => {
   for (const siteUrl of [undefined, 'http://www.fourtype.com', 'https://www.fourtype.com/path']) {
     const response = await createTestHandler(siteUrl)(
-      createRequest(JSON.stringify({ tier: 'field-guide', currency: 'usd' })),
+      createRequest(JSON.stringify({ tier: 'founding', currency: 'usd' })),
     )
 
     assert.equal(response.status, 503)
@@ -187,7 +203,7 @@ test('allows an explicitly configured localhost canonical origin in test', async
   ]) {
     const origins: string[] = []
     const response = await createTestHandler(siteUrl, origins)(
-      createRequest(JSON.stringify({ tier: 'field-guide', currency: 'usd' })),
+      createRequest(JSON.stringify({ tier: 'founding', currency: 'usd' })),
     )
 
     assert.equal(response.status, 200)

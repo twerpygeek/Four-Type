@@ -21,7 +21,7 @@ async function expectCampaignFitsViewport(page: Page) {
   expect((bookBox?.y ?? 0) + (bookBox?.height ?? 0)).toBeLessThanOrEqual(await page.evaluate(() => window.innerHeight))
 
   const tiers = page.locator('.field-guide-tier')
-  await expect(tiers).toHaveCount(2)
+  await expect(tiers).toHaveCount(1)
   for (const tier of await tiers.all()) await expect(tier).toBeVisible()
 
   expect(await tiers.evaluateAll((tierElements) => tierElements.every((tier) => {
