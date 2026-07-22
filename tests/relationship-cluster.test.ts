@@ -27,6 +27,16 @@ test('relationship cluster routes readers to the quiz and couples action page', 
   assert.ok(relationshipGuideLinks.some((link) => link.href === '/blog/parenting-by-temperament'))
 })
 
+test('couples action page gives partners a shared three-step flow', () => {
+  const page = getSeoPage('temperament-test-for-couples')!
+  const copy = JSON.stringify(page.blocks)
+
+  assert.match(copy, /Take the quiz separately/i)
+  assert.match(copy, /Compare.*score/i)
+  assert.match(copy, /one conversation prompt|one small agreement/i)
+  assert.equal(page.ctaLabel, 'Take the Quiz Together')
+})
+
 test('new relationship guides use practical and responsible framing', () => {
   const couples = getBlogArticle('couples-discussion-guide-by-temperament')!
   const parenting = getBlogArticle('parenting-by-temperament')!

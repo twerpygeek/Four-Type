@@ -657,6 +657,63 @@ export const seoPages: SeoPage[] = [
     ],
   },
   {
+    slug: 'relationships',
+    shortTitle: 'Temperament Relationships',
+    title: 'Temperament Relationships: Compatibility, Communication, and Repair',
+    description: 'Use Choleric, Sanguine, Melancholic, and Phlegmatic patterns to understand compatibility, conflict, communication, repair, couples, and parenting.',
+    keywords: ['temperament relationships', 'temperament compatibility', 'temperament communication', 'temperament conflict styles', 'parenting by temperament'],
+    eyebrow: 'Relationships and Family',
+    icon: Heart,
+    accent: 'pink',
+    priority: 0.86,
+    changeFrequency: 'monthly',
+    ctaLabel: 'Take the Quiz Separately',
+    blocks: [
+      {
+        type: 'section',
+        title: 'A pattern is useful when it makes a person easier to understand',
+        body: [
+          'Temperament can give people shared language for pace, pressure, affection, and repair. It cannot predict whether a relationship will work or excuse harmful behavior.',
+          'Use it to notice repeated choices, make clearer requests, and take responsibility for the next conversation. It is not a verdict on compatibility or a replacement for support when a relationship feels unsafe.',
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'Four pressures, four first moves',
+        intro: 'Under stress, these patterns point to different needs. They describe a starting tendency, not a fixed role.',
+        items: [
+          { title: 'Commander (Choleric)', body: 'Looks for direction when pressure rises.', accent: 'red' },
+          { title: 'Bard (Sanguine)', body: 'Looks for connection and emotional movement.', accent: 'gold' },
+          { title: 'Strategist (Melancholic)', body: 'Looks for clarity, meaning, and what may be missed.', accent: 'blue' },
+          { title: 'Guardian (Phlegmatic)', body: 'Looks for steadiness and emotional safety.', accent: 'green' },
+        ],
+      },
+      {
+        type: 'grid',
+        title: 'Start with the question you are actually asking',
+        items: [
+          { title: 'Compatibility', body: 'Compare patterns without looking for a perfect match.', accent: 'pink' },
+          { title: 'Pair dynamics', body: 'Notice where different needs for pace, affection, and decisions can complement or strain each other.', accent: 'gold' },
+          { title: 'Conflict and repair', body: 'Notice the default move, the missing move, and a better next step.', accent: 'red' },
+          { title: 'Communication', body: 'Name what helps each person hear feedback, ask for space, and stay engaged.', accent: 'blue' },
+          { title: 'Couple conversations', body: 'Use a shared prompt to understand a recent hard moment without assigning blame.', accent: 'green' },
+          { title: 'Parenting', body: 'Use practical questions at home instead of labels for adults or children.', accent: 'purple' },
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Take the quiz separately, then compare gently',
+        body: 'Each person should answer from repeated behavior. Then choose one recent moment and ask what each of you was trying to protect. The related guides below can help you turn that answer into a practical next step.',
+        bullets: ['What do I do under pressure?', 'What helps me stay present?', 'What is one small agreement we can try this week?'],
+      },
+    ],
+    faq: [
+      { question: 'Can temperament predict relationship compatibility?', answer: 'No. It can help people understand recurring patterns in pace, communication, conflict, and repair.' },
+      { question: 'Should couples take the temperament test together?', answer: 'Take it separately first, then compare results as conversation starters rather than verdicts.' },
+      { question: 'Can temperament help families?', answer: 'It can help adults notice different needs for pace, clarity, connection, and steadiness without turning anyone into a fixed label.' },
+    ],
+  },
+  {
     slug: 'temperament-test-for-couples',
     shortTitle: 'Temperament Test for Couples',
     title: 'Temperament Test for Couples: Understand Communication and Conflict Patterns',
@@ -675,6 +732,16 @@ export const seoPages: SeoPage[] = [
         body: [
           'Couples often struggle less because they are “incompatible” and more because they read each other through the wrong lens. A Choleric may think a Phlegmatic is avoiding the issue. A Phlegmatic may experience the same Choleric as unnecessarily intense.',
           'A temperament test gives couples shared language for emotional pace, decision-making, affection, conflict, and repair.',
+        ],
+      },
+      {
+        type: 'callout',
+        title: 'Take the quiz separately, then compare gently',
+        body: 'The useful part is not agreeing on a label. It is noticing where your score patterns make a hard moment easier or harder to read.',
+        bullets: [
+          'Take the quiz separately and answer from repeated behavior.',
+          'Compare your score spread before debating a single top result.',
+          'Choose one conversation prompt: What do I do under pressure, and what helps me stay present?',
         ],
       },
       {
@@ -4642,6 +4709,7 @@ export const coreGuideLinks: LinkCard[] = [
 ]
 
 export const relationshipGuideLinks: LinkCard[] = [
+  { href: '/relationships', title: 'Temperament Relationships', description: 'Start with compatibility, communication, repair, couples, and parenting.' },
   { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Compare communication and conflict patterns together.' },
   { href: '/blog/four-temperaments-compatibility', title: 'Four Temperaments Compatibility', description: 'Understand how all four temperament patterns relate.' },
   { href: '/blog/temperament-compatibility-chart', title: 'Temperament Compatibility Chart', description: 'See how the four temperaments relate in relationships.' },
@@ -4649,6 +4717,8 @@ export const relationshipGuideLinks: LinkCard[] = [
   { href: '/blog/sanguine-melancholic-compatibility', title: 'Sanguine and Melancholic Compatibility', description: 'Lightness meets depth in this high-contrast pairing.' },
   { href: '/blog/temperament-conflict-style', title: 'Temperament Conflict Style', description: 'Learn how each type fights, avoids, apologizes, and repairs.' },
   { href: '/blog/temperament-communication-style', title: 'Temperament Communication Style', description: 'Understand how each type talks, listens, and gives feedback.' },
+  { href: '/blog/couples-discussion-guide-by-temperament', title: 'Couples Discussion Guide by Temperament', description: 'Use a structured conversation to compare patterns without blame.' },
+  { href: '/blog/parenting-by-temperament', title: 'Parenting by Temperament', description: 'Use temperament language at home without labeling children.' },
   { href: '/blog/personality-test-for-relationships', title: 'Personality Test for Relationships', description: 'Use temperament to improve couple communication and repair.' },
   { href: '/blog/choleric-sanguine-melancholic-phlegmatic', title: 'How to Tell the Four Temperaments Apart', description: 'Spot the real-life differences between the four patterns.' },
   { href: '/subtypes', title: 'Temperament Subtypes', description: 'Go beyond the primary label with blended subtype patterns.' },
@@ -4707,7 +4777,7 @@ export function guideLinksForSeoPage(slug: string): LinkCard[] {
     ]
   }
 
-  if (slug === 'temperament-test-for-couples') {
+  if (slug === 'relationships' || slug === 'temperament-test-for-couples') {
     return relationshipGuideLinks
   }
 
