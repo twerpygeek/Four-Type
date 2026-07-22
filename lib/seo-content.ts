@@ -3112,6 +3112,12 @@ export const blogArticles: BlogArticle[] = [
         bullets: ['Choleric protects control and progress.', 'Sanguine protects connection and energy.', 'Melancholic protects meaning and quality.', 'Phlegmatic protects peace and stability.'],
       },
       {
+        type: 'callout',
+        title: 'Try this with one conflict moment',
+        body: 'Choose one recent disagreement, describe what happened without assigning a type, then ask each other: “What were you trying to protect in that moment?”',
+        bullets: ['Compare the first move each person made.', 'Name the pressure underneath it.', 'Choose one different repair move for the next similar moment.'],
+      },
+      {
         type: 'section',
         title: 'How to use compatibility without weaponizing it',
         body: [
@@ -3123,11 +3129,13 @@ export const blogArticles: BlogArticle[] = [
     related: [
       { href: '/blog/temperament-compatibility-chart', title: 'Temperament Compatibility Chart', description: 'Compare the main four temperament pairings.' },
       { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Use the test together as a relationship conversation tool.' },
-      { href: '/blog/choleric-phlegmatic-relationship', title: 'Choleric and Phlegmatic Relationship', description: 'Explore one of the strongest complementary pairings.' },
+      { href: '/blog/couples-discussion-guide-by-temperament', title: 'Couples Discussion Guide', description: 'Use one conflict moment to compare pressure and repair.' },
+      { href: '/blog/temperament-conflict-style', title: 'Temperament Conflict Style', description: 'Practice a different first move under pressure.' },
+      { href: '/blog/choleric-phlegmatic-relationship', title: 'Choleric and Phlegmatic Relationship', description: 'Explore the drive-and-calm pairing.' },
       { href: '/blog/sanguine-melancholic-compatibility', title: 'Sanguine and Melancholic Compatibility', description: 'Understand the playful-depth pairing.' },
     ],
     faq: [
-      { question: 'Which four temperaments are most compatible?', answer: 'There is no single perfect match. Choleric and Phlegmatic often balance each other, Sanguine and Phlegmatic can feel warm and steady, and Sanguine and Melancholic can grow through a lightness-depth balance.' },
+      { question: 'Which four temperaments are most compatible?', answer: 'There is no single perfect match, and temperament does not predict whether a relationship will work. Different pairings can use this framework to notice their pace, stress patterns, and repair habits.' },
       { question: 'Can opposite temperaments work in relationships?', answer: 'Yes. Opposite temperaments can work well when both people respect different stress responses and do not treat their own pace as the only normal one.' },
       { question: 'Is temperament compatibility only for dating?', answer: 'No. It can also help friendships, family, teams, leadership, and coworker relationships because it describes communication pace and stress patterns.' },
       { question: 'Should I avoid a temperament pairing that looks difficult?', answer: 'No. A difficult pairing can still become strong with emotional maturity, repair, and clear communication. The chart is a guide, not a rule.' },
@@ -3181,6 +3189,14 @@ export const blogArticles: BlogArticle[] = [
       },
       {
         type: 'section',
+        title: 'Repair at the turning point',
+        body: [
+          'When pressure starts to rise, the Choleric can ask: “Can you give me an answer by 7 tonight?” A time-bound request leaves room without turning delay into disappearance.',
+          'The Phlegmatic can agree to return at that time with a real preference, even if the answer is still tentative. A specific return keeps calm from becoming silence.',
+        ],
+      },
+      {
+        type: 'section',
         title: 'A practical script',
         body: [
           'The Choleric can say: “I am pushing because I want clarity, not because I want to control you. What pace would help you stay in the conversation?”',
@@ -3193,10 +3209,12 @@ export const blogArticles: BlogArticle[] = [
       { href: '/blog/four-temperaments-compatibility', title: 'Four Temperaments Compatibility', description: 'See the broader relationship framework.' },
       { href: '/blog/temperament-compatibility-chart', title: 'Temperament Compatibility Chart', description: 'Compare all four pairings.' },
       { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Take the test together and compare patterns.' },
+      { href: '/blog/couples-discussion-guide-by-temperament', title: 'Couples Discussion Guide', description: 'Use a short conversation to name pace and repair.' },
+      { href: '/blog/temperament-conflict-style', title: 'Temperament Conflict Style', description: 'Practice a repair move before the push-withdraw cycle grows.' },
       { href: '/temperament/choleric', title: 'Choleric Temperament', description: 'Understand the Choleric pattern in depth.' },
     ],
     faq: [
-      { question: 'Are Choleric and Phlegmatic compatible?', answer: 'Yes. Choleric and Phlegmatic can be highly compatible because one brings direction while the other brings steadiness. The challenge is pace: the Choleric may push while the Phlegmatic withdraws.' },
+      { question: 'Are Choleric and Phlegmatic compatible?', answer: 'Temperament cannot establish whether this relationship will work. It can help both people notice a pace pattern: the Choleric may push for clarity while the Phlegmatic may withdraw under pressure.' },
       { question: 'Why do Choleric and Phlegmatic couples fight?', answer: 'They often fight because directness and calm are misread. The Choleric sees delay as avoidance, while the Phlegmatic sees pressure as control.' },
       { question: 'What should a Choleric do in a Phlegmatic relationship?', answer: 'A Choleric should ask before taking over, slow down during conflict, and remember that the Phlegmatic’s quietness does not mean indifference.' },
       { question: 'What should a Phlegmatic do with a Choleric partner?', answer: 'A Phlegmatic should state preferences earlier, avoid silent resentment, and give clear timelines instead of disappearing from hard conversations.' },
@@ -3250,11 +3268,10 @@ export const blogArticles: BlogArticle[] = [
       },
       {
         type: 'section',
-        title: 'A practical script',
+        title: 'How Sanguine and Melancholic communicate when one is hurt',
         body: [
-          'The Sanguine can say: “I am joking because I want us to feel lighter, not because I do not care. Do you need me to stay serious right now?”',
-          'The Melancholic can say: “I am asking questions because this matters to me, not because I am trying to ruin the mood. Can we give this ten focused minutes?”',
-          'That small shift lets the pairing keep both gifts: joy that does not run away, and depth that does not suffocate.',
+          'When one person is hurt, the Sanguine can stay with the feeling before trying to brighten the room: “I hear that this landed badly. Tell me what hurt.”',
+          'The Melancholic can name the concern plainly: “I felt dismissed when the plan changed without a conversation.” Then both people choose a next step they can name, such as a check-in before changing plans.',
         ],
       },
     ],
@@ -3262,10 +3279,12 @@ export const blogArticles: BlogArticle[] = [
       { href: '/blog/four-temperaments-compatibility', title: 'Four Temperaments Compatibility', description: 'Learn the broader compatibility framework.' },
       { href: '/blog/temperament-compatibility-chart', title: 'Temperament Compatibility Chart', description: 'Compare all four temperament pairings.' },
       { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Use the quiz together as a relationship tool.' },
+      { href: '/blog/couples-discussion-guide-by-temperament', title: 'Couples Discussion Guide', description: 'Use a shared prompt when a feeling needs more room.' },
+      { href: '/blog/temperament-communication-style', title: 'Temperament Communication Style', description: 'Use feedback that stays clear and warm.' },
       { href: '/temperament/sanguine', title: 'Sanguine Temperament', description: 'Understand the Sanguine pattern in depth.' },
     ],
     faq: [
-      { question: 'Are Sanguine and Melancholic compatible?', answer: 'Yes. Sanguine and Melancholic can be compatible when the Sanguine respects depth and the Melancholic respects lightness. Their contrast can become growth instead of friction.' },
+      { question: 'Are Sanguine and Melancholic compatible?', answer: 'Temperament cannot establish whether this relationship will work. It can help both people notice when play, depth, follow-through, or plain language would make a hard moment easier to discuss.' },
       { question: 'Why do Sanguine and Melancholic relationships struggle?', answer: 'They often struggle because Sanguines may seem inconsistent or shallow to Melancholics, while Melancholics may seem critical or heavy to Sanguines.' },
       { question: 'What does a Sanguine need from a Melancholic?', answer: 'A Sanguine needs warmth, encouragement, and room for spontaneity, not constant correction or suspicion.' },
       { question: 'What does a Melancholic need from a Sanguine?', answer: 'A Melancholic needs follow-through, sincerity, and moments where the Sanguine can stay present with serious feelings.' },
@@ -3710,6 +3729,16 @@ export const blogArticles: BlogArticle[] = [
         ],
       },
       {
+        type: 'grid',
+        title: 'First move, missing move, repair move',
+        items: [
+          { title: 'Choleric', body: 'First move: push for a decision. Missing move: curiosity about the other person’s pace. Repair move: ask one question before offering a solution.', accent: 'red' },
+          { title: 'Sanguine', body: 'First move: soften the tension with energy or humor. Missing move: staying with the hard point. Repair move: repeat the concern back before changing the mood.', accent: 'gold' },
+          { title: 'Melancholic', body: 'First move: analyze what went wrong. Missing move: warmth while naming the concern. Repair move: state one specific impact without adding a verdict.', accent: 'blue' },
+          { title: 'Phlegmatic', body: 'First move: lower the temperature or go quiet. Missing move: a real preference. Repair move: name what you need and when you will return to the conversation.', accent: 'green' },
+        ],
+      },
+      {
         type: 'section',
         title: 'What repair looks like by type',
         body: [
@@ -3736,6 +3765,7 @@ export const blogArticles: BlogArticle[] = [
       { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Compare conflict and communication patterns together.' },
       { href: '/blog/four-temperaments-compatibility', title: 'Four Temperaments Compatibility', description: 'Understand temperament pairings.' },
       { href: '/blog/choleric-phlegmatic-relationship', title: 'Choleric and Phlegmatic Relationship', description: 'Read one common conflict pairing.' },
+      { href: '/blog/couples-discussion-guide-by-temperament', title: 'Couples Discussion Guide', description: 'Use a shared prompt to begin a repair conversation.' },
       { href: '/blog/temperament-communication-style', title: 'Temperament Communication Style', description: 'Learn how each type talks and listens.' },
     ],
     faq: [
@@ -3781,14 +3811,16 @@ export const blogArticles: BlogArticle[] = [
         title: 'What each type needs to hear',
         body: [
           'Choleric needs to hear the point. Sanguine needs to feel invited. Melancholic needs to know the meaning. Phlegmatic needs to feel safe enough to answer honestly.',
-          'This does not mean you should flatter each type. It means you should deliver truth in a way their nervous system can actually receive.',
+          'This does not mean you should flatter each type. It means you should deliver truth in a form the other person can hear.',
         ],
       },
       {
-        type: 'callout',
-        title: 'How to adapt without becoming fake',
-        body: 'Healthy communication is not manipulation. It is translation.',
-        bullets: ['With Choleric: be direct and specific.', 'With Sanguine: be warm and responsive.', 'With Melancholic: be thoughtful and accurate.', 'With Phlegmatic: be calm and patient.'],
+        type: 'section',
+        title: 'Feedback that can be received',
+        body: [
+          'Adaptation is translation, not manipulation: the concern stays honest while the delivery gives the other person a fair chance to respond.',
+        ],
+        bullets: ['Choleric: “Here is the issue, and here is the decision I need help making.”', 'Sanguine: “I value us, and I need to stay with one concern for a minute.”', 'Melancholic: “I noticed this detail, and I want to understand what it meant.”', 'Phlegmatic: “I want your honest view; we can take a moment before answering.”'],
       },
       {
         type: 'section',
@@ -3803,6 +3835,7 @@ export const blogArticles: BlogArticle[] = [
       { href: '/blog/temperament-conflict-style', title: 'Temperament Conflict Style', description: 'See how communication changes under pressure.' },
       { href: '/blog/temperament-types-at-work', title: 'Temperament Types at Work', description: 'Apply communication patterns to teams.' },
       { href: '/temperament-test-for-couples', title: 'Temperament Test for Couples', description: 'Use the quiz together in relationships.' },
+      { href: '/blog/couples-discussion-guide-by-temperament', title: 'Couples Discussion Guide', description: 'Use feedback stems in a calmer shared conversation.' },
       { href: '/four-temperaments-test', title: 'Four Temperaments Test', description: 'Find your dominant communication pattern.' },
     ],
     faq: [
@@ -4845,7 +4878,7 @@ export const relationshipGuideLinks: LinkCard[] = [
   { href: '/blog/couples-discussion-guide-by-temperament', title: 'Couples Discussion Guide', description: 'Use a 30-minute conversation after taking the quiz separately.' },
   { href: '/blog/four-temperaments-compatibility', title: 'Four Temperaments Compatibility', description: 'Understand how all four temperament patterns relate.' },
   { href: '/blog/temperament-compatibility-chart', title: 'Temperament Compatibility Chart', description: 'See how the four temperaments relate in relationships.' },
-  { href: '/blog/choleric-phlegmatic-relationship', title: 'Choleric and Phlegmatic Relationship', description: 'Drive meets calm in one of the strongest complementary pairings.' },
+  { href: '/blog/choleric-phlegmatic-relationship', title: 'Choleric and Phlegmatic Relationship', description: 'Explore how drive and calm meet under pressure.' },
   { href: '/blog/sanguine-melancholic-compatibility', title: 'Sanguine and Melancholic Compatibility', description: 'Lightness meets depth in this high-contrast pairing.' },
   { href: '/blog/temperament-conflict-style', title: 'Temperament Conflict Style', description: 'Learn how each type fights, avoids, apologizes, and repairs.' },
   { href: '/blog/temperament-communication-style', title: 'Temperament Communication Style', description: 'Understand how each type talks, listens, and gives feedback.' },

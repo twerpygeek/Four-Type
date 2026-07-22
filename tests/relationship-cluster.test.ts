@@ -62,6 +62,26 @@ test('new practical guides point to the right next relationship actions', () => 
   assert.ok(parenting.related.some((link) => link.href === '/blog/couples-discussion-guide-by-temperament'))
 })
 
+test('existing relationship guides expose the right next practical step', () => {
+  const requiredLinks: Record<string, string[]> = {
+    'four-temperaments-compatibility': [
+      '/blog/couples-discussion-guide-by-temperament',
+      '/blog/temperament-conflict-style',
+      '/blog/choleric-phlegmatic-relationship',
+      '/blog/sanguine-melancholic-compatibility',
+    ],
+    'choleric-phlegmatic-relationship': ['/blog/couples-discussion-guide-by-temperament', '/blog/temperament-conflict-style'],
+    'sanguine-melancholic-compatibility': ['/blog/couples-discussion-guide-by-temperament', '/blog/temperament-communication-style'],
+    'temperament-conflict-style': ['/blog/couples-discussion-guide-by-temperament', '/blog/temperament-communication-style'],
+    'temperament-communication-style': ['/blog/couples-discussion-guide-by-temperament', '/blog/temperament-conflict-style'],
+  }
+
+  Object.entries(requiredLinks).forEach(([slug, hrefs]) => {
+    const article = getBlogArticle(slug)!
+    hrefs.forEach((href) => assert.ok(article.related.some((link) => link.href === href), `${slug} missing ${href}`))
+  })
+})
+
 test('relationship articles have distinct titles and do not make match-score claims', () => {
   const articles = requiredArticleSlugs.map((slug) => getBlogArticle(slug)!)
   assert.equal(new Set(articles.map((article) => article.title)).size, articles.length)
