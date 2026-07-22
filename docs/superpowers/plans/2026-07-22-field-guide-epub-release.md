@@ -22,7 +22,7 @@
 ### Task 1: Trace and test the EPUB generator defect
 
 **Files:**
-- Modify: `.worktrees/field-guide-prototype/book/brand-publication/build_epub.py`
+- Modify: `.worktrees/field-guide-prototype/book/brand-publication/scripts/build_epub.py`
 - Modify: `.worktrees/field-guide-prototype/book/brand-publication/tests/test_full_book.py`
 
 - [ ] Add a failing validation test that builds the EPUB and asserts each inline SVG has `xmlns="http://www.w3.org/2000/svg"` and that manifest items for pages 10, 18, and 22 have `properties="svg"`.
@@ -33,7 +33,7 @@
 ### Task 2: Repair SVG packaging and build semantic chapters
 
 **Files:**
-- Modify: `.worktrees/field-guide-prototype/book/brand-publication/build_epub.py`
+- Modify: `.worktrees/field-guide-prototype/book/brand-publication/scripts/build_epub.py`
 - Modify: `.worktrees/field-guide-prototype/book/brand-publication/styles/epub.css` or the generator’s EPUB CSS output
 - Test: `.worktrees/field-guide-prototype/book/brand-publication/tests/test_full_book.py`
 
