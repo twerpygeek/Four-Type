@@ -31,7 +31,7 @@ export default function SupporterTiers() {
         <div className="field-guide-tier-details">
           <p className="field-guide-tier-kicker">Complete Digital Edition</p>
           <p className="field-guide-tier-price">{foundingPrice}</p>
-          <p className="field-guide-tier-intro">The full 144-page Field Guide, reflowable EPUB and printable worksheet pack.</p>
+          <p className="field-guide-tier-intro">144 illustrated pages, practical relationship and work tools, a reflowable EPUB, and worksheets you will actually use.</p>
           <ul>
             <li>Designed PDF for reading and printing</li>
             <li>Reflowable EPUB for compatible reading apps</li>

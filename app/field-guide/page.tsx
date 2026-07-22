@@ -8,21 +8,29 @@ const canonicalUrl = 'https://www.fourtype.com/field-guide'
 export const metadata: Metadata = {
   title: 'FourType Field Guide · Illustrated Digital Book',
   description:
-    'Get the complete 144-page FourType Field Guide in PDF and EPUB, with practical tools for work, relationships, tension and repair.',
+    'See your pattern. Choose your next move. The complete illustrated FourType Field Guide for work, relationships, tension and repair.',
   alternates: { canonical: canonicalUrl },
   openGraph: {
     type: 'website',
     url: canonicalUrl,
     title: 'Read the room. Widen your range. · FourType',
-    description: 'A practical illustrated field guide for work, relationships, tension and repair.',
+    description:
+      'See your pattern. Choose your next move. A practical illustrated guide for work, relationships, tension and repair.',
     images: [
       {
-        url: '/images/field-guide/field-guide-social.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'The FourType Field Guide illustrated digital book',
+        url: '/images/field-guide/fourtype-field-guide-og.png',
+        width: 1731,
+        height: 909,
+        alt: 'FourType: The Field Guide, shown as an illustrated book with the four FourType characters',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Read the room. Widen your range. · FourType',
+    description:
+      'See your pattern. Choose your next move. A practical illustrated guide for work, relationships, tension and repair.',
+    images: ['/images/field-guide/fourtype-field-guide-og.png'],
   },
 }
 
@@ -31,9 +39,9 @@ const productSchema = {
   '@type': 'Product',
   name: 'The FourType Field Guide',
   description:
-    'A complete illustrated digital Field Guide with practical tools for work, relationships, tension and repair.',
+    'A complete illustrated digital Field Guide that helps readers see recurring patterns and choose more useful next moves at work, in relationships, under pressure and during repair.',
   url: canonicalUrl,
-  image: 'https://www.fourtype.com/images/field-guide/field-guide-social.jpg',
+  image: 'https://www.fourtype.com/images/field-guide/fourtype-field-guide-og.png',
   brand: {
     '@type': 'Brand',
     name: 'FourType',

@@ -61,10 +61,10 @@ export default function FieldGuideCampaign() {
                 <SectionEyebrow>FourType · The Field Guide</SectionEyebrow>
                 <h1 id="field-guide-title">Read the room. Widen your range.</h1>
                 <p className="field-guide-lede">
-                  A practical, illustrated field guide for work, relationships, tension and repair.
+                  A practical, illustrated guide to the patterns that shape how you work, relate, react and repair.
                 </p>
                 <p className="field-guide-reward-bridge">
-                  Learn how Choleric Commanders, Sanguine Bards, Melancholic Strategists and Phlegmatic Guardians notice a situation, what each pattern may miss, and how to choose a better next move.
+                  Notice the reaction you keep repeating. Learn how the four temperament patterns meet pressure, then practise one more useful next move.
                 </p>
                 <div className="field-guide-actions">
                   <CampaignCtaLink className="field-guide-button field-guide-button-primary" href="#supporter-levels" analyticsEvent={{ event: 'field-guide-hero-cta' }}>

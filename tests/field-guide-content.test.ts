@@ -9,7 +9,8 @@ const footer = readFileSync('components/Footer.tsx', 'utf8')
 
 test('sells the finished book while preserving responsible-use language', () => {
   assert.match(campaign, /Read the room\. Widen your range\./)
-  assert.match(campaign, /A practical, illustrated field guide for work, relationships, tension and repair\./)
+  assert.match(campaign, /A practical, illustrated guide to the patterns that shape how you work, relate, react and repair\./)
+  assert.match(campaign, /Notice the reaction you keep repeating\./)
   assert.match(campaign, /reflective framework/i)
   assert.match(campaign, /diagnose, rank, hire, exclude/i)
   assert.doesNotMatch(campaign, /back this campaign|early access|help publish|stretch goals|72 \/ 100|2 of 3/i)
@@ -43,6 +44,9 @@ test('exposes policy and contact routes on supporter status pages', () => {
 test('publishes truthful metadata without ratings', () => {
   assert.match(page, /https:\/\/www\.fourtype\.com\/field-guide/)
   assert.match(page, /Product/)
+  assert.match(page, /fourtype-field-guide-og\.png/)
+  assert.match(page, /summary_large_image/)
+  assert.match(page, /See your pattern\. Choose your next move\./)
   assert.doesNotMatch(page, /aggregateRating|reviewRating/)
   assert.doesNotMatch(page, /InStock/)
 })
@@ -56,6 +60,7 @@ test('renders one USD-only complete digital edition purchase control', () => {
   assert.match(component, /getSupporterOffer\('founding', 'usd'\)/)
   assert.match(component, /Complete Digital Edition/)
   assert.match(component, /Get instant access · US\$12/)
+  assert.match(component, /144 illustrated pages, practical relationship and work tools/)
   assert.match(component, /field-guide-bundle-visual/)
   assert.doesNotMatch(component, /Founding Digital Supporter|US\$25/)
   assert.doesNotMatch(component, /MYR|RM39|RM79|sessionStorage|Choose checkout currency/)
