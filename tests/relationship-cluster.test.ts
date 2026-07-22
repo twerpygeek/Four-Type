@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { blogArticles, getBlogArticle, getSeoPage, relationshipGuideLinks, seoPages } from '../lib/seo-content'
+import { allContentPages, blogArticles, getBlogArticle, getSeoPage, relationshipGuideLinks, seoPages } from '../lib/seo-content'
 
 const requiredArticleSlugs = [
   'four-temperaments-compatibility',
@@ -16,6 +16,17 @@ test('relationship cluster has a pillar and every required guide', () => {
   assert.equal(getSeoPage('relationships')?.title, 'Temperament Relationships: Compatibility, Communication, and Repair')
   requiredArticleSlugs.forEach((slug) => assert.ok(getBlogArticle(slug), `missing ${slug}`))
   assert.ok(getSeoPage('temperament-test-for-couples'))
+})
+
+test('relationship cluster routes are discoverable through the shared content index', () => {
+  const hrefs = new Set(allContentPages.map((page) => page.href))
+
+  ;[
+    '/relationships',
+    '/temperament-test-for-couples',
+    '/blog/couples-discussion-guide-by-temperament',
+    '/blog/parenting-by-temperament',
+  ].forEach((href) => assert.ok(hrefs.has(href), `missing discoverable route ${href}`))
 })
 
 test('relationship cluster routes readers to the quiz and couples action page', () => {
